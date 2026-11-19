@@ -6,6 +6,7 @@
 > **Architect & Author:** **Mohamed Khaled Farag**  
 > 🔗 **LinkedIn:** [linkedin.com/in/mk-farag](https://www.linkedin.com/in/mk-farag/)  
 > ✉️ **Email:** [mohammedkhaled.fa@gmail.com](mailto:mohammedkhaled.fa@gmail.com)  
+> 🐙 **GitHub:** [github.com/mkfarag/java-handbook](https://github.com/mkfarag/java-handbook)  
 > 🐳 **Docker Hub:** [hub.docker.com/r/mkfarag/java-handbook](https://hub.docker.com/r/mkfarag/java-handbook)
 
 ---
@@ -37,6 +38,10 @@ Open **[http://localhost:3000](http://localhost:3000)** in your browser.
 
 ### 2. Run Locally with Node.js
 ```bash
+# Clone the repository
+git clone https://github.com/mkfarag/java-handbook.git
+cd java-handbook
+
 # Install dependencies
 npm install
 
@@ -58,22 +63,26 @@ This runs the automated verification suite executing 160 test scenarios across a
 
 ## 📦 How to Share the Handbook with Others
 
-### Option 1: Share as a Docker Image (Offline / Air-Gapped)
-You can export the built Docker image into a single `.tar` archive and send it to anyone via USB drive or network transfer:
+### Option 1: Share via Docker Hub (Fastest)
+Anyone with Docker can run the entire handbook with a single command without downloading source code or installing Node.js:
 ```bash
-# 1. Build the Docker image
-docker build -t java-handbook .
+docker pull mkfarag/java-handbook:latest
+docker run -d -p 3000:80 --name java_handbook mkfarag/java-handbook:latest
+```
 
-# 2. Save image to a portable file
-docker save -o java-handbook.tar java-handbook
+### Option 2: Share as a Standalone Tar Archive (Air-Gapped / USB)
+You can export the built Docker image into a single `.tar` archive and send it to anyone via USB drive or offline network transfer:
+```bash
+# 1. Save image to a portable file
+docker save -o java-handbook.tar mkfarag/java-handbook:latest
 
-# 3. On the recipient's machine (no internet needed):
+# 2. On the recipient's machine (no internet needed):
 docker load -i java-handbook.tar
-docker run -d -p 3000:80 --name java_handbook java-handbook
+docker run -d -p 3000:80 --name java_handbook mkfarag/java-handbook:latest
 ```
 The recipient opens `http://localhost:3000` in any web browser.
 
-### Option 2: Share as a Pre-Built Static Folder (Zero-Docker / Zero-Node)
+### Option 3: Share as a Pre-Built Static Folder (Zero-Docker / Zero-Node)
 Because this handbook is 100% static and offline-first, you can distribute the built `dist/` directory:
 ```bash
 # 1. Build production assets
@@ -88,18 +97,14 @@ The recipient can unpack the zip and serve it using any lightweight local server
 - Node: `npx serve dist`
 - Or drag-and-drop onto free static hosts like GitHub Pages, Vercel, Netlify, or Cloudflare Pages.
 
-### Option 3: Share Full Codebase via Git
+### Option 4: Share & Contribute via GitHub
 ```bash
-git init
-git add .
-git commit -m "feat: complete offline Java & Jakarta EE handbook"
-git remote add origin <your-repo-url>
-git push -u origin main
-```
-Anyone cloning the repository simply runs:
-```bash
-npm install
-npm run dev
+# Clone repository
+git clone https://github.com/mkfarag/java-handbook.git
+cd java-handbook
+
+# Run locally or with Docker
+npm install && npm run dev
 # or: docker compose up -d
 ```
 
