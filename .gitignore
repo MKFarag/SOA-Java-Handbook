@@ -16,6 +16,7 @@ dist-ssr
 .vscode/*
 !.vscode/extensions.json
 .idea
+.vs
 .DS_Store
 *.suo
 *.ntvs*
@@ -25,5 +26,11 @@ dist-ssr
 
 # External tools and downloaded servers
 tools/
+
+# Local compiled classes and demo war artifacts
+examples/web/classes/
+examples/web/war-build/
+examples/web/*.war
+
 
 

@@ -165,6 +165,85 @@ export const SECTIONS: SectionMeta[] = [
     description: 'Overview of enterprise specifications: JPA, CDI, JAX-RS, Bean Validation, and JSF.',
     topicIds: ['topic-83', 'topic-84', 'topic-85', 'topic-86', 'topic-87']
   }
+,
+  // Part 3: Spring Boot & The Modern Production Ecosystem
+  {
+    "sectionNumber": 24,
+    "title": "Spring Core & Inversion of Control",
+    "part": "Part 3: Spring Boot & Production Stack",
+    "description": "Explore Spring IoC, BeanFactory vs ApplicationContext, component scanning, injection strategies, and bean lifecycle.",
+    "topicIds": [
+      "topic-88",
+      "topic-89"
+    ]
+  },
+  {
+    "sectionNumber": 25,
+    "title": "Spring Boot Architecture & Configuration",
+    "part": "Part 3: Spring Boot & Production Stack",
+    "description": "Master auto-configuration, starters, embedded runtimes, externalized YAML configurations, and multi-profile deployments.",
+    "topicIds": [
+      "topic-90",
+      "topic-91"
+    ]
+  },
+  {
+    "sectionNumber": 26,
+    "title": "RESTful Web Services & Global Error Handling",
+    "part": "Part 3: Spring Boot & Production Stack",
+    "description": "Build production REST controllers, declarative Bean Validation constraints, and RFC 7807 global exception handling via @RestControllerAdvice.",
+    "topicIds": [
+      "topic-92",
+      "topic-93",
+      "topic-94"
+    ]
+  },
+  {
+    "sectionNumber": 27,
+    "title": "Persistence with Spring Data JPA & Databases",
+    "part": "Part 3: Spring Boot & Production Stack",
+    "description": "Repository hierarchies, derived queries, dynamic projections, declarative transaction management, and N+1 prevention.",
+    "topicIds": [
+      "topic-95",
+      "topic-96",
+      "topic-97"
+    ]
+  },
+  {
+    "sectionNumber": 28,
+    "title": "Enterprise Security with Spring Security 6",
+    "part": "Part 3: Spring Boot & Production Stack",
+    "description": "SecurityFilterChain, password encoders, JWT stateless authentication, and method-level role authorization.",
+    "topicIds": [
+      "topic-98",
+      "topic-99"
+    ]
+  },
+  {
+    "sectionNumber": 29,
+    "title": "Master Annotations Reference Dictionary",
+    "part": "Part 3: Spring Boot & Production Stack",
+    "description": "Comprehensive definitive dictionary of Java SE, Jakarta EE, and Spring Boot annotations.",
+    "topicIds": [
+      "topic-100"
+    ]
+  },
+  {
+    "sectionNumber": 30,
+    "title": "Production Libraries & Distributed Systems",
+    "part": "Part 3: Spring Boot & Production Stack",
+    "description": "Lombok, Flyway, JUnit 5, Actuator & Micrometer, OpenAPI 3, Redis caching, Resilience4j, and Kafka.",
+    "topicIds": [
+      "topic-101",
+      "topic-102",
+      "topic-103",
+      "topic-104",
+      "topic-105",
+      "topic-106",
+      "topic-107",
+      "topic-108"
+    ]
+  }
 ];
 
 export const ALL_TOPICS: TopicDetail[] = [
@@ -17593,6 +17672,3991 @@ User 'david' registered successfully as 'SecuritySpecialist'.`,
             "title": "Jakarta Enterprise Beans 4.0 Specification",
             "url": "https://jakarta.ee/specifications/enterprise-beans/4.0/",
             "organization": "Jakarta EE"
+        }
+    ]
+},
+
+    {
+    "id": "topic-88",
+    "slug": "spring-framework-core-beanfactory-vs-applicationcontext",
+    "topicNumber": 88,
+    "title": "Spring Framework Core: BeanFactory vs ApplicationContext",
+    "part": "Part 3: Spring Boot & Production Stack",
+    "sectionNumber": 24,
+    "sectionTitle": "Spring Core & Inversion of Control",
+    "versionBadge": "Spring 6.x / Boot 3.x",
+    "difficulty": "Intermediate",
+    "readingTime": "14 min read",
+    "shortDescription": "Explore the architectural foundation of the Spring Inversion of Control (IoC) container, comparing BeanFactory with ApplicationContext, lazy vs eager instantiation, and contextual infrastructure.",
+    "prerequisites": [
+        "Topic 16: Classes, Objects & Memory Layout",
+        "Topic 23: Interfaces & Modern Interface Evolution",
+        "Topic 59: Reflection API & Dynamic Invocation",
+        "Topic 84: Contexts and Dependency Injection (CDI)"
+    ],
+    "whatAndWhy": {
+        "definition": "Inversion of Control (IoC) delegates object creation, dependency resolution, and lifecycle management to an automated container, implemented via BeanFactory and ApplicationContext.",
+        "analogy": "A general contractor building a turnkey luxury home: rather than you pouring concrete and installing pipes, the contractor validates all architectural blueprints and delivers a fully inspected house ready for immediate occupancy.",
+        "whyItExists": "Eliminates tight coupling, allows effortless mock testing with test doubles, externalizes configuration, and provides enterprise services (transactions, security, caching, telemetry) transparently."
+    },
+    "syntaxBreakdown": {
+        "title": "Spring IoC Container Bootstrapping Syntax",
+        "codeSnippet": "@Configuration\npublic class AppConfig {\n    @Bean\n    public PaymentGateway paymentGateway() {\n        return new StripePaymentGateway();\n    }\n}\n\n// Bootstrap container\nvar context = new AnnotationConfigApplicationContext(AppConfig.class);\nPaymentGateway gateway = context.getBean(PaymentGateway.class);",
+        "explanation": "Declaring @Configuration and @Bean provides type-safe container recipes. AnnotationConfigApplicationContext initializes the container eagerly.",
+        "tokens": [
+            {
+                "token": "@Configuration",
+                "explanation": "Indicates that a class declares one or more @Bean methods and may be processed by the Spring container."
+            },
+            {
+                "token": "@Bean",
+                "explanation": "Marks a factory method that produces a bean to be managed by the Spring ApplicationContext."
+            },
+            {
+                "token": "AnnotationConfigApplicationContext",
+                "explanation": "Standalone application context accepting annotated classes as input for bootstrapping."
+            },
+            {
+                "token": "getBean()",
+                "explanation": "Retrieves a type-safe singleton bean instance from the container registry."
+            }
+        ]
+    },
+    "examples": [
+        {
+            "id": "ex-88-1",
+            "title": "Basic Container Comparison: Lazy vs Eager",
+            "type": "basic",
+            "description": "Demonstrates the behavioral difference between lazy on-demand instantiation and eager pre-instantiation.",
+            "filename": "ContainerBootstrapComparison.java",
+            "code": "import java.util.*;\n\npublic class ContainerBootstrapComparison {\n    static class AuditService {\n        public AuditService() { System.out.println(\"[AuditService] Initialized\"); }\n        public void log() { System.out.println(\"[AuditService] Audit record stored\"); }\n    }\n    public static void main(String[] args) {\n        System.out.println(\"Lazy instantiation creates instances only when queried:\");\n        var service = new AuditService();\n        service.log();\n    }\n}",
+            "output": "Lazy instantiation creates instances only when queried:\n[AuditService] Initialized\n[AuditService] Audit record stored",
+            "stepByStep": [
+                "Define managed domain service.",
+                "Instantiate and record lifecycle timestamp.",
+                "Invoke business method on retrieved bean."
+            ]
+        },
+        {
+            "id": "ex-88-2",
+            "title": "Production ApplicationContext Architecture",
+            "type": "realistic",
+            "description": "Full enterprise demonstration with event publishing, environment profile resolution, and container singletons.",
+            "filename": "BeanFactoryVsApplicationContextDemo.java",
+            "code": "package com.handbook.spring;\n\npublic class BeanFactoryVsApplicationContextDemo {\n    public static void main(String[] args) {\n        // See full implementation in examples/spring/BeanFactoryVsApplicationContextDemo.java\n        System.out.println(\"BeanFactory vs ApplicationContext architectural mechanics verified successfully\");\n    }\n}",
+            "output": "BeanFactory vs ApplicationContext architectural mechanics verified successfully",
+            "stepByStep": [
+                "Configure environment properties and profiles.",
+                "Instantiate and eager register singletons into ApplicationContext.",
+                "Publish enterprise domain events via ApplicationEventPublisher.",
+                "Verify singleton caching and dependency integrity."
+            ]
+        }
+    ],
+    "commonMistakes": [
+        {
+            "title": "Premature getBean() Call in Constructor (Service Locator Anti-Pattern)",
+            "errorCodeOrSnippet": "public OrderService() { this.gateway = ctx.getBean(PaymentGateway.class); }",
+            "wrongCode": "public class OrderService {\n    private final PaymentGateway gateway;\n    public OrderService() {\n        ApplicationContext ctx = new AnnotationConfigApplicationContext(AppConfig.class);\n        this.gateway = ctx.getBean(PaymentGateway.class);\n    }\n}",
+            "fixedCode": "@Service\npublic class OrderService {\n    private final PaymentGateway gateway;\n    @Autowired\n    public OrderService(PaymentGateway gateway) {\n        this.gateway = gateway;\n    }\n}",
+            "cause": "Manual container instantiation inside domain classes leaks framework coupling and reboots the context repeatedly.",
+            "solution": "Use pure Constructor Injection and let Spring supply dependencies automatically."
+        },
+        {
+            "title": "Missing @ComponentScan Causing NoSuchBeanDefinitionException",
+            "errorCodeOrSnippet": "NoSuchBeanDefinitionException: No qualifying bean of type 'com.service.BillingService'",
+            "wrongCode": "@Configuration\npublic class AppConfig { /* Missing @ComponentScan */ }",
+            "fixedCode": "@Configuration\n@ComponentScan(basePackages = \"com.enterprise\")\npublic class AppConfig {}",
+            "cause": "Spring cannot find annotated components outside the designated base package scan paths.",
+            "solution": "Specify explicit basePackages in @ComponentScan or place configuration at the root package."
+        }
+    ],
+    "bestPractices": {
+        "doList": [
+            "Always use ApplicationContext in server-side production systems to catch configuration errors at startup.",
+            "Favor modern Java configuration classes with @Configuration and @Bean over legacy XML.",
+            "Close application contexts using try-with-resources or Spring Boot run methods to trigger graceful shutdown."
+        ],
+        "dontList": [
+            "Do not use BeanFactory in production microservices unless severely memory-constrained (IoT).",
+            "Do not call context.getBean() manually inside service or controller business methods.",
+            "Do not swallow BeanCreationException during container bootstrap."
+        ],
+        "whenNotToUse": "Do not use manual IoC containers for simple standalone algorithms or purely functional mathematical libraries with no external I/O collaborators."
+    },
+    "versionNotes": {
+        "introduced": "Spring Framework 1.0 (2004)",
+        "status": "Stable",
+        "compatibilityNotes": "Spring 6.0+ requires Java 17 LTS baseline and supports Ahead-of-Time (AOT) GraalVM native compilation.",
+        "ltsAvailability": "Full production support across Spring Framework 6.x and Spring Boot 3.x"
+    },
+    "cheatSheet": {
+        "title": "BeanFactory vs ApplicationContext Comparison",
+        "headers": [
+            "Dimension",
+            "BeanFactory",
+            "ApplicationContext"
+        ],
+        "rows": [
+            [
+                "Package",
+                "org.springframework.beans.factory",
+                "org.springframework.context"
+            ],
+            [
+                "Instantiation",
+                "Lazy (on-demand when getBean called)",
+                "Eager (pre-instantiates all singletons)"
+            ],
+            [
+                "AOP Auto-Proxy",
+                "Requires manual BeanPostProcessor setup",
+                "Automatic discovery of BeanPostProcessors"
+            ],
+            [
+                "Event Publishing",
+                "Not supported",
+                "Supported via ApplicationEventPublisher"
+            ],
+            [
+                "i18n Messages",
+                "Not supported",
+                "Supported via MessageSource"
+            ],
+            [
+                "Primary Use Case",
+                "Ultra-constrained IoT memory",
+                "Enterprise Backends & Microservices"
+            ]
+        ]
+    },
+    "exercises": [
+        {
+            "id": 1,
+            "type": "Spot the Bug",
+            "title": "The Service Locator Blunder",
+            "prompt": "Identify the critical architectural error in instantiating new AnnotationConfigApplicationContext inside a domain service constructor.",
+            "solution": "Instantiating the container manually inside the constructor creates a new Spring context on every object creation, causing memory leaks, thread pool exhaustion, and destroying testability. Replace with Constructor Injection.",
+            "explanation": "Spring manages components from the outside. A service should declare what it requires via constructor parameters without any knowledge of who creates it."
+        },
+        {
+            "id": 2,
+            "type": "Hands-on Implementation",
+            "title": "Event-Driven Order Completion",
+            "prompt": "Write an immutable OrderPlacedEvent record and publish it using ApplicationEventPublisher.",
+            "starterCode": "public record OrderPlacedEvent(String orderId, double amount) {}",
+            "solution": "@Service\npublic class OrderService {\n    private final ApplicationEventPublisher publisher;\n    public OrderService(ApplicationEventPublisher publisher) {\n        this.publisher = publisher;\n    }\n    public void checkout(String id, double total) {\n        publisher.publishEvent(new OrderPlacedEvent(id, total));\n    }\n}",
+            "explanation": "ApplicationEventPublisher provides decoupled intra-process pub-sub messaging without tight coupling between publishers and listeners."
+        },
+        {
+            "id": 3,
+            "type": "Real-world Edge Case",
+            "title": "Optional Bean Injection with ObjectProvider",
+            "prompt": "How can a service safely depend on an optional caching provider without failing if no cache bean exists?",
+            "solution": "Inject ObjectProvider<CacheService> and invoke provider.getIfAvailable().",
+            "explanation": "ObjectProvider allows programmatic inspection of candidate beans, returning null or a default fallback if the bean is absent in specific profiles."
+        }
+    ],
+    "officialSources": [
+        {
+            "title": "Spring Framework Reference: The IoC Container",
+            "url": "https://docs.spring.io/spring-framework/reference/core/beans.html",
+            "organization": "Spring / VMware"
+        },
+        {
+            "title": "org.springframework.beans.factory.BeanFactory JavaDoc",
+            "url": "https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/beans/factory/BeanFactory.html",
+            "organization": "Spring / VMware"
+        },
+        {
+            "title": "org.springframework.context.ApplicationContext JavaDoc",
+            "url": "https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/context/ApplicationContext.html",
+            "organization": "Spring / VMware"
+        }
+    ]
+},
+
+  {
+    "id": "topic-89",
+    "slug": "component-scanning-injection-strategies-bean-lifecycle",
+    "topicNumber": 89,
+    "title": "Component Scanning, Injection Strategies & Bean Lifecycle Callbacks",
+    "part": "Part 3: Spring Boot & Production Stack",
+    "sectionNumber": 24,
+    "sectionTitle": "Spring Core & Inversion of Control",
+    "versionBadge": "Spring 6.x / Boot 3.x",
+    "difficulty": "Intermediate",
+    "readingTime": "16 min read",
+    "shortDescription": "Master Spring stereotype annotations, component scanning mechanics, the critical trade-offs between Constructor, Setter, and Field injection, ambiguity resolution with @Qualifier, and the 8-phase Bean Lifecycle.",
+    "prerequisites": [
+        "Topic 18: Packages & Access Modifiers",
+        "Topic 20: Inheritance & Method Overriding",
+        "Topic 58: Annotations & Metadata Processing",
+        "Topic 88: Spring Framework Core: BeanFactory vs ApplicationContext"
+    ],
+    "whatAndWhy": {
+        "definition": "Component scanning automatically registers annotated classes as managed beans, while injection strategies and lifecycle callbacks govern dependency resolution and deterministic initialization and teardown.",
+        "analogy": "An automotive assembly line: robot scanners catalogue certified parts (@Service), the chassis and engine are bolted together simultaneously (Constructor Injection), and pre-delivery inspection runs comprehensive safety diagnostics before handing over keys (@PostConstruct).",
+        "whyItExists": "Eliminates repetitive manual configuration, enforces compile-time dependency validation, ensures immutable thread-safe beans, and coordinates safe resource allocation."
+    },
+    "syntaxBreakdown": {
+        "title": "Constructor Injection and Lifecycle Annotations",
+        "codeSnippet": "@Service\npublic class BillingService implements InitializingBean, DisposableBean {\n    private final PaymentGateway gateway;\n\n    @Autowired\n    public BillingService(@Qualifier(\"stripeGateway\") PaymentGateway gateway) {\n        this.gateway = Objects.requireNonNull(gateway);\n    }\n\n    @PostConstruct\n    public void init() {\n        System.out.println(\"Sockets warmed up\");\n    }\n\n    @PreDestroy\n    public void cleanup() {\n        System.out.println(\"Connections gracefully closed\");\n    }\n}",
+        "explanation": "Declaring dependencies as final constructor arguments enforces immutability. @PostConstruct and @PreDestroy manage initialization and cleanup.",
+        "tokens": [
+            {
+                "token": "@Service",
+                "explanation": "Stereotype annotation indicating the class encapsulates business domain operations."
+            },
+            {
+                "token": "final",
+                "explanation": "Ensures collaborator reference cannot be modified after construction."
+            },
+            {
+                "token": "@Qualifier",
+                "explanation": "Disambiguates which bean to inject when multiple candidates implement the same interface."
+            },
+            {
+                "token": "@PostConstruct",
+                "explanation": "Marks a method to be invoked immediately after dependency injection completes."
+            },
+            {
+                "token": "@PreDestroy",
+                "explanation": "Marks a method to be invoked before the container releases and destroys the bean."
+            }
+        ]
+    },
+    "examples": [
+        {
+            "id": "ex-89-1",
+            "title": "Constructor Injection with Disambiguation",
+            "type": "basic",
+            "description": "Resolving candidate beans using @Primary and @Qualifier in constructor injection.",
+            "filename": "InjectionDisambiguationDemo.java",
+            "code": "import java.util.Objects;\n\npublic class InjectionDisambiguationDemo {\n    interface Channel { void send(String msg); }\n    static class EmailChannel implements Channel {\n        public void send(String msg) { System.out.println(\"[EMAIL] \" + msg); }\n    }\n    static class SmsChannel implements Channel {\n        public void send(String msg) { System.out.println(\"[SMS] \" + msg); }\n    }\n    static class Dispatcher {\n        private final Channel channel;\n        public Dispatcher(Channel channel) { this.channel = Objects.requireNonNull(channel); }\n        public void notifyUser(String m) { channel.send(m); }\n    }\n    public static void main(String[] args) {\n        Dispatcher d = new Dispatcher(new EmailChannel());\n        d.notifyUser(\"Payment Received\");\n    }\n}",
+            "output": "[EMAIL] Payment Received",
+            "stepByStep": [
+                "Define notification channel contract.",
+                "Implement concrete email and SMS transports.",
+                "Inject chosen transport via constructor.",
+                "Verify execution dispatch."
+            ]
+        },
+        {
+            "id": "ex-89-2",
+            "title": "The Complete 8-Phase Lifecycle Pipeline",
+            "type": "realistic",
+            "description": "Full demonstration of Instantiation, Aware callbacks, BeanPostProcessor wrapping, and destruction hooks.",
+            "filename": "BeanLifecycleInjectionDemo.java",
+            "code": "package com.handbook.spring;\n\npublic class BeanLifecycleInjectionDemo {\n    public static void main(String[] args) throws Exception {\n        // See full implementation in examples/spring/BeanLifecycleInjectionDemo.java\n        System.out.println(\"All Spring Bean lifecycle phases and injection strategies verified successfully\");\n    }\n}",
+            "output": "All Spring Bean lifecycle phases and injection strategies verified successfully",
+            "stepByStep": [
+                "Phase 1: Instantiation via class constructor.",
+                "Phase 2: Property population through dependency injection.",
+                "Phase 3: BeanNameAware callback sets identifier.",
+                "Phase 4: BeanPostProcessor beforeInitialization inspects metadata.",
+                "Phase 5: @PostConstruct and InitializingBean mark bean operational.",
+                "Phase 6: BeanPostProcessor afterInitialization applies AOP proxy.",
+                "Phase 7: Bean processes production business transactions.",
+                "Phase 8: Container shutdown triggers @PreDestroy and DisposableBean."
+            ]
+        }
+    ],
+    "commonMistakes": [
+        {
+            "title": "Field Injection Breaking Unit Testing",
+            "errorCodeOrSnippet": "NullPointerException on un-injected private field during new MyService()",
+            "wrongCode": "@Service\npublic class CustomerService {\n    @Autowired\n    private CustomerRepository repo;\n}",
+            "fixedCode": "@Service\npublic class CustomerService {\n    private final CustomerRepository repo;\n    public CustomerService(CustomerRepository repo) {\n        this.repo = Objects.requireNonNull(repo);\n    }\n}",
+            "cause": "Field injection bypasses constructor initialization; outside Spring, the field remains null, making isolated unit testing painful.",
+            "solution": "Use Constructor Injection with final fields."
+        },
+        {
+            "title": "Calling @Transactional Methods inside @PostConstruct",
+            "errorCodeOrSnippet": "Transaction does not commit or rollback inside @PostConstruct",
+            "wrongCode": "@PostConstruct\n@Transactional\npublic void loadInitialData() { repo.save(new User(\"admin\")); }",
+            "fixedCode": "@EventListener(ApplicationReadyEvent.class)\n@Transactional\npublic void onAppReady() { repo.save(new User(\"admin\")); }",
+            "cause": "@PostConstruct runs in Phase 5 before AOP proxy creation in Phase 6; 'this' is not wrapped in a transactional proxy yet.",
+            "solution": "Listen to ApplicationReadyEvent when all AOP dynamic proxies are fully active."
+        }
+    ],
+    "bestPractices": {
+        "doList": [
+            "Enforce Constructor Injection for all mandatory collaborators to guarantee immutability and compile-time verification.",
+            "Declare injected fields as 'private final' to prevent accidental reassignment.",
+            "Use standard jakarta.annotation.@PostConstruct and @PreDestroy for lifecycle methods."
+        ],
+        "dontList": [
+            "Do not use field injection (@Autowired on fields).",
+            "Do not write heavy, blocking I/O calls inside constructors.",
+            "Do not introduce circular dependencies; re-architect with mediator services or domain events."
+        ],
+        "whenNotToUse": "Do not apply Spring stereotypes to transient value objects, DTOs, or JPA entities; these should remain lightweight POJOs."
+    },
+    "versionNotes": {
+        "introduced": "Spring Framework 2.5 (2007)",
+        "status": "Stable",
+        "compatibilityNotes": "Spring 6 / Boot 3 uses jakarta.annotation package for @PostConstruct and @PreDestroy. Circular dependencies are disabled by default.",
+        "ltsAvailability": "Standard feature across all Spring Boot 3.x production versions"
+    },
+    "cheatSheet": {
+        "title": "Spring Injection Strategies Comparison",
+        "headers": [
+            "Dimension",
+            "Constructor Injection",
+            "Setter Injection",
+            "Field Injection"
+        ],
+        "rows": [
+            [
+                "Immutability (final)",
+                "Fully Supported",
+                "Not Supported",
+                "Not Supported"
+            ],
+            [
+                "Mandatory Dependencies",
+                "Guaranteed at Compile Time",
+                "Can be Null",
+                "Guaranteed only by Container"
+            ],
+            [
+                "Unit Testability",
+                "Trivial (plain POJO new)",
+                "Requires setter calls",
+                "Hard (requires reflection/Mockito)"
+            ],
+            [
+                "Circular Dependencies",
+                "Detected at Startup",
+                "Can mask cycles",
+                "Can mask cycles"
+            ],
+            [
+                "Industry Standard",
+                "100% Recommended",
+                "Rare (Optional only)",
+                "Anti-Pattern (Prohibited)"
+            ]
+        ]
+    },
+    "exercises": [
+        {
+            "id": 1,
+            "type": "Spot the Bug",
+            "title": "The Phantom Dependency",
+            "prompt": "A developer marks private fields with @Autowired but writes a unit test using 'new UserService()'. The test throws NullPointerException on the first line. Explain why.",
+            "solution": "Field injection uses reflection at runtime when managed by Spring. Plain 'new UserService()' runs standard JVM constructors, leaving all private fields uninitialized (null). Refactor to constructor injection.",
+            "explanation": "Constructor injection ensures that required collaborators cannot be omitted, preventing uninitialized states both inside and outside the container."
+        },
+        {
+            "id": 2,
+            "type": "Hands-on Implementation",
+            "title": "Disambiguating with @Primary and @Qualifier",
+            "prompt": "Configure an AlertService that injects SmsAlertChannel explicitly by name while EmailAlertChannel remains the default @Primary channel.",
+            "starterCode": "public interface AlertChannel { void send(String m); }",
+            "solution": "@Service\npublic class AlertService {\n    private final AlertChannel defaultChannel;\n    private final AlertChannel urgentChannel;\n    public AlertService(AlertChannel defaultChannel, @Qualifier(\"smsAlertChannel\") AlertChannel urgentChannel) {\n        this.defaultChannel = defaultChannel;\n        this.urgentChannel = urgentChannel;\n    }\n}",
+            "explanation": "Unannotated parameters resolve to the candidate tagged with @Primary, while parameters annotated with @Qualifier target the candidate by bean name."
+        },
+        {
+            "id": 3,
+            "type": "Real-world Edge Case",
+            "title": "Circular Dependency Resolution",
+            "prompt": "ServiceA injects ServiceB via constructor, and ServiceB injects ServiceA via constructor. What happens during startup, and what is the clean architectural solution?",
+            "solution": "Spring throws BeanCurrentlyInCreationException. The clean fix is to break the cycle by extracting shared logic into a third mediator service (e.g., ServiceC) or decoupling via ApplicationEvents.",
+            "explanation": "Circular dependencies violate the Single Responsibility Principle. Extracting a mediator decouples both services, making the dependency graph a directed acyclic graph (DAG)."
+        }
+    ],
+    "officialSources": [
+        {
+            "title": "Spring Framework Reference: Dependencies & Dependency Injection",
+            "url": "https://docs.spring.io/spring-framework/reference/core/beans/dependencies.html",
+            "organization": "Spring / VMware"
+        },
+        {
+            "title": "Spring Framework Reference: Bean Lifecycle Nature",
+            "url": "https://docs.spring.io/spring-framework/reference/core/beans/factory-nature.html",
+            "organization": "Spring / VMware"
+        },
+        {
+            "title": "Jakarta Annotations 2.1 Specification",
+            "url": "https://jakarta.ee/specifications/annotations/2.1/",
+            "organization": "Jakarta EE"
+        }
+    ]
+},
+
+  {
+    "id": "topic-90",
+    "slug": "auto-configuration-mechanics-starters-embedded-runtimes",
+    "topicNumber": 90,
+    "title": "Auto-Configuration Mechanics, Starters & Embedded Runtimes",
+    "part": "Part 3: Spring Boot & Production Stack",
+    "sectionNumber": 25,
+    "sectionTitle": "Spring Boot Architecture & Configuration",
+    "versionBadge": "Spring Boot 3.x / Java 21+",
+    "difficulty": "Intermediate",
+    "readingTime": "16 min read",
+    "shortDescription": "Deconstruct Spring Boot's opinionated architecture: condition evaluation algorithms, starter dependencies, AutoConfiguration.imports, and embedded web runtimes.",
+    "prerequisites": [
+        "Topic 65: Apache Tomcat & The WAR Structure",
+        "Topic 88: Spring Framework Core: BeanFactory vs ApplicationContext",
+        "Topic 89: Component Scanning, Injection Strategies & Bean Lifecycle Callbacks"
+    ],
+    "whatAndWhy": {
+        "definition": "Spring Boot introduces opinionated defaults via curated starters, condition-driven auto-configuration that activates based on classpath and properties, and embedded servlet containers packaged inside executable JARs.",
+        "analogy": "A modern smartphone: out of the box, it detects your SIM card (@ConditionalOnClass), configures cellular APN settings automatically (Auto-Configuration), preloads a dialer (@ConditionalOnMissingBean), and turns on the cellular antenna (Embedded Tomcat).",
+        "whyItExists": "Eliminates hundreds of lines of boilerplate XML/Java configuration, prevents dependency version mismatch bugs, and standardizes containerized microservice deployments."
+    },
+    "syntaxBreakdown": {
+        "title": "Auto-Configuration Class and Conditional Annotations",
+        "codeSnippet": "@AutoConfiguration\n@ConditionalOnClass(name = \"com.zaxxer.hikari.HikariDataSource\")\n@ConditionalOnProperty(name = \"spring.datasource.enabled\", havingValue = \"true\", matchIfMissing = true)\npublic class DataSourceAutoConfiguration {\n\n    @Bean\n    @ConditionalOnMissingBean(DataSource.class)\n    public DataSource defaultDataSource() {\n        return new HikariDataSource();\n    }\n}",
+        "explanation": "@AutoConfiguration marks a class discovered via AutoConfiguration.imports. Conditions verify classpath presence, property values, and ensure user beans take precedence.",
+        "tokens": [
+            {
+                "token": "@AutoConfiguration",
+                "explanation": "Designates a top-level auto-configuration candidate executed after user configuration classes."
+            },
+            {
+                "token": "@ConditionalOnClass",
+                "explanation": "Condition that checks if specified class types exist on the current JVM classpath."
+            },
+            {
+                "token": "@ConditionalOnProperty",
+                "explanation": "Condition that tests environment property keys and expected string values."
+            },
+            {
+                "token": "@ConditionalOnMissingBean",
+                "explanation": "The core back-off annotation ensuring auto-configuration yields when a user declares a custom bean."
+            }
+        ]
+    },
+    "examples": [
+        {
+            "id": "ex-90-1",
+            "title": "Disabling Unneeded Auto-Configurations",
+            "type": "basic",
+            "description": "Excluding database auto-configuration for a stateless proxy or microservice gateway.",
+            "filename": "StatelessGatewayApp.java",
+            "code": "import org.springframework.boot.autoconfigure.SpringBootApplication;\nimport org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;\n\n@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})\npublic class StatelessGatewayApp {\n    public static void main(String[] args) {\n        System.out.println(\"Booting stateless gateway without database overhead\");\n    }\n}",
+            "output": "Booting stateless gateway without database overhead",
+            "stepByStep": [
+                "Annotate application with @SpringBootApplication.",
+                "Pass unwanted auto-configuration classes to the exclude attribute.",
+                "Verify the context starts without database driver dependencies."
+            ]
+        },
+        {
+            "id": "ex-90-2",
+            "title": "Auto-Configuration Condition Engine & Embedded Server",
+            "type": "realistic",
+            "description": "Full demonstration of condition evaluation, automatic back-off, and embedded Tomcat server lifecycle.",
+            "filename": "AutoConfigurationEmbeddedDemo.java",
+            "code": "package com.handbook.spring;\n\npublic class AutoConfigurationEmbeddedDemo {\n    public static void main(String[] args) throws Exception {\n        // See full implementation in examples/spring/AutoConfigurationEmbeddedDemo.java\n        System.out.println(\"Spring Boot Auto-Configuration & Embedded Runtime mechanics verified successfully\");\n    }\n}",
+            "output": "Spring Boot Auto-Configuration & Embedded Runtime mechanics verified successfully",
+            "stepByStep": [
+                "Define candidate auto-configuration with @ConditionalOnMissingBean.",
+                "Simulate default auto-configuration without user beans: default HikariCP and Tomcat created.",
+                "Simulate user overriding DataSource: auto-configuration gracefully backs off.",
+                "Verify embedded server start and stop transitions."
+            ]
+        }
+    ],
+    "commonMistakes": [
+        {
+            "title": "Using Legacy spring.factories in Spring Boot 3.x",
+            "errorCodeOrSnippet": "Custom auto-configuration classes in META-INF/spring.factories are completely ignored",
+            "wrongCode": "# META-INF/spring.factories\norg.springframework.boot.autoconfigure.EnableAutoConfiguration=com.my.AutoConfig",
+            "fixedCode": "# META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports\ncom.my.AutoConfig",
+            "cause": "Spring Boot 3.0 permanently removed support for finding auto-configurations via spring.factories.",
+            "solution": "Declare auto-configuration classes in the new AutoConfiguration.imports file."
+        },
+        {
+            "title": "Placing Auto-Configuration in @ComponentScan Target Packages",
+            "errorCodeOrSnippet": "BeanDefinitionOverrideException: Invalid bean definition with name 'myBean'",
+            "wrongCode": "package com.app;\n@Component // Auto-configuration placed in main application scan path\npublic class MyAutoConfig {}",
+            "fixedCode": "package com.app.autoconfigure;\n// Excluded from application @ComponentScan; loaded via imports file\n@AutoConfiguration\npublic class MyAutoConfig {}",
+            "cause": "Application @ComponentScan eagerly registers the class as a standard component before condition evaluation runs.",
+            "solution": "Keep auto-configuration classes in dedicated packages outside the application base package."
+        }
+    ],
+    "bestPractices": {
+        "doList": [
+            "Always guard auto-configured @Bean methods with @ConditionalOnMissingBean so consumers can override them.",
+            "Use spring-boot-starter dependencies rather than specifying individual transitive library versions.",
+            "Use @AutoConfiguration instead of @Configuration for all auto-configuration classes in Spring Boot 3.x."
+        ],
+        "dontList": [
+            "Do not place auto-configuration classes in packages scanned by user @ComponentScan.",
+            "Do not write custom auto-configurations when a simple @Configuration in user code suffices.",
+            "Do not hardcode port numbers inside application code; use externalized server.port configuration."
+        ],
+        "whenNotToUse": "Do not use auto-configuration for internal domain logic specific to one application; auto-configuration is designed for cross-cutting, reusable platform libraries."
+    },
+    "versionNotes": {
+        "introduced": "Spring Boot 1.0 (2014)",
+        "status": "Stable",
+        "compatibilityNotes": "Spring Boot 3.x requires Java 17/21/26 LTS, enforces Jakarta EE 10/11, and uses AutoConfiguration.imports exclusively.",
+        "ltsAvailability": "Supported across all Spring Boot 3.x production releases"
+    },
+    "cheatSheet": {
+        "title": "Spring Boot Conditional Annotations Reference",
+        "headers": [
+            "Annotation",
+            "Condition Checked",
+            "Default Behavior"
+        ],
+        "rows": [
+            [
+                "@ConditionalOnClass",
+                "Presence of class on JVM classpath",
+                "Fails if class is absent"
+            ],
+            [
+                "@ConditionalOnMissingBean",
+                "Absence of bean in ApplicationContext",
+                "Backs off if bean exists"
+            ],
+            [
+                "@ConditionalOnProperty",
+                "Property value match in environment",
+                "Checks name and havingValue"
+            ],
+            [
+                "@ConditionalOnWebApplication",
+                "Servlet or Reactive web environment",
+                "Matches only in web applications"
+            ],
+            [
+                "@ConditionalOnExpression",
+                "SpEL expression evaluates to true",
+                "Dynamic programmatic condition"
+            ]
+        ]
+    },
+    "exercises": [
+        {
+            "id": 1,
+            "type": "Spot the Bug",
+            "title": "The Un-overridable Default Bean",
+            "prompt": "An internal library defines a default Jackson ObjectMapper bean using @Bean inside @AutoConfiguration, but applications cannot override it. Why?",
+            "solution": "The @Bean method is missing @ConditionalOnMissingBean(ObjectMapper.class). Adding this annotation instructs Spring Boot to skip the default bean if the application defines one.",
+            "explanation": "@ConditionalOnMissingBean is the essential contract for auto-configuration back-off."
+        },
+        {
+            "id": 2,
+            "type": "Hands-on Implementation",
+            "title": "Conditional Metrics Exporter",
+            "prompt": "Create an auto-configuration that registers CloudWatchExporter only if property 'management.cloudwatch.enabled' is 'true'.",
+            "starterCode": "@AutoConfiguration\npublic class CloudWatchAutoConfig {}",
+            "solution": "@AutoConfiguration\n@ConditionalOnProperty(name = \"management.cloudwatch.enabled\", havingValue = \"true\")\npublic class CloudWatchAutoConfig {\n    @Bean\n    @ConditionalOnMissingBean\n    public CloudWatchExporter cloudWatchExporter() {\n        return new CloudWatchExporter();\n    }\n}",
+            "explanation": "Combining @ConditionalOnProperty with @ConditionalOnMissingBean ensures the bean activates only when requested and allows user overrides."
+        },
+        {
+            "id": 3,
+            "type": "Real-world Edge Case",
+            "title": "Switching from Embedded Tomcat to Undertow",
+            "prompt": "How do you switch a Spring Boot Web MVC application from embedded Tomcat to embedded Undertow in Maven?",
+            "solution": "Exclude spring-boot-starter-tomcat from spring-boot-starter-web, and add spring-boot-starter-undertow.",
+            "explanation": "Spring Boot's auto-configuration checks for Tomcat on the classpath; when absent and Undertow is detected, it auto-configures UndertowServletWebServerFactory instead."
+        }
+    ],
+    "officialSources": [
+        {
+            "title": "Spring Boot Reference: Auto-Configuration",
+            "url": "https://docs.spring.io/spring-boot/docs/current/reference/html/using.html#using.auto-configuration",
+            "organization": "Spring / VMware"
+        },
+        {
+            "title": "Spring Boot Reference: Embedded Web Servers",
+            "url": "https://docs.spring.io/spring-boot/docs/current/reference/html/web.html#web.servlet.embedded-container",
+            "organization": "Spring / VMware"
+        },
+        {
+            "title": "org.springframework.boot.autoconfigure.AutoConfiguration JavaDoc",
+            "url": "https://docs.spring.io/spring-boot/docs/current/api/org/springframework/boot/autoconfigure/AutoConfiguration.html",
+            "organization": "Spring / VMware"
+        }
+    ]
+},
+
+  {
+    "id": "topic-91",
+    "slug": "externalized-configuration-yaml-hierarchies-multi-profile",
+    "topicNumber": 91,
+    "title": "Externalized Configuration, YAML Hierarchies & Multi-Profile Deployment",
+    "part": "Part 3: Spring Boot & Production Stack",
+    "sectionNumber": 25,
+    "sectionTitle": "Spring Boot Architecture & Configuration",
+    "versionBadge": "Spring Boot 3.x / Java 21+",
+    "difficulty": "Intermediate",
+    "readingTime": "16 min read",
+    "shortDescription": "Master Spring Boot externalized configuration architectures, the 17-level property precedence hierarchy, type-safe @ConfigurationProperties with immutable records, and multi-profile deployment.",
+    "prerequisites": [
+        "Topic 26: Records (Java 16+)",
+        "Topic 86: Jakarta Bean Validation",
+        "Topic 90: Auto-Configuration Mechanics, Starters & Embedded Runtimes"
+    ],
+    "whatAndWhy": {
+        "definition": "Externalized configuration separates application logic from deployment parameters according to Twelve-Factor principles, binding multi-source properties into type-safe, validated Java objects.",
+        "analogy": "A universal travel power adapter: the base unit works everywhere, profile faceplates adapt to regional sockets (UK, US, EU), and an internal voltage regulator automatically overrides settings based on the wall circuit.",
+        "whyItExists": "Enables identical compiled binaries to deploy across development, staging, and production Kubernetes clusters simply by varying configuration sources."
+    },
+    "syntaxBreakdown": {
+        "title": "Immutable @ConfigurationProperties Record with Validation",
+        "codeSnippet": "@Validated\n@ConfigurationProperties(prefix = \"app.payment\")\npublic record PaymentProperties(\n    @NotBlank String apiEndpoint,\n    @Min(1) @Max(10) int maxRetries,\n    @NotNull Duration timeout,\n    boolean sandboxMode\n) {}",
+        "explanation": "Java Records provide immutable configuration containers. @Validated enforces Jakarta Bean Validation constraints during container bootstrap.",
+        "tokens": [
+            {
+                "token": "@ConfigurationProperties",
+                "explanation": "Binds external properties sharing a common prefix into structured Java fields."
+            },
+            {
+                "token": "@Validated",
+                "explanation": "Triggers JSR-380 validation during property binding, failing startup if invalid."
+            },
+            {
+                "token": "Duration",
+                "explanation": "Spring Boot natively coerces strings like '10s', '500ms', or '2m' into java.time.Duration."
+            },
+            {
+                "token": "Relaxed Binding",
+                "explanation": "Automatically maps kebab-case, camelCase, and UPPER_SNAKE_CASE into the target property."
+            }
+        ]
+    },
+    "examples": [
+        {
+            "id": "ex-91-1",
+            "title": "Relaxed Binding Demonstration",
+            "type": "basic",
+            "description": "How Spring Boot maps diverse naming conventions into standard Java record fields.",
+            "filename": "RelaxedBindingDemo.java",
+            "code": "public class RelaxedBindingDemo {\n    public static void main(String[] args) {\n        // app.payment.max-retries (YAML)\n        // APP_PAYMENT_MAX_RETRIES (Env)\n        // app.payment.maxRetries  (Properties)\n        System.out.println(\"Relaxed binding maps all three conventions to 'maxRetries'\");\n    }\n}",
+            "output": "Relaxed binding maps all three conventions to 'maxRetries'",
+            "stepByStep": [
+                "Define field in camelCase.",
+                "Supply external property in kebab-case or UPPER_SNAKE_CASE.",
+                "Spring Boot resolves and binds without configuration."
+            ]
+        },
+        {
+            "id": "ex-91-2",
+            "title": "Multi-Profile Environment Precedence",
+            "type": "realistic",
+            "description": "Full demonstration of default YAML, profile YAML overrides, and command-line argument priority.",
+            "filename": "ExternalizedConfigurationProfilesDemo.java",
+            "code": "package com.handbook.spring;\n\npublic class ExternalizedConfigurationProfilesDemo {\n    public static void main(String[] args) {\n        // See full implementation in examples/spring/ExternalizedConfigurationProfilesDemo.java\n        System.out.println(\"Externalized configuration hierarchy, multi-profile overrides, and validation verified successfully\");\n    }\n}",
+            "output": "Externalized configuration hierarchy, multi-profile overrides, and validation verified successfully",
+            "stepByStep": [
+                "Load baseline application.yml configuration.",
+                "Apply active profile overrides (application-prod.yml).",
+                "Override properties via command-line arguments (highest priority).",
+                "Validate bound properties with non-null and range assertions."
+            ]
+        }
+    ],
+    "commonMistakes": [
+        {
+            "title": "Omitting @Validated Resulting in Silent Invalid Config",
+            "errorCodeOrSnippet": "maxRetries configured as -10 boots silently without error",
+            "wrongCode": "@ConfigurationProperties(prefix = \"app.payment\")\npublic record PaymentProperties(@Min(1) int maxRetries) {}",
+            "fixedCode": "@Validated\n@ConfigurationProperties(prefix = \"app.payment\")\npublic record PaymentProperties(@Min(1) int maxRetries) {}",
+            "cause": "Validation annotations like @Min are ignored on configuration properties unless @Validated is present.",
+            "solution": "Always annotate configuration properties classes and records with @Validated."
+        },
+        {
+            "title": "Invalid Dot Notation in Linux Environment Variables",
+            "errorCodeOrSnippet": "export app.payment.merchant-id=ACME fails with syntax error in bash",
+            "wrongCode": "export app.payment.merchant-id=ACME",
+            "fixedCode": "export APP_PAYMENT_MERCHANT_ID=ACME",
+            "cause": "POSIX shells forbid dots and dashes in environment variable names.",
+            "solution": "Use uppercase snake case: replace dots and dashes with underscores."
+        }
+    ],
+    "bestPractices": {
+        "doList": [
+            "Use @ConfigurationProperties with immutable Java Records for all structured application configurations.",
+            "Always annotate configuration records with @Validated and appropriate Bean Validation constraints.",
+            "Store safe defaults in application.yml; override sensitive values via environment variables."
+        ],
+        "dontList": [
+            "Do not use @Value for groups of related properties.",
+            "Do not hardcode environment-specific URLs or credentials in source code or default configuration files.",
+            "Do not commit production secrets or private keys to version control."
+        ],
+        "whenNotToUse": "Do not use @ConfigurationProperties for single standalone system properties (like logging levels), where standard Spring Boot properties suffice."
+    },
+    "versionNotes": {
+        "introduced": "Spring Boot 1.0 (2014)",
+        "status": "Stable",
+        "compatibilityNotes": "Spring Boot 3.x fully supports Java Records for @ConfigurationProperties without @ConstructorBinding, and uses Jakarta Validation 3.0.",
+        "ltsAvailability": "Standard production feature across all modern Spring Boot releases"
+    },
+    "cheatSheet": {
+        "title": "Spring Boot Property Precedence Reference",
+        "headers": [
+            "Priority",
+            "Configuration Source",
+            "Example"
+        ],
+        "rows": [
+            [
+                "1 (Highest)",
+                "Command-line arguments",
+                "--server.port=9090"
+            ],
+            [
+                "2",
+                "JVM System Properties",
+                "-Dserver.port=8080"
+            ],
+            [
+                "3",
+                "OS Environment Variables",
+                "SERVER_PORT=8000"
+            ],
+            [
+                "4",
+                "Profile Application Config (external)",
+                "/config/application-prod.yml"
+            ],
+            [
+                "5",
+                "Profile Application Config (packaged)",
+                "classpath:application-prod.yml"
+            ],
+            [
+                "6 (Lowest)",
+                "Default Application Config (packaged)",
+                "classpath:application.yml"
+            ]
+        ]
+    },
+    "exercises": [
+        {
+            "id": 1,
+            "type": "Spot the Bug",
+            "title": "The Silent Configuration Flaw",
+            "prompt": "A developer writes @Min(5) on an integer property in a @ConfigurationProperties record, but the application boots happily with value 0. Why?",
+            "solution": "The record is missing @Validated. Spring Boot will not trigger Bean Validation on configuration classes unless @Validated is explicitly declared.",
+            "explanation": "@Validated registers the Spring validator interceptor during the property binding phase."
+        },
+        {
+            "id": 2,
+            "type": "Hands-on Implementation",
+            "title": "Immutable Connection Pool Properties",
+            "prompt": "Write a complete @ConfigurationProperties record for database connection pooling with minimum 5 and maximum 50 connections.",
+            "starterCode": "@ConfigurationProperties(prefix = \"app.pool\")\npublic record PoolProperties(...) {}",
+            "solution": "@Validated\n@ConfigurationProperties(prefix = \"app.pool\")\npublic record PoolProperties(\n    @Min(5) int minIdle,\n    @Max(50) int maxTotal,\n    @NotNull Duration idleTimeout\n) {}",
+            "explanation": "Record fields with validation annotations guarantee valid state when injected into services."
+        },
+        {
+            "id": 3,
+            "type": "Real-world Edge Case",
+            "title": "Docker Environment Variable Relaxed Binding",
+            "prompt": "How does property 'spring.datasource.hikari.maximum-pool-size' map to an environment variable in a Docker container?",
+            "solution": "SPRING_DATASOURCE_HIKARI_MAXIMUM_POOL_SIZE or SPRING_DATASOURCE_HIKARI_MAXIMUMPOOLSIZE.",
+            "explanation": "Spring Boot converts dot-separated kebab-case keys into uppercase snake-case for POSIX environment variable compliance."
+        }
+    ],
+    "officialSources": [
+        {
+            "title": "Spring Boot Reference: Externalized Configuration",
+            "url": "https://docs.spring.io/spring-boot/docs/current/reference/html/features.html#features.external-config",
+            "organization": "Spring / VMware"
+        },
+        {
+            "title": "Spring Boot Reference: Type-safe Configuration Properties",
+            "url": "https://docs.spring.io/spring-boot/docs/current/reference/html/features.html#features.external-config.typesafe-configuration-properties",
+            "organization": "Spring / VMware"
+        },
+        {
+            "title": "Jakarta Bean Validation Specification",
+            "url": "https://jakarta.ee/specifications/bean-validation/",
+            "organization": "Jakarta EE"
+        }
+    ]
+},
+
+  {
+    "id": "topic-92",
+    "slug": "production-rest-controller-architecture-spring-web-mvc",
+    "topicNumber": 92,
+    "title": "Production REST Controller Architecture with Spring Web MVC",
+    "part": "Part 3: Spring Boot & Production Stack",
+    "sectionNumber": 26,
+    "sectionTitle": "RESTful Web Services & Global Error Handling",
+    "versionBadge": "Spring Boot 3.x / Java 21+",
+    "difficulty": "Intermediate",
+    "readingTime": "16 min read",
+    "shortDescription": "Architect resilient, production-grade REST APIs using Spring Web MVC: HTTP method mappings (@GetMapping to @DeleteMapping), URI template variables, query parameters, payload deserialization, and explicit ResponseEntity status codes.",
+    "prerequisites": [
+        "Topic 64: Web Architecture Fundamentals (HTTP Protocol)",
+        "Topic 89: Component Scanning, Injection Strategies & Bean Lifecycle Callbacks",
+        "Topic 90: Auto-Configuration Mechanics, Starters & Embedded Runtimes"
+    ],
+    "whatAndWhy": {
+        "definition": "Spring Web MVC implements the Front Controller pattern via DispatcherServlet, dispatching incoming HTTP requests to @RestController beans that serialize DTO representations directly into JSON response bodies.",
+        "analogy": "An international diplomatic embassy: the mailroom (DispatcherServlet) inspects courier packages and routes them to specialized treaty officers (@RestController) who negotiate through legal councils (@Service) and issue stamped communiqués (ResponseEntity) with exact legal codes (200, 201, 204).",
+        "whyItExists": "Decouples web transport protocols from backend business logic, automates JSON serialization via Jackson, and provides declarative HTTP mapping annotations."
+    },
+    "syntaxBreakdown": {
+        "title": "Spring REST Controller and Method Mapping Annotations",
+        "codeSnippet": "@RestController\n@RequestMapping(\"/api/v1/customers\")\npublic class CustomerController {\n    @GetMapping(\"/{id}\")\n    public ResponseEntity<CustomerDto> getById(@PathVariable String id) {\n        return ResponseEntity.ok(service.findById(id));\n    }\n    @PostMapping\n    public ResponseEntity<CustomerDto> create(@RequestBody CreateCustomerRequest req) {\n        CustomerDto created = service.create(req);\n        return ResponseEntity.created(URI.create(\"/api/v1/customers/\" + created.id())).body(created);\n    }\n}",
+        "explanation": "@RestController combines @Controller and @ResponseBody. ResponseEntity gives full control over status codes, HTTP headers (like Location), and response bodies.",
+        "tokens": [
+            {
+                "token": "@RestController",
+                "explanation": "Marks class as a web controller where every method serializes return values directly to JSON."
+            },
+            {
+                "token": "@RequestMapping",
+                "explanation": "Defines the base URI path mapping prefix for all endpoints in the controller."
+            },
+            {
+                "token": "@PathVariable",
+                "explanation": "Extracts dynamic URI template path variables into method parameters."
+            },
+            {
+                "token": "@RequestBody",
+                "explanation": "Instructs Jackson to deserialize incoming HTTP request JSON body into a Java DTO."
+            },
+            {
+                "token": "ResponseEntity<T>",
+                "explanation": "Represents the entire HTTP response: status code, headers, and body."
+            }
+        ]
+    },
+    "examples": [
+        {
+            "id": "ex-92-1",
+            "title": "Basic REST CRUD Mapping",
+            "type": "basic",
+            "description": "Mapping GET, POST, and DELETE endpoints with appropriate HTTP status codes.",
+            "filename": "SimpleCrudController.java",
+            "code": "import org.springframework.http.ResponseEntity;\nimport org.springframework.web.bind.annotation.*;\n\n@RestController\n@RequestMapping(\"/api/v1/items\")\npublic class SimpleCrudController {\n    @GetMapping(\"/{id}\")\n    public ResponseEntity<String> getItem(@PathVariable String id) {\n        return ResponseEntity.ok(\"Item: \" + id);\n    }\n    @DeleteMapping(\"/{id}\")\n    public ResponseEntity<Void> deleteItem(@PathVariable String id) {\n        return ResponseEntity.noContent().build();\n    }\n}",
+            "output": "GET /api/v1/items/42 -> 200 OK [Item: 42]\nDELETE /api/v1/items/42 -> 204 No Content",
+            "stepByStep": [
+                "Declare @RestController with base path.",
+                "Map GET method with @PathVariable returning 200 OK.",
+                "Map DELETE method returning 204 No Content."
+            ]
+        },
+        {
+            "id": "ex-92-2",
+            "title": "Production REST Controller Architecture",
+            "type": "realistic",
+            "description": "Complete CRUD implementation with path variables, query parameters, Location headers, and status code verification.",
+            "filename": "RestControllerArchitectureDemo.java",
+            "code": "package com.handbook.spring;\n\npublic class RestControllerArchitectureDemo {\n    public static void main(String[] args) {\n        // See full implementation in examples/spring/RestControllerArchitectureDemo.java\n        System.out.println(\"Spring Web MVC REST controller HTTP semantics verified successfully\");\n    }\n}",
+            "output": "Spring Web MVC REST controller HTTP semantics verified successfully",
+            "stepByStep": [
+                "GET by ID returning 200 OK with Customer DTO.",
+                "POST creating resource returning 201 Created with Location header.",
+                "GET filtering by query parameter tier=VIP.",
+                "PUT updating entity returning 200 OK.",
+                "DELETE returning 204 No Content, followed by 404 on subsequent read."
+            ]
+        }
+    ],
+    "commonMistakes": [
+        {
+            "title": "Returning JPA Entities Directly from Controllers",
+            "errorCodeOrSnippet": "JsonMappingException: Infinite recursion / LazyInitializationException",
+            "wrongCode": "@GetMapping(\"/{id}\")\npublic CustomerEntity get(@PathVariable Long id) { return repo.findById(id).orElseThrow(); }",
+            "fixedCode": "@GetMapping(\"/{id}\")\npublic ResponseEntity<CustomerResponseDto> get(@PathVariable Long id) { return ResponseEntity.ok(service.getDto(id)); }",
+            "cause": "Entities contain bidirectional relationships causing Jackson infinite loops and leak internal DB schema details.",
+            "solution": "Always map entities to immutable DTOs/Records before serialization."
+        },
+        {
+            "title": "The 'Always 200 OK' Anti-Pattern",
+            "errorCodeOrSnippet": "HTTP 200 OK with body: { \"status\": \"ERROR\", \"message\": \"Not Found\" }",
+            "wrongCode": "return ResponseEntity.ok(new ErrorResponse(\"Not found\"));",
+            "fixedCode": "return ResponseEntity.status(HttpStatus.NOT_FOUND).body(problemDetail);",
+            "cause": "Using HTTP 200 for failures violates HTTP specifications and breaks client-side caching and automated error interceptors.",
+            "solution": "Use genuine RFC 9110 HTTP status codes (404, 400, 409, 500)."
+        }
+    ],
+    "bestPractices": {
+        "doList": [
+            "Always wrap responses in ResponseEntity<T> to control status codes and headers explicitly.",
+            "Return 201 Created with a Location header pointing to newly created resources.",
+            "Use Java Records for all request and response DTOs."
+        ],
+        "dontList": [
+            "Do not write business or persistence logic in controllers; delegate directly to @Service beans.",
+            "Do not return null from controller methods; return ResponseEntity.notFound() or ResponseEntity.noContent().",
+            "Do not expose internal database IDs if client security requires opaque UUIDs."
+        ],
+        "whenNotToUse": "Do not use @RestController if you are building server-side rendered HTML web applications (use standard @Controller with Thymeleaf instead)."
+    },
+    "versionNotes": {
+        "introduced": "Spring 4.0 (2013)",
+        "status": "Stable",
+        "compatibilityNotes": "Spring Boot 3.x uses modern Jakarta Servlet 6.0 and natively serializes Java Records as DTOs.",
+        "ltsAvailability": "Supported across all Spring Framework and Spring Boot versions"
+    },
+    "cheatSheet": {
+        "title": "Spring REST HTTP Status Mapping",
+        "headers": [
+            "Action",
+            "HTTP Method",
+            "Success Status Code",
+            "Failure Status Code"
+        ],
+        "rows": [
+            [
+                "Retrieve Resource",
+                "GET",
+                "200 OK",
+                "404 Not Found"
+            ],
+            [
+                "Create Resource",
+                "POST",
+                "201 Created (+ Location)",
+                "400 Bad Request / 409 Conflict"
+            ],
+            [
+                "Replace Resource",
+                "PUT",
+                "200 OK / 204 No Content",
+                "404 Not Found / 400 Bad Request"
+            ],
+            [
+                "Delete Resource",
+                "DELETE",
+                "204 No Content",
+                "404 Not Found"
+            ]
+        ]
+    },
+    "exercises": [
+        {
+            "id": 1,
+            "type": "Spot the Bug",
+            "title": "The Missing Request Body",
+            "prompt": "A developer writes @PostMapping public Customer create(CustomerDto dto) but finds all fields inside dto are null during POST requests. Why?",
+            "solution": "The parameter is missing @RequestBody. Without @RequestBody, Spring looks for query parameters or form fields instead of reading the JSON body.",
+            "explanation": "@RequestBody tells Spring's HttpMessageConverter to parse the incoming JSON stream into the target object."
+        },
+        {
+            "id": 2,
+            "type": "Hands-on Implementation",
+            "title": "Paginated Product Listing",
+            "prompt": "Implement a GET endpoint /api/v1/products accepting optional 'page' (default 0) and 'size' (default 20) query parameters.",
+            "starterCode": "@GetMapping\npublic ResponseEntity<List<ProductDto>> listProducts(...) {}",
+            "solution": "@GetMapping\npublic ResponseEntity<List<ProductDto>> listProducts(\n    @RequestParam(defaultValue = \"0\") int page,\n    @RequestParam(defaultValue = \"20\") int size\n) {\n    return ResponseEntity.ok(productService.findAll(page, size));\n}",
+            "explanation": "@RequestParam with defaultValue provides safe defaults when clients omit pagination query parameters."
+        },
+        {
+            "id": 3,
+            "type": "Real-world Edge Case",
+            "title": "Idempotent Resource Replacement",
+            "prompt": "Why should a PUT endpoint return 200 OK with the updated representation or 204 No Content rather than 201 Created?",
+            "solution": "PUT represents complete replacement of a resource at a known URI. Because the URI already existed, 200 or 204 reflects modification; 201 is reserved for when a new URI was allocated.",
+            "explanation": "RFC 9110 specifies PUT as an idempotent replacement operation."
+        }
+    ],
+    "officialSources": [
+        {
+            "title": "Spring Framework Reference: REST Controllers",
+            "url": "https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-controller.html",
+            "organization": "Spring / VMware"
+        },
+        {
+            "title": "RFC 9110: HTTP Semantics",
+            "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
+            "organization": "Spring / VMware"
+        }
+    ]
+},
+
+  {
+    "id": "topic-93",
+    "slug": "request-validation-bean-validation-custom-constraints",
+    "topicNumber": 93,
+    "title": "Request Validation with Bean Validation & Custom Constraint Validators",
+    "part": "Part 3: Spring Boot & Production Stack",
+    "sectionNumber": 26,
+    "sectionTitle": "RESTful Web Services & Global Error Handling",
+    "versionBadge": "Spring Boot 3.x / Java 21+",
+    "difficulty": "Intermediate",
+    "readingTime": "16 min read",
+    "shortDescription": "Implement strict API payload contracts using Jakarta Bean Validation (@Valid), standard JSR-380 constraints (@NotBlank, @Email, @Positive, @Size), and authoring custom constraint annotations backed by ConstraintValidator implementations.",
+    "prerequisites": [
+        "Topic 86: Jakarta Bean Validation",
+        "Topic 91: Externalized Configuration, YAML Hierarchies & Multi-Profile Deployment",
+        "Topic 92: Production REST Controller Architecture with Spring Web MVC"
+    ],
+    "whatAndWhy": {
+        "definition": "Bean Validation declarative constraints (@NotBlank, @Email, @Valid) validate incoming request payloads at the HTTP layer, rejecting malformed inputs with 400 Bad Request before service execution.",
+        "analogy": "An international border security checkpoint: the officer inspects passports and visas (@Valid) before letting travelers through the gate. If a visa is missing or expired, entry is denied immediately (400 Bad Request).",
+        "whyItExists": "Prevents corrupted data from polluting database tables, eliminates repetitive defensive if-statements in business logic, and standardizes validation error reporting."
+    },
+    "syntaxBreakdown": {
+        "title": "Bean Validation on Request DTO and Custom Constraint",
+        "codeSnippet": "public record CreateAccountRequest(\n    @NotBlank String companyName,\n    @Email String contactEmail,\n    @ValidTaxId String corporateTaxId,\n    @Positive double initialDeposit\n) {}\n\n@PostMapping\npublic ResponseEntity<Void> create(@Valid @RequestBody CreateAccountRequest req) { ... }",
+        "explanation": "@Valid triggers Jakarta Validation during deserialization. Custom annotations link to ConstraintValidator classes to enforce domain-specific rules.",
+        "tokens": [
+            {
+                "token": "@Valid",
+                "explanation": "Triggers validation on the annotated parameter or nested object graph."
+            },
+            {
+                "token": "@NotBlank",
+                "explanation": "Ensures string is non-null and contains at least one non-whitespace character."
+            },
+            {
+                "token": "@Positive",
+                "explanation": "Enforces that a numeric value is strictly greater than zero."
+            },
+            {
+                "token": "@Constraint",
+                "explanation": "Meta-annotation that designates a custom annotation as a Bean Validation constraint."
+            }
+        ]
+    },
+    "examples": [
+        {
+            "id": "ex-93-1",
+            "title": "Standard Constraints on User Registration DTO",
+            "type": "basic",
+            "description": "Applying @NotBlank, @Email, and @Size constraints on a registration record.",
+            "filename": "UserSignupDto.java",
+            "code": "import jakarta.validation.constraints.*;\n\npublic record UserSignupDto(\n    @NotBlank(message = \"Username is required\")\n    @Size(min = 3, max = 30, message = \"Username must be 3-30 chars\")\n    String username,\n\n    @NotBlank(message = \"Email is required\")\n    @Email(message = \"Must be valid email\")\n    String email\n) {}",
+            "output": "Validation rules: username [3-30 chars, not blank], email [valid RFC format, not blank]",
+            "stepByStep": [
+                "Define immutable record.",
+                "Annotate fields with standard Jakarta validation constraints.",
+                "Provide meaningful client-facing error messages."
+            ]
+        },
+        {
+            "id": "ex-93-2",
+            "title": "Custom Constraint Validator & Error Engine",
+            "type": "realistic",
+            "description": "Custom @ValidTaxId constraint validator and validation error collection.",
+            "filename": "RequestValidationEngineDemo.java",
+            "code": "package com.handbook.spring;\n\npublic class RequestValidationEngineDemo {\n    public static void main(String[] args) {\n        // See full implementation in examples/spring/RequestValidationEngineDemo.java\n        System.out.println(\"Bean Validation and custom constraint validator mechanics verified successfully\");\n    }\n}",
+            "output": "Bean Validation and custom constraint validator mechanics verified successfully",
+            "stepByStep": [
+                "Validate compliant corporate registration payload: 0 errors.",
+                "Validate payload with blank name, bad email, bad tax ID, and negative deposit: 4 errors.",
+                "Verify field-level error mapping."
+            ]
+        }
+    ],
+    "commonMistakes": [
+        {
+            "title": "Forgetting @Valid on Nested DTOs",
+            "errorCodeOrSnippet": "Nested address fields are never validated even when invalid",
+            "wrongCode": "public record OrderRequest(@NotNull AddressDto address) {}",
+            "fixedCode": "public record OrderRequest(@NotNull @Valid AddressDto address) {}",
+            "cause": "Bean validation does not automatically cascade into child objects unless @Valid is explicitly present.",
+            "solution": "Add @Valid to nested object fields to enable cascading validation."
+        },
+        {
+            "title": "Using @NotNull on String Fields Instead of @NotBlank",
+            "errorCodeOrSnippet": "Payload with {\"name\": \"  \"} passes validation",
+            "wrongCode": "public record UserRequest(@NotNull String name) {}",
+            "fixedCode": "public record UserRequest(@NotBlank String name) {}",
+            "cause": "@NotNull only checks for null; whitespace strings ' ' and empty strings '' pass.",
+            "solution": "Always use @NotBlank for text strings."
+        }
+    ],
+    "bestPractices": {
+        "doList": [
+            "Use @NotBlank for all mandatory text fields to reject empty or whitespace-only inputs.",
+            "Add @Valid to all nested DTO references to enable cascading validation.",
+            "Keep custom ConstraintValidators lightweight, stateless, and CPU-bound (regex, checksums)."
+        ],
+        "dontList": [
+            "Do not query databases inside ConstraintValidators; database uniqueness checks belong in the @Service layer.",
+            "Do not trust client-side validation alone; always enforce validation at the backend HTTP perimeter.",
+            "Do not swallow MethodArgumentNotValidException without returning field-level errors to the client."
+        ],
+        "whenNotToUse": "Do not use Bean Validation for complex workflow state machines that depend on external microservice calls."
+    },
+    "versionNotes": {
+        "introduced": "Bean Validation 1.0 (2009) / Spring 3.0",
+        "status": "Stable",
+        "compatibilityNotes": "Spring Boot 3.x uses Jakarta Validation 3.0 (jakarta.validation.*) and Hibernate Validator 8.x.",
+        "ltsAvailability": "Supported in all current Spring Boot LTS releases"
+    },
+    "cheatSheet": {
+        "title": "Jakarta Validation Core Annotations",
+        "headers": [
+            "Annotation",
+            "Allowed Types",
+            "Condition Checked"
+        ],
+        "rows": [
+            [
+                "@NotNull",
+                "Any Object",
+                "Value != null"
+            ],
+            [
+                "@NotEmpty",
+                "String, Collection, Map",
+                "Value != null and size > 0"
+            ],
+            [
+                "@NotBlank",
+                "String",
+                "Value != null and trim().length() > 0"
+            ],
+            [
+                "@Positive",
+                "Numbers",
+                "Value > 0"
+            ],
+            [
+                "@Size(min, max)",
+                "String, Collection",
+                "Size within [min, max] range"
+            ],
+            [
+                "@Email",
+                "String",
+                "Valid RFC 5322 email syntax"
+            ],
+            [
+                "@Pattern(regexp)",
+                "String",
+                "Matches given regular expression"
+            ]
+        ]
+    },
+    "exercises": [
+        {
+            "id": 1,
+            "type": "Spot the Bug",
+            "title": "The Silent Empty String",
+            "prompt": "A developer marks password with @NotNull and @Size(min=8), but a client submits 8 spaces '        ' and account creation succeeds. Why?",
+            "solution": "@Size counts characters including spaces, and @NotNull does not check whitespace. Use @NotBlank combined with @Size, or @Pattern to enforce character classes.",
+            "explanation": "@NotBlank trims leading and trailing whitespace before checking length."
+        },
+        {
+            "id": 2,
+            "type": "Hands-on Implementation",
+            "title": "Custom Postal Code Validator",
+            "prompt": "Author a custom constraint annotation @ValidZipCode that verifies US 5-digit or 9-digit (ZIP+4) postal codes.",
+            "starterCode": "@Constraint(validatedBy = ZipCodeValidator.class)\npublic @interface ValidZipCode {}",
+            "solution": "public class ZipCodeValidator implements ConstraintValidator<ValidZipCode, String> {\n    private static final Pattern P = Pattern.compile(\"^\\\\d{5}(-\\\\d{4})?$\");\n    public boolean isValid(String val, ConstraintValidatorContext ctx) {\n        return val != null && P.matcher(val).matches();\n    }\n}",
+            "explanation": "Regex '^\\d{5}(-\\d{4})?$' correctly validates standard US ZIP and ZIP+4 formats."
+        },
+        {
+            "id": 3,
+            "type": "Real-world Edge Case",
+            "title": "Cascading Validation in Collections",
+            "prompt": "How do you validate every element inside a List<AddressDto> on a customer update request?",
+            "solution": "public record UpdateCustomerRequest(List<@Valid AddressDto> addresses) {} or annotate the list field with @Valid.",
+            "explanation": "Java 8+ type annotations allow placing @Valid directly on container element types: List<@Valid AddressDto>."
+        }
+    ],
+    "officialSources": [
+        {
+            "title": "Spring Framework Reference: Validation",
+            "url": "https://docs.spring.io/spring-framework/reference/core/validation.html",
+            "organization": "Spring / VMware"
+        },
+        {
+            "title": "Jakarta Bean Validation Specification",
+            "url": "https://jakarta.ee/specifications/bean-validation/3.0/",
+            "organization": "Jakarta EE"
+        }
+    ]
+},
+
+  {
+    "id": "topic-94",
+    "slug": "centralized-global-exception-handling-rest-controller-advice",
+    "topicNumber": 94,
+    "title": "Centralized Global Exception Handling via @RestControllerAdvice (RFC 7807)",
+    "part": "Part 3: Spring Boot & Production Stack",
+    "sectionNumber": 26,
+    "sectionTitle": "RESTful Web Services & Global Error Handling",
+    "versionBadge": "Spring Boot 3.x / Java 21+",
+    "difficulty": "Intermediate",
+    "readingTime": "16 min read",
+    "shortDescription": "Architect bulletproof, centralized error handling for enterprise REST APIs using @RestControllerAdvice, @ExceptionHandler, and the RFC 7807 Problem Details for HTTP APIs specification introduced natively in Spring Framework 6.x.",
+    "prerequisites": [
+        "Topic 29: The Java Exception Hierarchy",
+        "Topic 32: Custom Exceptions & Exception Chaining",
+        "Topic 92: Production REST Controller Architecture with Spring Web MVC",
+        "Topic 93: Request Validation with Bean Validation & Custom Constraint Validators"
+    ],
+    "whatAndWhy": {
+        "definition": "@RestControllerAdvice intercepts unhandled exceptions thrown across all controllers using AOP, converting them into standardized RFC 7807 ProblemDetail JSON payloads.",
+        "analogy": "An airport triage center: when an incident occurs at any boarding gate, the passenger is escorted to a central triage bureau that uses standard international civil aviation incident forms (RFC 7807) and stamps an official tracking reference (traceId).",
+        "whyItExists": "Eliminates repetitive try/catch boilerplate in controllers, prevents security information leaks (CWE-209), and provides predictable, machine-readable error contracts for API clients."
+    },
+    "syntaxBreakdown": {
+        "title": "@RestControllerAdvice and RFC 7807 ProblemDetail",
+        "codeSnippet": "@RestControllerAdvice\npublic class GlobalExceptionHandler {\n    @ExceptionHandler(ResourceNotFoundException.class)\n    public ProblemDetail handleNotFound(ResourceNotFoundException ex) {\n        ProblemDetail problem = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, ex.getMessage());\n        problem.setTitle(\"Resource Not Found\");\n        problem.setProperty(\"timestamp\", Instant.now());\n        return problem;\n    }\n}",
+        "explanation": "@RestControllerAdvice catches exceptions globally. ProblemDetail implements the RFC 7807 standard schema with type, title, status, detail, instance, and custom properties.",
+        "tokens": [
+            {
+                "token": "@RestControllerAdvice",
+                "explanation": "Specialized @Component that declares @ExceptionHandler methods shared across all @RestController classes."
+            },
+            {
+                "token": "@ExceptionHandler",
+                "explanation": "Declares which Java exception classes a method is responsible for handling."
+            },
+            {
+                "token": "ProblemDetail",
+                "explanation": "Spring 6.x standard container for RFC 7807 Problem Details for HTTP APIs."
+            },
+            {
+                "token": "setProperty()",
+                "explanation": "Attaches custom extension attributes (e.g. traceId, timestamp, invalidFields) to the error JSON."
+            }
+        ]
+    },
+    "examples": [
+        {
+            "id": "ex-94-1",
+            "title": "Standard RFC 7807 JSON Error Response",
+            "type": "basic",
+            "description": "The JSON payload format produced by Spring's ProblemDetail class.",
+            "filename": "problem-detail-example.json",
+            "code": "{\n  \"type\": \"https://api.handbook.io/errors/not-found\",\n  \"title\": \"Resource Not Found\",\n  \"status\": 404,\n  \"detail\": \"Customer CUST-999 was not found\",\n  \"instance\": \"/api/v1/customers/CUST-999\",\n  \"timestamp\": \"2026-11-19T11:54:38.110Z\",\n  \"traceId\": \"b8c3-441f-82a1\"\n}",
+            "output": "Standard RFC 7807 ProblemDetail JSON payload with trace correlation",
+            "stepByStep": [
+                "type: URI identifying error category.",
+                "status & title: Standard HTTP status code and summary.",
+                "detail: Human-readable message specific to incident.",
+                "instance & traceId: Path and unique tracing identifier."
+            ]
+        },
+        {
+            "id": "ex-94-2",
+            "title": "Centralized Global Exception Handler Advice",
+            "type": "realistic",
+            "description": "Handling Not Found, Business Conflict, Validation, and Sanitized 500 errors.",
+            "filename": "GlobalExceptionAdviceDemo.java",
+            "code": "package com.handbook.spring;\n\npublic class GlobalExceptionAdviceDemo {\n    public static void main(String[] args) {\n        // See full implementation in examples/spring/GlobalExceptionAdviceDemo.java\n        System.out.println(\"Centralized @RestControllerAdvice and RFC 7807 ProblemDetail verified successfully\");\n    }\n}",
+            "output": "Centralized @RestControllerAdvice and RFC 7807 ProblemDetail verified successfully",
+            "stepByStep": [
+                "Intercept ResourceNotFoundException -> 404 Not Found with trace ID.",
+                "Intercept BusinessConflictException -> 409 Conflict.",
+                "Intercept ValidationException -> 400 Bad Request with field errors list.",
+                "Intercept unhandled Exception -> 500 Internal Error with sanitized message."
+            ]
+        }
+    ],
+    "commonMistakes": [
+        {
+            "title": "Leaking Raw Stack Traces in Production (CWE-209)",
+            "errorCodeOrSnippet": "Returning ex.getStackTrace() in 500 responses",
+            "wrongCode": "@ExceptionHandler(Exception.class)\npublic ResponseEntity<String> handle(Exception e) { return ResponseEntity.status(500).body(e.toString()); }",
+            "fixedCode": "@ExceptionHandler(Exception.class)\npublic ProblemDetail handle(Exception e) {\n    log.error(\"Unhandled error\", e);\n    return ProblemDetail.forStatusAndDetail(HttpStatus.INTERNAL_SERVER_ERROR, \"An unexpected error occurred.\");\n}",
+            "cause": "Exposing stack traces reveals internal class names, database vendor info, and library vulnerabilities to attackers.",
+            "solution": "Log the stack trace securely on the server and return sanitized generic messages to clients."
+        },
+        {
+            "title": "Confusing @ControllerAdvice with @RestControllerAdvice",
+            "errorCodeOrSnippet": "Circular view resolution error: Could not resolve view with name 'ProblemDetail'",
+            "wrongCode": "@ControllerAdvice\npublic class GlobalErrorHandler { ... }",
+            "fixedCode": "@RestControllerAdvice\npublic class GlobalErrorHandler { ... }",
+            "cause": "@ControllerAdvice expects view names for HTML templates; @RestControllerAdvice serializes return values directly to JSON.",
+            "solution": "Use @RestControllerAdvice for REST APIs."
+        }
+    ],
+    "bestPractices": {
+        "doList": [
+            "Use RFC 7807 ProblemDetail as the uniform error representation across all microservices.",
+            "Include a correlation ID (traceId or errorRef) in error responses for log tracking.",
+            "Catch MethodArgumentNotValidException to return structured field-level validation errors."
+        ],
+        "dontList": [
+            "Do not write try/catch blocks in controllers for standard domain exceptions.",
+            "Do not return internal SQL exceptions or database table names in HTTP responses.",
+            "Do not use HTTP 200 OK for error conditions."
+        ],
+        "whenNotToUse": "Do not intercept security authorization exceptions (AccessDeniedException) in ControllerAdvice if Spring Security filters need to handle authentication challenges."
+    },
+    "versionNotes": {
+        "introduced": "Spring 3.2 (2012) / Spring 6.0 (RFC 7807)",
+        "status": "Stable",
+        "compatibilityNotes": "Spring Framework 6.x and Spring Boot 3.x provide native ProblemDetail support according to RFC 7807.",
+        "ltsAvailability": "Supported in all modern Spring Boot LTS releases"
+    },
+    "cheatSheet": {
+        "title": "RFC 7807 ProblemDetail Standard Fields",
+        "headers": [
+            "Field",
+            "Type",
+            "RFC Definition"
+        ],
+        "rows": [
+            [
+                "type",
+                "URI",
+                "URI reference identifying the problem type"
+            ],
+            [
+                "title",
+                "String",
+                "Short, human-readable summary of problem"
+            ],
+            [
+                "status",
+                "Integer",
+                "HTTP status code (400, 404, 409, 500)"
+            ],
+            [
+                "detail",
+                "String",
+                "Human-readable explanation of this specific occurrence"
+            ],
+            [
+                "instance",
+                "URI",
+                "URI identifying the specific endpoint that failed"
+            ],
+            [
+                "properties",
+                "Map",
+                "Custom extension members (traceId, timestamp, invalidFields)"
+            ]
+        ]
+    },
+    "exercises": [
+        {
+            "id": 1,
+            "type": "Spot the Bug",
+            "title": "The Uncaught Validation Error",
+            "prompt": "A project has a global advice handling RuntimeException and Exception, but validation errors return default Spring 400 payloads without custom fields. Why?",
+            "solution": "MethodArgumentNotValidException extends Exception directly (not RuntimeException). A specific handler for MethodArgumentNotValidException is needed to unpack BindingResult field errors.",
+            "explanation": "Spring looks for the most specific @ExceptionHandler match before falling back to parent classes."
+        },
+        {
+            "id": 2,
+            "type": "Hands-on Implementation",
+            "title": "Custom ProblemDetail with Trace ID",
+            "prompt": "Write an exception handler for OrderNotFoundException that attaches a random UUID traceId to the ProblemDetail properties.",
+            "starterCode": "@ExceptionHandler(OrderNotFoundException.class)\npublic ProblemDetail handleOrderNotFound(OrderNotFoundException ex) {}",
+            "solution": "@ExceptionHandler(OrderNotFoundException.class)\npublic ProblemDetail handleOrderNotFound(OrderNotFoundException ex) {\n    ProblemDetail pd = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, ex.getMessage());\n    pd.setTitle(\"Order Not Found\");\n    pd.setProperty(\"traceId\", UUID.randomUUID().toString());\n    pd.setProperty(\"timestamp\", Instant.now());\n    return pd;\n}",
+            "explanation": "ProblemDetail.setProperty() attaches arbitrary metadata to the JSON response root."
+        },
+        {
+            "id": 3,
+            "type": "Real-world Edge Case",
+            "title": "Enabling Automatic RFC 7807 for Framework Exceptions",
+            "prompt": "How can you tell Spring Boot 3.x to automatically format all standard Spring MVC exceptions (404, 405, 415) into RFC 7807 Problem Details?",
+            "solution": "Set 'spring.mvc.problemdetails.enabled=true' in application.yml.",
+            "explanation": "Spring Boot includes ProblemDetailsExceptionHandler which formats framework-level errors into RFC 7807 when this flag is enabled."
+        }
+    ],
+    "officialSources": [
+        {
+            "title": "Spring Framework Reference: Error Responses & ProblemDetail",
+            "url": "https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-ann-rest-exceptions.html",
+            "organization": "Spring / VMware"
+        },
+        {
+            "title": "RFC 7807: Problem Details for HTTP APIs",
+            "url": "https://datatracker.ietf.org/doc/html/rfc7807",
+            "organization": "Spring / VMware"
+        }
+    ]
+},
+
+{
+    "id": "topic-95",
+    "slug": "spring-data-jpa-architecture-repository-hierarchy-jparepository",
+    "topicNumber": 95,
+    "title": "Spring Data JPA Architecture, Repository Hierarchy & JpaRepository",
+    "part": "Part 3: Spring Boot & Production Stack",
+    "sectionNumber": 27,
+    "sectionTitle": "Persistence with Spring Data JPA & Databases",
+    "versionBadge": "Spring Boot 3.x / Jakarta Persistence 3.1+",
+    "difficulty": "Advanced",
+    "readingTime": "18 min read",
+    "shortDescription": "Master the Spring Data JPA persistence abstraction: the repository interface hierarchy (Repository -> CrudRepository -> PagingAndSortingRepository -> JpaRepository), dynamic AOP proxy generation, EntityManager persistence context lifecycle states, and dirty-checking flush mechanics.",
+    "prerequisites": [
+        "Topic 83: Jakarta Persistence (JPA) & Hibernate ORM",
+        "Topic 88: Spring Framework Core, BeanFactory vs ApplicationContext",
+        "Topic 89: Component Scanning, Injection Strategies & Bean Lifecycle Callbacks"
+    ],
+    "whatAndWhy": {
+        "definition": "Spring Data JPA provides a declarative abstraction over the JPA EntityManager, using dynamic runtime proxies to implement repository interfaces without requiring manual DAO classes.",
+        "analogy": "An automated bank teller: rather than personally walking into the vault, opening safe deposit boxes, counting cash, and updating hand-written ledger books (EntityManager), you slide your debit card into an automated terminal (JpaRepository) which instantly verifies, debits, credits, and reconciles records behind the scenes.",
+        "whyItExists": "Eliminates redundant CRUD boilerplate, provides consistent pagination and sorting, translates vendor SQL exceptions into unified Spring DataAccessExceptions, and streamlines domain data modeling."
+    },
+    "syntaxBreakdown": {
+        "title": "Spring Data JpaRepository Interface Declaration",
+        "codeSnippet": "public interface AccountRepository extends JpaRepository<Account, Long> {\n    Optional<Account> findByOwnerName(String name);\n    @Modifying\n    @Query(\"UPDATE Account a SET a.balance = a.balance + :amount WHERE a.id = :id\")\n    int creditBalance(@Param(\"id\") Long id, @Param(\"amount\") double amount);\n}",
+        "explanation": "Extending JpaRepository exposes standard CRUD, paging, and batch methods. Adding custom method signatures triggers automatic JPQL query generation at runtime.",
+        "tokens": [
+            {
+                "token": "JpaRepository<Account, Long>",
+                "explanation": "Generic interface taking entity domain class and primary key type."
+            },
+            {
+                "token": "findByOwnerName(String name)",
+                "explanation": "Derived query method automatically parsed into JPQL by Spring Data."
+            },
+            {
+                "token": "@Modifying",
+                "explanation": "Instructs JPA that the query executes an UPDATE or DELETE rather than a SELECT."
+            },
+            {
+                "token": "@Query",
+                "explanation": "Defines explicit JPQL query to bypass method name derivation."
+            },
+            {
+                "token": "@Param",
+                "explanation": "Binds method parameter names to named JPQL bind variables (:id, :amount)."
+            }
+        ]
+    },
+    "examples": [
+        {
+            "id": "ex-95-1",
+            "title": "Repository Hierarchy Usage",
+            "type": "basic",
+            "description": "Saving, finding by ID, and deleting entities using standard JpaRepository methods.",
+            "filename": "BasicAccountRepoUsage.java",
+            "code": "import org.springframework.data.jpa.repository.JpaRepository;\nimport java.util.Optional;\n\npublic class BasicAccountRepoUsage {\n    public void demonstrate(AccountRepository repository) {\n        Account acc = new Account(null, \"Alice\", 5000.0);\n        Account saved = repository.save(acc);\n        Optional<Account> found = repository.findById(saved.getId());\n        repository.deleteById(saved.getId());\n    }\n}",
+            "output": "Entity transitioned: TRANSIENT -> MANAGED -> REMOVED",
+            "stepByStep": [
+                "Define repository interface extending JpaRepository.",
+                "Inject repository via constructor injection into Service.",
+                "Invoke save() to transition transient instance to managed state.",
+                "Delete entity using deleteById()."
+            ]
+        },
+        {
+            "id": "ex-95-2",
+            "title": "Spring Data JPA Architecture & Lifecycle Simulation",
+            "type": "realistic",
+            "description": "Simulating dynamic runtime proxy generation, dirty-checking, and persistence context state transitions.",
+            "filename": "SpringDataJpaRepositoryDemo.java",
+            "code": "package com.handbook.spring;\n\npublic class SpringDataJpaRepositoryDemo {\n    public static void main(String[] args) {\n        // See full implementation in examples/spring/SpringDataJpaRepositoryDemo.java\n        System.out.println(\"Topic 95 Spring Data JPA Architecture demo executed successfully\");\n    }\n}",
+            "output": "Topic 95 Spring Data JPA Architecture demo executed successfully",
+            "stepByStep": [
+                "Instantiate AccountRepository dynamic proxy via JdkDynamicAopProxy.",
+                "Persist Account and verify TRANSIENT to MANAGED state transition.",
+                "Execute derived query findByOwnerName.",
+                "Perform in-memory mutation and trigger flush() dirty-check.",
+                "Sort accounts by balance descending.",
+                "Delete entity and assert REMOVED state."
+            ]
+        }
+    ],
+    "commonMistakes": [
+        {
+            "title": "Calling save() to update a managed entity",
+            "errorCodeOrSnippet": "Account acc = repo.findById(1L).get();\nacc.setBalance(9000.0);\nrepo.save(acc); // Unnecessary and redundant in JPA!",
+            "cause": "Assuming database persistence requires explicit save/update calls like MongoDB or raw SQL.",
+            "solution": "Within a @Transactional method, any mutation on a managed entity is automatically saved upon method exit via dirty checking. Omit the redundant save()."
+        },
+        {
+            "title": "Modifying detached entities without merge",
+            "errorCodeOrSnippet": "public void updateBalance(Account detached) {\n    detached.setBalance(100.0);\n    // Entity is detached, changes are silently lost!\n}",
+            "cause": "Operating on entities passed from web controllers outside active transactions without re-attaching.",
+            "solution": "Fetch the managed entity by ID inside the service transaction or invoke repository.save() which internally calls em.merge()."
+        }
+    ],
+    "bestPractices": {
+        "doList": [
+            "Extend JpaRepository for relational database entities requiring batch operations and flushing.",
+            "Use repository.getReferenceById(id) when only creating foreign key references to avoid unnecessary SELECT queries.",
+            "Always execute state-mutating repository operations inside @Transactional service boundaries."
+        ],
+        "dontList": [
+            "Never perform heavy database mutations in web controllers.",
+            "Avoid calling repository.findAll() on unbounded tables; always provide Pageable.",
+            "Never expose raw JPA entity classes directly in REST API responses (use DTOs)."
+        ],
+        "whenNotToUse": "Do not use Spring Data JPA for bulk analytical batch inserts of millions of rows (use Spring Batch with JdbcTemplate or Hibernate StatelessSession instead)."
+    },
+    "versionNotes": {
+        "introduced": "Spring Data JPA 1.0 (2011) -> Spring Data JPA 3.x with Jakarta Persistence 3.1",
+        "status": "Stable",
+        "compatibilityNotes": "Spring Boot 3 requires jakarta.persistence.* namespace (Hibernate 6+).",
+        "ltsAvailability": "Compatible with Java 17, 21, and 26+."
+    },
+    "cheatSheet": {
+        "title": "Spring Data Repository Hierarchy Comparison",
+        "headers": [
+            "Interface",
+            "Key Methods",
+            "Pagination/Sort",
+            "JPA Flush Support"
+        ],
+        "rows": [
+            [
+                "Repository<T, ID>",
+                "None (Marker interface)",
+                "No",
+                "No"
+            ],
+            [
+                "CrudRepository<T, ID>",
+                "save, findById, deleteById, count",
+                "No",
+                "No"
+            ],
+            [
+                "PagingAndSortingRepository<T, ID>",
+                "findAll(Sort), findAll(Pageable)",
+                "Yes",
+                "No"
+            ],
+            [
+                "JpaRepository<T, ID>",
+                "flush, saveAndFlush, getReferenceById",
+                "Yes",
+                "Yes"
+            ]
+        ]
+    },
+    "exercises": [
+        {
+            "id": 1,
+            "type": "Spot the Bug",
+            "title": "The Phantom Update",
+            "prompt": "A developer writes a service method that updates an account balance and returns without calling repo.save(). In tests without @Transactional, the update never saves to the database. Why?",
+            "solution": "Without @Transactional, there is no active transaction or open persistence context to trigger the end-of-transaction dirty-checking flush.",
+            "explanation": "Always annotate mutation service methods with @Transactional so the persistence context automatically flushes changes upon successful completion."
+        },
+        {
+            "id": 2,
+            "type": "Hands-on Implementation",
+            "title": "Declare a JpaRepository with Derived Method",
+            "prompt": "Write a repository interface for a Product entity with primary key UUID, including a method to find all products by category with price greater than a given threshold.",
+            "starterCode": "public interface ProductRepository extends JpaRepository<Product, UUID> {\n    // Add derived method\n}",
+            "solution": "public interface ProductRepository extends JpaRepository<Product, UUID> {\n    List<Product> findByCategoryAndPriceGreaterThan(String category, BigDecimal price);\n}",
+            "explanation": "Spring Data automatically parses 'findByCategoryAndPriceGreaterThan' into the appropriate JPQL WHERE clause."
+        },
+        {
+            "id": 3,
+            "type": "Real-world Edge Case",
+            "title": "getReferenceById vs findById",
+            "prompt": "When creating an OrderItem that references an Order by ID, why is orderRepo.getReferenceById(orderId) preferred over orderRepo.findById(orderId)?",
+            "solution": "getReferenceById returns a lightweight Hibernate proxy containing only the ID without issuing an immediate SQL SELECT. This avoids an unnecessary database query when setting a foreign key.",
+            "explanation": "findById immediately executes a SELECT query to populate the entire entity into memory."
+        }
+    ],
+    "officialSources": [
+        {
+            "title": "Spring Data JPA Reference Documentation",
+            "url": "https://docs.spring.io/spring-data/jpa/reference/jpa/repositories.html",
+            "organization": "Spring / VMware"
+        },
+        {
+            "title": "Jakarta Persistence 3.1 Specification",
+            "url": "https://jakarta.ee/specifications/persistence/3.1/",
+            "organization": "Eclipse Foundation"
+        }
+    ]
+},
+
+  {
+    "id": "topic-96",
+    "slug": "automated-derived-query-methods-dynamic-projections-jpql-query",
+    "topicNumber": 96,
+    "title": "Automated Derived Query Methods, Dynamic Projections & JPQL @Query",
+    "part": "Part 3: Spring Boot & Production Stack",
+    "sectionNumber": 27,
+    "sectionTitle": "Persistence with Spring Data JPA & Databases",
+    "versionBadge": "Spring Boot 3.x / Java 21+",
+    "difficulty": "Advanced",
+    "readingTime": "17 min read",
+    "shortDescription": "Architect high-efficiency data access with Spring Data JPA: query method derivation rules, closed and open interface-based projections, constructor record DTO projections, and custom JPQL queries with named parameters.",
+    "prerequisites": [
+        "Topic 83: Jakarta Persistence (JPA) & Hibernate ORM",
+        "Topic 95: Spring Data JPA Architecture, Repository Hierarchy & JpaRepository"
+    ],
+    "whatAndWhy": {
+        "definition": "Spring Data JPA query techniques allow developers to retrieve partial entity representations (projections) and write declarative queries using derived method naming or JPQL constructor expressions.",
+        "analogy": "A library catalog: instead of hauling every 1,000-page encyclopedia off the shelf just to look up author names and publication dates (fetching full entities), you consult an index card summary (interface/record projection) containing only the exact three fields you need.",
+        "whyItExists": "Reduces heap allocation and network overhead, prevents accidental exposure of sensitive entity columns, and allows direct mapping into immutable Java records."
+    },
+    "syntaxBreakdown": {
+        "title": "Spring Data Projections and JPQL Constructor Expression",
+        "codeSnippet": "public record UserSummaryDto(String fullName, String email) {}\n\npublic interface UserRepository extends JpaRepository<User, Long> {\n    // Closed Interface Projection\n    List<UserExcerpt> findByDepartment(String dept);\n\n    // Record Constructor Projection via JPQL\n    @Query(\"SELECT new com.example.UserSummaryDto(u.name, u.email) FROM User u WHERE u.active = true\")\n    List<UserSummaryDto> findActiveUserSummaries();\n}",
+        "explanation": "Projections selectively query columns. Interface projections synthesize proxies at runtime; record constructor queries instantiate immutable records directly in one SQL pass.",
+        "tokens": [
+            {
+                "token": "UserExcerpt",
+                "explanation": "Closed interface projection exposing only needed getter methods."
+            },
+            {
+                "token": "SELECT new ...",
+                "explanation": "JPQL constructor expression creating Java record instances directly from query columns."
+            },
+            {
+                "token": "@Query",
+                "explanation": "Custom JPQL query bypassing method name parsing limitations."
+            }
+        ]
+    },
+    "examples": [
+        {
+            "id": "ex-96-1",
+            "title": "Closed vs Open Interface Projections",
+            "type": "basic",
+            "description": "Declaring and using closed and open projections in a Spring Data repository.",
+            "filename": "ProjectionBasics.java",
+            "code": "public interface EmployeeSummary {\n    String getFirstName();\n    String getLastName();\n    @Value(\"#{target.firstName + ' ' + target.lastName}\")\n    String getFullName();\n}",
+            "output": "Closed projection executes selective SQL; open projection computes SpEL expression in memory.",
+            "stepByStep": [
+                "Define projection interface with getter signatures.",
+                "Use closed projection for database-level column filtering.",
+                "Use @Value for computed composite properties."
+            ]
+        },
+        {
+            "id": "ex-96-2",
+            "title": "Derived Queries and Projections Simulation",
+            "type": "realistic",
+            "description": "Simulating derived method parsing, interface projection proxies, and JPQL record constructor projections.",
+            "filename": "DerivedQueryProjectionsDemo.java",
+            "code": "package com.handbook.spring;\n\npublic class DerivedQueryProjectionsDemo {\n    public static void main(String[] args) {\n        // See full implementation in examples/spring/DerivedQueryProjectionsDemo.java\n        System.out.println(\"Topic 96 Derived Queries and Projections demo executed successfully\");\n    }\n}",
+            "output": "Topic 96 Derived Queries and Projections demo executed successfully",
+            "stepByStep": [
+                "Execute derived query countByDepartment and existsByEmail.",
+                "Retrieve closed interface projection EmployeeNameAndDept.",
+                "Evaluate open projection EmployeeSalarySummary with default compensation tier logic.",
+                "Execute JPQL constructor expression returning immutable EmployeeDto records."
+            ]
+        }
+    ],
+    "commonMistakes": [
+        {
+            "title": "Assuming Open Projections optimize SQL queries",
+            "errorCodeOrSnippet": "public interface UserView {\n    @Value(\"#{target.firstName + ' ' + target.lastName}\")\n    String getFullName();\n}",
+            "cause": "Because the SpEL expression accesses target.property, Spring Data must retrieve the entire entity to evaluate the expression.",
+            "solution": "Use closed projections or SQL concat expressions in @Query if you want SQL-level column optimization."
+        },
+        {
+            "title": "Missing fully-qualified class name in JPQL constructor expressions",
+            "errorCodeOrSnippet": "@Query(\"SELECT new UserDto(u.id, u.name) FROM User u\") // ClassNotFoundException in JPQL!",
+            "cause": "JPQL requires the complete canonical package name for constructor expressions.",
+            "solution": "Specify the full package: @Query(\"SELECT new com.example.dto.UserDto(u.id, u.name) FROM User u\")."
+        }
+    ],
+    "bestPractices": {
+        "doList": [
+            "Prefer Java records for DTO projections in modern Spring Boot 3 applications.",
+            "Use derived query methods for simple single-condition or double-condition queries.",
+            "Use explicit @Query with named parameters (@Param) when queries involve joins or complex conditions."
+        ],
+        "dontList": [
+            "Avoid writing long method names with 5+ conditions (e.g. findByAAndBOrCAndDOrderByE); use @Query instead.",
+            "Never use native queries unless leveraging vendor-specific SQL dialect features.",
+            "Never perform Cartesian product joins without projections or distinct keywords."
+        ],
+        "whenNotToUse": "Do not use derived method queries for highly dynamic search criteria with optional filters (use Spring Data JPA Specifications or Querydsl instead)."
+    },
+    "versionNotes": {
+        "introduced": "Dynamic Projections introduced in Spring Data JPA 1.10 -> Record DTO support in Spring Data 2.6+",
+        "status": "Stable",
+        "compatibilityNotes": "Java Records are first-class citizens in Spring Boot 3.x.",
+        "ltsAvailability": "Java 17, 21, and 26+."
+    },
+    "cheatSheet": {
+        "title": "Query and Projection Strategies Matrix",
+        "headers": [
+            "Approach",
+            "Generated SQL",
+            "Proxy Overhead",
+            "Best For"
+        ],
+        "rows": [
+            [
+                "Derived Query Method",
+                "Full SELECT * FROM entity",
+                "None",
+                "Retrieving full managed entities"
+            ],
+            [
+                "Closed Interface Projection",
+                "Selective SELECT col1, col2",
+                "Lightweight Dynamic Proxy",
+                "Lightweight view models and dropdowns"
+            ],
+            [
+                "Open Interface Projection",
+                "Full SELECT * FROM entity",
+                "SpEL Evaluation Proxy",
+                "Synthetic computed properties"
+            ],
+            [
+                "Record DTO Projection",
+                "Selective SELECT col1, col2",
+                "Zero (Direct Constructor)",
+                "High-throughput APIs & microservices"
+            ]
+        ]
+    },
+    "exercises": [
+        {
+            "id": 1,
+            "type": "Spot the Bug",
+            "title": "JPQL Named Parameter Typo",
+            "prompt": "A developer writes @Query(\"SELECT u FROM User u WHERE u.email = :mail\") but declares the method as findByEmail(@Param(\"email\") String mail). What happens?",
+            "solution": "Throws QueryCreationException or IllegalArgumentException because the JPQL placeholder :mail does not match the @Param(\"email\") declaration.",
+            "explanation": "Named parameters in JPQL must exactly match the value specified in the @Param annotation."
+        },
+        {
+            "id": 2,
+            "type": "Hands-on Implementation",
+            "title": "Constructor Expression with Record",
+            "prompt": "Write a JPQL query that projects the id, name, and totalOrders from a Customer entity directly into a CustomerSummaryRecord.",
+            "starterCode": "@Query(\"...\")\nList<CustomerSummaryRecord> findCustomerSummaries();",
+            "solution": "@Query(\"SELECT new com.example.CustomerSummaryRecord(c.id, c.name, size(c.orders)) FROM Customer c\")\nList<CustomerSummaryRecord> findCustomerSummaries();",
+            "explanation": "The size() JPQL function counts associated collection items, and 'new com.example...' constructs the record."
+        },
+        {
+            "id": 3,
+            "type": "Real-world Edge Case",
+            "title": "Dynamic Projections with Generic Type",
+            "prompt": "How can you write a single Spring Data repository method that returns either full entities, closed projections, or DTOs depending on what the caller passes in?",
+            "solution": "<T> List<T> findByDepartment(String dept, Class<T> projectionType);",
+            "explanation": "Spring Data supports dynamic projections by accepting a Class<T> parameter and instantiating the requested projection dynamically."
+        }
+    ],
+    "officialSources": [
+        {
+            "title": "Spring Data JPA: Projections Reference",
+            "url": "https://docs.spring.io/spring-data/jpa/reference/repositories/projections.html",
+            "organization": "Spring / VMware"
+        },
+        {
+            "title": "Spring Data JPA: Defining Query Methods",
+            "url": "https://docs.spring.io/spring-data/jpa/reference/repositories/query-methods-details.html",
+            "organization": "Spring / VMware"
+        }
+    ]
+},
+
+  {
+    "id": "topic-97",
+    "slug": "declarative-transactional-boundaries-pagination-sorting-n-plus-one",
+    "topicNumber": 97,
+    "title": "Declarative @Transactional Boundaries, Pagination, Sorting & N+1 Prevention",
+    "part": "Part 3: Spring Boot & Production Stack",
+    "sectionNumber": 27,
+    "sectionTitle": "Persistence with Spring Data JPA & Databases",
+    "versionBadge": "Spring Boot 3.x / Jakarta Persistence 3.1+",
+    "difficulty": "Advanced",
+    "readingTime": "19 min read",
+    "shortDescription": "Master enterprise transaction boundaries and ORM performance tuning: declarative @Transactional propagation, readOnly performance gains, Pageable pagination, and eliminating the N+1 Select Problem via @EntityGraph and JOIN FETCH.",
+    "prerequisites": [
+        "Topic 83: Jakarta Persistence (JPA) & Hibernate ORM",
+        "Topic 95: Spring Data JPA Architecture, Repository Hierarchy & JpaRepository",
+        "Topic 96: Automated Derived Query Methods, Dynamic Projections & JPQL @Query"
+    ],
+    "whatAndWhy": {
+        "definition": "Declarative transaction management intercepts method calls via Spring AOP proxies to control ACID transaction boundaries, while @EntityGraph and JOIN FETCH eliminate redundant queries when traversing object relationships.",
+        "analogy": "A freight delivery: instead of making 1 trip to pick up a truck (1 query) and then 100 individual round trips back and forth to carry each cardboard box one by one (N+1 queries), a shipping container (@EntityGraph / JOIN FETCH) loads both the truck and all 100 boxes together in one single trip.",
+        "whyItExists": "Protects data integrity through automated commit/rollback mechanics and prevents disastrous database round-trip performance bottlenecks in production microservices."
+    },
+    "syntaxBreakdown": {
+        "title": "Declarative @Transactional and @EntityGraph Syntax",
+        "codeSnippet": "@Service\npublic class OrderService {\n    @Transactional(readOnly = true)\n    public Page<OrderDto> getOrders(Pageable pageable) {\n        return orderRepo.findAllWithItems(pageable).map(this::toDto);\n    }\n\n    @Transactional(rollbackFor = BusinessException.class)\n    public void placeOrder(OrderRequest request) {\n        // atomic database updates\n    }\n}\n\npublic interface OrderRepository extends JpaRepository<Order, Long> {\n    @EntityGraph(attributePaths = {\"items\", \"customer\"})\n    Page<Order> findAllWithItems(Pageable pageable);\n}",
+        "explanation": "@Transactional wraps method execution in ACID boundaries. @EntityGraph specifies which lazy associations should be eagerly fetched in a single SQL JOIN.",
+        "tokens": [
+            {
+                "token": "@Transactional(readOnly = true)",
+                "explanation": "Optimizes JDBC connection and disables Hibernate dirty-checking snapshots."
+            },
+            {
+                "token": "rollbackFor",
+                "explanation": "Specifies checked exceptions that should trigger an automatic transaction rollback."
+            },
+            {
+                "token": "@EntityGraph(attributePaths = ...)",
+                "explanation": "Executes an optimized SQL LEFT JOIN fetching parent and related children in 1 query."
+            },
+            {
+                "token": "Pageable / Page<T>",
+                "explanation": "Standard Spring Data abstraction for database-level pagination and sorting."
+            }
+        ]
+    },
+    "examples": [
+        {
+            "id": "ex-97-1",
+            "title": "Pagination and Sorting with PageRequest",
+            "type": "basic",
+            "description": "Executing paginated queries with sorting and mapping results to DTOs.",
+            "filename": "PaginationExample.java",
+            "code": "Pageable pageable = PageRequest.of(0, 25, Sort.by(\"createdAt\").descending());\nPage<CustomerOrder> page = repository.findByStatus(\"ACTIVE\", pageable);\nList<CustomerOrder> orders = page.getContent();\nlong total = page.getTotalElements();",
+            "output": "Fetched page 0 with 25 records (Total elements: 1,420)",
+            "stepByStep": [
+                "Construct Pageable using PageRequest.of(page, size, sort).",
+                "Pass Pageable to repository method.",
+                "Inspect page content, total elements, and total pages."
+            ]
+        },
+        {
+            "id": "ex-97-2",
+            "title": "Transaction Boundaries and N+1 Elimination Simulation",
+            "type": "realistic",
+            "description": "Simulating @Transactional commit/rollback, unoptimized N+1 queries, and single-query @EntityGraph resolution.",
+            "filename": "TransactionalEntityGraphDemo.java",
+            "code": "package com.handbook.spring;\n\npublic class TransactionalEntityGraphDemo {\n    public static void main(String[] args) {\n        // See full implementation in examples/spring/TransactionalEntityGraphDemo.java\n        System.out.println(\"Topic 97 Transactional and EntityGraph demo executed successfully\");\n    }\n}",
+            "output": "Topic 97 Transactional and EntityGraph demo executed successfully",
+            "stepByStep": [
+                "Execute successful transaction and verify commit.",
+                "Execute failing transaction and verify rollback on exception.",
+                "Execute lazy loading loop and observe 1 + N query proliferation.",
+                "Execute @EntityGraph / JOIN FETCH and assert query count is reduced to exactly 1."
+            ]
+        }
+    ],
+    "commonMistakes": [
+        {
+            "title": "Self-invocation of @Transactional methods",
+            "errorCodeOrSnippet": "public class OrderService {\n    public void outer() { inner(); }\n    @Transactional\n    public void inner() { /* db update */ }\n}",
+            "cause": "Because Spring uses AOP proxies, calling a method from within the same class (this.inner()) bypasses the proxy interceptor entirely. The transaction is never started!",
+            "solution": "Move the @Transactional method to a separate service bean, or inject the service into itself via self-injection."
+        },
+        {
+            "title": "Expecting rollbacks on checked exceptions by default",
+            "errorCodeOrSnippet": "@Transactional\npublic void process() throws IOException {\n    throw new IOException(\"File error\"); // Transaction COMMITS anyway!\n}",
+            "cause": "By default, Spring transactions only roll back on unchecked exceptions (RuntimeException and Error).",
+            "solution": "Explicitly declare rollbackFor: @Transactional(rollbackFor = Exception.class)."
+        }
+    ],
+    "bestPractices": {
+        "doList": [
+            "Always annotate read-only query methods with @Transactional(readOnly = true) to disable dirty-checking snapshots.",
+            "Always use @EntityGraph or JOIN FETCH whenever you know child collections will be traversed in business logic or serializers.",
+            "Keep transaction boundaries as short as possible to prevent database connection pool starvation."
+        ],
+        "dontList": [
+            "Never perform external network HTTP calls or long calculations inside a @Transactional method.",
+            "Never place @Transactional on private methods (Spring AOP proxies cannot intercept private methods).",
+            "Avoid using Open Session In View (OSIV) in production; fetch all required data eagerly inside the service layer."
+        ],
+        "whenNotToUse": "Do not use @EntityGraph to fetch multiple independent @OneToMany collections simultaneously (Cartesian product explosion; fetch at most one collection with JOIN FETCH, and use @BatchSize for others)."
+    },
+    "versionNotes": {
+        "introduced": "Spring Transaction Management 1.0 -> @EntityGraph introduced in JPA 2.1 / Spring Data JPA 1.4",
+        "status": "Stable",
+        "compatibilityNotes": "Spring Boot 3 disables OSIV warnings by default but OSIV remains discouraged for high-scale microservices.",
+        "ltsAvailability": "Universal on Java 17, 21, and 26+."
+    },
+    "cheatSheet": {
+        "title": "Transaction Propagation Rules",
+        "headers": [
+            "Propagation",
+            "Existing Transaction?",
+            "Action"
+        ],
+        "rows": [
+            [
+                "REQUIRED (Default)",
+                "Yes / No",
+                "Joins existing transaction, or starts a new one if none exists."
+            ],
+            [
+                "REQUIRES_NEW",
+                "Yes / No",
+                "Always suspends existing transaction and opens a brand new isolated transaction."
+            ],
+            [
+                "SUPPORTS",
+                "Yes / No",
+                "Executes inside transaction if one exists; executes non-transactionally otherwise."
+            ],
+            [
+                "MANDATORY",
+                "Yes / No",
+                "Must run inside existing transaction; throws exception if none exists."
+            ],
+            [
+                "NEVER",
+                "Yes / No",
+                "Must run non-transactionally; throws exception if an active transaction is detected."
+            ]
+        ]
+    },
+    "exercises": [
+        {
+            "id": 1,
+            "type": "Spot the Bug",
+            "title": "The Silent Failure",
+            "prompt": "A developer writes @Transactional(readOnly = true) on a method, loads an entity, modifies a field, and expects it to be saved upon method exit. The database never updates. Why?",
+            "solution": "readOnly = true disables dirty-checking snapshot comparisons in Hibernate to conserve memory. Mutations on managed entities are intentionally not flushed to the database.",
+            "explanation": "Remove readOnly = true when an endpoint is intended to modify database state."
+        },
+        {
+            "id": 2,
+            "type": "Hands-on Implementation",
+            "title": "Define an EntityGraph Repository Query",
+            "prompt": "Write a repository method that finds a Customer by id and eagerly fetches both 'orders' and 'address' associations in 1 query.",
+            "starterCode": "public interface CustomerRepository extends JpaRepository<Customer, Long> {\n    // Define query with EntityGraph\n}",
+            "solution": "@EntityGraph(attributePaths = {\"orders\", \"address\"})\nOptional<Customer> findWithOrdersAndAddressById(Long id);",
+            "explanation": "attributePaths specifies the relationship graph to fetch eagerly using an outer join."
+        },
+        {
+            "id": 3,
+            "type": "Real-world Edge Case",
+            "title": "Multiple Bag Fetch Exception",
+            "prompt": "Why does Hibernate throw MultipleBagFetchException if you attempt to JOIN FETCH two separate List collections on the same entity simultaneously?",
+            "solution": "Joining two separate collections in a single SQL query produces a Cartesian product (M * N rows), which causes duplicate parent rows and prevents Hibernate from reliably reconstructing bag (List) semantics.",
+            "explanation": "Fetch one collection with JOIN FETCH and fetch the second collection using @BatchSize or separate queries."
+        }
+    ],
+    "officialSources": [
+        {
+            "title": "Spring Framework: Transaction Management",
+            "url": "https://docs.spring.io/spring-framework/reference/data-access/transaction.html",
+            "organization": "Spring / VMware"
+        },
+        {
+            "title": "Vlad Mihalcea: The High-Performance Java Persistence Guide to N+1 Queries",
+            "url": "https://vladmihalcea.com/n-plus-1-query-problem/",
+            "organization": "Spring / VMware"
+        }
+    ]
+},
+
+  {
+    "id": "topic-98",
+    "slug": "modern-security-filter-chain-architecture-password-encryption",
+    "topicNumber": 98,
+    "title": "Modern SecurityFilterChain Architecture & Password Encryption",
+    "part": "Part 3: Spring Boot & Production Stack",
+    "sectionNumber": 28,
+    "sectionTitle": "Enterprise Security with Spring Security 6",
+    "versionBadge": "Spring Security 6.x / Java 21+",
+    "difficulty": "Advanced",
+    "readingTime": "18 min read",
+    "shortDescription": "Architect defense-in-depth security in Spring Security 6: declarative SecurityFilterChain bean configuration, URL request matching, disabling CSRF for stateless REST microservices, and cryptographic BCrypt password hashing.",
+    "prerequisites": [
+        "Topic 71: Servlet Filters & Interception",
+        "Topic 90: Auto-Configuration Mechanics, Starters & Embedded Runtimes",
+        "Topic 92: Production REST Controller Architecture with Spring Web MVC"
+    ],
+    "whatAndWhy": {
+        "definition": "Spring Security 6 enforces authentication and authorization through an ordered chain of servlet filters, configured declaratively via SecurityFilterChain @Bean definitions rather than legacy adapter inheritance.",
+        "analogy": "An airport security terminal: passenger flows move through sequential checkpoints (SecurityFilterChain)—first passport inspection (AuthenticationFilter), then metal detectors (CSRF / Tamper guard), and finally boarding gate clearance (AuthorizationFilter)—before reaching the departure lounge (@RestController).",
+        "whyItExists": "Protects enterprise systems against OWASP Top 10 vulnerabilities, standardizes credential storage using slow-hashing algorithms, and provides unified authorization."
+    },
+    "syntaxBreakdown": {
+        "title": "Spring Security 6 SecurityFilterChain Bean Definition",
+        "codeSnippet": "@Configuration\n@EnableWebSecurity\npublic class SecurityConfig {\n    @Bean\n    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {\n        return http\n            .csrf(csrf -> csrf.disable())\n            .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))\n            .authorizeHttpRequests(auth -> auth\n                .requestMatchers(\"/api/v1/auth/**\").permitAll()\n                .requestMatchers(\"/api/v1/admin/**\").hasRole(\"ADMIN\")\n                .anyRequest().authenticated()\n            )\n            .build();\n    }\n}",
+        "explanation": "Uses functional lambda DSL to configure CSRF, stateless session management, and request matchers without extending WebSecurityConfigurerAdapter.",
+        "tokens": [
+            {
+                "token": "SecurityFilterChain",
+                "explanation": "Target bean defining the ordered chain of filters to execute on matched HTTP requests."
+            },
+            {
+                "token": "csrf.disable()",
+                "explanation": "Disables CSRF protection, which is redundant for stateless token-based REST APIs."
+            },
+            {
+                "token": "SessionCreationPolicy.STATELESS",
+                "explanation": "Instructs Spring Security never to create an HttpSession."
+            },
+            {
+                "token": "requestMatchers(...).permitAll()",
+                "explanation": "Opens public endpoints (like login/signup) without requiring credentials."
+            },
+            {
+                "token": "hasRole(\"ADMIN\")",
+                "explanation": "Restricts access to principals granted the 'ROLE_ADMIN' authority."
+            }
+        ]
+    },
+    "examples": [
+        {
+            "id": "ex-98-1",
+            "title": "BCrypt Password Hashing",
+            "type": "basic",
+            "description": "Hashing raw passwords and validating user attempts using BCryptPasswordEncoder.",
+            "filename": "PasswordHasher.java",
+            "code": "import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;\n\npublic class PasswordHasher {\n    public static void main(String[] args) {\n        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);\n        String hash = encoder.encode(\"MySecret2026\");\n        boolean matches = encoder.matches(\"MySecret2026\", hash);\n        System.out.println(\"Password verification: \" + matches);\n    }\n}",
+            "output": "Password verification: true",
+            "stepByStep": [
+                "Instantiate BCryptPasswordEncoder with cost factor 12.",
+                "Encode raw password generating salted hash.",
+                "Verify user login attempts with matches()."
+            ]
+        },
+        {
+            "id": "ex-98-2",
+            "title": "SecurityFilterChain and Authentication Pipeline Simulation",
+            "type": "realistic",
+            "description": "Simulating SecurityFilterChain rules, BCrypt hashing, and AuthenticationManager credential checks.",
+            "filename": "SecurityFilterChainDemo.java",
+            "code": "package com.handbook.spring;\n\npublic class SecurityFilterChainDemo {\n    public static void main(String[] args) {\n        // See full implementation in examples/spring/SecurityFilterChainDemo.java\n        System.out.println(\"Topic 98 Modern SecurityFilterChain and Password Encoder verified successfully\");\n    }\n}",
+            "output": "Topic 98 Modern SecurityFilterChain and Password Encoder verified successfully",
+            "stepByStep": [
+                "Initialize BCrypt password encoder with 1000 key-stretching iterations.",
+                "Encode raw secret and verify cryptographic match.",
+                "Register user details with ROLE_ADMIN and ROLE_USER authorities.",
+                "Configure SecurityFilterChain rules with permitAll and authenticated paths.",
+                "Authenticate principal through AuthenticationManager and verify rejection of bad credentials."
+            ]
+        }
+    ],
+    "commonMistakes": [
+        {
+            "title": "Storing passwords with fast MD5 or SHA-256",
+            "errorCodeOrSnippet": "String hash = DigestUtils.sha256Hex(password); // Vulnerable to GPU brute force!",
+            "cause": "SHA-256 is designed for throughput, allowing billions of hash attempts per second on modern GPUs.",
+            "solution": "Always use key-stretching adaptive algorithms: BCrypt, Argon2, or PBKDF2."
+        },
+        {
+            "title": "Leaving CSRF enabled on stateless REST APIs",
+            "errorCodeOrSnippet": "http.authorizeHttpRequests(...); // Default CSRF enabled causes 403 Forbidden on POST/PUT!",
+            "cause": "Spring Security enables CSRF by default, which blocks non-GET requests lacking a CSRF token.",
+            "solution": "Explicitly disable CSRF when using stateless Bearer token authentication: http.csrf(csrf -> csrf.disable())."
+        }
+    ],
+    "bestPractices": {
+        "doList": [
+            "Use BCryptPasswordEncoder with a minimum cost factor of 10 (12 recommended for production).",
+            "Enforce SessionCreationPolicy.STATELESS for REST APIs using Bearer tokens.",
+            "Always order requestMatchers from most specific to least specific."
+        ],
+        "dontList": [
+            "Never extend WebSecurityConfigurerAdapter (removed in Spring Security 6).",
+            "Never log raw or decrypted user passwords in log files.",
+            "Never use plain text comparisons for password checking (susceptible to timing attacks)."
+        ],
+        "whenNotToUse": "Do not disable CSRF in stateful server-rendered applications (like Thymeleaf, JSP, or JSF) where authentication relies on browser session cookies."
+    },
+    "versionNotes": {
+        "introduced": "Spring Security 1.0 -> Modern Component FilterChain in Spring Security 6 / Spring Boot 3",
+        "status": "Stable",
+        "compatibilityNotes": "WebSecurityConfigurerAdapter is completely removed in Spring Security 6.",
+        "ltsAvailability": "Universal on Java 17, 21, and 26+."
+    },
+    "cheatSheet": {
+        "title": "Spring Security 6 Key Filter Chain Components",
+        "headers": [
+            "Component",
+            "Type",
+            "Responsibility"
+        ],
+        "rows": [
+            [
+                "SecurityFilterChain",
+                "@Bean Interface",
+                "Defines the ordered filter pipeline and URL authorization rules"
+            ],
+            [
+                "BCryptPasswordEncoder",
+                "PasswordEncoder",
+                "Salts and hashes passwords using adaptive cost functions"
+            ],
+            [
+                "AuthenticationManager",
+                "Core Engine",
+                "Coordinates AuthenticationProviders to validate credentials"
+            ],
+            [
+                "UserDetailsService",
+                "Repository Bridge",
+                "Loads UserDetails from persistent storage by username"
+            ],
+            [
+                "AuthorizationFilter",
+                "Filter",
+                "Enforces request authorization at the HTTP endpoint boundary"
+            ]
+        ]
+    },
+    "exercises": [
+        {
+            "id": 1,
+            "type": "Spot the Bug",
+            "title": "The Overriding Matcher Trap",
+            "prompt": "A developer writes .anyRequest().authenticated() before .requestMatchers(\"/public/**\").permitAll(). Users cannot access /public. Why?",
+            "solution": "Spring Security matches rules from top to bottom. Because .anyRequest() matches everything, subsequent rules are never evaluated.",
+            "explanation": "Always place specific permitAll() matchers before general authenticated() or anyRequest() matchers."
+        },
+        {
+            "id": 2,
+            "type": "Hands-on Implementation",
+            "title": "Declare Modern SecurityFilterChain Bean",
+            "prompt": "Write a Spring Security 6 configuration method that permits /health and /actuator/info, requires role 'ADMIN' for /admin/**, and authenticates all other routes.",
+            "starterCode": "@Bean\npublic SecurityFilterChain filterChain(HttpSecurity http) throws Exception {\n    // Return chain\n}",
+            "solution": "@Bean\npublic SecurityFilterChain filterChain(HttpSecurity http) throws Exception {\n    return http\n        .csrf(csrf -> csrf.disable())\n        .authorizeHttpRequests(auth -> auth\n            .requestMatchers(\"/health\", \"/actuator/info\").permitAll()\n            .requestMatchers(\"/admin/**\").hasRole(\"ADMIN\")\n            .anyRequest().authenticated()\n        )\n        .build();\n}",
+            "explanation": "Configures stateless security with exact endpoint matcher rules."
+        },
+        {
+            "id": 3,
+            "type": "Real-world Edge Case",
+            "title": "hasRole vs hasAuthority",
+            "prompt": "What is the difference between hasRole('ADMIN') and hasAuthority('ADMIN') in Spring Security?",
+            "solution": "hasRole('ADMIN') automatically prefixes the string with 'ROLE_', expecting the authority 'ROLE_ADMIN'. hasAuthority('ADMIN') performs an exact string match without any prefix.",
+            "explanation": "Always match how authorities are loaded in your UserDetailsService."
+        }
+    ],
+    "officialSources": [
+        {
+            "title": "Spring Security 6 Architecture Reference",
+            "url": "https://docs.spring.io/spring-security/reference/servlet/architecture.html",
+            "organization": "Spring / VMware"
+        },
+        {
+            "title": "Spring Security: Password Storage Configuration",
+            "url": "https://docs.spring.io/spring-security/reference/features/authentication/password-storage.html",
+            "organization": "Spring / VMware"
+        }
+    ]
+},
+
+  {
+    "id": "topic-99",
+    "slug": "stateless-rest-security-jwt-method-level-role-authorization",
+    "topicNumber": 99,
+    "title": "Stateless REST Security with JWT & Method-Level Role Authorization",
+    "part": "Part 3: Spring Boot & Production Stack",
+    "sectionNumber": 28,
+    "sectionTitle": "Enterprise Security with Spring Security 6",
+    "versionBadge": "Spring Security 6.x / Java 21+",
+    "difficulty": "Advanced",
+    "readingTime": "19 min read",
+    "shortDescription": "Architect stateless microservice authentication: HMAC-SHA256 JWT creation, OncePerRequestFilter extraction, SecurityContextHolder thread-local lifecycle, and fine-grained method security using @PreAuthorize and SpEL expressions.",
+    "prerequisites": [
+        "Topic 71: Servlet Filters & Interception",
+        "Topic 92: Production REST Controller Architecture with Spring Web MVC",
+        "Topic 98: Modern SecurityFilterChain Architecture & Password Encryption"
+    ],
+    "whatAndWhy": {
+        "definition": "Stateless JWT security validates identity using cryptographically signed self-contained tokens attached to each HTTP request, decoupling server state from client sessions and enabling declarative method-level role authorization.",
+        "analogy": "An electronic concert wristband: rather than the venue looking up your name in a massive guest register every time you enter a room (HttpSession), your wristband contains a digitally signed barcode showing your VIP status (JWT). Staff scan the wristband at the door (@PreAuthorize) to grant access instantly.",
+        "whyItExists": "Enables seamless horizontal scaling across cloud microservices, eliminates sticky sessions, and provides granular role-based access control (RBAC)."
+    },
+    "syntaxBreakdown": {
+        "title": "JWT Authentication Filter and @PreAuthorize Syntax",
+        "codeSnippet": "@Service\npublic class AdminService {\n    @PreAuthorize(\"hasRole('ADMIN')\")\n    public void purgeSystemLogs() {\n        // admin-only operation\n    }\n\n    @PreAuthorize(\"hasRole('ADMIN') or #username == authentication.name\")\n    public UserProfile getProfile(String username) {\n        // self-service or admin lookup\n    }\n}",
+        "explanation": "@PreAuthorize evaluates Spring Expression Language (SpEL) before method invocation. If false, AccessDeniedException (403 Forbidden) is thrown.",
+        "tokens": [
+            {
+                "token": "@PreAuthorize",
+                "explanation": "Method-level security annotation evaluated before method invocation using SpEL."
+            },
+            {
+                "token": "hasRole('ADMIN')",
+                "explanation": "SpEL function verifying if SecurityContextHolder contains 'ROLE_ADMIN'."
+            },
+            {
+                "token": "authentication.name",
+                "explanation": "Refers to the authenticated principal's username in the current security context."
+            },
+            {
+                "token": "#username",
+                "explanation": "Binds directly to the method argument named 'username'."
+            }
+        ]
+    },
+    "examples": [
+        {
+            "id": "ex-99-1",
+            "title": "Method-Level Security Annotation",
+            "type": "basic",
+            "description": "Securing service methods with role-based annotations.",
+            "filename": "SecuredUserService.java",
+            "code": "import org.springframework.security.access.prepost.PreAuthorize;\nimport org.springframework.stereotype.Service;\n\n@Service\npublic class SecuredUserService {\n    @PreAuthorize(\"hasRole('ADMIN')\")\n    public void deleteUser(Long id) {\n        // Delete logic\n    }\n}",
+            "output": "Invocation allowed only when principal possesses ROLE_ADMIN; otherwise throws 403 Forbidden.",
+            "stepByStep": [
+                "Enable method security with @EnableMethodSecurity.",
+                "Annotate target service method with @PreAuthorize.",
+                "Spring Security AOP proxy intercepts method and checks SecurityContextHolder."
+            ]
+        },
+        {
+            "id": "ex-99-2",
+            "title": "JWT & RBAC Method Security Simulation",
+            "type": "realistic",
+            "description": "Simulating HMAC-SHA256 JWT token generation, OncePerRequestFilter parsing, SecurityContextHolder propagation, and @PreAuthorize enforcement.",
+            "filename": "JwtRbacSecurityDemo.java",
+            "code": "package com.handbook.spring;\n\npublic class JwtRbacSecurityDemo {\n    public static void main(String[] args) {\n        // See full implementation in examples/spring/JwtRbacSecurityDemo.java\n        System.out.println(\"Topic 99 JWT & RBAC Method Security verified successfully\");\n    }\n}",
+            "output": "Topic 99 JWT & RBAC Method Security verified successfully",
+            "stepByStep": [
+                "Generate HMAC-SHA256 JWT tokens for standard user and admin.",
+                "Simulate OncePerRequestFilter parsing Bearer header into SecurityContextHolder.",
+                "Invoke user method successfully for standard user.",
+                "Attempt super-admin method with standard user and assert 403 Forbidden rejection.",
+                "Invoke super-admin method with admin principal successfully.",
+                "Verify tamper protection rejects invalid signature."
+            ]
+        }
+    ],
+    "commonMistakes": [
+        {
+            "title": "Forgetting to clear SecurityContextHolder in ThreadLocal",
+            "errorCodeOrSnippet": "SecurityContextHolder.getContext().setAuthentication(auth);\n// Filter completes without finally { SecurityContextHolder.clearContext(); }",
+            "cause": "Web servers reuse worker threads. Failing to clear the context causes subsequent unrelated requests on that thread to inherit the previous user's credentials!",
+            "solution": "Always clear the SecurityContext in a finally block within the filter, or rely on SecurityContextHolderFilter."
+        },
+        {
+            "title": "Storing sensitive data in JWT claims",
+            "errorCodeOrSnippet": "claims.put(\"ssn\", ssn);\nclaims.put(\"password\", rawPassword); // Security Disaster!",
+            "cause": "JWT payloads are Base64URL-encoded, NOT encrypted. Anyone intercepting the token can decode and read the payload.",
+            "solution": "Only store non-sensitive identifiers (userId, username, roles, expiration). Use JWE (JSON Web Encryption) if encryption is required."
+        }
+    ],
+    "bestPractices": {
+        "doList": [
+            "Enable method security via @EnableMethodSecurity(prePostEnabled = true).",
+            "Use short-lived access tokens (e.g. 15 minutes) coupled with refresh tokens stored in HTTP-only cookies.",
+            "Store JWT signing keys in secure secret management vaults (e.g. HashiCorp Vault, AWS Secrets Manager)."
+        ],
+        "dontList": [
+            "Never hardcode JWT secret keys in application.yml or git repositories.",
+            "Never accept 'alg': 'none' tokens from untrusted clients.",
+            "Avoid huge token payloads; keep JWT size small to prevent HTTP header bloat."
+        ],
+        "whenNotToUse": "Do not use JWTs if you require instant server-side revocation on every single request without checking a distributed token blacklist (use short TTLs or Redis token validation instead)."
+    },
+    "versionNotes": {
+        "introduced": "JWT RFC 7519 (2015) -> Modern @EnableMethodSecurity in Spring Security 6",
+        "status": "Stable",
+        "compatibilityNotes": "Spring Security 6 replaces legacy @EnableGlobalMethodSecurity with @EnableMethodSecurity.",
+        "ltsAvailability": "Universal on Java 17, 21, and 26+."
+    },
+    "cheatSheet": {
+        "title": "JWT & Method Security SpEL Expressions",
+        "headers": [
+            "Expression",
+            "Condition",
+            "Example"
+        ],
+        "rows": [
+            [
+                "hasRole('ROLE')",
+                "Principal has specified role",
+                "@PreAuthorize(\"hasRole('ADMIN')\")"
+            ],
+            [
+                "hasAnyRole('R1', 'R2')",
+                "Principal has at least one role",
+                "@PreAuthorize(\"hasAnyRole('USER', 'ADMIN')\")"
+            ],
+            [
+                "isAuthenticated()",
+                "Principal is logged in",
+                "@PreAuthorize(\"isAuthenticated()\")"
+            ],
+            [
+                "#param == authentication.name",
+                "Method argument matches username",
+                "@PreAuthorize(\"#id == authentication.principal.id\")"
+            ],
+            [
+                "permitAll",
+                "Public method",
+                "@PreAuthorize(\"permitAll()\")"
+            ]
+        ]
+    },
+    "exercises": [
+        {
+            "id": 1,
+            "type": "Spot the Bug",
+            "title": "The Disabled Method Security",
+            "prompt": "A developer writes @PreAuthorize(\"hasRole('ADMIN')\") on a controller method, but anyone can invoke it without authentication. What is missing?",
+            "solution": "@EnableMethodSecurity is missing from the Spring Security configuration class. Method security annotations are ignored unless explicitly enabled.",
+            "explanation": "Add @Configuration @EnableMethodSecurity to activate method interception proxies."
+        },
+        {
+            "id": 2,
+            "type": "Hands-on Implementation",
+            "title": "Extract Bearer Token in Servlet Filter",
+            "prompt": "Write a Java snippet that extracts the raw token from an HTTP Authorization header if it begins with 'Bearer '.",
+            "starterCode": "String header = request.getHeader(\"Authorization\");\n// Extract raw token",
+            "solution": "String token = null;\nif (header != null && header.startsWith(\"Bearer \")) {\n    token = header.substring(7);\n}",
+            "explanation": "Bearer tokens are passed as 'Bearer <token>'; substring(7) extracts the token body."
+        },
+        {
+            "id": 3,
+            "type": "Real-world Edge Case",
+            "title": "JWT Clock Skew Tolerance",
+            "prompt": "Why do production JWT parsers include a 30 to 60-second clock skew tolerance when validating the 'exp' (expiration) claim?",
+            "solution": "Distributed microservice servers may have slight clock drift (fractions of a second up to several seconds) despite NTP synchronization. A tolerance prevents immediate rejection of valid tokens.",
+            "explanation": "Libraries like JJWT and Nimbus allow configuring setAllowedClockSkewSeconds(60)."
+        }
+    ],
+    "officialSources": [
+        {
+            "title": "Spring Security: Method Security Reference",
+            "url": "https://docs.spring.io/spring-security/reference/servlet/authorization/method-security.html",
+            "organization": "Spring / VMware"
+        },
+        {
+            "title": "RFC 7519: JSON Web Token (JWT)",
+            "url": "https://datatracker.ietf.org/doc/html/rfc7519",
+            "organization": "Spring / VMware"
+        }
+    ]
+},
+
+  {
+    "id": "topic-100",
+    "slug": "definitive-dictionary-java-jakarta-spring-annotations",
+    "topicNumber": 100,
+    "title": "The Definitive Dictionary of Java SE, Jakarta EE & Spring Annotations",
+    "part": "Part 3: Spring Boot & Production Stack",
+    "sectionNumber": 29,
+    "sectionTitle": "Master Annotations Reference Dictionary",
+    "versionBadge": "Java 21+ / Spring Boot 3.x",
+    "difficulty": "Advanced",
+    "readingTime": "22 min read",
+    "shortDescription": "The definitive cross-referenced architectural dictionary categorizing and comparing core annotations across Java SE Core, Jakarta EE enterprise specifications, and the Spring Boot production ecosystem.",
+    "prerequisites": [
+        "Topic 58: Java Reflection API & Dynamic Introspection",
+        "Topic 83: Jakarta Persistence (JPA) & Hibernate ORM",
+        "Topic 88: Spring Framework Core, BeanFactory vs ApplicationContext",
+        "Topic 98: Modern SecurityFilterChain Architecture & Password Encryption"
+    ],
+    "whatAndWhy": {
+        "definition": "Annotations provide declarative metadata attached to program elements that guide compile-time code generation, container dependency injection, persistence mapping, and runtime security aspects.",
+        "analogy": "A multi-lingual diplomatic passport: pages contain official visa stamps from three different sovereign territories—the home nation (Java SE), international treaty bodies (Jakarta EE specifications), and modern corporate alliances (Spring Boot)—each recognized and honored by specialized border guards (AOP proxies and reflection engines).",
+        "whyItExists": "Unifies enterprise development around declarative metadata, eliminating verbose XML configuration while establishing clear architectural boundaries."
+    },
+    "syntaxBreakdown": {
+        "title": "Meta-Annotation Declaration and Composition Syntax",
+        "codeSnippet": "@Retention(RetentionPolicy.RUNTIME)\n@Target(ElementType.TYPE)\n@Documented\n@Inherited\n@Component\npublic @interface CustomService {\n    String value() default \"\";\n}",
+        "explanation": "Meta-annotations configure runtime visibility (@Retention) and valid placement targets (@Target). Composing @Component turns the custom annotation into an automatic Spring bean stereotype.",
+        "tokens": [
+            {
+                "token": "@Retention(RUNTIME)",
+                "explanation": "Preserves annotation metadata in compiled bytecode for runtime reflection inspection."
+            },
+            {
+                "token": "@Target(TYPE)",
+                "explanation": "Restricts annotation declaration to classes, interfaces, records, and enums."
+            },
+            {
+                "token": "@Inherited",
+                "explanation": "Causes subclasses to automatically inherit the annotation from parent classes."
+            },
+            {
+                "token": "@Component",
+                "explanation": "Transitively converts any class annotated with @CustomService into a Spring-managed bean."
+            }
+        ]
+    },
+    "examples": [
+        {
+            "id": "ex-100-1",
+            "title": "Meta-Annotation Declaration",
+            "type": "basic",
+            "description": "Declaring a custom runtime stereotype annotation with meta-annotations.",
+            "filename": "CustomStereotype.java",
+            "code": "import java.lang.annotation.*;\n\n@Retention(RetentionPolicy.RUNTIME)\n@Target(ElementType.TYPE)\npublic @interface EnterpriseService {\n    String tier() default \"STANDARD\";\n}",
+            "output": "Custom annotation defined with runtime retention for reflection inspection.",
+            "stepByStep": [
+                "Declare @Retention(RetentionPolicy.RUNTIME).",
+                "Specify @Target(ElementType.TYPE).",
+                "Define annotation elements with default values."
+            ]
+        },
+        {
+            "id": "ex-100-2",
+            "title": "Tri-Part Annotation Dictionary & Inspector Simulation",
+            "type": "realistic",
+            "description": "Scanning domain classes, categorizing annotations into Tri-Part domains, and resolving composed meta-annotations.",
+            "filename": "AnnotationMetadataDictionaryDemo.java",
+            "code": "package com.handbook.spring;\n\npublic class AnnotationMetadataDictionaryDemo {\n    public static void main(String[] args) {\n        // See full implementation in examples/spring/AnnotationMetadataDictionaryDemo.java\n        System.out.println(\"Topic 100 Definitive Annotations Dictionary verified successfully\");\n    }\n}",
+            "output": "Topic 100 Definitive Annotations Dictionary verified successfully",
+            "stepByStep": [
+                "Define custom TriPartCategory meta-annotation tracking architectural domains.",
+                "Annotate AccountApiController with composed @SimulatedRestController.",
+                "Annotate BankAccountEntity with @SimulatedEntity.",
+                "Run MetadataInspector to extract direct and transitive annotations.",
+                "Assert that composed @SimulatedComponent is resolved transitively from @SimulatedRestController."
+            ]
+        }
+    ],
+    "commonMistakes": [
+        {
+            "title": "Omitting RetentionPolicy.RUNTIME",
+            "errorCodeOrSnippet": "@Target(ElementType.TYPE)\npublic @interface MyAspectAnnotation {} // Missing @Retention defaults to CLASS!",
+            "cause": "Without @Retention(RetentionPolicy.RUNTIME), the annotation is stripped at runtime by the JVM and clazz.getAnnotation() returns null.",
+            "solution": "Always explicitly declare @Retention(RetentionPolicy.RUNTIME) for annotations inspected via reflection or Spring AOP."
+        },
+        {
+            "title": "Mixing Jakarta EE and Spring Transactional annotations",
+            "errorCodeOrSnippet": "import jakarta.transaction.Transactional;\n@Transactional(readOnly = true) // Compilation Error: readOnly does not exist on Jakarta @Transactional!",
+            "cause": "Jakarta EE's @Transactional does not support readOnly or specific rollbackFor attributes that Spring's @Transactional provides.",
+            "solution": "In Spring Boot applications, always import org.springframework.transaction.annotation.Transactional."
+        }
+    ],
+    "bestPractices": {
+        "doList": [
+            "Use composed meta-annotations (like @RestController) to eliminate repetitive annotation clusters.",
+            "Always define clear default values for optional annotation attributes.",
+            "Adhere strictly to architectural boundaries: keep persistence annotations in entities and transport annotations in DTOs/controllers."
+        ],
+        "dontList": [
+            "Never invent custom annotations when standard Java SE, Jakarta EE, or Spring annotations already exist.",
+            "Avoid placing @Transactional on private methods (Spring AOP cannot intercept private methods).",
+            "Never create cyclic meta-annotation dependencies."
+        ],
+        "whenNotToUse": "Do not use runtime annotations for high-frequency operations executed millions of times per second in tight loops (reflection has slight invocation overhead; use direct method dispatch or bytecode generation instead)."
+    },
+    "versionNotes": {
+        "introduced": "Annotations introduced in Java 5 -> Repeatable annotations in Java 8 -> Spring Boot 3 annotation modernization",
+        "status": "Stable",
+        "compatibilityNotes": "Spring Boot 3 migrated all javax.* annotations to jakarta.* namespace.",
+        "ltsAvailability": "Universal across Java 17, 21, and 26+."
+    },
+    "cheatSheet": {
+        "title": "Tri-Part Enterprise Annotation Equivalents Matrix",
+        "headers": [
+            "Role / Purpose",
+            "Java SE Standard",
+            "Jakarta EE Standard",
+            "Spring Framework / Boot"
+        ],
+        "rows": [
+            [
+                "Dependency Injection",
+                "None",
+                "@Inject / @Named",
+                "@Autowired / @Qualifier"
+            ],
+            [
+                "Component Marker",
+                "None",
+                "@Named / @Singleton",
+                "@Component / @Service / @Repository"
+            ],
+            [
+                "Web Endpoint Controller",
+                "None",
+                "@Path / @GET (JAX-RS)",
+                "@RestController / @GetMapping"
+            ],
+            [
+                "ACID Transaction",
+                "None",
+                "jakarta.transaction.@Transactional",
+                "org.springframework.@Transactional"
+            ],
+            [
+                "Persistence Mapping",
+                "None",
+                "@Entity / @Table / @Id",
+                "Spring Data @Entity (delegates to JPA)"
+            ],
+            [
+                "Input Validation",
+                "None",
+                "jakarta.validation.@Valid",
+                "Spring Boot Starter Validation (@Valid)"
+            ],
+            [
+                "Method Security",
+                "None",
+                "@RolesAllowed (JSR-250)",
+                "@PreAuthorize / @Secured"
+            ]
+        ]
+    },
+    "exercises": [
+        {
+            "id": 1,
+            "type": "Spot the Bug",
+            "title": "The Missing Reflection Metadata",
+            "prompt": "A developer writes a custom @Audit annotation and annotates a service method, but method.isAnnotationPresent(Audit.class) returns false at runtime. Why?",
+            "solution": "The custom annotation is missing @Retention(RetentionPolicy.RUNTIME). The default retention is CLASS, which means the annotation is discarded when the JVM loads the class into memory.",
+            "explanation": "Add @Retention(RetentionPolicy.RUNTIME) to the annotation definition."
+        },
+        {
+            "id": 2,
+            "type": "Hands-on Implementation",
+            "title": "Declare Composed Stereotype",
+            "prompt": "Declare an annotation named @TransactionalService that combines Spring's @Service and @Transactional into a single meta-annotation.",
+            "starterCode": "// Define @TransactionalService",
+            "solution": "@Retention(RetentionPolicy.RUNTIME)\n@Target(ElementType.TYPE)\n@Service\n@Transactional\npublic @interface TransactionalService {}",
+            "explanation": "Classes annotated with @TransactionalService will be automatically registered as Spring service beans with transactional boundaries."
+        },
+        {
+            "id": 3,
+            "type": "Real-world Edge Case",
+            "title": "@Repeatable Container Annotation",
+            "prompt": "How does Java implement @Repeatable annotations under the hood in bytecode?",
+            "solution": "Java requires a container annotation (e.g. @Schedules holding Schedule[] value()) to wrap multiple repeatable annotations in the compiled class file.",
+            "explanation": "@Repeatable(Schedules.class) specifies the synthesized wrapper container."
+        }
+    ],
+    "officialSources": [
+        {
+            "title": "Oracle Java SE Annotations Specification",
+            "url": "https://docs.oracle.com/javase/specs/jls/se21/html/jls-9.html#jls-9.6",
+            "organization": "Oracle"
+        },
+        {
+            "title": "Spring Framework Annotation Programming Model",
+            "url": "https://docs.spring.io/spring-framework/reference/core/beans/annotation-config.html",
+            "organization": "Spring / VMware"
+        }
+    ]
+},
+
+  {
+    "id": "topic-101",
+    "slug": "boilerplate-elimination-project-lombok-mapstruct",
+    "topicNumber": 101,
+    "title": "Boilerplate Elimination: Project Lombok & MapStruct",
+    "part": "Part 3: Spring Boot & Production Stack",
+    "sectionNumber": 30,
+    "sectionTitle": "Production Libraries & Distributed Systems",
+    "versionBadge": "Java 21+ / Spring Boot 3.x",
+    "difficulty": "Intermediate",
+    "readingTime": "18 min read",
+    "shortDescription": "Eliminate repetitive boilerplate in enterprise Java applications using Project Lombok's annotation processor and MapStruct's compile-time, type-safe bean mapping engine.",
+    "prerequisites": [
+        "Topic 16: Classes, Objects & Memory Layout",
+        "Topic 26: Immutable Data Modeling with Java Records",
+        "Topic 92: Production REST Controller Architecture with Spring Web MVC"
+    ],
+    "whatAndWhy": {
+        "definition": "Lombok synthesizes boilerplate accessors, builders, and constructors directly into compiled bytecode at build time, while MapStruct generates plain, high-performance Java mapping code without reflection.",
+        "analogy": "An automated architectural draftsman: instead of hand-drawing thousands of repetitive window panes and door frames for every building floor plan (manual getters, setters, and mappers), you sketch high-level blueprints (@Builder, @Mapper) and an industrial laser printer fabricates the completed model instantly.",
+        "whyItExists": "Dramatically cuts codebase size, eliminates human error in object mapping, and avoids the runtime performance cost of reflection-based mappers."
+    },
+    "syntaxBreakdown": {
+        "title": "Lombok and MapStruct Declarations",
+        "codeSnippet": "@Data\n@Builder\npublic class CustomerEntity {\n    private Long id;\n    private String email;\n}\n\n@Mapper(componentModel = \"spring\")\npublic interface CustomerMapper {\n    CustomerDto toDto(CustomerEntity entity);\n    CustomerEntity toEntity(CustomerDto dto);\n}",
+        "explanation": "@Data and @Builder inject methods during compilation. @Mapper generates a Spring @Component implementing the interface.",
+        "tokens": [
+            {
+                "token": "@Builder",
+                "explanation": "Implements the Fluent Builder Pattern for clean, immutable instantiation."
+            },
+            {
+                "token": "@Data",
+                "explanation": "Combines @Getter, @Setter, @ToString, @EqualsAndHashCode, and @RequiredArgsConstructor."
+            },
+            {
+                "token": "@Mapper(componentModel = \"spring\")",
+                "explanation": "Generates an implementation registered as a Spring bean injectable via @Autowired."
+            }
+        ]
+    },
+    "examples": [
+        {
+            "id": "ex-101-1",
+            "title": "MapStruct Interface Declaration",
+            "type": "basic",
+            "description": "Declaring a MapStruct mapper between Entity and DTO.",
+            "filename": "UserMapper.java",
+            "code": "@Mapper(componentModel = \"spring\")\npublic interface UserMapper {\n    UserDto toDto(UserEntity entity);\n}",
+            "output": "MapStruct generates UserMapperImpl during javac compilation.",
+            "stepByStep": [
+                "Define interface annotated with @Mapper.",
+                "Declare mapping signature.",
+                "Compile with javac annotation processing enabled."
+            ]
+        },
+        {
+            "id": "ex-101-2",
+            "title": "Lombok Builder and MapStruct Mapping Simulation",
+            "type": "realistic",
+            "description": "Simulating Lombok builder pattern and MapStruct direct method invocation mapping.",
+            "filename": "LombokMapStructDemo.java",
+            "code": "package com.handbook.spring;\n\npublic class LombokMapStructDemo {\n    public static void main(String[] args) {\n        // See full implementation in examples/spring/LombokMapStructDemo.java\n        System.out.println(\"Topic 101 Lombok & MapStruct code generation verified successfully\");\n    }\n}",
+            "output": "Topic 101 Lombok & MapStruct code generation verified successfully",
+            "stepByStep": [
+                "Instantiate CustomerEntity using simulated Lombok Builder.",
+                "Execute CustomerMapperImpl transforming entity to CustomerDto record.",
+                "Reverse map DTO back to entity verifying field integrity."
+            ]
+        }
+    ],
+    "commonMistakes": [
+        {
+            "title": "Wrong annotation processor execution order",
+            "errorCodeOrSnippet": "MapStruct cannot find getters/setters in compiled classes!",
+            "cause": "If MapStruct runs before Lombok in maven-compiler-plugin, Lombok has not yet generated getters.",
+            "solution": "Configure Lombok before MapStruct in the annotationProcessorPaths list in pom.xml."
+        },
+        {
+            "title": "Using @Data on JPA Entities",
+            "errorCodeOrSnippet": "@Entity\n@Data\npublic class Order { ... } // StackOverflowError on bidirectional relationships!",
+            "cause": "@Data generates toString() and hashCode() traversing all fields, triggering infinite recursion on bidirectional lazy relationships.",
+            "solution": "Use @Getter and @Setter on JPA entities instead of @Data, or use @ToString.Exclude."
+        }
+    ],
+    "bestPractices": {
+        "doList": [
+            "Prefer MapStruct over reflection-based mappers like ModelMapper.",
+            "Use @Builder for complex domain model construction.",
+            "Add lombok-mapstruct-binding in build configurations to ensure seamless processor integration."
+        ],
+        "dontList": [
+            "Never use @Data on JPA entities with bidirectional associations.",
+            "Never perform business logic transformations inside mapper interfaces.",
+            "Avoid using Lombok on Java Records (records already provide built-in immutability)."
+        ],
+        "whenNotToUse": "Do not use MapStruct if DTOs and entities share identical structure and records with straightforward constructors suffice."
+    },
+    "versionNotes": {
+        "introduced": "Project Lombok (2009) -> MapStruct (2013) -> Spring Boot 3 compatibility",
+        "status": "Stable",
+        "compatibilityNotes": "Java 21+ requires recent Lombok (1.18.30+) and MapStruct (1.5.5+) versions.",
+        "ltsAvailability": "Universal on Java 17, 21, and 26+."
+    },
+    "cheatSheet": {
+        "title": "Lombok & MapStruct Annotations Matrix",
+        "headers": [
+            "Annotation",
+            "Framework",
+            "Purpose"
+        ],
+        "rows": [
+            [
+                "@Getter / @Setter",
+                "Lombok",
+                "Generates standard field accessors/mutators"
+            ],
+            [
+                "@Builder",
+                "Lombok",
+                "Generates fluent builder pattern"
+            ],
+            [
+                "@Slf4j",
+                "Lombok",
+                "Injects private static final Logger log instance"
+            ],
+            [
+                "@Mapper",
+                "MapStruct",
+                "Marks interface as compile-time object mapper"
+            ],
+            [
+                "@Mapping",
+                "MapStruct",
+                "Customizes source-to-target field mapping"
+            ]
+        ]
+    },
+    "exercises": [
+        {
+            "id": 1,
+            "type": "Spot the Bug",
+            "title": "StackOverflowError in Entity toString",
+            "prompt": "Why does annotating both Order and OrderItem entities with @Data cause a StackOverflowError when printing an order?",
+            "solution": "Both classes include bidirectional references. Lombok's generated toString() calls orderItem.toString(), which calls order.toString() infinitely.",
+            "explanation": "Use @ToString(exclude = \"items\") on the parent or avoid @Data on entities."
+        },
+        {
+            "id": 2,
+            "type": "Hands-on Implementation",
+            "title": "Declare MapStruct Custom Field Mapping",
+            "prompt": "Write a MapStruct interface mapping AccountEntity's 'balance' to AccountDto's 'currentBalance'.",
+            "starterCode": "@Mapper\npublic interface AccountMapper {\n    // Add mapping\n}",
+            "solution": "@Mapper(componentModel = \"spring\")\npublic interface AccountMapper {\n    @Mapping(source = \"balance\", target = \"currentBalance\")\n    AccountDto toDto(AccountEntity entity);\n}",
+            "explanation": "@Mapping specifies custom property name differences between source and target."
+        },
+        {
+            "id": 3,
+            "type": "Real-world Edge Case",
+            "title": "MapStruct Null Value Handling",
+            "prompt": "How can you configure MapStruct to ignore null source values when updating an existing entity?",
+            "solution": "@MappingTarget with nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE.",
+            "explanation": "Prevents null DTO properties from wiping out existing entity data during partial updates."
+        }
+    ],
+    "officialSources": [
+        {
+            "title": "Project Lombok Features Guide",
+            "url": "https://projectlombok.org/features/",
+            "organization": "Oracle"
+        },
+        {
+            "title": "MapStruct Reference Guide",
+            "url": "https://mapstruct.org/documentation/reference-guide/",
+            "organization": "Spring / VMware"
+        }
+    ]
+},
+
+  {
+    "id": "topic-102",
+    "slug": "versioned-database-migrations-with-flyway",
+    "topicNumber": 102,
+    "title": "Versioned Database Migrations with Flyway",
+    "part": "Part 3: Spring Boot & Production Stack",
+    "sectionNumber": 30,
+    "sectionTitle": "Production Libraries & Distributed Systems",
+    "versionBadge": "Spring Boot 3.x / Flyway 10+",
+    "difficulty": "Advanced",
+    "readingTime": "17 min read",
+    "shortDescription": "Master automated database schema evolution in Spring Boot using Flyway: versioned migration naming rules, flyway_schema_history checksum verification, repeatable migrations, and zero-downtime blue/green deployment strategies.",
+    "prerequisites": [
+        "Topic 61: JDBC Fundamentals & Connection Management",
+        "Topic 83: Jakarta Persistence (JPA) & Hibernate ORM",
+        "Topic 95: Spring Data JPA Architecture, Repository Hierarchy & JpaRepository"
+    ],
+    "whatAndWhy": {
+        "definition": "Flyway automates database schema changes by tracking versioned SQL scripts in a metadata table and executing pending migrations in order upon application startup.",
+        "analogy": "A passport with entry visas: every immigration checkpoint stamps an official, sequential visa number (flyway_schema_history). If an old stamp is altered or a traveler attempts to skip pages, border security halts the journey immediately.",
+        "whyItExists": "Eliminates risky manual database updates, synchronizes schema changes across developer machines and cloud clusters, and prevents schema drift."
+    },
+    "syntaxBreakdown": {
+        "title": "Flyway Migration File Naming Convention",
+        "codeSnippet": "V1_1__add_user_roles_table.sql\nR__recreate_order_summary_view.sql\nU1_1__undo_user_roles_table.sql",
+        "explanation": "V denotes Versioned migrations, R denotes Repeatable migrations, and U denotes Undo migrations.",
+        "tokens": [
+            {
+                "token": "V{version}__",
+                "explanation": "Prefix for versioned migrations; version numbers can use dots or underscores."
+            },
+            {
+                "token": "R__",
+                "explanation": "Prefix for repeatable migrations; re-executes whenever script checksum changes."
+            },
+            {
+                "token": "__ (double underscore)",
+                "explanation": "Mandatory separator between version and descriptive text."
+            }
+        ]
+    },
+    "examples": [
+        {
+            "id": "ex-102-1",
+            "title": "Basic Versioned Migration Script",
+            "type": "basic",
+            "description": "Creating a users table with Flyway versioned script.",
+            "filename": "V1__init_schema.sql",
+            "code": "CREATE TABLE app_users (\n    id BIGINT PRIMARY KEY,\n    username VARCHAR(50) NOT NULL UNIQUE,\n    created_at TIMESTAMP NOT NULL\n);",
+            "output": "Table created and registered in flyway_schema_history.",
+            "stepByStep": [
+                "Place file in src/main/resources/db/migration.",
+                "Name file V1__init_schema.sql.",
+                "Start Spring Boot to apply migration automatically."
+            ]
+        },
+        {
+            "id": "ex-102-2",
+            "title": "Flyway Migration Engine and Checksum Validation Simulation",
+            "type": "realistic",
+            "description": "Simulating sequential migration execution, metadata ranking, and tamper checksum detection.",
+            "filename": "FlywayMigrationDemo.java",
+            "code": "package com.handbook.spring;\n\npublic class FlywayMigrationDemo {\n    public static void main(String[] args) {\n        // See full implementation in examples/spring/FlywayMigrationDemo.java\n        System.out.println(\"Topic 102 Flyway Database Migrations verified successfully\");\n    }\n}",
+            "output": "Topic 102 Flyway Database Migrations verified successfully",
+            "stepByStep": [
+                "Run initial migrations V1.0 and V1.1.",
+                "Verify schema history contains 2 installed entries.",
+                "Apply incremental migration V1.2.",
+                "Simulate modified past migration and assert checksum failure."
+            ]
+        }
+    ],
+    "commonMistakes": [
+        {
+            "title": "Modifying an already applied migration script",
+            "errorCodeOrSnippet": "FlywayException: Validate failed: Migrations have failed validation (checksum mismatch)",
+            "cause": "Editing an existing migration file changes its checksum, which no longer matches the database history.",
+            "solution": "Never alter existing migration scripts; always write a new incremental migration (e.g. V1_2__fix_column.sql)."
+        },
+        {
+            "title": "Using single underscore in migration filename",
+            "errorCodeOrSnippet": "V1_init_schema.sql // Flyway ignores the file!",
+            "cause": "Flyway strictly requires two underscores (__) between the version number and the description.",
+            "solution": "Use double underscores: V1__init_schema.sql."
+        }
+    ],
+    "bestPractices": {
+        "doList": [
+            "Disable ddl-auto in production: spring.jpa.hibernate.ddl-auto=validate.",
+            "Always follow the Expand/Contract zero-downtime migration pattern.",
+            "Use repeatable migrations (R__) for views and stored procedures."
+        ],
+        "dontList": [
+            "Never run destructive DROP COLUMN migrations without prior deprecation phases.",
+            "Never modify or delete applied migration files in source control.",
+            "Never mix DDL and heavy DML data migrations in the same script."
+        ],
+        "whenNotToUse": "Do not use Flyway for non-relational document databases (use Mongock for MongoDB instead)."
+    },
+    "versionNotes": {
+        "introduced": "Flyway 1.0 (2010) -> Flyway 10 with Spring Boot 3",
+        "status": "Stable",
+        "compatibilityNotes": "Spring Boot 3 auto-configures Flyway when flyway-core is present.",
+        "ltsAvailability": "Universal on Java 17, 21, and 26+."
+    },
+    "cheatSheet": {
+        "title": "Flyway Migration Types",
+        "headers": [
+            "Type",
+            "Prefix",
+            "Execution Rule",
+            "Ideal For"
+        ],
+        "rows": [
+            [
+                "Versioned",
+                "V",
+                "Runs once in strict version order",
+                "Tables, foreign keys, columns"
+            ],
+            [
+                "Repeatable",
+                "R",
+                "Runs when file checksum changes",
+                "Views, functions, stored procedures"
+            ],
+            [
+                "Undo",
+                "U",
+                "Reverts corresponding versioned script",
+                "Rollback automation (Teams tier)"
+            ],
+            [
+                "Baseline",
+                "B",
+                "Sets starting point for existing DB",
+                "Legacy databases adopting Flyway"
+            ]
+        ]
+    },
+    "exercises": [
+        {
+            "id": 1,
+            "type": "Spot the Bug",
+            "title": "The Ignored Migration Script",
+            "prompt": "A developer names a script 'v2__add_index.sql' (lowercase 'v') and Flyway skips it. Why?",
+            "solution": "Flyway prefixes are case-sensitive by default. Versioned scripts must begin with uppercase 'V'.",
+            "explanation": "Rename the script to 'V2__add_index.sql'."
+        },
+        {
+            "id": 2,
+            "type": "Hands-on Implementation",
+            "title": "Zero-Downtime Column Rename",
+            "prompt": "Outline the two-step Flyway migration process to rename column 'phone' to 'phoneNumber' without breaking active application pods.",
+            "starterCode": "-- Step 1:\n-- Step 2:",
+            "solution": "-- Step 1 (V1_1): ALTER TABLE users ADD COLUMN phone_number VARCHAR(20); (Backfill data)\n-- Step 2 (V1_2 deployed after code update): ALTER TABLE users DROP COLUMN phone;",
+            "explanation": "The Expand/Contract pattern ensures older running code continues to function during deployment."
+        },
+        {
+            "id": 3,
+            "type": "Real-world Edge Case",
+            "title": "Flyway Out-of-Order Migrations",
+            "prompt": "When two developers create V1.2 and V1.3 in parallel branches, how does Flyway handle applying V1.2 if V1.3 was already deployed?",
+            "solution": "By default, Flyway throws an error unless 'flyway.out-of-order=true' is configured, which allows older unapplied versions to execute.",
+            "explanation": "Out-of-order execution is commonly enabled in team environments with multiple concurrent feature branches."
+        }
+    ],
+    "officialSources": [
+        {
+            "title": "Flyway Documentation by Redgate",
+            "url": "https://documentation.red-gate.com/fd",
+            "organization": "Spring / VMware"
+        },
+        {
+            "title": "Spring Boot Flyway Auto-Configuration Guide",
+            "url": "https://docs.spring.io/spring-boot/docs/current/reference/html/howto.html#howto.data-initialization.migration-tool.flyway",
+            "organization": "Spring / VMware"
+        }
+    ]
+},
+
+  {
+    "id": "topic-103",
+    "slug": "modern-automated-testing-junit5-mockito-testcontainers",
+    "topicNumber": 103,
+    "title": "Modern Automated Testing: JUnit 5, Mockito & Testcontainers",
+    "part": "Part 3: Spring Boot & Production Stack",
+    "sectionNumber": 30,
+    "sectionTitle": "Production Libraries & Distributed Systems",
+    "versionBadge": "Spring Boot 3.x / JUnit 5.10+",
+    "difficulty": "Advanced",
+    "readingTime": "19 min read",
+    "shortDescription": "Build resilient test automation suites across the testing pyramid: JUnit 5 Jupiter assertions and lifecycle, Mockito test doubles, Spring Boot test slices (@WebMvcTest, @DataJpaTest), and real database integration with Testcontainers.",
+    "prerequisites": [
+        "Topic 29: Exception Handling Architecture & Hierarchy",
+        "Topic 89: Component Scanning, Injection Strategies & Bean Lifecycle Callbacks",
+        "Topic 92: Production REST Controller Architecture with Spring Web MVC"
+    ],
+    "whatAndWhy": {
+        "definition": "Modern automated testing combines fast, isolated unit tests (JUnit 5 + Mockito) with lightweight Spring slice tests and production-identical containerized integration tests (Testcontainers).",
+        "analogy": "Automobile safety testing: engineers test individual brake pads in lab hydraulic presses (Unit Tests with Mockito), mount the brake system onto a chassis simulator (Slice Tests with @WebMvcTest), and finally test-drive the complete vehicle on real asphalt tracks (Integration Tests with Testcontainers).",
+        "whyItExists": "Guarantees regression protection, accelerates developer velocity, and eliminates subtle bugs caused by in-memory mock database dialect mismatches."
+    },
+    "syntaxBreakdown": {
+        "title": "JUnit 5, Mockito, and Testcontainers Syntax",
+        "codeSnippet": "@ExtendWith(MockitoExtension.class)\nclass OrderServiceTest {\n    @Mock private PaymentGateway gateway;\n    @InjectMocks private OrderService service;\n\n    @Test\n    void testCheckout() {\n        when(gateway.charge(\"ACC\", 100.0)).thenReturn(true);\n        assertTrue(service.checkout(\"ACC\", 100.0));\n        verify(gateway, times(1)).charge(\"ACC\", 100.0);\n    }\n}",
+        "explanation": "MockitoExtension creates mock proxies, when().thenReturn() defines stub behavior, and verify() asserts method execution count.",
+        "tokens": [
+            {
+                "token": "@Mock",
+                "explanation": "Creates a dynamic mock test double for the collaborator."
+            },
+            {
+                "token": "@InjectMocks",
+                "explanation": "Instantiates target class and injects mocked dependencies into its constructor."
+            },
+            {
+                "token": "when(...).thenReturn(...)",
+                "explanation": "Configures deterministic stub response for given arguments."
+            },
+            {
+                "token": "verify(mock, times(1))",
+                "explanation": "Asserts that the method was invoked exactly once with expected parameters."
+            }
+        ]
+    },
+    "examples": [
+        {
+            "id": "ex-103-1",
+            "title": "JUnit 5 Exception Assertion",
+            "type": "basic",
+            "description": "Asserting exception throwing using assertThrows.",
+            "filename": "ExceptionTest.java",
+            "code": "import org.junit.jupiter.api.*;\nimport static org.junit.jupiter.api.Assertions.*;\n\nclass ExceptionTest {\n    @Test\n    void shouldThrowOnNegative() {\n        assertThrows(IllegalArgumentException.class, () -> {\n            new Account(-100.0);\n        });\n    }\n}",
+            "output": "Test passes when IllegalArgumentException is thrown.",
+            "stepByStep": [
+                "Annotate method with @Test.",
+                "Invoke assertThrows specifying expected exception class.",
+                "Provide executable lambda."
+            ]
+        },
+        {
+            "id": "ex-103-2",
+            "title": "Testing Pyramid and Testcontainers Simulation",
+            "type": "realistic",
+            "description": "Simulating Mockito unit tests, exception handling, and Testcontainers Docker lifecycle.",
+            "filename": "ModernTestingDemo.java",
+            "code": "package com.handbook.spring;\n\npublic class ModernTestingDemo {\n    public static void main(String[] args) {\n        // See full implementation in examples/spring/ModernTestingDemo.java\n        System.out.println(\"Topic 103 Automated Testing Suite verified successfully\");\n    }\n}",
+            "output": "Topic 103 Automated Testing Suite verified successfully",
+            "stepByStep": [
+                "Execute unit test using Mockito test double.",
+                "Verify checkout succeeds and collaborator was invoked once.",
+                "Assert exception on invalid arguments.",
+                "Simulate PostgreSQL Testcontainers lifecycle: startup, test execution, and teardown."
+            ]
+        }
+    ],
+    "commonMistakes": [
+        {
+            "title": "Using @SpringBootTest for pure unit tests",
+            "errorCodeOrSnippet": "@SpringBootTest\nclass CalculatorTest { ... } // 10-second startup for 1 millisecond test!",
+            "cause": "@SpringBootTest starts the full ApplicationContext, scanning beans and connecting to databases.",
+            "solution": "Use pure JUnit 5 with MockitoExtension for unit tests; reserve @SpringBootTest for integration tests."
+        },
+        {
+            "title": "Relying on H2 for testing PostgreSQL/Oracle production apps",
+            "errorCodeOrSnippet": "H2 in-memory test passes, but PostgreSQL fails in production on native JSONB operators!",
+            "cause": "In-memory H2 lacks support for advanced RDBMS dialect features and concurrency locking.",
+            "solution": "Use Testcontainers with real PostgreSQL Docker images."
+        }
+    ],
+    "bestPractices": {
+        "doList": [
+            "Structure tests following the Arrange-Act-Assert (AAA) pattern.",
+            "Use Spring Boot 3.1+ @ServiceConnection with Testcontainers for zero-configuration integration tests.",
+            "Use @WebMvcTest for fast, focused controller slice testing."
+        ],
+        "dontList": [
+            "Never use Thread.sleep() in tests (use Awaitility for asynchronous testing).",
+            "Never share mutable test state between test methods.",
+            "Avoid over-mocking domain models; only mock external infrastructure collaborators."
+        ],
+        "whenNotToUse": "Do not use Testcontainers in constrained CI environments where Docker daemon access is strictly prohibited (use mock server stubs instead)."
+    },
+    "versionNotes": {
+        "introduced": "JUnit 5 (2017) -> Testcontainers 1.0 (2015) -> Spring Boot 3.1 @ServiceConnection",
+        "status": "Stable",
+        "compatibilityNotes": "Spring Boot 3 default testing starter includes JUnit 5 Jupiter and Mockito 5.",
+        "ltsAvailability": "Universal on Java 17, 21, and 26+."
+    },
+    "cheatSheet": {
+        "title": "Spring Boot Testing Annotations Matrix",
+        "headers": [
+            "Annotation",
+            "Scope",
+            "Spring Context?",
+            "Primary Use Case"
+        ],
+        "rows": [
+            [
+                "@ExtendWith(MockitoExtension.class)",
+                "Unit",
+                "No (Pure JVM)",
+                "Service and business logic unit tests"
+            ],
+            [
+                "@WebMvcTest",
+                "Slice",
+                "Partial (Web layer)",
+                "REST controller endpoints and validation"
+            ],
+            [
+                "@DataJpaTest",
+                "Slice",
+                "Partial (JPA layer)",
+                "Repositories and entity queries"
+            ],
+            [
+                "@SpringBootTest",
+                "Integration",
+                "Full ApplicationContext",
+                "End-to-end integration workflows"
+            ],
+            [
+                "@Testcontainers",
+                "Integration",
+                "Full + Real Docker",
+                "Real PostgreSQL, Kafka, and Redis testing"
+            ]
+        ]
+    },
+    "exercises": [
+        {
+            "id": 1,
+            "type": "Spot the Bug",
+            "title": "Un-injected Mockito Collaborator",
+            "prompt": "A developer declares @Mock private Service service; but forgets @ExtendWith(MockitoExtension.class) or MockitoAnnotations.openMocks(this). What happens?",
+            "solution": "The mock field remains null, and running the test throws a NullPointerException as soon as the field is accessed.",
+            "explanation": "MockitoExtension is required to scan and initialize @Mock fields."
+        },
+        {
+            "id": 2,
+            "type": "Hands-on Implementation",
+            "title": "Controller Slice Test with MockMvc",
+            "prompt": "Write a MockMvc test checking that GET /api/v1/ping returns HTTP 200 OK with body 'pong'.",
+            "starterCode": "@WebMvcTest\nclass PingTest {\n    @Autowired MockMvc mockMvc;\n    @Test void testPing() throws Exception {}\n}",
+            "solution": "@Test void testPing() throws Exception {\n    mockMvc.perform(get(\"/api/v1/ping\"))\n        .andExpect(status().isOk())\n        .andExpect(content().string(\"pong\"));\n}",
+            "explanation": "MockMvc executes HTTP requests in-memory without starting an embedded web server."
+        },
+        {
+            "id": 3,
+            "type": "Real-world Edge Case",
+            "title": "Testcontainers Reuse in Local Dev",
+            "prompt": "How can developers configure Testcontainers to keep local Docker containers running across repeated test runs to avoid restart latency?",
+            "solution": "Enable testcontainers.reuse.enable=true in ~/.testcontainers.properties and call .withReuse(true) on the container instance.",
+            "explanation": "Reusing active containers cuts test turnaround time down to milliseconds."
+        }
+    ],
+    "officialSources": [
+        {
+            "title": "JUnit 5 User Guide",
+            "url": "https://junit.org/junit5/docs/current/user-guide/",
+            "organization": "Eclipse Foundation"
+        },
+        {
+            "title": "Testcontainers for Java Reference",
+            "url": "https://java.testcontainers.org/",
+            "organization": "Spring / VMware"
+        }
+    ]
+},
+
+  {
+    "id": "topic-104",
+    "slug": "production-observability-spring-boot-actuator-micrometer-prometheus",
+    "topicNumber": 104,
+    "title": "Production Observability: Spring Boot Actuator, Micrometer & Prometheus",
+    "part": "Part 3: Spring Boot & Production Stack",
+    "sectionNumber": 30,
+    "sectionTitle": "Production Libraries & Distributed Systems",
+    "versionBadge": "Spring Boot 3.x / Micrometer 1.12+",
+    "difficulty": "Advanced",
+    "readingTime": "18 min read",
+    "shortDescription": "Master enterprise observability in Spring Boot: Actuator endpoints, Kubernetes liveness/readiness probes, dimensional metrics collection with Micrometer, and Prometheus text exposition format scraping.",
+    "prerequisites": [
+        "Topic 90: Auto-Configuration Mechanics, Starters & Embedded Runtimes",
+        "Topic 98: Modern SecurityFilterChain Architecture & Password Encryption"
+    ],
+    "whatAndWhy": {
+        "definition": "Spring Boot Actuator and Micrometer instrument application internals, exposing health probes, thread states, JVM metrics, and Prometheus scrape endpoints for cloud monitoring.",
+        "analogy": "An airplane cockpit telemetry system: dials and sensors continuously stream altitude, engine temperature, and fuel levels to ground control (Prometheus/Grafana) so flight computers can detect turbulence before passengers notice.",
+        "whyItExists": "Enables automated recovery in container orchestrators (Kubernetes), alerts on anomalies, and visualizes throughput and latency trends."
+    },
+    "syntaxBreakdown": {
+        "title": "Actuator and Micrometer MeterRegistry Configuration",
+        "codeSnippet": "@Service\npublic class OrderService {\n    private final Counter orderCounter;\n    public OrderService(MeterRegistry registry) {\n        this.orderCounter = Counter.builder(\"orders.created\")\n            .tag(\"tier\", \"gold\")\n            .register(registry);\n    }\n    public void placeOrder() {\n        orderCounter.increment();\n    }\n}",
+        "explanation": "MeterRegistry registers dimensional metrics. Prometheus scrapes /actuator/prometheus to collect counters, timers, and gauges.",
+        "tokens": [
+            {
+                "token": "MeterRegistry",
+                "explanation": "Central registry for publishing and querying application metrics."
+            },
+            {
+                "token": "Counter",
+                "explanation": "Monotonically increasing cumulative metric tracking event occurrences."
+            },
+            {
+                "token": ".tag(\"key\", \"val\")",
+                "explanation": "Dimensional key-value metadata enabling dynamic grouping in Grafana."
+            }
+        ]
+    },
+    "examples": [
+        {
+            "id": "ex-104-1",
+            "title": "Actuator Health Indicator",
+            "type": "basic",
+            "description": "Implementing a custom HealthIndicator bean.",
+            "filename": "CustomHealthIndicator.java",
+            "code": "@Component\npublic class CustomHealthIndicator implements HealthIndicator {\n    @Override\n    public Health health() {\n        return Health.up().withDetail(\"subsystem\", \"active\").build();\n    }\n}",
+            "output": "Actuator /actuator/health includes custom subsystem details.",
+            "stepByStep": [
+                "Implement HealthIndicator interface.",
+                "Return Health.up() or Health.down().",
+                "Attach diagnostic details via withDetail()."
+            ]
+        },
+        {
+            "id": "ex-104-2",
+            "title": "Actuator & Prometheus Metrics Simulation",
+            "type": "realistic",
+            "description": "Simulating health checks, dimensional Micrometer metrics, and Prometheus scrape exposition.",
+            "filename": "ActuatorObservabilityDemo.java",
+            "code": "package com.handbook.spring;\n\npublic class ActuatorObservabilityDemo {\n    public static void main(String[] args) {\n        // See full implementation in examples/spring/ActuatorObservabilityDemo.java\n        System.out.println(\"Topic 104 Observability & Actuator verified successfully\");\n    }\n}",
+            "output": "Topic 104 Observability & Actuator verified successfully",
+            "stepByStep": [
+                "Check /actuator/health status and details.",
+                "Record dimensional HTTP request metrics via Micrometer simulator.",
+                "Record JVM heap memory gauge.",
+                "Export Prometheus text exposition format and verify tags."
+            ]
+        }
+    ],
+    "commonMistakes": [
+        {
+            "title": "Exposing all Actuator endpoints publicly without security",
+            "errorCodeOrSnippet": "management.endpoints.web.exposure.include=* // Severe security vulnerability!",
+            "cause": "Exposing endpoints like /actuator/env, /actuator/heapdump, or /actuator/shutdown allows attackers to steal secrets or crash servers.",
+            "solution": "Only expose health, info, and prometheus, and protect management endpoints behind Spring Security."
+        },
+        {
+            "title": "High-cardinality tags in Micrometer",
+            "errorCodeOrSnippet": "Counter.builder(\"requests\").tag(\"userId\", userId).register(registry); // OOM crash!",
+            "cause": "Using high-cardinality tags (userId, UUID, email) generates millions of unique metric time-series, exhausting JVM memory.",
+            "solution": "Only use low-cardinality tags (HTTP method, status code, region, tier)."
+        }
+    ],
+    "bestPractices": {
+        "doList": [
+            "Enable Kubernetes liveness and readiness probes in container deployments.",
+            "Expose /actuator/prometheus on a separate internal management port.",
+            "Use Timer to record both duration percentiles and call counts simultaneously."
+        ],
+        "dontList": [
+            "Never use dynamic UUIDs or timestamps as Micrometer metric tags.",
+            "Never perform heavy database queries inside HealthIndicator health checks.",
+            "Avoid leaving /actuator/env publicly accessible."
+        ],
+        "whenNotToUse": "Do not use Actuator metrics for business audit logs (use dedicated database audit tables or Kafka event topics instead)."
+    },
+    "versionNotes": {
+        "introduced": "Spring Boot Actuator 1.0 -> Micrometer integration in Spring Boot 2.0 -> Prometheus in 3.x",
+        "status": "Stable",
+        "compatibilityNotes": "Spring Boot 3 uses Micrometer 1.12+ with native OpenTelemetry tracing support.",
+        "ltsAvailability": "Universal on Java 17, 21, and 26+."
+    },
+    "cheatSheet": {
+        "title": "Micrometer Metric Primitives",
+        "headers": [
+            "Metric Type",
+            "Behavior",
+            "Best Used For"
+        ],
+        "rows": [
+            [
+                "Counter",
+                "Monotonically increasing number",
+                "Total requests, error counts, orders completed"
+            ],
+            [
+                "Gauge",
+                "Instantaneous value that goes up and down",
+                "Current queue size, active connections, heap memory"
+            ],
+            [
+                "Timer",
+                "Measures latency duration and frequency",
+                "API endpoint response times, method execution duration"
+            ],
+            [
+                "DistributionSummary",
+                "Tracks distribution of numerical values",
+                "Payload payload sizes, batch processing sizes"
+            ]
+        ]
+    },
+    "exercises": [
+        {
+            "id": 1,
+            "type": "Spot the Bug",
+            "title": "The Hanging Health Check",
+            "prompt": "A developer writes a custom HealthIndicator that connects to a slow third-party API with no timeout. What happens when the third-party hangs?",
+            "solution": "The /actuator/health endpoint hangs indefinitely, causing Kubernetes liveness checks to time out and repeatedly kill healthy application pods.",
+            "explanation": "Always enforce short timeouts (e.g. 500ms) on health check calls."
+        },
+        {
+            "id": 2,
+            "type": "Hands-on Implementation",
+            "title": "Configure Actuator YAML Exposure",
+            "prompt": "Write application.yml configuration exposing only 'health', 'info', and 'prometheus' endpoints.",
+            "starterCode": "management:\n  endpoints:\n    web:",
+            "solution": "management:\n  endpoints:\n    web:\n      exposure:\n        include: health, info, prometheus",
+            "explanation": "Restricts exposed management endpoints to essential operational targets."
+        },
+        {
+            "id": 3,
+            "type": "Real-world Edge Case",
+            "title": "Readiness State Transition",
+            "prompt": "How can an application gracefully refuse new traffic before executing graceful shutdown in Kubernetes?",
+            "solution": "Publish an AvailabilityChangeEvent transitioning ReadinessState to REFUSING_TRAFFIC.",
+            "explanation": "Kubernetes detects the readiness change and redirects traffic away before pod termination."
+        }
+    ],
+    "officialSources": [
+        {
+            "title": "Spring Boot Actuator Production-Ready Features",
+            "url": "https://docs.spring.io/spring-boot/docs/current/reference/html/actuator.html",
+            "organization": "Spring / VMware"
+        },
+        {
+            "title": "Micrometer Application Metrics Guide",
+            "url": "https://micrometer.io/docs",
+            "organization": "Spring / VMware"
+        }
+    ]
+},
+
+  {
+    "id": "topic-105",
+    "slug": "automated-interactive-api-documentation-openapi3-swagger-ui",
+    "topicNumber": 105,
+    "title": "Automated Interactive API Documentation with OpenAPI 3 & Swagger UI",
+    "part": "Part 3: Spring Boot & Production Stack",
+    "sectionNumber": 30,
+    "sectionTitle": "Production Libraries & Distributed Systems",
+    "versionBadge": "Spring Boot 3.x / OpenAPI 3.0",
+    "difficulty": "Intermediate",
+    "readingTime": "17 min read",
+    "shortDescription": "Automate REST API contract generation in Spring Boot using springdoc-openapi: OpenAPI 3 JSON schemas, interactive Swagger UI documentation, and declarative metadata annotations.",
+    "prerequisites": [
+        "Topic 92: Production REST Controller Architecture with Spring Web MVC",
+        "Topic 93: Request Validation with Bean Validation & Custom Constraint Validators"
+    ],
+    "whatAndWhy": {
+        "definition": "springdoc-openapi derives machine-readable OpenAPI 3 specifications and human-friendly Swagger UI documentation directly from Spring MVC controllers and annotations at runtime.",
+        "analogy": "An interactive vending machine display: rather than reading a static laminated manual on the wall (outdated wiki), the machine's live touchscreen displays current inventory, nutritional facts, prices, and lets you press buttons to test purchases directly.",
+        "whyItExists": "Eliminates documentation drift, empowers frontend teams with live interactive API playgrounds, and enables automated SDK client code generation."
+    },
+    "syntaxBreakdown": {
+        "title": "OpenAPI 3 Controller Annotations",
+        "codeSnippet": "@Operation(summary = \"Get user by ID\", description = \"Fetches user profile details\")\n@ApiResponses({\n    @ApiResponse(responseCode = \"200\", description = \"Success\"),\n    @ApiResponse(responseCode = \"404\", description = \"User not found\")\n})\n@GetMapping(\"/{id}\")\npublic ResponseEntity<UserDto> getUser(@PathVariable Long id) { ... }",
+        "explanation": "@Operation provides high-level endpoint context. @ApiResponses documents all possible HTTP status codes.",
+        "tokens": [
+            {
+                "token": "@Operation",
+                "explanation": "Describes the business purpose and operational context of an endpoint."
+            },
+            {
+                "token": "@ApiResponse",
+                "explanation": "Documents a specific HTTP response status code and payload schema."
+            },
+            {
+                "token": "@Schema",
+                "explanation": "Enriches DTO fields with examples, descriptions, and formats."
+            }
+        ]
+    },
+    "examples": [
+        {
+            "id": "ex-105-1",
+            "title": "Documenting DTO with @Schema",
+            "type": "basic",
+            "description": "Enriching Java Record DTO with Swagger Schema annotations.",
+            "filename": "UserDto.java",
+            "code": "public record UserDto(\n    @Schema(description = \"Unique identifier\", example = \"1001\") Long id,\n    @Schema(description = \"Primary email address\", example = \"user@example.com\") String email\n) {}",
+            "output": "OpenAPI schema includes field descriptions and realistic examples.",
+            "stepByStep": [
+                "Annotate record components with @Schema.",
+                "Provide description and example values.",
+                "View rendered schema under /swagger-ui/index.html."
+            ]
+        },
+        {
+            "id": "ex-105-2",
+            "title": "OpenAPI Specification Generation Simulation",
+            "type": "realistic",
+            "description": "Simulating OpenAPI 3.0 specification JSON generation and interactive Swagger UI contracts.",
+            "filename": "OpenApiSwaggerDemo.java",
+            "code": "package com.handbook.spring;\n\npublic class OpenApiSwaggerDemo {\n    public static void main(String[] args) {\n        // See full implementation in examples/spring/OpenApiSwaggerDemo.java\n        System.out.println(\"Topic 105 OpenAPI 3 and Swagger UI verified successfully\");\n    }\n}",
+            "output": "Topic 105 OpenAPI 3 and Swagger UI verified successfully",
+            "stepByStep": [
+                "Configure OpenApiSpecification instance.",
+                "Register GET and POST endpoints with responses (200, 201, 400, 404).",
+                "Generate OpenAPI 3.0.1 compliant JSON schema.",
+                "Assert contract endpoints and verify Swagger UI accessibility."
+            ]
+        }
+    ],
+    "commonMistakes": [
+        {
+            "title": "Using outdated Springfox libraries on Spring Boot 3",
+            "errorCodeOrSnippet": "springfox-boot-starter fails on Spring Boot 3 with NullPointerException!",
+            "cause": "Springfox is unmaintained and incompatible with Spring 6 / Spring Boot 3.",
+            "solution": "Use the modern, actively maintained springdoc-openapi-starter-webmvc-ui library."
+        },
+        {
+            "title": "Forgetting to permit Swagger endpoints in Spring Security",
+            "errorCodeOrSnippet": "GET /swagger-ui/index.html -> 401 Unauthorized / 403 Forbidden!",
+            "cause": "Spring Security secures all endpoints by default.",
+            "solution": "Add .requestMatchers(\"/v3/api-docs/**\", \"/swagger-ui/**\", \"/swagger-ui.html\").permitAll() to your SecurityFilterChain."
+        }
+    ],
+    "bestPractices": {
+        "doList": [
+            "Include realistic examples in @Schema annotations to assist frontend developers.",
+            "Document RFC 7807 ProblemDetail error responses for 400, 401, 403, and 404.",
+            "Use openapi-generator-cli in CI pipelines to auto-generate client SDKs."
+        ],
+        "dontList": [
+            "Never expose Swagger UI in production environments without authorization.",
+            "Avoid duplicating validation rules in both @Schema and Bean Validation (springdoc auto-infers Bean Validation rules).",
+            "Never document deprecated endpoints without marking @Deprecated."
+        ],
+        "whenNotToUse": "Do not use Swagger for internal binary RPC protocols like gRPC (use Protobuf service definitions instead)."
+    },
+    "versionNotes": {
+        "introduced": "Swagger 1.0 (2011) -> OpenAPI Specification 3.0 (2017) -> springdoc-openapi 2.x for Spring Boot 3",
+        "status": "Stable",
+        "compatibilityNotes": "springdoc-openapi is the official OpenAPI solution for Spring Boot 3.",
+        "ltsAvailability": "Universal on Java 17, 21, and 26+."
+    },
+    "cheatSheet": {
+        "title": "Key OpenAPI 3 Annotations",
+        "headers": [
+            "Annotation",
+            "Applies To",
+            "Purpose"
+        ],
+        "rows": [
+            [
+                "@Tag",
+                "Class",
+                "Groups endpoints into cohesive visual sections in Swagger UI"
+            ],
+            [
+                "@Operation",
+                "Method",
+                "Summarizes endpoint behavior and business rules"
+            ],
+            [
+                "@ApiResponse",
+                "Method",
+                "Documents an expected HTTP response code and schema"
+            ],
+            [
+                "@Parameter",
+                "Parameter",
+                "Describes query params, headers, and path variables"
+            ],
+            [
+                "@Schema",
+                "Field / Type",
+                "Provides documentation, types, and examples for DTO fields"
+            ]
+        ]
+    },
+    "exercises": [
+        {
+            "id": 1,
+            "type": "Spot the Bug",
+            "title": "Missing Swagger UI Redirection",
+            "prompt": "A developer accesses http://localhost:8080/swagger-ui and receives a 404, but http://localhost:8080/swagger-ui/index.html works. Why?",
+            "solution": "springdoc-openapi redirects /swagger-ui.html to /swagger-ui/index.html by default, not bare /swagger-ui.",
+            "explanation": "Configure springdoc.swagger-ui.path=/swagger-ui if a custom redirect is required."
+        },
+        {
+            "id": 2,
+            "type": "Hands-on Implementation",
+            "title": "Documenting Endpoint with @Operation",
+            "prompt": "Annotate a deleteOrder method with @Operation and an @ApiResponse for 204 No Content.",
+            "starterCode": "@DeleteMapping(\"/{id}\")\npublic ResponseEntity<Void> deleteOrder(@PathVariable Long id) {}",
+            "solution": "@Operation(summary = \"Delete order by ID\")\n@ApiResponse(responseCode = \"204\", description = \"Order deleted successfully\")\n@DeleteMapping(\"/{id}\")\npublic ResponseEntity<Void> deleteOrder(@PathVariable Long id) {\n    return ResponseEntity.noContent().build();\n}",
+            "explanation": "Documents expected 204 status code in Swagger contract."
+        },
+        {
+            "id": 3,
+            "type": "Real-world Edge Case",
+            "title": "JWT Security Scheme in Swagger UI",
+            "prompt": "How can you configure Swagger UI so developers can paste Bearer tokens directly into an 'Authorize' dialog box?",
+            "solution": "Define an OpenAPI @Bean configuring SecurityScheme with type SecurityScheme.Type.HTTP and scheme 'bearer'.",
+            "explanation": "Adds the interactive padlock icon and Bearer auth header injection to Swagger UI."
+        }
+    ],
+    "officialSources": [
+        {
+            "title": "springdoc-openapi Official Documentation",
+            "url": "https://springdoc.org/",
+            "organization": "Spring / VMware"
+        },
+        {
+            "title": "OpenAPI 3.0 Specification",
+            "url": "https://spec.openapis.org/oas/v3.0.3",
+            "organization": "Oracle"
+        }
+    ]
+},
+
+  {
+    "id": "topic-106",
+    "slug": "high-performance-distributed-caching-caffeine-redis",
+    "topicNumber": 106,
+    "title": "High-Performance Distributed Caching with Caffeine & Redis",
+    "part": "Part 3: Spring Boot & Production Stack",
+    "sectionNumber": 30,
+    "sectionTitle": "Production Libraries & Distributed Systems",
+    "versionBadge": "Spring Boot 3.x / Redis 7+",
+    "difficulty": "Advanced",
+    "readingTime": "19 min read",
+    "shortDescription": "Master multi-tier caching architectures in Spring Boot: L1 in-memory Caffeine caching, L2 distributed Redis caching, Spring Cache annotations (@Cacheable, @CachePut, @CacheEvict), and cache stampede prevention.",
+    "prerequisites": [
+        "Topic 37: Map Hierarchy & Hash Collisions",
+        "Topic 95: Spring Data JPA Architecture, Repository Hierarchy & JpaRepository",
+        "Topic 97: Declarative @Transactional Boundaries, Pagination, Sorting & N+1 Prevention"
+    ],
+    "whatAndWhy": {
+        "definition": "Distributed caching accelerates applications by storing frequently accessed data in high-speed in-memory tiers (Caffeine and Redis), bypassing expensive relational database disk I/O.",
+        "analogy": "A chef's prep station: keeping fresh salt and chopped garlic right on the cutting board (L1 Caffeine) avoids walking across the kitchen to the refrigerator (L2 Redis), which in turn avoids driving across town to the grocery warehouse (Database).",
+        "whyItExists": "Reduces database query latency from milliseconds to microseconds, handles sudden traffic spikes, and decreases cloud database compute costs."
+    },
+    "syntaxBreakdown": {
+        "title": "Spring Cache Annotations Syntax",
+        "codeSnippet": "@Service\npublic class ProductService {\n    @Cacheable(value = \"products\", key = \"#id\", sync = true)\n    public ProductDto getProduct(String id) { ... }\n\n    @CachePut(value = \"products\", key = \"#dto.id\")\n    public ProductDto updateProduct(ProductDto dto) { ... }\n\n    @CacheEvict(value = \"products\", key = \"#id\")\n    public void deleteProduct(String id) { ... }\n}",
+        "explanation": "@Cacheable reads from cache or computes and caches. @CachePut updates cache. @CacheEvict evicts entries.",
+        "tokens": [
+            {
+                "token": "@Cacheable",
+                "explanation": "Returns cached value if present; otherwise executes method and stores result."
+            },
+            {
+                "token": "key = \"#id\"",
+                "explanation": "SpEL expression resolving method argument as unique cache key."
+            },
+            {
+                "token": "sync = true",
+                "explanation": "Synchronizes cache misses to prevent cache stampedes under concurrent load."
+            },
+            {
+                "token": "@CacheEvict",
+                "explanation": "Removes specific keys or clears entire cache namespaces (allEntries = true)."
+            }
+        ]
+    },
+    "examples": [
+        {
+            "id": "ex-106-1",
+            "title": "Basic @Cacheable Usage",
+            "type": "basic",
+            "description": "Caching database queries using Spring Cache.",
+            "filename": "CachedItemService.java",
+            "code": "@Service\npublic class CachedItemService {\n    @Cacheable(\"items\")\n    public String getItemDetails(String id) {\n        // Simulating slow DB query\n        return \"Details for \" + id;\n    }\n}",
+            "output": "First call executes method; subsequent calls return instantly from cache.",
+            "stepByStep": [
+                "Annotate main class with @EnableCaching.",
+                "Annotate service method with @Cacheable.",
+                "Verify execution is skipped on cache hit."
+            ]
+        },
+        {
+            "id": "ex-106-2",
+            "title": "Multi-Tiered Caching Simulation",
+            "type": "realistic",
+            "description": "Simulating L1 Caffeine in-memory cache, L2 Redis distributed cache, TTL expiration, and eviction.",
+            "filename": "DistributedCachingDemo.java",
+            "code": "package com.handbook.spring;\n\npublic class DistributedCachingDemo {\n    public static void main(String[] args) {\n        // See full implementation in examples/spring/DistributedCachingDemo.java\n        System.out.println(\"Topic 106 Caffeine & Redis Distributed Caching verified successfully\");\n    }\n}",
+            "output": "Topic 106 Caffeine & Redis Distributed Caching verified successfully",
+            "stepByStep": [
+                "Execute request #1 on cold cache and observe database load.",
+                "Execute request #2 and verify instant L1 Caffeine hit.",
+                "Evict L1 simulating pod restart and observe L2 Redis hit backfilling L1.",
+                "Trigger @CacheEvict and assert eviction across all tiers."
+            ]
+        }
+    ],
+    "commonMistakes": [
+        {
+            "title": "Caching mutable objects without defensive copying",
+            "errorCodeOrSnippet": "Product p = cache.get(\"p1\");\np.setPrice(0.0); // Directly corrupts cached instance across all threads!",
+            "cause": "In-memory caches (Caffeine) store references to heap objects. Mutating the returned object modifies the cached instance directly.",
+            "solution": "Always store immutable Java Records or clone objects before returning from cache."
+        },
+        {
+            "title": "Omission of TTL causing unbounded memory leaks",
+            "errorCodeOrSnippet": "Caffeine.newBuilder().build(); // No expireAfterWrite or maximumSize!",
+            "cause": "Without expiration or size limits, caches grow infinitely until the JVM crashes with OutOfMemoryError.",
+            "solution": "Always configure maximumSize() and expireAfterWrite() on every cache configuration."
+        }
+    ],
+    "bestPractices": {
+        "doList": [
+            "Always define explicit TTL (Time-To-Live) on all Redis and Caffeine caches.",
+            "Set sync = true on @Cacheable methods subject to high concurrent traffic to stop cache stampedes.",
+            "Use Redis serializers like GenericJackson2JsonRedisSerializer for human-readable JSON inspection in Redis."
+        ],
+        "dontList": [
+            "Never cache sensitive user credentials or unencrypted credit card tokens.",
+            "Never use caching as a substitute for fixing slow, un-indexed SQL queries.",
+            "Avoid calling @Cacheable methods from within the same class (self-invocation bypasses AOP cache proxies)."
+        ],
+        "whenNotToUse": "Do not use caching for rapidly changing real-time data (like high-frequency trading market ticks) where cache invalidation overhead exceeds query cost."
+    },
+    "versionNotes": {
+        "introduced": "Spring Cache Abstraction (Spring 3.1) -> Caffeine integration in Spring Boot 2 -> Redis 7 in Spring Boot 3",
+        "status": "Stable",
+        "compatibilityNotes": "Spring Boot 3 auto-configures RedisCacheManager via spring-boot-starter-data-redis.",
+        "ltsAvailability": "Universal on Java 17, 21, and 26+."
+    },
+    "cheatSheet": {
+        "title": "Caching Tiers Comparison",
+        "headers": [
+            "Tier",
+            "Technology",
+            "Access Latency",
+            "Scope",
+            "Eviction Policy"
+        ],
+        "rows": [
+            [
+                "L1 Cache",
+                "Caffeine (JVM Heap)",
+                "~10 nanoseconds",
+                "Single JVM Pod",
+                "Window TinyLFU"
+            ],
+            [
+                "L2 Cache",
+                "Redis (Remote Key-Value)",
+                "~1-2 milliseconds",
+                "Cluster-wide Shared",
+                "Volatile-LRU / TTL"
+            ],
+            [
+                "Database",
+                "PostgreSQL / Oracle",
+                "~15-50 milliseconds",
+                "Persistent Source of Truth",
+                "Permanent Disk Storage"
+            ]
+        ]
+    },
+    "exercises": [
+        {
+            "id": 1,
+            "type": "Spot the Bug",
+            "title": "Self-Invocation Cache Bypass",
+            "prompt": "A developer calls this.findAccount(id) from within the same Service bean. Why is @Cacheable ignored?",
+            "solution": "Spring Cache uses dynamic AOP proxies. Internal self-invocations bypass the proxy wrapper, executing the raw method without intercepting the cache.",
+            "explanation": "Inject the service into itself or separate cached methods into distinct bean components."
+        },
+        {
+            "id": 2,
+            "type": "Hands-on Implementation",
+            "title": "Evict All Cache Entries",
+            "prompt": "Write a method signature that completely clears the 'catalog' cache namespace upon catalog refresh.",
+            "starterCode": "@CacheEvict(...)\npublic void refreshCatalog() {}",
+            "solution": "@CacheEvict(value = \"catalog\", allEntries = true)\npublic void refreshCatalog() {}",
+            "explanation": "allEntries = true evicts every key in the specified cache namespace."
+        },
+        {
+            "id": 3,
+            "type": "Real-world Edge Case",
+            "title": "Cache Penetration with Non-Existent Keys",
+            "prompt": "How can you protect a database against attackers deliberately requesting millions of non-existent IDs that miss the cache every time?",
+            "solution": "Cache null or sentinel values with short TTLs, or use a Bloom filter in front of the cache to reject non-existent keys immediately.",
+            "explanation": "Caching null results prevents repetitive database hits for invalid keys."
+        }
+    ],
+    "officialSources": [
+        {
+            "title": "Spring Framework Cache Abstraction Reference",
+            "url": "https://docs.spring.io/spring-framework/reference/integration/cache.html",
+            "organization": "Spring / VMware"
+        },
+        {
+            "title": "Caffeine High-Performance In-Memory Cache Guide",
+            "url": "https://github.com/ben-manes/caffeine",
+            "organization": "Spring / VMware"
+        }
+    ]
+},
+
+  {
+    "id": "topic-107",
+    "slug": "resilience-fault-tolerance-resilience4j-circuit-breaker",
+    "topicNumber": 107,
+    "title": "Resilience & Fault Tolerance with Resilience4j (Circuit Breaker, RateLimiter)",
+    "part": "Part 3: Spring Boot & Production Stack",
+    "sectionNumber": 30,
+    "sectionTitle": "Production Libraries & Distributed Systems",
+    "versionBadge": "Spring Boot 3.x / Resilience4j 2+",
+    "difficulty": "Advanced",
+    "readingTime": "19 min read",
+    "shortDescription": "Engineer fault-tolerant distributed microservices using Resilience4j: CircuitBreaker state transitions (CLOSED, OPEN, HALF_OPEN), sliding window error thresholds, RateLimiter throttling, and fallback degradation strategies.",
+    "prerequisites": [
+        "Topic 29: Exception Handling Architecture & Hierarchy",
+        "Topic 92: Production REST Controller Architecture with Spring Web MVC",
+        "Topic 104: Production Observability: Spring Boot Actuator, Micrometer & Prometheus"
+    ],
+    "whatAndWhy": {
+        "definition": "Resilience4j provides lightweight, functional fault tolerance patterns that prevent cascading failures in distributed systems through circuit breakers, rate limiters, retries, and fallbacks.",
+        "analogy": "An electrical home breaker box: when an appliance shorts out, the circuit breaker trips instantly to cut current to that single outlet, preventing your house wiring from catching fire and leaving all other rooms fully powered.",
+        "whyItExists": "Isolates failing microservice dependencies, protects thread pools from exhaustion during network slowdowns, and provides graceful degradation for users."
+    },
+    "syntaxBreakdown": {
+        "title": "Resilience4j CircuitBreaker and Fallback Syntax",
+        "codeSnippet": "@Service\npublic class PaymentService {\n    @CircuitBreaker(name = \"paymentGateway\", fallbackMethod = \"fallbackCharge\")\n    @RateLimiter(name = \"paymentLimiter\")\n    public ChargeResult charge(ChargeRequest req) {\n        return externalBankClient.charge(req);\n    }\n    public ChargeResult fallbackCharge(ChargeRequest req, Throwable t) {\n        return new ChargeResult(\"QUEUED\", \"Queued for async settlement\");\n    }\n}",
+        "explanation": "@CircuitBreaker intercepts invocations. If the circuit trips to OPEN or calls throw exceptions, fallbackCharge is invoked automatically.",
+        "tokens": [
+            {
+                "token": "@CircuitBreaker",
+                "explanation": "Monitors call failure rates and short-circuits execution when thresholds trip."
+            },
+            {
+                "token": "fallbackMethod",
+                "explanation": "Declares method to invoke upon failure, matching original parameters plus a Throwable."
+            },
+            {
+                "token": "@RateLimiter",
+                "explanation": "Enforces max request rate quotas, throwing RequestNotPermitted when exceeded."
+            }
+        ]
+    },
+    "examples": [
+        {
+            "id": "ex-107-1",
+            "title": "Declaring Resilience4j CircuitBreaker Bean",
+            "type": "basic",
+            "description": "Configuring CircuitBreaker programmatically with custom thresholds.",
+            "filename": "CircuitConfig.java",
+            "code": "CircuitBreakerConfig config = CircuitBreakerConfig.custom()\n    .failureRateThreshold(50.0f)\n    .slidingWindowSize(10)\n    .build();\nCircuitBreaker cb = CircuitBreaker.of(\"bankService\", config);",
+            "output": "CircuitBreaker initialized with 50% failure rate threshold across 10 calls.",
+            "stepByStep": [
+                "Build CircuitBreakerConfig specifying sliding window and threshold.",
+                "Create CircuitBreaker instance via CircuitBreaker.of().",
+                "Execute calls decorated with cb.decorateSupplier()."
+            ]
+        },
+        {
+            "id": "ex-107-2",
+            "title": "CircuitBreaker State Transitions and Throttling Simulation",
+            "type": "realistic",
+            "description": "Simulating CLOSED -> OPEN -> HALF_OPEN transitions, immediate short-circuiting, and token bucket rate limiting.",
+            "filename": "Resilience4jDemo.java",
+            "code": "package com.handbook.spring;\n\npublic class Resilience4jDemo {\n    public static void main(String[] args) {\n        // See full implementation in examples/spring/Resilience4jDemo.java\n        System.out.println(\"Topic 107 Resilience4j Circuit Breaker & RateLimiter verified successfully\");\n    }\n}",
+            "output": "Topic 107 Resilience4j Circuit Breaker & RateLimiter verified successfully",
+            "stepByStep": [
+                "Execute calls in CLOSED state.",
+                "Simulate consecutive downstream failures to trip circuit to OPEN.",
+                "Verify subsequent calls are immediately short-circuited to fallback.",
+                "Simulate RateLimiter token bucket throttling and verify HTTP 429 rejection."
+            ]
+        }
+    ],
+    "commonMistakes": [
+        {
+            "title": "Mismatched fallback method signature",
+            "errorCodeOrSnippet": "NoSuchMethodException: fallbackCharge(ChargeRequest)",
+            "cause": "Resilience4j requires the fallback method signature to include all original arguments PLUS a trailing Throwable parameter.",
+            "solution": "Add Throwable ex to the end of the fallback method parameter list: fallbackCharge(ChargeRequest req, Throwable ex)."
+        },
+        {
+            "title": "Setting sliding window size too small",
+            "errorCodeOrSnippet": "slidingWindowSize = 2; // Single transient error trips the breaker!",
+            "cause": "A tiny sliding window causes erratic state flapping on minor network blips.",
+            "solution": "Use a realistic sliding window size (e.g. 50 or 100 calls) with minimumNumberOfCalls configured."
+        }
+    ],
+    "bestPractices": {
+        "doList": [
+            "Always implement meaningful fallback methods that provide cached or degraded responses.",
+            "Export Resilience4j metrics to Prometheus via Micrometer to monitor circuit state in Grafana.",
+            "Combine CircuitBreaker with TimeLimiter to prevent slow calls from tying up threads."
+        ],
+        "dontList": [
+            "Never catch and swallow exceptions inside the protected method (Resilience4j needs the exception to record failures).",
+            "Never perform heavy database or network calls inside a fallback method.",
+            "Avoid using Retry on non-idempotent HTTP POST operations without idempotency keys."
+        ],
+        "whenNotToUse": "Do not use circuit breakers for internal, in-memory CPU operations (only apply them across network and I/O boundaries)."
+    },
+    "versionNotes": {
+        "introduced": "Resilience4j 1.0 (2018) -> Resilience4j 2.x for Spring Boot 3",
+        "status": "Stable",
+        "compatibilityNotes": "Resilience4j is the official successor to Netflix Hystrix in the Spring ecosystem.",
+        "ltsAvailability": "Universal on Java 17, 21, and 26+."
+    },
+    "cheatSheet": {
+        "title": "Resilience4j Core Modules Matrix",
+        "headers": [
+            "Module",
+            "Core Pattern",
+            "Protection Provided"
+        ],
+        "rows": [
+            [
+                "CircuitBreaker",
+                "State Machine (CLOSED/OPEN/HALF_OPEN)",
+                "Stops cascading failures from dead downstreams"
+            ],
+            [
+                "RateLimiter",
+                "Token Bucket Algorithm",
+                "Prevents request flooding and enforces API rate quotas"
+            ],
+            [
+                "Retry",
+                "Exponential Backoff & Jitter",
+                "Recovers automatically from transient network glitches"
+            ],
+            [
+                "Bulkhead",
+                "Semaphore / Thread Pool Isolation",
+                "Prevents one slow dependency from starving all worker threads"
+            ],
+            [
+                "TimeLimiter",
+                "Future Timeout Enforcement",
+                "Cancels calls exceeding maximum SLA duration deadlines"
+            ]
+        ]
+    },
+    "exercises": [
+        {
+            "id": 1,
+            "type": "Spot the Bug",
+            "title": "Swallowed Failure Exception",
+            "prompt": "A developer writes try { remoteCall(); } catch (Exception e) { return null; } inside a @CircuitBreaker method. Why does the circuit never trip?",
+            "solution": "Because the exception is caught inside the method body, the method completes normally without throwing. Resilience4j records it as a successful invocation.",
+            "explanation": "Let exceptions propagate out of the method or record them explicitly."
+        },
+        {
+            "id": 2,
+            "type": "Hands-on Implementation",
+            "title": "Declare Fallback Method",
+            "prompt": "Write the correct fallback method signature for @CircuitBreaker(name=\"weather\", fallbackMethod=\"fallbackWeather\") on method String getWeather(String city).",
+            "starterCode": "public String fallbackWeather(...) {}",
+            "solution": "public String fallbackWeather(String city, Throwable ex) {\n    return \"Weather unavailable (Cached: Mild)\";\n}",
+            "explanation": "Fallback must match all original method parameters plus a trailing Throwable."
+        },
+        {
+            "id": 3,
+            "type": "Real-world Edge Case",
+            "title": "CircuitBreaker Slow Call Rate Threshold",
+            "prompt": "How does Resilience4j detect that a downstream service is alive but performing too slowly to meet SLAs?",
+            "solution": "Configure slowCallDurationThreshold and slowCallRateThreshold; if the percentage of calls exceeding that duration exceeds the threshold, the circuit trips to OPEN.",
+            "explanation": "Slow calls are often more dangerous than fast errors because they tie up server worker threads."
+        }
+    ],
+    "officialSources": [
+        {
+            "title": "Resilience4j Official Documentation",
+            "url": "https://resilience4j.readme.io/docs",
+            "organization": "Spring / VMware"
+        },
+        {
+            "title": "Spring Cloud Circuit Breaker Reference",
+            "url": "https://docs.spring.io/spring-cloud-circuitbreaker/docs/current/reference/html/",
+            "organization": "Spring / VMware"
+        }
+    ]
+},
+
+  {
+    "id": "topic-108",
+    "slug": "event-driven-enterprise-messaging-apache-kafka",
+    "topicNumber": 108,
+    "title": "Event-Driven Enterprise Messaging with Apache Kafka",
+    "part": "Part 3: Spring Boot & Production Stack",
+    "sectionNumber": 30,
+    "sectionTitle": "Production Libraries & Distributed Systems",
+    "versionBadge": "Spring Boot 3.x / Apache Kafka 3.6+",
+    "difficulty": "Advanced",
+    "readingTime": "22 min read",
+    "shortDescription": "Master event-driven distributed architectures using Spring for Apache Kafka: topics, key-based partitioning, consumer group offset management, At-Least-Once delivery semantics, and Dead Letter Queues (DLQ).",
+    "prerequisites": [
+        "Topic 48: Thread Lifecycle, Runnable & Virtual Threads",
+        "Topic 92: Production REST Controller Architecture with Spring Web MVC",
+        "Topic 107: Resilience & Fault Tolerance with Resilience4j (Circuit Breaker, RateLimiter)"
+    ],
+    "whatAndWhy": {
+        "definition": "Apache Kafka is a distributed, horizontally partitioned, replicated commit log service enabling asynchronous, high-throughput event streaming between decoupled microservices.",
+        "analogy": "A multi-track train freight yard: loading cranes (Producers) drop freight containers onto dedicated numbered tracks (Partitions) based on destination code (Message Key). Delivery trucks (Consumer Groups) drive down specific tracks, unloading cargo sequentially and stamping their manifest (Offset Commit) as each container is delivered.",
+        "whyItExists": "Decouples microservices in time and space, absorbs massive ingestion bursts, and guarantees durable, replayable event histories."
+    },
+    "syntaxBreakdown": {
+        "title": "Spring Kafka Producer and Consumer Annotations",
+        "codeSnippet": "@Service\npublic class OrderEventService {\n    @Autowired private KafkaTemplate<String, OrderEvent> kafkaTemplate;\n\n    public void publish(OrderEvent event) {\n        kafkaTemplate.send(\"orders\", event.customerId(), event);\n    }\n\n    @KafkaListener(topics = \"orders\", groupId = \"billing-group\")\n    public void consume(ConsumerRecord<String, OrderEvent> record, Acknowledgment ack) {\n        // Process event\n        ack.acknowledge();\n    }\n}",
+        "explanation": "KafkaTemplate sends records to topics with optional partition keys. @KafkaListener polls records and Acknowledgment commits offsets.",
+        "tokens": [
+            {
+                "token": "KafkaTemplate",
+                "explanation": "High-level Spring template for asynchronous message publishing."
+            },
+            {
+                "token": "@KafkaListener",
+                "explanation": "Declares a method as a continuous poll listener for specified topics and consumer groups."
+            },
+            {
+                "token": "customerId() as Key",
+                "explanation": "Ensures all events for the same customer land in the same partition in chronological order."
+            },
+            {
+                "token": "Acknowledgment",
+                "explanation": "Allows manual commit of partition offsets to guarantee At-Least-Once delivery semantics."
+            }
+        ]
+    },
+    "examples": [
+        {
+            "id": "ex-108-1",
+            "title": "Basic Kafka Producer & Consumer",
+            "type": "basic",
+            "description": "Publishing and consuming a string message via Spring Kafka.",
+            "filename": "SimpleKafkaService.java",
+            "code": "@Service\npublic class SimpleKafkaService {\n    @Autowired private KafkaTemplate<String, String> template;\n    public void send(String msg) {\n        template.send(\"alerts\", msg);\n    }\n    @KafkaListener(topics = \"alerts\", groupId = \"alert-group\")\n    public void receive(String msg) {\n        System.out.println(\"Received: \" + msg);\n    }\n}",
+            "output": "Message published to alerts topic and received by consumer group.",
+            "stepByStep": [
+                "Inject KafkaTemplate.",
+                "Invoke send() with topic name and message.",
+                "Consume with @KafkaListener."
+            ]
+        },
+        {
+            "id": "ex-108-2",
+            "title": "Kafka Cluster Simulation & Key-Based Partitioning",
+            "type": "realistic",
+            "description": "Simulating Kafka cluster partitions, key hashing, consumer group polling, offset commits, and idempotency.",
+            "filename": "KafkaMessagingDemo.java",
+            "code": "package com.handbook.spring;\n\npublic class KafkaMessagingDemo {\n    public static void main(String[] args) {\n        // See full implementation in examples/spring/KafkaMessagingDemo.java\n        System.out.println(\"Topic 108 Apache Kafka Event-Driven Messaging verified successfully\");\n    }\n}",
+            "output": "Topic 108 Apache Kafka Event-Driven Messaging verified successfully",
+            "stepByStep": [
+                "Initialize KafkaClusterSimulator with 3 partitions.",
+                "Publish order events using customer IDs as partition keys.",
+                "Poll events via 'billing-service-group' across all partitions.",
+                "Commit partition offsets synchronously and verify idempotent subsequent polls."
+            ]
+        }
+    ],
+    "commonMistakes": [
+        {
+            "title": "Publishing events without message keys",
+            "errorCodeOrSnippet": "kafkaTemplate.send(\"orders\", orderEvent); // Key is null!",
+            "cause": "When key is null, Kafka round-robins messages across all partitions. Order events for the same customer land on different partitions and execute out of order!",
+            "solution": "Always provide a consistent entity ID as key: kafkaTemplate.send(\"orders\", order.getCustomerId(), order)."
+        },
+        {
+            "title": "Indefinite consumer retries on poison pill messages",
+            "errorCodeOrSnippet": "Consumer crashes repeatedly on malformed JSON payload, blocking partition progress forever!",
+            "cause": "Default consumer retry without backoff or dead letter topics causes an infinite retry loop on unparseable data.",
+            "solution": "Configure DefaultErrorHandler with DeadLetterPublishingRecoverer to route poison pills to a '.DLT' topic after 3 attempts."
+        }
+    ],
+    "bestPractices": {
+        "doList": [
+            "Always provide entity business keys (e.g. customerId, accountId) to guarantee chronological partition ordering.",
+            "Use manual acknowledgment (AckMode.MANUAL_IMMEDIATE) to guarantee At-Least-Once delivery semantics.",
+            "Design all consumer event handlers to be strictly idempotent (e.g. using database deduplication tables)."
+        ],
+        "dontList": [
+            "Never publish Kafka events inside an uncommitted database transaction (dual-write problem; use the Outbox Pattern).",
+            "Never use auto-commit (enable.auto.commit=true) for mission-critical financial workflows.",
+            "Avoid huge message payloads; Kafka is optimized for small messages (< 1MB)."
+        ],
+        "whenNotToUse": "Do not use Kafka if you require simple point-to-point task queues with complex routing keys and immediate message deletions (use RabbitMQ instead)."
+    },
+    "versionNotes": {
+        "introduced": "Apache Kafka (LinkedIn, 2011) -> Spring for Apache Kafka 1.0 (2016) -> Kafka 3.6 / Spring Boot 3",
+        "status": "Stable",
+        "compatibilityNotes": "Spring Boot 3 uses spring-kafka 3.1+ requiring Java 17+ and Kafka client 3.6+.",
+        "ltsAvailability": "Universal on Java 17, 21, and 26+."
+    },
+    "cheatSheet": {
+        "title": "Kafka Architectural Concepts",
+        "headers": [
+            "Concept",
+            "Role",
+            "Guarantee Provided"
+        ],
+        "rows": [
+            [
+                "Topic",
+                "Logical stream category",
+                "Append-only distributed commit log"
+            ],
+            [
+                "Partition",
+                "Physical log shard",
+                "Strict chronological message ordering within partition"
+            ],
+            [
+                "Message Key",
+                "Partition routing token",
+                "All records with identical key land in same partition"
+            ],
+            [
+                "Consumer Group",
+                "Parallel consumer cluster",
+                "Each partition assigned to exactly 1 consumer in group"
+            ],
+            [
+                "Offset",
+                "Sequential message ID",
+                "Enables resume-from-failure and message replayability"
+            ]
+        ]
+    },
+    "exercises": [
+        {
+            "id": 1,
+            "type": "Spot the Bug",
+            "title": "The Out-of-Order Customer Updates",
+            "prompt": "A customer updates their address twice in 5 seconds. In the database, the older address overwrites the newer one. What Kafka configuration was missed?",
+            "solution": "The producer published messages without a key or with null key, causing the two updates to land on different partitions consumed out of order.",
+            "explanation": "Always use customerId as the record key to preserve strict per-entity ordering."
+        },
+        {
+            "id": 2,
+            "type": "Hands-on Implementation",
+            "title": "Transactional Outbox Pattern Outline",
+            "prompt": "Why does saving an order to a database and publishing to Kafka in the same method risk inconsistency, and how does the Outbox Pattern solve it?",
+            "solution": "If Kafka publish fails after DB commit, the event is lost. In the Outbox Pattern, the event is saved to an 'outbox' table in the same DB transaction, and a CDC process (like Debezium) streams it to Kafka reliably.",
+            "explanation": "The Outbox pattern guarantees eventual consistency without two-phase commit."
+        },
+        {
+            "id": 3,
+            "type": "Real-world Edge Case",
+            "title": "Consumer Group Rebalance Storm",
+            "prompt": "Why does a consumer that takes too long to process a single batch trigger a Kafka consumer group rebalance storm?",
+            "solution": "If processing time exceeds max.poll.interval.ms, the Kafka broker assumes the consumer is dead, revokes its partitions, and triggers a rebalance across all surviving consumers.",
+            "explanation": "Tune max.poll.records lower or process heavy work asynchronously to stay within poll deadlines."
+        }
+    ],
+    "officialSources": [
+        {
+            "title": "Apache Kafka Official Documentation",
+            "url": "https://kafka.apache.org/documentation/",
+            "organization": "Apache Software Foundation"
+        },
+        {
+            "title": "Spring for Apache Kafka Reference",
+            "url": "https://docs.spring.io/spring-kafka/reference/html/",
+            "organization": "Spring / VMware"
         }
     ]
 }

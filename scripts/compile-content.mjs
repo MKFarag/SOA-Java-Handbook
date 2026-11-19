@@ -4,7 +4,8 @@ import matter from 'gray-matter';
 
 const CONTENT_DIRS = [
   path.resolve('content/part1-core'),
-  path.resolve('content/part2-jakarta')
+  path.resolve('content/part2-jakarta'),
+  path.resolve('content/part3-spring')
 ];
 const OUTPUT_FILE = path.resolve('src/data/generated-topics.json');
 

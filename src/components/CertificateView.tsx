@@ -40,7 +40,7 @@ export const CertificateView: React.FC<CertificateViewProps> = ({
   // Stamp mode: 'funny' (100% Fake / But You're Perfect) or 'formal' (Official Gold Seal)
   const [stampMode, setStampMode] = useState<'funny' | 'formal'>('funny');
 
-  const certificateId = `JH-2026-${recipientName.replace(/\s+/g, '').toUpperCase().slice(0, 4) || 'DEV'}-87`;
+  const certificateId = `CERT-2026-MKF-${totalTopics}`;
   const issueDate = "November 19, 2026";
   const isAllCompleted = completedCount >= totalTopics;
 
@@ -49,13 +49,13 @@ export const CertificateView: React.FC<CertificateViewProps> = ({
   };
 
   const handleCopyCredential = () => {
-    const text = `Certificate of Java & Jakarta EE Mastery
+    const text = `Certificate of Java, Jakarta EE & Spring Boot Mastery
 Recipient: ${recipientName}
-Status: 100% Fake Certificate, but 100% Genuine Java Mastery!
+Status: 100% Verified Technical Mastery
 Credential ID: ${certificateId}
-Curriculum: 87/87 Modules Completed (Java 8–26 LTS, Jakarta EE 10/11)
-Automated Tests Passed: 160 / 160 Passed
-Issued By: Mohamed Khaled Farag (Lead Curriculum Architect)
+Curriculum: ${completedCount}/${totalTopics} Modules Completed (Java SE, Jakarta EE & Spring Boot)
+Automated Tests Passed: 160+ Passed
+Issued By: Mohamed Khaled Farag (mkfarag)
 Issue Date: ${issueDate}`;
 
     navigator.clipboard.writeText(text);
@@ -79,13 +79,15 @@ Issue Date: ${issueDate}`;
         modulesCompleted: completedCount,
         parts: [
           "Part 1: Java Core (Java 8 through 26 LTS)",
-          "Part 2: Java EE & Jakarta EE (Jakarta EE 10 & 11, Tomcat 10.1)"
+          "Part 2: Java EE & Jakarta EE (Jakarta EE 10 & 11, Tomcat 10.1)",
+          "Part 3: Spring Boot & Modern Production Ecosystem (Spring Framework 6 / Boot 3)"
         ],
         testSuitesPassed: 160,
         status: isAllCompleted ? "Completed & Verified" : "In Progress"
       },
       authorAndIssuer: {
         name: "Mohamed Khaled Farag",
+        username: "mkfarag",
         title: "Curriculum Author & Lead Architect",
         github: "https://github.com/MKFarag/java-handbook",
         dockerHub: "https://hub.docker.com/r/mkfarag/java-handbook"
@@ -106,7 +108,7 @@ Issue Date: ${issueDate}`;
   };
 
   return (
-    <div className="max-w-6xl mx-auto py-8 px-4 sm:px-6 lg:px-8 space-y-6 text-left">
+    <div className="max-w-5xl mx-auto py-8 px-4 sm:px-6 lg:px-8 space-y-6 text-left">
       
       {/* Top Controls Toolbar (Hidden on Print) */}
       <div className="no-print space-y-4">
@@ -128,7 +130,7 @@ Issue Date: ${issueDate}`;
                 </h1>
               </div>
               <p className="text-xs sm:text-sm text-zinc-500 dark:text-zinc-400">
-                Type your name below, customize your seal style, and print your personal certificate.
+                Type your name below, choose your seal, and print your personal certificate.
               </p>
             </div>
           </div>
@@ -139,11 +141,11 @@ Issue Date: ${issueDate}`;
               <button
                 type="button"
                 onClick={onUnlockAll}
-                className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-semibold bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 hover:bg-emerald-500/25 transition-all shadow-xs"
-                title="Mark all 87 topics complete for verification"
+                className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-semibold bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 hover:bg-emerald-500/25 transition-all shadow-xs cursor-pointer"
+                title={`Mark all ${totalTopics} topics complete for verification`}
               >
                 <Sparkles className="w-4 h-4 text-emerald-500" />
-                <span>Mark All 87 Complete (Demo)</span>
+                <span>Mark All {totalTopics} Complete (Demo)</span>
               </button>
             )}
 
@@ -264,7 +266,7 @@ Issue Date: ${issueDate}`;
             <div className="flex items-center gap-2.5 text-xs text-amber-950 dark:text-amber-200">
               <ShieldCheck className="w-4 h-4 text-amber-500 shrink-0" />
               <span>
-                Progress: <strong className="font-mono text-amber-600 dark:text-amber-400">{completedCount}</strong> of <strong className="font-mono">{totalTopics}</strong> topics done. Click <strong>Mark All 87 Complete</strong> above to unlock verified mode.
+                Progress: <strong className="font-mono text-amber-600 dark:text-amber-400">{completedCount}</strong> of <strong className="font-mono">{totalTopics}</strong> topics done. Click <strong>Mark All {totalTopics} Complete</strong> above to unlock verified mode.
               </span>
             </div>
             <button
@@ -279,7 +281,7 @@ Issue Date: ${issueDate}`;
           <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center gap-2.5 text-xs text-emerald-900 dark:text-emerald-200">
             <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
             <span>
-              <strong>100% Curriculum Mastered:</strong> All 87 modules and 160 automated tests verified. Ready to print!
+              <strong>100% Curriculum Mastered:</strong> All {totalTopics} modules and technical test suites verified. Ready to print!
             </span>
           </div>
         )}
@@ -288,18 +290,14 @@ Issue Date: ${issueDate}`;
       {/* The Printable Certificate Container */}
       <div 
         id="certificate-print-area"
-        className="relative mx-auto w-full bg-white text-zinc-900 rounded-2xl shadow-2xl border-8 border-double border-amber-600/40 p-8 sm:p-12 lg:p-14 overflow-hidden select-text"
-        style={{
-          aspectRatio: '1.414 / 1', // ISO 216 Landscape Ratio
-          minHeight: '620px'
-        }}
+        className="relative mx-auto w-full bg-white text-zinc-900 rounded-2xl shadow-xl border-4 sm:border-8 border-double border-amber-600/50 p-4 sm:p-6 lg:p-8 select-text"
       >
         {/* Subtle Security Background Watermark */}
         <div 
-          className="absolute inset-0 pointer-events-none opacity-[0.035] flex items-center justify-center select-none"
+          className="absolute inset-0 pointer-events-none opacity-[0.035] flex items-center justify-center select-none overflow-hidden"
           aria-hidden="true"
         >
-          <svg className="w-[800px] h-[800px]" viewBox="0 0 200 200" fill="currentColor">
+          <svg className="w-[600px] h-[600px]" viewBox="0 0 200 200" fill="currentColor">
             <circle cx="100" cy="100" r="90" stroke="currentColor" strokeWidth="2" fill="none" />
             <circle cx="100" cy="100" r="70" stroke="currentColor" strokeWidth="1" fill="none" />
             <circle cx="100" cy="100" r="50" stroke="currentColor" strokeWidth="1" fill="none" />
@@ -308,23 +306,23 @@ Issue Date: ${issueDate}`;
         </div>
 
         {/* Ornate Corner Accents */}
-        <div className="absolute top-4 left-4 w-12 h-12 border-t-2 border-l-2 border-amber-600/60 pointer-events-none" />
-        <div className="absolute top-4 right-4 w-12 h-12 border-t-2 border-r-2 border-amber-600/60 pointer-events-none" />
-        <div className="absolute bottom-4 left-4 w-12 h-12 border-b-2 border-l-2 border-amber-600/60 pointer-events-none" />
-        <div className="absolute bottom-4 right-4 w-12 h-12 border-b-2 border-r-2 border-amber-600/60 pointer-events-none" />
+        <div className="absolute top-2 left-2 w-8 h-8 border-t-2 border-l-2 border-amber-600/60 pointer-events-none" />
+        <div className="absolute top-2 right-2 w-8 h-8 border-t-2 border-r-2 border-amber-600/60 pointer-events-none" />
+        <div className="absolute bottom-2 left-2 w-8 h-8 border-b-2 border-l-2 border-amber-600/60 pointer-events-none" />
+        <div className="absolute bottom-2 right-2 w-8 h-8 border-b-2 border-r-2 border-amber-600/60 pointer-events-none" />
 
         {/* Inner Gold Foil Framing Line */}
-        <div className="border border-amber-500/50 p-6 sm:p-8 lg:p-10 h-full flex flex-col justify-between rounded-lg relative z-10 bg-gradient-to-b from-amber-50/20 via-white to-amber-50/10">
+        <div className="border border-amber-500/50 p-4 sm:p-6 lg:p-8 rounded-lg relative z-10 bg-gradient-to-b from-amber-50/25 via-white to-amber-50/15 space-y-6">
           
           {/* Certificate Header */}
-          <div className="text-center space-y-2">
-            <div className="inline-flex items-center justify-center gap-2 text-xs font-mono font-bold tracking-widest text-amber-700 uppercase">
-              <span className="w-8 h-[1px] bg-amber-600/50 inline-block" />
+          <div className="text-center space-y-1.5">
+            <div className="inline-flex items-center justify-center gap-2 text-[10px] sm:text-xs font-mono font-bold tracking-widest text-amber-700 uppercase">
+              <span className="w-6 sm:w-8 h-[1px] bg-amber-600/50 inline-block" />
               <span>THE DEFINITIVE JAVA &amp; JAKARTA EE HANDBOOK</span>
-              <span className="w-8 h-[1px] bg-amber-600/50 inline-block" />
+              <span className="w-6 sm:w-8 h-[1px] bg-amber-600/50 inline-block" />
             </div>
 
-            <h2 className="text-2xl sm:text-4xl lg:text-5xl font-serif font-bold tracking-wide text-zinc-900 uppercase">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-serif font-bold tracking-wide text-zinc-900 uppercase">
               Certificate of Mastery
             </h2>
 
@@ -336,67 +334,68 @@ Issue Date: ${issueDate}`;
           </div>
 
           {/* Presentation Statement */}
-          <div className="text-center my-6 space-y-3">
-            <p className="text-xs sm:text-sm font-sans uppercase tracking-widest text-zinc-500 font-medium">
+          <div className="text-center space-y-2.5">
+            <p className="text-xs font-sans uppercase tracking-widest text-zinc-500 font-medium">
               This is proudly awarded to
             </p>
 
             {/* Recipient Full Name (Dynamically Updated) */}
-            <div className="relative inline-block py-2">
-              <h3 className="text-3xl sm:text-5xl lg:text-6xl font-serif font-extrabold text-amber-700 tracking-tight">
+            <div className="relative inline-block py-1">
+              <h3 className="text-2xl sm:text-4xl lg:text-5xl font-serif font-extrabold text-amber-700 tracking-tight">
                 {recipientName || "Java Architect"}
               </h3>
-              <div className="w-full h-1 bg-gradient-to-r from-transparent via-amber-600 to-transparent mt-2 rounded-full" />
+              <div className="w-full h-1 bg-gradient-to-r from-transparent via-amber-600 to-transparent mt-1.5 rounded-full" />
             </div>
 
             {/* Curriculum Achievement Description (Clean, zero links) */}
-            <p className="max-w-3xl mx-auto text-xs sm:text-sm text-zinc-700 font-serif leading-relaxed pt-2">
-              For successfully mastering and demonstrating technical proficiency across the complete 87-topic curriculum of the 
-              <strong> Definitive Java &amp; Jakarta EE Handbook</strong>, covering core language internals from 
-              <strong> Java 8 through Java 26 LTS</strong> (Modern Syntax, OOP, Concurrency, Virtual Threads, and JVM Memory Management) 
-              and enterprise distributed systems across <strong>Jakarta EE 10 &amp; 11</strong> (Servlets 6.0, JSP, MVC Architecture, Database Connection Pooling, JPA, CDI, JAX-RS, and Production Hardening).
+            <p className="max-w-2xl mx-auto text-xs sm:text-sm text-zinc-700 font-serif leading-relaxed">
+              For successfully mastering and demonstrating technical proficiency across the complete {totalTopics}-topic curriculum of the 
+              <strong> Definitive Java, Jakarta EE &amp; Spring Boot Architecture Handbook</strong>, covering core language internals from 
+              <strong> Java 8 through Java 26 LTS</strong> (Modern Syntax, OOP, Concurrency, Virtual Threads, and JVM Memory Management), 
+              enterprise distributed standards across <strong>Jakarta EE 10 &amp; 11</strong> (Servlets 6.0, JSP, MVC Architecture, Database Connection Pooling, JPA, CDI, JAX-RS), 
+              and the modern production ecosystem with <strong>Spring Framework 6 &amp; Spring Boot 3</strong> (Inversion of Control, Auto-Configuration, REST Web MVC, Spring Data JPA, and Enterprise Security 6).
             </p>
           </div>
 
           {/* Verification Badge Highlights */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 my-4 py-3 border-y border-amber-200/80 bg-amber-500/5 text-center rounded-lg">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 py-2.5 px-3 border-y border-amber-200/80 bg-amber-500/5 text-center rounded-lg">
             <div>
               <div className="text-[10px] font-mono uppercase text-zinc-500">Modules Completed</div>
-              <div className="text-sm sm:text-base font-bold font-mono text-zinc-900">
+              <div className="text-xs sm:text-sm font-bold font-mono text-zinc-900">
                 {completedCount} / {totalTopics} (100%)
               </div>
             </div>
             <div>
               <div className="text-[10px] font-mono uppercase text-zinc-500">Test Scenarios</div>
-              <div className="text-sm sm:text-base font-bold font-mono text-emerald-600">
+              <div className="text-xs sm:text-sm font-bold font-mono text-emerald-600">
                 160 / 160 Passed
               </div>
             </div>
             <div>
               <div className="text-[10px] font-mono uppercase text-zinc-500">Curriculum Target</div>
-              <div className="text-sm sm:text-base font-bold font-mono text-amber-700">
+              <div className="text-xs sm:text-sm font-bold font-mono text-amber-700">
                 Java 26 &amp; Jakarta EE 11
               </div>
             </div>
             <div>
               <div className="text-[10px] font-mono uppercase text-zinc-500">Status</div>
-              <div className="text-sm sm:text-base font-bold font-mono text-emerald-600 flex items-center justify-center gap-1">
-                <CheckCircle2 className="w-3.5 h-3.5" />
+              <div className="text-xs sm:text-sm font-bold font-mono text-emerald-600 flex items-center justify-center gap-1">
+                <CheckCircle2 className="w-3 h-3" />
                 <span>{stampMode === 'funny' ? "LEGIT BEAST" : "VERIFIED"}</span>
               </div>
             </div>
           </div>
 
           {/* Footer: Signatures, Seal & Metadata */}
-          <div className="pt-4 flex flex-col sm:flex-row items-center justify-between gap-6 text-center sm:text-left">
+          <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
             
-            {/* Left Signature: Mohamed Khaled Farag (Author & Lead Architect) */}
-            <div className="space-y-1 sm:w-1/3">
+            {/* Left Signature: mkfarag (Username above line) + Mohamed Khaled Farag (Full name below line) */}
+            <div className="space-y-0.5 sm:w-1/3">
               <div className="font-serif italic text-xl sm:text-2xl text-zinc-800 tracking-wider">
-                Mohamed K. Farag
+                mkfarag
               </div>
-              <div className="w-48 h-[1px] bg-zinc-400 mx-auto sm:mx-0" />
-              <div className="text-[11px] font-bold uppercase tracking-wider text-zinc-700">
+              <div className="w-40 sm:w-44 h-[1px] bg-zinc-400 mx-auto sm:mx-0 my-1" />
+              <div className="text-xs font-bold uppercase tracking-wider text-zinc-800">
                 Mohamed Khaled Farag
               </div>
               <div className="text-[10px] text-zinc-500 font-sans">
@@ -405,30 +404,30 @@ Issue Date: ${issueDate}`;
             </div>
 
             {/* Center: The Official Stamp / Seal (Funny Humor Stamp OR Formal Gold Medallion) */}
-            <div className="shrink-0 flex flex-col items-center justify-center my-2 sm:my-0">
+            <div className="shrink-0 flex flex-col items-center justify-center">
               {stampMode === 'funny' ? (
                 /* The Hilarious "100% FAKE / BUT YOU ARE PERFECT" Rubber Stamp */
-                <div className="relative transform -rotate-6 select-none border-4 border-dashed border-rose-600/90 rounded-2xl p-2.5 px-4 bg-rose-50/95 shadow-lg text-center max-w-[240px] animate-fadeIn">
-                  <div className="text-[9px] font-mono font-black tracking-widest text-rose-600 uppercase border-b border-rose-300 pb-0.5">
+                <div className="transform -rotate-3 select-none border-2 sm:border-3 border-dashed border-rose-600/90 rounded-xl p-2 px-3 bg-rose-50/95 shadow-md text-center max-w-[210px] animate-fadeIn">
+                  <div className="text-[8px] font-mono font-black tracking-widest text-rose-600 uppercase border-b border-rose-300 pb-0.5">
                     ★ 100% CERTIFIED FAKE ★
                   </div>
-                  <div className="text-sm sm:text-base font-serif font-black text-rose-800 uppercase tracking-tight py-1 leading-tight">
+                  <div className="text-xs sm:text-sm font-serif font-black text-rose-800 uppercase tracking-tight py-0.5 leading-tight">
                     BUT YOU ARE PERFECT!
                   </div>
-                  <div className="text-[8px] font-mono font-semibold text-rose-700 leading-tight">
-                    Not accredited by Oracle or any gov. But your Java mastery is 100% genuine. You crushed 87 topics.
+                  <div className="text-[7.5px] font-mono font-semibold text-rose-700 leading-tight">
+                    Not accredited by Oracle or any gov. But your Java mastery is 100% real. You crushed {totalTopics} topics.
                   </div>
                 </div>
               ) : (
                 /* Formal Gold Foil Medallion / Official Seal */
-                <div className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-gradient-to-tr from-amber-600 via-amber-400 to-yellow-200 p-[3px] shadow-lg shadow-amber-500/20">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-gradient-to-tr from-amber-600 via-amber-400 to-yellow-200 p-[2px] shadow-md shadow-amber-500/20">
                   <div className="w-full h-full rounded-full bg-amber-500 flex flex-col items-center justify-center text-zinc-950 p-1 border-2 border-dashed border-amber-800/40 text-center select-none">
-                    <ShieldCheck className="w-5 h-5 sm:w-6 sm:h-6 text-amber-950" />
-                    <span className="text-[7px] sm:text-[8px] font-mono font-extrabold uppercase tracking-tight leading-tight pt-0.5">
+                    <ShieldCheck className="w-4 h-4 sm:w-5 sm:h-5 text-amber-950" />
+                    <span className="text-[7px] font-mono font-extrabold uppercase tracking-tight leading-tight">
                       JAVA ARCHITECT
                     </span>
-                    <span className="text-[6px] sm:text-[7px] font-mono font-bold text-amber-950/90">
-                      87 TOPICS · 2026
+                    <span className="text-[6px] font-mono font-bold text-amber-950/90">
+                      {totalTopics} TOPICS · 2026
                     </span>
                   </div>
                 </div>
@@ -436,13 +435,13 @@ Issue Date: ${issueDate}`;
             </div>
 
             {/* Right: Technical Architecture Board & Metadata */}
-            <div className="space-y-1 sm:w-1/3 sm:text-right">
+            <div className="space-y-0.5 sm:w-1/3 sm:text-right">
               <div className="font-serif italic text-xl sm:text-2xl text-zinc-800 tracking-wider">
                 {stampMode === 'funny' ? "The JVM & JIT Compiler" : "Architecture Review Board"}
               </div>
-              <div className="w-48 h-[1px] bg-zinc-400 mx-auto sm:ml-auto sm:mr-0" />
-              <div className="text-[11px] font-bold uppercase tracking-wider text-zinc-700">
-                {stampMode === 'funny' ? "0 Compiler Errors · 0 Crashes" : "Enterprise Standards Committee"}
+              <div className="w-40 sm:w-44 h-[1px] bg-zinc-400 mx-auto sm:ml-auto sm:mr-0 my-1" />
+              <div className="text-xs font-bold uppercase tracking-wider text-zinc-800">
+                {stampMode === 'funny' ? "0 Compiler Errors · 0 Warnings" : "Enterprise Standards Committee"}
               </div>
               <div className="text-[10px] font-mono text-zinc-500">
                 ID: <span className="font-semibold text-zinc-800">{certificateId}</span> · {issueDate}

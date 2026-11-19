@@ -65,7 +65,7 @@
   }
 }
 
-/* VS Code Dark+ Syntax Highlighting */
+/* VS Code Dark+ / Brighter Syntax Highlighting Specification */
 .token.comment,
 .token.prolog,
 .token.doctype,
@@ -110,16 +110,28 @@
 .token.control-flow,
 .token.keyword-return,
 .token.keyword-if,
-.token.keyword-for {
+.token.keyword-for,
+.token.keyword-switch,
+.token.keyword-try,
+.token.keyword-catch {
   color: #c586c0;
 }
 
-.token.function,
-.token.class-name {
+.token.annotation,
+.token.decorator {
+  color: #8cd7ff;
+  font-weight: 500;
+}
+
+.token.class-name,
+.token.interface,
+.token.record {
   color: #4ec9b0;
 }
 
-.token.method {
+.token.function,
+.token.method,
+.token.function-definition {
   color: #dcdcaa;
 }
 

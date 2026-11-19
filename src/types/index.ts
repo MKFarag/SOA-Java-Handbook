@@ -1,4 +1,7 @@
-export type PartType = 'Part 1: Java Core' | 'Part 2: Java EE & Jakarta EE';
+export type PartType = 
+  | 'Part 1: Java Core' 
+  | 'Part 2: Java EE & Jakarta EE' 
+  | 'Part 3: Spring Boot & Production Stack';
 
 export type DifficultyLevel = 'Beginner' | 'Intermediate' | 'Advanced';
 
@@ -66,7 +69,50 @@ export interface TopicExercise {
 export interface OfficialSource {
   title: string;
   url: string;
-  organization: 'Oracle' | 'OpenJDK' | 'Jakarta EE' | 'Apache Tomcat' | 'Eclipse Foundation';
+  organization: 'Oracle' | 'OpenJDK' | 'Jakarta EE' | 'Apache Tomcat' | 'Eclipse Foundation' | 'Spring / VMware' | 'Apache Software Foundation';
+}
+
+export type ChallengeStatus = 'unattempted' | 'mastered' | 'needs-review';
+
+export interface SectionMilestoneChallenge {
+  id: string;
+  sectionNumber: number;
+  sectionTitle: string;
+  part: PartType;
+  title: string;
+  scenario: string;
+  architecturalConstraints: string[];
+  expectedOutput: string;
+  diagnosticHints: string[];
+  commonPitfalls: string[];
+  prerequisiteTopicIds: string[];
+  referenceSolutionCode: string;
+  solutionArchitectureNotes: string;
+}
+
+export interface CapstoneEvaluationCriteria {
+  category: string;
+  weight: string;
+  description: string;
+}
+
+export interface CapstoneProject {
+  id: string;
+  part: PartType;
+  title: string;
+  subtitle: string;
+  difficulty: 'Senior Systems Architect (Master)' | 'Enterprise Solutions Engineer (Advanced)' | 'Lead Cloud Architect (Production)';
+  prerequisitesCount: number;
+  prerequisiteTopicIds?: string[];
+  estimatedDuration: string;
+  scenario: string;
+  architecturalRequirements: string[];
+  technicalStack: string[];
+  deliverables: string[];
+  expectedTerminalOutput: string;
+  evaluationCriteria: CapstoneEvaluationCriteria[];
+  referenceArchitectureCode: string;
+  verificationSuiteCode: string;
 }
 
 export interface TopicDetail {
@@ -103,4 +149,5 @@ export interface SectionMeta {
   part: PartType;
   description: string;
   topicIds: string[];
+  milestoneChallenge?: SectionMilestoneChallenge;
 }

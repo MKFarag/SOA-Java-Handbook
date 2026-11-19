@@ -14,7 +14,7 @@
 ## 🌟 Key Features
 
 - **100% Offline-First:** Zero runtime CDN dependencies, zero external font fetches. Everything runs directly on your local machine or container.
-- **Official Completion Certificate:** Interactive, print-ready, and exportable (JSON & A4 PDF) verified Certificate of Technical Mastery issued upon completing all 87 modules.
+- **Official Completion Certificate:** Interactive, print-ready, and exportable (JSON & A4 PDF) verified Certificate of Technical Mastery issued upon completing all 108 modules.
 - **VS Code Dark+ & Light Paper Themes:** Built to match developer ergonomics with a deep `#18181b` slate theme, warm Java amber/orange accents, and crisp light paper mode.
 - **Offline Full-Text Search:** Sub-millisecond client-side indexing powered by MiniSearch with instant keyword matching, fuzzy tolerance, and `Ctrl + K` shortcut.
 - **Dual-Tab Code Blocks:** Switch between Java source code and exact terminal/console output with one-click copy buttons.
@@ -80,6 +80,28 @@ npm run dev
   - JavaServer Pages (JSP): Translation lifecycle, Directives, Scriptlets, EL, JSTL, Custom Tags
   - The Web MVC Pattern, Form Handling, Multipart Uploads, Error Pages, JNDI Connection Pooling
   - Jakarta EE Enterprise Stack: JPA, CDI, JAX-RS, Bean Validation, JSF, EJB
+
+- **Part 3: Spring Boot & The Modern Production Ecosystem (Sections 24–30, Topics 88–108):**
+  - Spring Framework Core: Inversion of Control, `BeanFactory` vs `ApplicationContext`
+  - Component Scanning, Injection Strategies, Bean Lifecycle Callbacks (`@PostConstruct`, `@PreDestroy`)
+  - Spring Boot Architecture: Auto-Configuration mechanics, Starters, Embedded Runtimes (Tomcat/Netty)
+  - Externalized Configuration: YAML hierarchies, Multi-Profile deployment (`@ConfigurationProperties`)
+  - Production REST Controller Architecture: Spring Web MVC, DTO patterns, HTTP status ergonomics
+  - Declarative Request Validation: Jakarta Bean Validation constraints, Custom validators
+  - Centralized Global Exception Handling: `@RestControllerAdvice` and RFC 7807 Problem Details
+  - Spring Data JPA: Repository hierarchies (`JpaRepository`), Derived queries, Dynamic projections, JPQL `@Query`
+  - Declarative `@Transactional` Boundaries, Pagination, Sorting, and N+1 prevention (`@EntityGraph`, JOIN FETCH)
+  - Enterprise Security with Spring Security 6: `SecurityFilterChain`, BCrypt password encryption
+  - Stateless REST Security: HMAC-SHA256 JWT authentication and method-level authorization (`@PreAuthorize`)
+  - Definitive Master Annotations Reference Dictionary across Java SE, Jakarta EE, and Spring Boot
+  - Production Boilerplate Elimination: Project Lombok and MapStruct compile-time mappers
+  - Versioned Database Migrations: Flyway evolutionary schema management
+  - Modern Automated Testing: JUnit 5, Mockito mocking framework, and Testcontainers Docker integration
+  - Production Observability: Spring Boot Actuator health endpoints, Micrometer metrics, and Prometheus scraping
+  - Automated Interactive API Documentation: OpenAPI 3 and Swagger UI specification generation
+  - High-Performance Multi-Tier Caching: Local Caffeine L1 cache and Distributed Redis L2 cache
+  - Resilience & Fault Tolerance: Resilience4j Circuit Breakers, Rate Limiters, Retry, and Fallback handlers
+  - Event-Driven Enterprise Messaging: Apache Kafka producers, consumers, partition keys, and consumer groups
 
 ---
 

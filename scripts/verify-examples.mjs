@@ -1574,6 +1574,154 @@ runTest('Jakarta EE - Topic 87: JsfEjbArchitectureDemo.java execution', () => {
   if (!out.includes('JSF lifecycle and EJB transaction execution verified successfully')) throw new Error(out);
 });
 
+// Part 3: Spring Boot & Modern Production Ecosystem
+runTest('Spring Boot - Topic 88: BeanFactoryVsApplicationContextDemo.java execution', () => {
+  const outDir = 'examples/web/classes';
+  execSync(`${JAVAC} -d ${outDir} examples/spring/BeanFactoryVsApplicationContextDemo.java`);
+  const out = execSync(`${JAVA} -ea -cp ${outDir} com.handbook.spring.BeanFactoryVsApplicationContextDemo`).toString();
+  if (!out.includes('BeanFactory vs ApplicationContext architectural mechanics verified successfully')) throw new Error(out);
+});
+
+runTest('Spring Boot - Topic 89: BeanLifecycleInjectionDemo.java execution', () => {
+  const outDir = 'examples/web/classes';
+  execSync(`${JAVAC} -d ${outDir} examples/spring/BeanLifecycleInjectionDemo.java`);
+  const out = execSync(`${JAVA} -ea -cp ${outDir} com.handbook.spring.BeanLifecycleInjectionDemo`).toString();
+  if (!out.includes('All Spring Bean lifecycle phases and injection strategies verified successfully')) throw new Error(out);
+});
+
+runTest('Spring Boot - Topic 90: AutoConfigurationEmbeddedDemo.java execution', () => {
+  const outDir = 'examples/web/classes';
+  execSync(`${JAVAC} -d ${outDir} examples/spring/AutoConfigurationEmbeddedDemo.java`);
+  const out = execSync(`${JAVA} -ea -cp ${outDir} com.handbook.spring.AutoConfigurationEmbeddedDemo`).toString();
+  if (!out.includes('Spring Boot Auto-Configuration & Embedded Runtime mechanics verified successfully')) throw new Error(out);
+});
+
+runTest('Spring Boot - Topic 91: ExternalizedConfigurationProfilesDemo.java execution', () => {
+  const outDir = 'examples/web/classes';
+  execSync(`${JAVAC} -d ${outDir} examples/spring/ExternalizedConfigurationProfilesDemo.java`);
+  const out = execSync(`${JAVA} -ea -cp ${outDir} com.handbook.spring.ExternalizedConfigurationProfilesDemo`).toString();
+  if (!out.includes('Externalized configuration hierarchy, multi-profile overrides, and validation verified successfully')) throw new Error(out);
+});
+
+runTest('Spring Boot - Topic 92: RestControllerArchitectureDemo.java execution', () => {
+  const outDir = 'examples/web/classes';
+  execSync(`${JAVAC} -d ${outDir} examples/spring/RestControllerArchitectureDemo.java`);
+  const out = execSync(`${JAVA} -ea -cp ${outDir} com.handbook.spring.RestControllerArchitectureDemo`).toString();
+  if (!out.includes('Spring Web MVC REST controller HTTP semantics verified successfully')) throw new Error(out);
+});
+
+runTest('Spring Boot - Topic 93: RequestValidationEngineDemo.java execution', () => {
+  const outDir = 'examples/web/classes';
+  execSync(`${JAVAC} -d ${outDir} examples/spring/RequestValidationEngineDemo.java`);
+  const out = execSync(`${JAVA} -ea -cp ${outDir} com.handbook.spring.RequestValidationEngineDemo`).toString();
+  if (!out.includes('Bean Validation and custom constraint validator mechanics verified successfully')) throw new Error(out);
+});
+
+runTest('Spring Boot - Topic 94: GlobalExceptionAdviceDemo.java execution', () => {
+  const outDir = 'examples/web/classes';
+  execSync(`${JAVAC} -d ${outDir} examples/spring/GlobalExceptionAdviceDemo.java`);
+  const out = execSync(`${JAVA} -ea -cp ${outDir} com.handbook.spring.GlobalExceptionAdviceDemo`).toString();
+  if (!out.includes('Centralized @RestControllerAdvice and RFC 7807 ProblemDetail verified successfully')) throw new Error(out);
+});
+
+runTest('Spring Boot - Topic 95: SpringDataJpaRepositoryDemo.java execution', () => {
+  const outDir = 'examples/web/classes';
+  execSync(`${JAVAC} -d ${outDir} examples/spring/SpringDataJpaRepositoryDemo.java`);
+  const out = execSync(`${JAVA} -ea -cp ${outDir} com.handbook.spring.SpringDataJpaRepositoryDemo`).toString();
+  if (!out.includes('Topic 95 Spring Data JPA Architecture demo executed successfully')) throw new Error(out);
+});
+
+runTest('Spring Boot - Topic 96: DerivedQueryProjectionsDemo.java execution', () => {
+  const outDir = 'examples/web/classes';
+  execSync(`${JAVAC} -d ${outDir} examples/spring/DerivedQueryProjectionsDemo.java`);
+  const out = execSync(`${JAVA} -ea -cp ${outDir} com.handbook.spring.DerivedQueryProjectionsDemo`).toString();
+  if (!out.includes('Topic 96 Derived Queries and Projections demo executed successfully')) throw new Error(out);
+});
+
+runTest('Spring Boot - Topic 97: TransactionalEntityGraphDemo.java execution', () => {
+  const outDir = 'examples/web/classes';
+  execSync(`${JAVAC} -d ${outDir} examples/spring/TransactionalEntityGraphDemo.java`);
+  const out = execSync(`${JAVA} -ea -cp ${outDir} com.handbook.spring.TransactionalEntityGraphDemo`).toString();
+  if (!out.includes('Topic 97 Transactional and EntityGraph demo executed successfully')) throw new Error(out);
+});
+
+runTest('Spring Boot - Topic 98: SecurityFilterChainDemo.java execution', () => {
+  const outDir = 'examples/web/classes';
+  execSync(`${JAVAC} -d ${outDir} examples/spring/SecurityFilterChainDemo.java`);
+  const out = execSync(`${JAVA} -ea -cp ${outDir} com.handbook.spring.SecurityFilterChainDemo`).toString();
+  if (!out.includes('Topic 98 Modern SecurityFilterChain and Password Encoder verified successfully')) throw new Error(out);
+});
+
+runTest('Spring Boot - Topic 99: JwtRbacSecurityDemo.java execution', () => {
+  const outDir = 'examples/web/classes';
+  execSync(`${JAVAC} -d ${outDir} examples/spring/JwtRbacSecurityDemo.java`);
+  const out = execSync(`${JAVA} -ea -cp ${outDir} com.handbook.spring.JwtRbacSecurityDemo`).toString();
+  if (!out.includes('Topic 99 JWT & RBAC Method Security verified successfully')) throw new Error(out);
+});
+
+runTest('Spring Boot - Topic 100: AnnotationMetadataDictionaryDemo.java execution', () => {
+  const outDir = 'examples/web/classes';
+  execSync(`${JAVAC} -d ${outDir} examples/spring/AnnotationMetadataDictionaryDemo.java`);
+  const out = execSync(`${JAVA} -ea -cp ${outDir} com.handbook.spring.AnnotationMetadataDictionaryDemo`).toString();
+  if (!out.includes('Topic 100 Definitive Annotations Dictionary verified successfully')) throw new Error(out);
+});
+
+runTest('Spring Boot - Topic 101: LombokMapStructDemo.java execution', () => {
+  const outDir = 'examples/web/classes';
+  execSync(`${JAVAC} -d ${outDir} examples/spring/LombokMapStructDemo.java`);
+  const out = execSync(`${JAVA} -ea -cp ${outDir} com.handbook.spring.LombokMapStructDemo`).toString();
+  if (!out.includes('Topic 101 Lombok & MapStruct code generation verified successfully')) throw new Error(out);
+});
+
+runTest('Spring Boot - Topic 102: FlywayMigrationDemo.java execution', () => {
+  const outDir = 'examples/web/classes';
+  execSync(`${JAVAC} -d ${outDir} examples/spring/FlywayMigrationDemo.java`);
+  const out = execSync(`${JAVA} -ea -cp ${outDir} com.handbook.spring.FlywayMigrationDemo`).toString();
+  if (!out.includes('Topic 102 Flyway Database Migrations verified successfully')) throw new Error(out);
+});
+
+runTest('Spring Boot - Topic 103: ModernTestingDemo.java execution', () => {
+  const outDir = 'examples/web/classes';
+  execSync(`${JAVAC} -d ${outDir} examples/spring/ModernTestingDemo.java`);
+  const out = execSync(`${JAVA} -ea -cp ${outDir} com.handbook.spring.ModernTestingDemo`).toString();
+  if (!out.includes('Topic 103 Automated Testing Suite verified successfully')) throw new Error(out);
+});
+
+runTest('Spring Boot - Topic 104: ActuatorObservabilityDemo.java execution', () => {
+  const outDir = 'examples/web/classes';
+  execSync(`${JAVAC} -d ${outDir} examples/spring/ActuatorObservabilityDemo.java`);
+  const out = execSync(`${JAVA} -ea -cp ${outDir} com.handbook.spring.ActuatorObservabilityDemo`).toString();
+  if (!out.includes('Topic 104 Observability & Actuator verified successfully')) throw new Error(out);
+});
+
+runTest('Spring Boot - Topic 105: OpenApiSwaggerDemo.java execution', () => {
+  const outDir = 'examples/web/classes';
+  execSync(`${JAVAC} -d ${outDir} examples/spring/OpenApiSwaggerDemo.java`);
+  const out = execSync(`${JAVA} -ea -cp ${outDir} com.handbook.spring.OpenApiSwaggerDemo`).toString();
+  if (!out.includes('Topic 105 OpenAPI 3 and Swagger UI verified successfully')) throw new Error(out);
+});
+
+runTest('Spring Boot - Topic 106: DistributedCachingDemo.java execution', () => {
+  const outDir = 'examples/web/classes';
+  execSync(`${JAVAC} -d ${outDir} examples/spring/DistributedCachingDemo.java`);
+  const out = execSync(`${JAVA} -ea -cp ${outDir} com.handbook.spring.DistributedCachingDemo`).toString();
+  if (!out.includes('Topic 106 Caffeine & Redis Distributed Caching verified successfully')) throw new Error(out);
+});
+
+runTest('Spring Boot - Topic 107: Resilience4jDemo.java execution', () => {
+  const outDir = 'examples/web/classes';
+  execSync(`${JAVAC} -d ${outDir} examples/spring/Resilience4jDemo.java`);
+  const out = execSync(`${JAVA} -ea -cp ${outDir} com.handbook.spring.Resilience4jDemo`).toString();
+  if (!out.includes('Topic 107 Resilience4j Circuit Breaker & RateLimiter verified successfully')) throw new Error(out);
+});
+
+runTest('Spring Boot - Topic 108: KafkaMessagingDemo.java execution', () => {
+  const outDir = 'examples/web/classes';
+  execSync(`${JAVAC} -d ${outDir} examples/spring/KafkaMessagingDemo.java`);
+  const out = execSync(`${JAVA} -ea -cp ${outDir} com.handbook.spring.KafkaMessagingDemo`).toString();
+  if (!out.includes('Topic 108 Apache Kafka Event-Driven Messaging verified successfully')) throw new Error(out);
+});
+
 runTest('Jakarta EE - WAR packaging for Tomcat', () => {
   const warBuild = 'examples/web/war-build';
   const webInfClasses = path.join(warBuild, 'WEB-INF/classes');

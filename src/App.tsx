@@ -6,8 +6,10 @@ import { HomeView } from './components/HomeView';
 import { SavedView } from './components/SavedView';
 import { ProgressView } from './components/ProgressView';
 import { CertificateView } from './components/CertificateView';
+import { CapstoneProjectView } from './components/CapstoneProjectView';
 import { SearchModal } from './components/SearchModal';
 import { ALL_TOPICS, getTopicById } from './data/topics';
+import type { ChallengeStatus, PartType } from './types';
 
 export function App() {
   // Theme state: respects saved choice or system preference
@@ -23,8 +25,9 @@ export function App() {
     return saved ? parseInt(saved, 10) : 100;
   });
 
-  // Views: 'home' | 'topic' | 'saved' | 'progress' | 'certificate'
-  const [currentView, setCurrentView] = useState<'home' | 'topic' | 'saved' | 'progress' | 'certificate'>('home');
+  // Views: 'home' | 'topic' | 'saved' | 'progress' | 'certificate' | 'capstone'
+  const [currentView, setCurrentView] = useState<'home' | 'topic' | 'saved' | 'progress' | 'certificate' | 'capstone'>('home');
+  const [selectedCapstonePart, setSelectedCapstonePart] = useState<PartType>('Part 1: Java Core');
   const [activeTopicId, setActiveTopicId] = useState<string | null>('topic-03');
 
   // Bookmarked topics
@@ -44,6 +47,26 @@ export function App() {
       return saved ? new Set(JSON.parse(saved)) : new Set(['topic-03']);
     } catch {
       return new Set(['topic-03']);
+    }
+  });
+
+  // Challenge assessment states: record of challengeId -> ChallengeStatus
+  const [challengeStates, setChallengeStates] = useState<Record<string, ChallengeStatus>>(() => {
+    try {
+      const saved = localStorage.getItem('java_handbook_challenges');
+      return saved ? JSON.parse(saved) : {};
+    } catch {
+      return {};
+    }
+  });
+
+  // Targeted review topics: Set of topicIds flagged for knowledge gap remediation
+  const [targetedReviewIds, setTargetedReviewIds] = useState<Set<string>>(() => {
+    try {
+      const saved = localStorage.getItem('java_handbook_targeted_review');
+      return saved ? new Set(JSON.parse(saved)) : new Set();
+    } catch {
+      return new Set();
     }
   });
 
@@ -77,6 +100,51 @@ export function App() {
   useEffect(() => {
     localStorage.setItem('java_handbook_completed', JSON.stringify([...completedTopicIds]));
   }, [completedTopicIds]);
+
+  // Sync challenge states
+  useEffect(() => {
+    localStorage.setItem('java_handbook_challenges', JSON.stringify(challengeStates));
+  }, [challengeStates]);
+
+  // Sync targeted review
+  useEffect(() => {
+    localStorage.setItem('java_handbook_targeted_review', JSON.stringify([...targetedReviewIds]));
+  }, [targetedReviewIds]);
+
+  const handleSolveChallenge = (challengeId: string) => {
+    setChallengeStates(prev => ({
+      ...prev,
+      [challengeId]: 'mastered'
+    }));
+  };
+
+  const handleNeedHelpChallenge = (challengeId: string, prerequisiteTopicIds: string[]) => {
+    setChallengeStates(prev => ({
+      ...prev,
+      [challengeId]: 'needs-review'
+    }));
+    setTargetedReviewIds(prev => {
+      const next = new Set(prev);
+      prerequisiteTopicIds.forEach(id => next.add(id));
+      return next;
+    });
+  };
+
+  const handleResetChallenge = (challengeId: string) => {
+    setChallengeStates(prev => {
+      const next = { ...prev };
+      delete next[challengeId];
+      return next;
+    });
+  };
+
+  const handleRemoveTargetedReview = (topicId: string) => {
+    setTargetedReviewIds(prev => {
+      const next = new Set(prev);
+      next.delete(topicId);
+      return next;
+    });
+  };
 
   // Global Ctrl+K shortcut listener
   useEffect(() => {
@@ -147,6 +215,10 @@ export function App() {
           onOpenSaved={() => setCurrentView('saved')}
           onOpenProgress={() => setCurrentView('progress')}
           onOpenCertificate={() => setCurrentView('certificate')}
+          onOpenCapstone={(part) => {
+            if (part) setSelectedCapstonePart(part);
+            setCurrentView('capstone');
+          }}
           completedTopicIds={completedTopicIds}
           savedTopicIds={new Set(savedTopicIds)}
           isOpenMobile={isMobileSidebarOpen}
@@ -160,6 +232,10 @@ export function App() {
               onSelectTopic={handleSelectTopic}
               completedTopicIds={completedTopicIds}
               onOpenCertificate={() => setCurrentView('certificate')}
+              onOpenCapstone={(part) => {
+                if (part) setSelectedCapstonePart(part);
+                setCurrentView('capstone');
+              }}
             />
           )}
 
@@ -190,6 +266,16 @@ export function App() {
               onToggleCompleted={handleToggleCompleted}
               onSelectTopic={handleSelectTopic}
               onOpenCertificate={() => setCurrentView('certificate')}
+              onOpenCapstone={(part) => {
+                if (part) setSelectedCapstonePart(part);
+                setCurrentView('capstone');
+              }}
+              challengeStates={challengeStates}
+              targetedReviewIds={targetedReviewIds}
+              onSolveChallenge={handleSolveChallenge}
+              onNeedHelpChallenge={handleNeedHelpChallenge}
+              onResetChallenge={handleResetChallenge}
+              onRemoveTargetedReview={handleRemoveTargetedReview}
             />
           )}
 
@@ -200,6 +286,15 @@ export function App() {
               onGoBack={() => setCurrentView('home')}
               onGoToProgress={() => setCurrentView('progress')}
               onUnlockAll={() => setCompletedTopicIds(new Set(ALL_TOPICS.map(t => t.id)))}
+            />
+          )}
+
+          {currentView === 'capstone' && (
+            <CapstoneProjectView
+              initialPart={selectedCapstonePart}
+              completedTopicIds={completedTopicIds}
+              onSelectTopic={handleSelectTopic}
+              onGoHome={() => setCurrentView('home')}
             />
           )}
         </main>
