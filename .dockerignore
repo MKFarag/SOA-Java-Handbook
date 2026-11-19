@@ -1,0 +1,9 @@
+node_modules
+dist
+.git
+.github
+.vscode
+tools/apache-tomcat-10.1.61
+*.log
+*.tmp
+scripts/temp-*

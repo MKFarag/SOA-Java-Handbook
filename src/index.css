@@ -1,0 +1,179 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  :root {
+    --bg-main: #f8fafc;
+    --bg-card: #ffffff;
+    --bg-sidebar: #f1f5f9;
+    --border-color: #e2e8f0;
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
+    --text-muted: #64748b;
+    --accent-orange: #ea580c;
+    --accent-orange-hover: #c2410c;
+    --accent-blue: #2563eb;
+    --code-bg: #1e1e1e;
+    --code-header: #2d2d2d;
+    --code-text: #d4d4d4;
+  }
+
+  .dark {
+    --bg-main: #18181b;
+    --bg-card: #1e1e1e;
+    --bg-sidebar: #141416;
+    --border-color: #2e2e32;
+    --text-primary: #f4f4f5;
+    --text-secondary: #a1a1aa;
+    --text-muted: #71717a;
+    --accent-orange: #f97316;
+    --accent-orange-hover: #fb923c;
+    --accent-blue: #38bdf8;
+    --code-bg: #1e1e1e;
+    --code-header: #252526;
+    --code-text: #d4d4d4;
+  }
+
+  body {
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+
+  code, pre, .font-mono {
+    font-family: "Cascadia Code", "Fira Code", Consolas, Menlo, Monaco, monospace;
+  }
+
+  /* Inline code highlighting */
+  code:not(pre code) {
+    background-color: rgba(234, 88, 12, 0.08);
+    color: #c2410c;
+    padding: 0.15em 0.35em;
+    border-radius: 0.25rem;
+    font-size: 0.875em;
+    font-weight: 600;
+    border: 1px solid rgba(234, 88, 12, 0.18);
+  }
+
+  .dark code:not(pre code) {
+    background-color: rgba(249, 115, 22, 0.15);
+    color: #fb923c;
+    border-color: rgba(249, 115, 22, 0.25);
+  }
+}
+
+/* VS Code Dark+ Syntax Highlighting */
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: #6a9955;
+  font-style: italic;
+}
+
+.token.punctuation {
+  color: #d4d4d4;
+}
+
+.token.property,
+.token.tag,
+.token.boolean,
+.token.number,
+.token.constant,
+.token.symbol {
+  color: #b5cea8;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin {
+  color: #ce9178;
+}
+
+.token.operator,
+.token.entity,
+.token.url {
+  color: #d4d4d4;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.keyword {
+  color: #569cd6;
+}
+
+.token.control-flow,
+.token.keyword-return,
+.token.keyword-if,
+.token.keyword-for {
+  color: #c586c0;
+}
+
+.token.function,
+.token.class-name {
+  color: #4ec9b0;
+}
+
+.token.method {
+  color: #dcdcaa;
+}
+
+.token.regex,
+.token.important,
+.token.variable {
+  color: #9cdcfe;
+}
+
+/* Custom scrollbars matching IntelliJ / VS Code */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #3f3f46;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #52525b;
+}
+
+/* Dedicated Print Styles for Certificate & Documentation */
+@media print {
+  @page {
+    size: landscape A4;
+    margin: 0;
+  }
+  body {
+    background: white !important;
+    color: black !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  header, aside, .no-print {
+    display: none !important;
+  }
+  main {
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: 100% !important;
+  }
+  #certificate-print-area {
+    margin: 0 auto !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    width: 100% !important;
+    min-height: 100vh !important;
+    page-break-inside: avoid !important;
+    padding: 2.5rem !important;
+  }
+}

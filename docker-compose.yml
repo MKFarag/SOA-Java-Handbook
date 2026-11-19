@@ -1,0 +1,11 @@
+services:
+  handbook:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: mkfarag/java-handbook:latest
+    container_name: java_handbook_app
+    ports:
+      - "3000:80"
+    restart: unless-stopped
+
