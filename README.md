@@ -24,89 +24,31 @@
 
 ---
 
-## 🚀 Quick Start
+## 🚀 Quick Start (أسهل طريقتين لتشغيل المشروع)
 
-### 1. Run with Docker (Recommended)
+### 1. تشغيل فوري عبر Docker (بدون كود وبدون تسطيب Node.js)
+لو عندك Docker، انسخ الأمر ده وشغله في التيرمينال فوراً:
 ```bash
-# Pull and run the pre-built image from Docker Hub:
 docker run -d -p 3000:80 --name java_handbook mkfarag/java-handbook:latest
-
-# Or build and start locally with Docker Compose:
-docker compose up -d
 ```
-Open **[http://localhost:3000](http://localhost:3000)** in your browser.
-
-### 2. Run Locally with Node.js
-```bash
-# Clone the repository
-git clone https://github.com/mkfarag/java-handbook.git
-cd java-handbook
-
-# Install dependencies
-npm install
-
-# Start local development server
-npm run dev
-
-# Or build and test the offline production bundle
-npm run build
-npm run preview
-```
-
-### 3. Run Automated Code Verifications
-```bash
-node scripts/verify-examples.mjs
-```
-This runs the automated verification suite executing 160 test scenarios across all 87 topics, compiling Java source files with `javac` and verifying Servlet compilation against Tomcat libraries.
+وافتح المتصفح على: **[http://localhost:3000](http://localhost:3000)**.
 
 ---
 
-## 📦 How to Share the Handbook with Others
-
-### Option 1: Share via Docker Hub (Fastest)
-Anyone with Docker can run the entire handbook with a single command without downloading source code or installing Node.js:
+### 2. تشغيل عبر كود المشروع (Git Clone)
+لو حابب تسحب الكود وتشغله على جهازك:
 ```bash
-docker pull mkfarag/java-handbook:latest
-docker run -d -p 3000:80 --name java_handbook mkfarag/java-handbook:latest
-```
-
-### Option 2: Share as a Standalone Tar Archive (Air-Gapped / USB)
-You can export the built Docker image into a single `.tar` archive and send it to anyone via USB drive or offline network transfer:
-```bash
-# 1. Save image to a portable file
-docker save -o java-handbook.tar mkfarag/java-handbook:latest
-
-# 2. On the recipient's machine (no internet needed):
-docker load -i java-handbook.tar
-docker run -d -p 3000:80 --name java_handbook mkfarag/java-handbook:latest
-```
-The recipient opens `http://localhost:3000` in any web browser.
-
-### Option 3: Share as a Pre-Built Static Folder (Zero-Docker / Zero-Node)
-Because this handbook is 100% static and offline-first, you can distribute the built `dist/` directory:
-```bash
-# 1. Build production assets
-npm run build
-
-# 2. Compress the 'dist' folder into a zip file
-# Windows PowerShell:
-Compress-Archive -Path dist\* -DestinationPath java-handbook-dist.zip
-```
-The recipient can unpack the zip and serve it using any lightweight local server:
-- Python: `python -m http.server 3000 --directory dist`
-- Node: `npx serve dist`
-- Or drag-and-drop onto free static hosts like GitHub Pages, Vercel, Netlify, or Cloudflare Pages.
-
-### Option 4: Share & Contribute via GitHub
-```bash
-# Clone repository
-git clone https://github.com/mkfarag/java-handbook.git
+# 1. اسحب المشروع
+git clone https://github.com/MKFarag/java-handbook.git
 cd java-handbook
 
-# Run locally or with Docker
-npm install && npm run dev
-# or: docker compose up -d
+# 2. سطب وشغل
+npm install
+npm run dev
 ```
+وافتح المتصفح على: **[http://localhost:5173](http://localhost:5173)**.
+
+> **ملاحظة:** يمكن أيضاً تحميل المشروع كملف مضغوط **ZIP** مباشرة بالضغط على زر **Code** ثم **Download ZIP** من صفحة GitHub، وفك الضغط وتشغيل `npm install` ثم `npm run dev`.
 
 ---
 
