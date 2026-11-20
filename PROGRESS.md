@@ -145,3 +145,12 @@
   - Button 1: `[✅ I Solved It]`: Reveals reference solution, architectural notes, and marks milestone as Mastered.
   - Button 2: `[🤔 Need Assistance]`: Reveals guided diagnostic hints, unlocks solution, and tags prerequisite topics for the "Targeted Review" dashboard.
 - [x] **CAP-03:** Build the "Targeted Review / Knowledge Gaps" section in `src/components/ProgressView.tsx` to highlight areas requiring reinforcement.
+
+### C. Cloud Sync, Security Gates & Admin Command Center
+- [x] **SYNC-01:** Integrate Firebase Firestore SDK with zero-cost serverless architecture (`src/lib/firebase.ts`, `src/services/firebaseService.ts`).
+- [x] **SYNC-02:** Build `StudentSyncModal` for cross-device progress synchronization using unique student codes without email/passwords.
+- [x] **CERT-01:** Implement `CertificateGateModal` to lock official technical certificates until 100% curriculum completion or authorized instructor passkey.
+- [x] **ADMIN-01:** Build Confidential Admin Command Center (`Ctrl+Shift+A` or `#admin`) with live student roster, progress metrics, and CSV export.
+- [x] **ADMIN-02:** Implement Admin Security Audit Suite with customizable complex master passwords and last-login timestamp/device tracking.
+- [x] **BCAST-01:** Build Instructor Broadcast & Resource Sharing system with in-app notification badges and homepage banner.
+

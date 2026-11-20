@@ -13,7 +13,13 @@ import {
   Lock, 
   Unlock, 
   AlertCircle, 
-  Key
+  Key,
+  Clock,
+  KeyRound,
+  Sparkles,
+  Check,
+  Eye,
+  EyeOff
 } from 'lucide-react';
 import type { StudentProfile, BroadcastItem, BroadcastType } from '../types';
 import { 
@@ -23,7 +29,10 @@ import {
   getBroadcasts, 
   publishBroadcast, 
   deleteBroadcast, 
-  verifyAdminPassword 
+  verifyAdminPassword,
+  getAdminSecurityConfig,
+  recordAdminLogin,
+  updateAdminPassword
 } from '../services/firebaseService';
 
 interface AdminDashboardModalProps {
@@ -43,9 +52,16 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [passwordInput, setPasswordInput] = useState('');
   const [authError, setAuthError] = useState<string | null>(null);
+  const [isVerifying, setIsVerifying] = useState(false);
 
-  // Tabs: 'students' | 'broadcasts'
-  const [activeTab, setActiveTab] = useState<'students' | 'broadcasts'>('students');
+  // Security Audit Info
+  const [lastLoginTime, setLastLoginTime] = useState<string | null>(null);
+  const [lastLoginDevice, setLastLoginDevice] = useState<string | null>(null);
+  const [previousLoginTime, setPreviousLoginTime] = useState<string | null>(null);
+  const [previousLoginDevice, setPreviousLoginDevice] = useState<string | null>(null);
+
+  // Tabs: 'students' | 'broadcasts' | 'security'
+  const [activeTab, setActiveTab] = useState<'students' | 'broadcasts' | 'security'>('students');
 
   // Students Data
   const [students, setStudents] = useState<StudentProfile[]>([]);
@@ -65,6 +81,16 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
   const [submittingBroadcast, setSubmittingBroadcast] = useState(false);
   const [formSuccess, setFormSuccess] = useState<string | null>(null);
   const [formError, setFormError] = useState<string | null>(null);
+
+  // Password Management Form State
+  const [currentPassInput, setCurrentPassInput] = useState('');
+  const [newPassInput, setNewPassInput] = useState('');
+  const [confirmPassInput, setConfirmPassInput] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [isSavingPass, setIsSavingPass] = useState(false);
+  const [passChangeSuccess, setPassChangeSuccess] = useState<string | null>(null);
+  const [passChangeError, setPassChangeError] = useState<string | null>(null);
+  const [copiedPass, setCopiedPass] = useState(false);
 
   // Load data once authenticated
   useEffect(() => {
@@ -105,14 +131,46 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
     }
   };
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setAuthError(null);
-    if (verifyAdminPassword(passwordInput)) {
-      setIsAuthenticated(true);
-      setPasswordInput('');
-    } else {
-      setAuthError('Incorrect Admin Passcode. Access denied.');
+    setIsVerifying(true);
+
+    try {
+      const isValid = await verifyAdminPassword(passwordInput);
+      if (isValid) {
+        // Fetch previous login timestamp before overwriting
+        const currentConfig = await getAdminSecurityConfig();
+        if (currentConfig.lastLoginTime) {
+          setPreviousLoginTime(currentConfig.lastLoginTime);
+          setPreviousLoginDevice(currentConfig.lastLoginDevice || 'Previous Session');
+        }
+
+        // Detect current browser / device
+        const ua = navigator.userAgent;
+        let browserName = 'Browser';
+        if (ua.includes('Firefox')) browserName = 'Firefox';
+        else if (ua.includes('Edg')) browserName = 'Edge';
+        else if (ua.includes('Chrome')) browserName = 'Chrome';
+        else if (ua.includes('Safari')) browserName = 'Safari';
+
+        const platform = navigator.platform || (ua.includes('Win') ? 'Windows' : 'Mobile / Device');
+        const deviceInfo = `${platform} (${browserName})`;
+
+        // Record new login in Firestore & LocalStorage
+        const recordedTime = await recordAdminLogin(deviceInfo);
+        setLastLoginTime(recordedTime);
+        setLastLoginDevice(deviceInfo);
+
+        setIsAuthenticated(true);
+        setPasswordInput('');
+      } else {
+        setAuthError('Incorrect Admin Passcode. Access denied.');
+      }
+    } catch (err) {
+      setAuthError('Authentication service failed. Please check internet connection.');
+    } finally {
+      setIsVerifying(false);
     }
   };
 
@@ -184,6 +242,53 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
     }
   };
 
+  const generateComplexPassword = () => {
+    const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789!@#$%^&*()_+';
+    let pass = 'MKF#';
+    for (let i = 0; i < 12; i++) {
+      pass += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    setNewPassInput(pass);
+    setConfirmPassInput(pass);
+  };
+
+  const handleChangePassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setPassChangeError(null);
+    setPassChangeSuccess(null);
+
+    // Verify current password first
+    const isCurrentValid = await verifyAdminPassword(currentPassInput);
+    if (!isCurrentValid) {
+      setPassChangeError('Current password is incorrect.');
+      return;
+    }
+
+    if (newPassInput.trim().length < 8) {
+      setPassChangeError('New password must be at least 8 characters long.');
+      return;
+    }
+
+    if (newPassInput !== confirmPassInput) {
+      setPassChangeError('New password and confirmation do not match.');
+      return;
+    }
+
+    setIsSavingPass(true);
+    try {
+      await updateAdminPassword(newPassInput.trim());
+      setPassChangeSuccess('Admin password updated successfully across all sessions and devices!');
+      setCurrentPassInput('');
+      setNewPassInput('');
+      setConfirmPassInput('');
+      setTimeout(() => setPassChangeSuccess(null), 4000);
+    } catch (err: any) {
+      setPassChangeError(err.message || 'Failed to update admin password.');
+    } finally {
+      setIsSavingPass(false);
+    }
+  };
+
   const handleExportCSV = () => {
     if (students.length === 0) {
       alert('No students to export.');
@@ -251,7 +356,7 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
           <button
             type="button"
             onClick={onClose}
-            className="p-1.5 rounded-lg text-zinc-400 hover:text-white hover:bg-zinc-800 transition-colors"
+            className="p-1.5 rounded-lg text-zinc-400 hover:text-white hover:bg-zinc-800 transition-colors cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
@@ -269,7 +374,7 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
                 Master Security Gate
               </h3>
               <p className="text-xs text-zinc-500 dark:text-zinc-400">
-                Enter your instructor passcode to access real-time student analytics and broadcast control.
+                Enter your instructor passcode to access real-time student analytics, broadcast control, and security settings.
               </p>
             </div>
 
@@ -292,51 +397,74 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
 
               <button
                 type="submit"
-                className="w-full py-2.5 px-4 rounded-xl bg-orange-500 hover:bg-orange-600 text-white font-bold text-sm shadow-md shadow-orange-500/25 transition-all cursor-pointer"
+                disabled={isVerifying}
+                className="w-full py-2.5 px-4 rounded-xl bg-orange-500 hover:bg-orange-600 active:scale-[0.98] text-white font-bold text-sm shadow-md shadow-orange-500/25 transition-all cursor-pointer disabled:opacity-50"
               >
-                Authenticate & Enter
+                {isVerifying ? 'Authenticating...' : 'Authenticate & Enter'}
               </button>
             </form>
           </div>
         ) : (
           /* Main Authenticated Dashboard */
           <div className="flex-1 flex flex-col overflow-hidden">
-            {/* Header Stats Bar */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 p-4 border-b border-zinc-200 dark:border-zinc-800 bg-zinc-50/60 dark:bg-zinc-900/40">
-              <div className="p-3 rounded-xl bg-white dark:bg-zinc-800/80 border border-zinc-200/60 dark:border-zinc-700/50">
-                <span className="text-[11px] font-medium text-zinc-500 dark:text-zinc-400 block">
-                  Registered Students
-                </span>
-                <span className="text-xl font-extrabold font-mono text-zinc-900 dark:text-zinc-100">
-                  {totalStudents}
-                </span>
+            {/* Header Stats Bar + Security Audit Banner */}
+            <div className="p-4 border-b border-zinc-200 dark:border-zinc-800 bg-zinc-50/60 dark:bg-zinc-900/40 space-y-3">
+              {/* Security Audit Badge */}
+              <div className="flex flex-wrap items-center justify-between gap-2 px-3 py-2 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-xs text-emerald-800 dark:text-emerald-300">
+                <div className="flex items-center gap-2">
+                  <Clock className="w-4 h-4 text-emerald-500 shrink-0" />
+                  <span>
+                    <strong>Admin Session Active:</strong> Authenticated on {lastLoginDevice || 'Current Machine'}
+                  </span>
+                </div>
+                {previousLoginTime ? (
+                  <span className="font-mono text-[11px] text-zinc-500 dark:text-zinc-400">
+                    Last access before this: {new Date(previousLoginTime).toLocaleString()} ({previousLoginDevice})
+                  </span>
+                ) : (
+                  <span className="font-mono text-[11px] text-emerald-600 dark:text-emerald-400">
+                    First recorded login session
+                  </span>
+                )}
               </div>
 
-              <div className="p-3 rounded-xl bg-white dark:bg-zinc-800/80 border border-zinc-200/60 dark:border-zinc-700/50">
-                <span className="text-[11px] font-medium text-zinc-500 dark:text-zinc-400 block">
-                  Certificates Unlocked
-                </span>
-                <span className="text-xl font-extrabold font-mono text-amber-500">
-                  {certifiedStudents}
-                </span>
-              </div>
+              {/* Stats Cards */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                <div className="p-3 rounded-xl bg-white dark:bg-zinc-800/80 border border-zinc-200/60 dark:border-zinc-700/50">
+                  <span className="text-[11px] font-medium text-zinc-500 dark:text-zinc-400 block">
+                    Registered Students
+                  </span>
+                  <span className="text-xl font-extrabold font-mono text-zinc-900 dark:text-zinc-100">
+                    {totalStudents}
+                  </span>
+                </div>
 
-              <div className="p-3 rounded-xl bg-white dark:bg-zinc-800/80 border border-zinc-200/60 dark:border-zinc-700/50">
-                <span className="text-[11px] font-medium text-zinc-500 dark:text-zinc-400 block">
-                  Total Completed Modules
-                </span>
-                <span className="text-xl font-extrabold font-mono text-emerald-500">
-                  {totalTopicsCompletedAll}
-                </span>
-              </div>
+                <div className="p-3 rounded-xl bg-white dark:bg-zinc-800/80 border border-zinc-200/60 dark:border-zinc-700/50">
+                  <span className="text-[11px] font-medium text-zinc-500 dark:text-zinc-400 block">
+                    Certificates Unlocked
+                  </span>
+                  <span className="text-xl font-extrabold font-mono text-amber-500">
+                    {certifiedStudents}
+                  </span>
+                </div>
 
-              <div className="p-3 rounded-xl bg-white dark:bg-zinc-800/80 border border-zinc-200/60 dark:border-zinc-700/50">
-                <span className="text-[11px] font-medium text-zinc-500 dark:text-zinc-400 block">
-                  Active Broadcasts
-                </span>
-                <span className="text-xl font-extrabold font-mono text-blue-500">
-                  {broadcasts.length}
-                </span>
+                <div className="p-3 rounded-xl bg-white dark:bg-zinc-800/80 border border-zinc-200/60 dark:border-zinc-700/50">
+                  <span className="text-[11px] font-medium text-zinc-500 dark:text-zinc-400 block">
+                    Total Completed Modules
+                  </span>
+                  <span className="text-xl font-extrabold font-mono text-emerald-500">
+                    {totalTopicsCompletedAll}
+                  </span>
+                </div>
+
+                <div className="p-3 rounded-xl bg-white dark:bg-zinc-800/80 border border-zinc-200/60 dark:border-zinc-700/50">
+                  <span className="text-[11px] font-medium text-zinc-500 dark:text-zinc-400 block">
+                    Active Broadcasts
+                  </span>
+                  <span className="text-xl font-extrabold font-mono text-blue-500">
+                    {broadcasts.length}
+                  </span>
+                </div>
               </div>
             </div>
 
@@ -346,7 +474,7 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
                 <button
                   type="button"
                   onClick={() => setActiveTab('students')}
-                  className={`py-3.5 text-xs sm:text-sm font-bold border-b-2 flex items-center gap-2 transition-colors ${
+                  className={`py-3.5 text-xs sm:text-sm font-bold border-b-2 flex items-center gap-2 transition-colors cursor-pointer ${
                     activeTab === 'students'
                       ? 'border-orange-500 text-orange-600 dark:text-orange-400'
                       : 'border-transparent text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200'
@@ -359,7 +487,7 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
                 <button
                   type="button"
                   onClick={() => setActiveTab('broadcasts')}
-                  className={`py-3.5 text-xs sm:text-sm font-bold border-b-2 flex items-center gap-2 transition-colors ${
+                  className={`py-3.5 text-xs sm:text-sm font-bold border-b-2 flex items-center gap-2 transition-colors cursor-pointer ${
                     activeTab === 'broadcasts'
                       ? 'border-orange-500 text-orange-600 dark:text-orange-400'
                       : 'border-transparent text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200'
@@ -368,6 +496,19 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
                   <Megaphone className="w-4 h-4" />
                   <span>Broadcasts & Resources ({broadcasts.length})</span>
                 </button>
+
+                <button
+                  type="button"
+                  onClick={() => setActiveTab('security')}
+                  className={`py-3.5 text-xs sm:text-sm font-bold border-b-2 flex items-center gap-2 transition-colors cursor-pointer ${
+                    activeTab === 'security'
+                      ? 'border-orange-500 text-orange-600 dark:text-orange-400'
+                      : 'border-transparent text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200'
+                  }`}
+                >
+                  <KeyRound className="w-4 h-4" />
+                  <span>Security & Passcode</span>
+                </button>
               </div>
 
               {activeTab === 'students' && (
@@ -375,7 +516,7 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
                   <button
                     type="button"
                     onClick={handleExportCSV}
-                    className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-zinc-200 dark:border-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-800 text-xs font-semibold text-zinc-700 dark:text-zinc-300 transition-colors"
+                    className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-zinc-200 dark:border-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-800 text-xs font-semibold text-zinc-700 dark:text-zinc-300 transition-colors cursor-pointer"
                   >
                     <Download className="w-3.5 h-3.5" />
                     <span>Export CSV</span>
@@ -384,7 +525,7 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
                     type="button"
                     onClick={fetchStudents}
                     disabled={loadingStudents}
-                    className="p-1.5 rounded-lg text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200"
+                    className="p-1.5 rounded-lg text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 cursor-pointer"
                     title="Refresh Students"
                   >
                     <RefreshCw className={`w-4 h-4 ${loadingStudents ? 'animate-spin' : ''}`} />
@@ -464,7 +605,7 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
                                 <button
                                   type="button"
                                   onClick={() => handleToggleCertificate(student.code, student.certificateUnlocked)}
-                                  className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[10px] font-bold uppercase transition-all ${
+                                  className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[10px] font-bold uppercase transition-all cursor-pointer ${
                                     student.certificateUnlocked
                                       ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30'
                                       : 'bg-zinc-100 dark:bg-zinc-800 text-zinc-500 border border-zinc-200 dark:border-zinc-700'
@@ -488,7 +629,7 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
                                 <button
                                   type="button"
                                   onClick={() => handleDeleteStudent(student.code, student.name)}
-                                  className="p-1 rounded text-zinc-400 hover:text-red-500 transition-colors"
+                                  className="p-1 rounded text-zinc-400 hover:text-red-500 transition-colors cursor-pointer"
                                   title="Delete Student Record"
                                 >
                                   <Trash2 className="w-4 h-4" />
@@ -629,7 +770,7 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
                       type="button"
                       onClick={fetchBroadcasts}
                       disabled={loadingBroadcasts}
-                      className="p-1 rounded text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200"
+                      className="p-1 rounded text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 cursor-pointer"
                     >
                       <RefreshCw className={`w-3.5 h-3.5 ${loadingBroadcasts ? 'animate-spin' : ''}`} />
                     </button>
@@ -666,7 +807,7 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
                             <button
                               type="button"
                               onClick={() => handleDeleteBroadcast(item.id, item.title)}
-                              className="p-1.5 rounded-lg text-zinc-400 hover:text-red-500 hover:bg-red-500/10 transition-colors"
+                              className="p-1.5 rounded-lg text-zinc-400 hover:text-red-500 hover:bg-red-500/10 transition-colors cursor-pointer"
                               title="Delete Broadcast"
                             >
                               <Trash2 className="w-4 h-4" />
@@ -700,6 +841,168 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
                       ))
                     )}
                   </div>
+                </div>
+              </div>
+            )}
+
+            {/* Tab 3: Security & Passcode Settings */}
+            {activeTab === 'security' && (
+              <div className="flex-1 p-6 overflow-y-auto space-y-6 max-w-2xl mx-auto w-full">
+                {/* Audit Information Card */}
+                <div className="p-4 rounded-xl bg-zinc-50 dark:bg-zinc-900/60 border border-zinc-200 dark:border-zinc-800 space-y-3">
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-700 dark:text-zinc-300 flex items-center gap-2">
+                    <Clock className="w-4 h-4 text-orange-500" />
+                    <span>Security Audit & Access History</span>
+                  </h3>
+                  
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                    <div className="p-3 rounded-lg bg-white dark:bg-zinc-800 border border-zinc-200/60 dark:border-zinc-700/60">
+                      <span className="text-zinc-400 text-[11px] block">Current Active Login:</span>
+                      <span className="font-mono font-bold text-zinc-900 dark:text-zinc-100">
+                        {lastLoginTime ? new Date(lastLoginTime).toLocaleString() : 'Now'}
+                      </span>
+                      <span className="text-[10px] text-zinc-400 block mt-0.5">
+                        Device: {lastLoginDevice || 'Current Session'}
+                      </span>
+                    </div>
+
+                    <div className="p-3 rounded-lg bg-white dark:bg-zinc-800 border border-zinc-200/60 dark:border-zinc-700/60">
+                      <span className="text-zinc-400 text-[11px] block">Previous Admin Login:</span>
+                      <span className="font-mono font-bold text-zinc-900 dark:text-zinc-100">
+                        {previousLoginTime ? new Date(previousLoginTime).toLocaleString() : 'None recorded'}
+                      </span>
+                      <span className="text-[10px] text-zinc-400 block mt-0.5">
+                        Device: {previousLoginDevice || 'N/A'}
+                      </span>
+                    </div>
+                  </div>
+                  <p className="text-[11px] text-zinc-500 dark:text-zinc-400">
+                    Use these timestamps to verify that no unauthorized person has accessed the Admin Console.
+                  </p>
+                </div>
+
+                {/* Change Password Form */}
+                <div className="p-5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#1c1c1f] space-y-4">
+                  <div className="flex items-center justify-between border-b border-zinc-200 dark:border-zinc-800 pb-3">
+                    <div>
+                      <h3 className="text-sm font-bold text-zinc-900 dark:text-zinc-100 flex items-center gap-2">
+                        <KeyRound className="w-4 h-4 text-orange-500" />
+                        <span>Change Master Admin Password</span>
+                      </h3>
+                      <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">
+                        Updating your password saves it to Firestore and protects your dashboard across all devices.
+                      </p>
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={generateComplexPassword}
+                      className="px-2.5 py-1.5 rounded-lg bg-orange-500/10 hover:bg-orange-500/20 text-orange-600 dark:text-orange-400 border border-orange-500/30 text-xs font-semibold flex items-center gap-1.5 transition-colors cursor-pointer"
+                      title="Generate a 16-character high-entropy secure passcode"
+                    >
+                      <Sparkles className="w-3.5 h-3.5" />
+                      <span>Generate Ultra-Secure</span>
+                    </button>
+                  </div>
+
+                  <form onSubmit={handleChangePassword} className="space-y-4 text-xs">
+                    <div>
+                      <label className="block font-semibold text-zinc-700 dark:text-zinc-300 mb-1">
+                        Current Master Passcode *
+                      </label>
+                      <input
+                        type={showPassword ? 'text' : 'password'}
+                        value={currentPassInput}
+                        onChange={(e) => setCurrentPassInput(e.target.value)}
+                        placeholder="Enter current password"
+                        className="w-full px-3 py-2 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 font-mono focus:outline-none focus:ring-2 focus:ring-orange-500/40"
+                        required
+                      />
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      <div>
+                        <div className="flex items-center justify-between mb-1">
+                          <label className="font-semibold text-zinc-700 dark:text-zinc-300">
+                            New Strong Passcode *
+                          </label>
+                          <button
+                            type="button"
+                            onClick={() => setShowPassword(p => !p)}
+                            className="text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 flex items-center gap-1 text-[11px]"
+                          >
+                            {showPassword ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
+                            <span>{showPassword ? 'Hide' : 'Show'}</span>
+                          </button>
+                        </div>
+                        <input
+                          type={showPassword ? 'text' : 'password'}
+                          value={newPassInput}
+                          onChange={(e) => setNewPassInput(e.target.value)}
+                          placeholder="At least 8 complex characters"
+                          className="w-full px-3 py-2 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 font-mono focus:outline-none focus:ring-2 focus:ring-orange-500/40"
+                          required
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block font-semibold text-zinc-700 dark:text-zinc-300 mb-1">
+                          Confirm New Passcode *
+                        </label>
+                        <input
+                          type={showPassword ? 'text' : 'password'}
+                          value={confirmPassInput}
+                          onChange={(e) => setConfirmPassInput(e.target.value)}
+                          placeholder="Re-type new passcode"
+                          className="w-full px-3 py-2 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 font-mono focus:outline-none focus:ring-2 focus:ring-orange-500/40"
+                          required
+                        />
+                      </div>
+                    </div>
+
+                    {newPassInput && (
+                      <div className="flex items-center gap-2">
+                        <span className="text-[11px] text-zinc-400 font-mono">
+                          Selected: <strong className="text-orange-500">{newPassInput}</strong>
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            navigator.clipboard.writeText(newPassInput);
+                            setCopiedPass(true);
+                            setTimeout(() => setCopiedPass(false), 2000);
+                          }}
+                          className="text-[11px] text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300 flex items-center gap-1"
+                        >
+                          {copiedPass ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : null}
+                          <span>{copiedPass ? 'Copied' : 'Copy'}</span>
+                        </button>
+                      </div>
+                    )}
+
+                    {passChangeError && (
+                      <div className="p-2.5 rounded-lg bg-red-500/10 border border-red-500/20 text-xs text-red-600 dark:text-red-400 flex items-center gap-2">
+                        <AlertCircle className="w-4 h-4 shrink-0" />
+                        <span>{passChangeError}</span>
+                      </div>
+                    )}
+
+                    {passChangeSuccess && (
+                      <div className="p-2.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-xs text-emerald-600 dark:text-emerald-400 flex items-center gap-2">
+                        <Check className="w-4 h-4 shrink-0" />
+                        <span>{passChangeSuccess}</span>
+                      </div>
+                    )}
+
+                    <button
+                      type="submit"
+                      disabled={isSavingPass}
+                      className="w-full py-2.5 px-4 rounded-xl bg-orange-500 hover:bg-orange-600 active:scale-[0.98] text-white font-bold text-xs flex items-center justify-center gap-2 shadow-md shadow-orange-500/20 transition-all cursor-pointer disabled:opacity-50"
+                    >
+                      <KeyRound className="w-4 h-4" />
+                      <span>{isSavingPass ? 'Updating Password...' : 'Save & Protect New Password'}</span>
+                    </button>
+                  </form>
                 </div>
               </div>
             )}

@@ -54,7 +54,8 @@ export const CertificateGateModal: React.FC<CertificateGateModalProps> = ({
     setLoading(true);
     try {
       // 1. Check if input is Master Admin / Instructor Passcode
-      if (verifyAdminPassword(input)) {
+      const isAdmin = await verifyAdminPassword(input);
+      if (isAdmin) {
         setSuccess('Instructor authorization granted! Unlocking certificate...');
         setTimeout(() => {
           onUnlockSuccess(currentStudent?.name || 'Mohamed Khaled Farag');

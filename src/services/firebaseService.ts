@@ -12,8 +12,11 @@ import {
 import { db } from "../lib/firebase";
 import type { StudentProfile, BroadcastItem, ChallengeStatus } from "../types";
 
-// Master admin passcodes
+// Master admin passcodes (Default fallback passwords)
+export const DEFAULT_MASTER_PASSWORD = "MKF#SOA2026!SecOps$99";
+
 export const MASTER_ADMIN_PASSWORDS = [
+  DEFAULT_MASTER_PASSWORD,
   "MKF@SOA2026",
   "ADMIN-MKF-SOA",
   "SOA-MASTER-PASS"
@@ -250,11 +253,112 @@ export async function deleteBroadcast(broadcastId: string): Promise<void> {
   await deleteDoc(bcastRef);
 }
 
+export interface AdminSecurityState {
+  adminPassword?: string;
+  lastLoginTime?: string;
+  lastLoginDevice?: string;
+  updatedAt?: string;
+}
+
 /**
- * Verify Admin Password
+ * Fetch Admin Security Config from Firestore (with localStorage fallback)
  */
-export function verifyAdminPassword(input: string): boolean {
+export async function getAdminSecurityConfig(): Promise<AdminSecurityState> {
+  try {
+    const secRef = doc(db, "admin_config", "security");
+    const snap = await getDoc(secRef);
+    if (snap.exists()) {
+      const data = snap.data() as AdminSecurityState;
+      if (data.adminPassword) {
+        localStorage.setItem("soa_custom_admin_pass", data.adminPassword);
+      }
+      if (data.lastLoginTime) {
+        localStorage.setItem("soa_last_admin_login", data.lastLoginTime);
+      }
+      if (data.lastLoginDevice) {
+        localStorage.setItem("soa_last_admin_device", data.lastLoginDevice);
+      }
+      return data;
+    }
+  } catch (err) {
+    console.warn("Could not fetch remote admin security config:", err);
+  }
+
+  // Fallback to local storage or defaults
+  return {
+    adminPassword: localStorage.getItem("soa_custom_admin_pass") || DEFAULT_MASTER_PASSWORD,
+    lastLoginTime: localStorage.getItem("soa_last_admin_login") || undefined,
+    lastLoginDevice: localStorage.getItem("soa_last_admin_device") || undefined
+  };
+}
+
+/**
+ * Verify Admin Password against Firestore, LocalStorage, or Fallback Passwords
+ */
+export async function verifyAdminPassword(input: string): Promise<boolean> {
   if (!input) return false;
   const clean = input.trim();
+
+  // 1. Check cloud stored password first
+  try {
+    const config = await getAdminSecurityConfig();
+    if (config.adminPassword && clean === config.adminPassword.trim()) {
+      return true;
+    }
+  } catch {
+    // ignore
+  }
+
+  // 2. Check local storage
+  const localSaved = localStorage.getItem("soa_custom_admin_pass");
+  if (localSaved && clean === localSaved.trim()) {
+    return true;
+  }
+
+  // 3. Check hardcoded fallback passwords
   return MASTER_ADMIN_PASSWORDS.includes(clean);
+}
+
+/**
+ * Update Admin Password in Firestore and LocalStorage
+ */
+export async function updateAdminPassword(newPassword: string): Promise<void> {
+  const clean = newPassword.trim();
+  if (clean.length < 8) {
+    throw new Error("Password must be at least 8 characters long.");
+  }
+
+  const nowIso = new Date().toISOString();
+  localStorage.setItem("soa_custom_admin_pass", clean);
+
+  try {
+    const secRef = doc(db, "admin_config", "security");
+    await setDoc(secRef, {
+      adminPassword: clean,
+      updatedAt: nowIso
+    }, { merge: true });
+  } catch (err) {
+    console.error("Failed to update admin password in Firestore:", err);
+  }
+}
+
+/**
+ * Record an Admin login event (timestamp + device name/browser)
+ */
+export async function recordAdminLogin(deviceInfo: string): Promise<string> {
+  const nowIso = new Date().toISOString();
+  localStorage.setItem("soa_last_admin_login", nowIso);
+  localStorage.setItem("soa_last_admin_device", deviceInfo);
+
+  try {
+    const secRef = doc(db, "admin_config", "security");
+    await setDoc(secRef, {
+      lastLoginTime: nowIso,
+      lastLoginDevice: deviceInfo
+    }, { merge: true });
+  } catch (err) {
+    console.warn("Could not record admin login in Firestore:", err);
+  }
+
+  return nowIso;
 }

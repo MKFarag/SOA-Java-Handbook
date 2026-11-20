@@ -1,26 +1,28 @@
-# Java & Jakarta EE Interactive Handbook (Offline-First)
+# NTI Java & SOA Master Interactive Handbook (Offline-First)
 
-> **A comprehensive, offline-first reference and learning platform covering Java 8 through Java 26 and Jakarta EE 10/11.**  
+> **A comprehensive, offline-first reference and learning platform covering Java 8 through Java 26, Jakarta EE 10/11, and Service-Oriented Architecture (SOA) with Spring Boot.**  
 > Designed from absolute zero for beginners and modern enterprise software engineers.
 >
 > **Architect & Author:** **Mohamed Khaled Farag**  
 > 🔗 **LinkedIn:** [linkedin.com/in/mk-farag](https://www.linkedin.com/in/mk-farag/)  
 > ✉️ **Email:** [mohammedkhaled.fa@gmail.com](mailto:mohammedkhaled.fa@gmail.com)  
 > 🐙 **GitHub:** [github.com/mkfarag/java-handbook](https://github.com/mkfarag/java-handbook)  
-> 🐳 **Docker Hub:** [hub.docker.com/r/mkfarag/java-handbook](https://hub.docker.com/r/mkfarag/java-handbook)
+> 🐳 **Docker Hub:** [hub.docker.com/r/mkfarag/nti-java-soa-handbook](https://hub.docker.com/r/mkfarag/nti-java-soa-handbook)
 
 ---
 
 ## 🌟 Key Features
 
 - **100% Offline-First:** Zero runtime CDN dependencies, zero external font fetches. Everything runs directly on your local machine or container.
-- **Official Completion Certificate:** Interactive, print-ready, and exportable (JSON & A4 PDF) verified Certificate of Technical Mastery issued upon completing all 108 modules.
+- **Cross-Device Cloud Progress Sync:** Seamlessly save and resume your progress across PC, laptop, and mobile using a lightweight unique student code without passwords or emails (Firebase Firestore).
+- **Official Completion Certificate & Security Gate:** Interactive, print-ready, and exportable verified Certificate of Technical Mastery issued exclusively upon completing all 108 modules or instructor verification.
+- **Confidential Instructor & Admin Portal:** Secret command center (`Ctrl + Shift + A` or `#admin`) protected by complex master authentication, featuring real-time student roster, progress metrics, CSV export, and security audit logs.
+- **Live Broadcasts & Shared Resources:** Instructor broadcast system for pushing Google Drive folders, project assignments, tasks, and notices to all learners with interactive notification badges.
 - **VS Code Dark+ & Light Paper Themes:** Built to match developer ergonomics with a deep `#18181b` slate theme, warm Java amber/orange accents, and crisp light paper mode.
 - **Offline Full-Text Search:** Sub-millisecond client-side indexing powered by MiniSearch with instant keyword matching, fuzzy tolerance, and `Ctrl + K` shortcut.
 - **Dual-Tab Code Blocks:** Switch between Java source code and exact terminal/console output with one-click copy buttons.
-- **Interactive Exercises:** 3 to 5 challenges per topic (Spot the Bug, Hands-on Implementation, Edge Case) with click-to-reveal solution panels.
-- **Local JDK & Apache Tomcat Verification:** Every code snippet is compiled against JDK 26.0.1 and portable Apache Tomcat 10.1.61 with 160 automated test suites passed (0 failed).
-- **Bookmarks & Progress:** Save topics for interview revision and track completion percentages across sections.
+- **Interactive Exercises & Capstones:** Multi-tiered Capstone projects and milestone challenges per topic with click-to-reveal solution panels.
+- **Local JDK & Apache Tomcat Verification:** Every code snippet is compiled against JDK 26.0.1 and Apache Tomcat 10.1.61 with 160 automated test suites passed (0 failed).
 
 ---
 
@@ -29,7 +31,7 @@
 ### 1. تشغيل فوري عبر Docker (بدون كود وبدون تسطيب Node.js)
 لو عندك Docker، انسخ الأمر ده وشغله في التيرمينال فوراً:
 ```bash
-docker run -d -p 3000:80 --name java_handbook mkfarag/java-handbook:latest
+docker run -d -p 3000:80 --name nti_java_soa_handbook mkfarag/nti-java-soa-handbook:latest
 ```
 وافتح المتصفح على: **[http://localhost:3000](http://localhost:3000)**.
 
