@@ -6,7 +6,6 @@ import {
   Check, 
   Download, 
   ShieldCheck, 
-  Sparkles, 
   CheckCircle2, 
   ArrowLeft,
   User,
@@ -19,7 +18,8 @@ interface CertificateViewProps {
   totalTopics: number;
   onGoBack: () => void;
   onGoToProgress: () => void;
-  onUnlockAll: () => void;
+  onUnlockAll?: () => void;
+  studentName?: string;
 }
 
 export const CertificateView: React.FC<CertificateViewProps> = ({
@@ -27,13 +27,14 @@ export const CertificateView: React.FC<CertificateViewProps> = ({
   totalTopics,
   onGoBack,
   onGoToProgress,
-  onUnlockAll
+  studentName
 }) => {
   const [copied, setCopied] = useState(false);
   const [downloaded, setDownloaded] = useState(false);
 
-  // Recipient name state (editable by the user, saved to localStorage)
+  // Recipient name state (editable by verified user, saved to localStorage)
   const [recipientName, setRecipientName] = useState<string>(() => {
+    if (studentName) return studentName;
     return localStorage.getItem('java_handbook_custom_name') || 'Mohamed Khaled Farag';
   });
 
@@ -137,17 +138,10 @@ Issue Date: ${issueDate}`;
 
           {/* Action Buttons */}
           <div className="flex flex-wrap items-center gap-2">
-            {!isAllCompleted && (
-              <button
-                type="button"
-                onClick={onUnlockAll}
-                className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-semibold bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 hover:bg-emerald-500/25 transition-all shadow-xs cursor-pointer"
-                title={`Mark all ${totalTopics} topics complete for verification`}
-              >
-                <Sparkles className="w-4 h-4 text-emerald-500" />
-                <span>Mark All {totalTopics} Complete (Demo)</span>
-              </button>
-            )}
+            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30">
+              <ShieldCheck className="w-4 h-4 text-emerald-500" />
+              <span>Verified Access</span>
+            </div>
 
             <button
               type="button"

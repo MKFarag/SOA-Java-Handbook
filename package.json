@@ -12,6 +12,7 @@
   "dependencies": {
     "@tailwindcss/vite": "^4.3.5",
     "@types/marked": "^5.0.2",
+    "firebase": "^13.4.0",
     "gray-matter": "^4.0.3",
     "lucide-react": "^1.74.0",
     "marked": "^18.2.1",

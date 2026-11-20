@@ -8,10 +8,11 @@ import {
   Trophy,
   ExternalLink,
   Mail,
-  ShieldCheck
+  ShieldCheck,
+  Megaphone
 } from 'lucide-react';
 import { SECTIONS, ALL_TOPICS } from '../data/topics';
-import type { PartType } from '../types';
+import type { PartType, BroadcastItem } from '../types';
 
 const LinkedInIcon = ({ className = "w-3.5 h-3.5" }: { className?: string }) => (
   <svg className={className} fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -24,13 +25,17 @@ interface HomeViewProps {
   completedTopicIds: Set<string>;
   onOpenCertificate?: () => void;
   onOpenCapstone?: (part?: PartType) => void;
+  broadcasts?: BroadcastItem[];
+  onOpenBroadcasts?: () => void;
 }
 
 export const HomeView: React.FC<HomeViewProps> = ({
   onSelectTopic,
   completedTopicIds,
   onOpenCertificate,
-  onOpenCapstone
+  onOpenCapstone,
+  broadcasts,
+  onOpenBroadcasts
 }) => {
   const part1Sections = SECTIONS.filter(s => s.part === 'Part 1: Java Core');
   const part2Sections = SECTIONS.filter(s => s.part === 'Part 2: Java EE & Jakarta EE');
@@ -70,6 +75,44 @@ export const HomeView: React.FC<HomeViewProps> = ({
           </span>
         </div>
       </div>
+
+      {/* Course Announcements & Shared Resources Banner */}
+      {broadcasts && broadcasts.length > 0 && (
+        <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-orange-500/10 via-amber-500/5 to-transparent border border-orange-500/25 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-xs">
+          <div className="flex items-center gap-3.5">
+            <div className="w-10 h-10 rounded-xl bg-orange-500 text-white flex items-center justify-center shrink-0 shadow-md shadow-orange-500/20">
+              <Megaphone className="w-5 h-5" />
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-bold uppercase tracking-wider text-orange-600 dark:text-orange-400">
+                  Course Announcements & Resources
+                </span>
+                <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-orange-500/20 text-orange-700 dark:text-orange-300">
+                  {broadcasts.length} {broadcasts.length === 1 ? 'Update' : 'Updates'}
+                </span>
+              </div>
+              <h3 className="text-sm sm:text-base font-bold text-zinc-900 dark:text-zinc-100 mt-0.5">
+                {broadcasts[0].title}
+              </h3>
+              {broadcasts[0].content && (
+                <p className="text-xs text-zinc-600 dark:text-zinc-400 line-clamp-1 mt-0.5">
+                  {broadcasts[0].content}
+                </p>
+              )}
+            </div>
+          </div>
+
+          <button
+            type="button"
+            onClick={onOpenBroadcasts}
+            className="shrink-0 px-4 py-2 rounded-xl bg-orange-500 hover:bg-orange-600 text-white text-xs font-bold flex items-center gap-2 shadow-xs transition-colors cursor-pointer"
+          >
+            <span>View All ({broadcasts.length})</span>
+            <ArrowRight className="w-4 h-4" />
+          </button>
+        </div>
+      )}
 
       {/* Part 1: Java Core Section Cards */}
       <div className="space-y-6">

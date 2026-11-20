@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { Header } from './components/Header';
 import { Sidebar } from './components/Sidebar';
 import { TopicView } from './components/TopicView';
@@ -8,8 +8,13 @@ import { ProgressView } from './components/ProgressView';
 import { CertificateView } from './components/CertificateView';
 import { CapstoneProjectView } from './components/CapstoneProjectView';
 import { SearchModal } from './components/SearchModal';
+import { StudentSyncModal } from './components/StudentSyncModal';
+import { CertificateGateModal } from './components/CertificateGateModal';
+import { AdminDashboardModal } from './components/AdminDashboardModal';
+import { BroadcastsModal } from './components/BroadcastsModal';
 import { ALL_TOPICS, getTopicById } from './data/topics';
-import type { ChallengeStatus, PartType } from './types';
+import type { ChallengeStatus, PartType, StudentProfile, BroadcastItem } from './types';
+import { saveStudentProfile, getBroadcasts } from './services/firebaseService';
 
 export function App() {
   // Theme state: respects saved choice or system preference
@@ -70,9 +75,41 @@ export function App() {
     }
   });
 
-  // Modal & mobile sidebar controls
+  // --- Student Cloud Sync & Security State ---
+  const [currentStudent, setCurrentStudent] = useState<StudentProfile | null>(() => {
+    try {
+      const saved = localStorage.getItem('soa_student_profile');
+      return saved ? JSON.parse(saved) : null;
+    } catch {
+      return null;
+    }
+  });
+
+  const [isCertificateUnlocked, setIsCertificateUnlocked] = useState<boolean>(() => {
+    const saved = localStorage.getItem('soa_certificate_unlocked');
+    return saved === 'true';
+  });
+
+  const [unlockedStudentName, setUnlockedStudentName] = useState<string>(() => {
+    return localStorage.getItem('java_handbook_custom_name') || 'Mohamed Khaled Farag';
+  });
+
+  // Modals visibility
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
+  const [isSyncModalOpen, setIsSyncModalOpen] = useState(false);
+  const [isCertGateOpen, setIsCertGateOpen] = useState(false);
+  const [isAdminModalOpen, setIsAdminModalOpen] = useState(false);
+  const [isBroadcastsModalOpen, setIsBroadcastsModalOpen] = useState(false);
+
+  // Syncing state
+  const [isSyncing, setIsSyncing] = useState(false);
+  const [lastSyncTime, setLastSyncTime] = useState<Date | null>(null);
+
+  // Broadcasts & Notifications
+  const [broadcasts, setBroadcasts] = useState<BroadcastItem[]>([]);
+  const [unreadBroadcastsCount, setUnreadBroadcastsCount] = useState<number>(0);
+  const [loadingBroadcasts, setLoadingBroadcasts] = useState(false);
 
   // Sync dark class on documentElement
   useEffect(() => {
@@ -91,25 +128,198 @@ export function App() {
     localStorage.setItem('java_handbook_fontscale', fontScale.toString());
   }, [fontScale]);
 
-  // Sync saved bookmarks
+  // Sync saved bookmarks locally
   useEffect(() => {
     localStorage.setItem('java_handbook_saved', JSON.stringify(savedTopicIds));
   }, [savedTopicIds]);
 
-  // Sync completed topics
+  // Sync completed topics locally
   useEffect(() => {
     localStorage.setItem('java_handbook_completed', JSON.stringify([...completedTopicIds]));
   }, [completedTopicIds]);
 
-  // Sync challenge states
+  // Sync challenge states locally
   useEffect(() => {
     localStorage.setItem('java_handbook_challenges', JSON.stringify(challengeStates));
   }, [challengeStates]);
 
-  // Sync targeted review
+  // Sync targeted review locally
   useEffect(() => {
     localStorage.setItem('java_handbook_targeted_review', JSON.stringify([...targetedReviewIds]));
   }, [targetedReviewIds]);
+
+  // Sync student profile locally
+  useEffect(() => {
+    if (currentStudent) {
+      localStorage.setItem('soa_student_profile', JSON.stringify(currentStudent));
+      if (currentStudent.certificateUnlocked) {
+        setIsCertificateUnlocked(true);
+        localStorage.setItem('soa_certificate_unlocked', 'true');
+      }
+    } else {
+      localStorage.removeItem('soa_student_profile');
+    }
+  }, [currentStudent]);
+
+  // Sync certificate unlocked status locally
+  useEffect(() => {
+    localStorage.setItem('soa_certificate_unlocked', isCertificateUnlocked ? 'true' : 'false');
+  }, [isCertificateUnlocked]);
+
+  // Fetch broadcasts on startup and calculate unread count
+  const refreshBroadcasts = useCallback(async () => {
+    setLoadingBroadcasts(true);
+    try {
+      const data = await getBroadcasts();
+      setBroadcasts(data);
+
+      const lastRead = localStorage.getItem('soa_last_read_broadcast_time') || '1970-01-01';
+      const unread = data.filter(b => new Date(b.createdAt) > new Date(lastRead)).length;
+      setUnreadBroadcastsCount(unread);
+    } catch (err) {
+      console.warn('Could not fetch broadcasts:', err);
+    } finally {
+      setLoadingBroadcasts(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    refreshBroadcasts();
+  }, [refreshBroadcasts]);
+
+  // Open Broadcasts Modal & mark read
+  const handleOpenBroadcasts = () => {
+    setIsBroadcastsModalOpen(true);
+    setUnreadBroadcastsCount(0);
+    localStorage.setItem('soa_last_read_broadcast_time', new Date().toISOString());
+  };
+
+  // Automated Cloud Sync to Firestore (Debounced)
+  const syncTimeoutRef = useRef<number | null>(null);
+
+  const forceSyncToCloud = useCallback(async () => {
+    if (!currentStudent) return;
+    setIsSyncing(true);
+    try {
+      await saveStudentProfile({
+        code: currentStudent.code,
+        name: currentStudent.name,
+        completedTopics: [...completedTopicIds],
+        savedTopics: savedTopicIds,
+        challengeStates: challengeStates,
+        targetedReviewIds: [...targetedReviewIds],
+        certificateUnlocked: isCertificateUnlocked
+      });
+      setLastSyncTime(new Date());
+    } catch (err) {
+      console.error('Auto-sync failed:', err);
+    } finally {
+      setIsSyncing(false);
+    }
+  }, [currentStudent, completedTopicIds, savedTopicIds, challengeStates, targetedReviewIds, isCertificateUnlocked]);
+
+  useEffect(() => {
+    if (!currentStudent) return;
+
+    if (syncTimeoutRef.current) {
+      window.clearTimeout(syncTimeoutRef.current);
+    }
+
+    syncTimeoutRef.current = window.setTimeout(() => {
+      forceSyncToCloud();
+    }, 1200);
+
+    return () => {
+      if (syncTimeoutRef.current) window.clearTimeout(syncTimeoutRef.current);
+    };
+  }, [completedTopicIds, savedTopicIds, challengeStates, targetedReviewIds, currentStudent, forceSyncToCloud]);
+
+  // Student Login callback
+  const handleStudentLogin = (profile: StudentProfile) => {
+    setCurrentStudent(profile);
+    setUnlockedStudentName(profile.name);
+    localStorage.setItem('java_handbook_custom_name', profile.name);
+
+    // Merge or load cloud progress
+    if (profile.completedTopics && profile.completedTopics.length > 0) {
+      setCompletedTopicIds(new Set(profile.completedTopics));
+    }
+    if (profile.savedTopics && profile.savedTopics.length > 0) {
+      setSavedTopicIds(profile.savedTopics);
+    }
+    if (profile.challengeStates && Object.keys(profile.challengeStates).length > 0) {
+      setChallengeStates(profile.challengeStates);
+    }
+    if (profile.targetedReviewIds && profile.targetedReviewIds.length > 0) {
+      setTargetedReviewIds(new Set(profile.targetedReviewIds));
+    }
+    if (profile.certificateUnlocked) {
+      setIsCertificateUnlocked(true);
+    }
+    setLastSyncTime(new Date());
+  };
+
+  // Student Logout callback
+  const handleStudentLogout = () => {
+    setCurrentStudent(null);
+    setIsCertificateUnlocked(false);
+    localStorage.removeItem('soa_student_profile');
+    localStorage.removeItem('soa_certificate_unlocked');
+  };
+
+  // Certificate Open Gate Check
+  const handleOpenCertificate = () => {
+    const isLocalComplete = completedTopicIds.size >= ALL_TOPICS.length;
+    if (isCertificateUnlocked || isLocalComplete) {
+      setCurrentView('certificate');
+    } else {
+      setIsCertGateOpen(true);
+    }
+  };
+
+  const handleUnlockCertificateSuccess = (studentName?: string) => {
+    setIsCertificateUnlocked(true);
+    if (studentName) {
+      setUnlockedStudentName(studentName);
+      localStorage.setItem('java_handbook_custom_name', studentName);
+    }
+    setCurrentView('certificate');
+  };
+
+  // Global Shortcuts Listener (Ctrl+K for search, Ctrl+Shift+A for secret Admin)
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Ctrl+K -> Search
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        setIsSearchOpen(prev => !prev);
+      }
+      // Ctrl+Shift+A -> Secret Admin Portal
+      if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key.toLowerCase() === 'a') {
+        e.preventDefault();
+        setIsAdminModalOpen(true);
+      }
+    };
+
+    // Secret URL Hash listener (#admin or #admin-portal)
+    const handleHashChange = () => {
+      if (window.location.hash === '#admin' || window.location.hash === '#admin-portal') {
+        setIsAdminModalOpen(true);
+        // Clear hash smoothly
+        history.replaceState(null, '', window.location.pathname + window.location.search);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('hashchange', handleHashChange);
+    // Check initial hash on load
+    handleHashChange();
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('hashchange', handleHashChange);
+    };
+  }, []);
 
   const handleSolveChallenge = (challengeId: string) => {
     setChallengeStates(prev => ({
@@ -145,18 +355,6 @@ export function App() {
       return next;
     });
   };
-
-  // Global Ctrl+K shortcut listener
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
-        e.preventDefault();
-        setIsSearchOpen(prev => !prev);
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, []);
 
   const handleSelectTopic = (topicId: string) => {
     setActiveTopicId(topicId);
@@ -194,8 +392,11 @@ export function App() {
         onOpenSearch={() => setIsSearchOpen(true)}
         onOpenSaved={() => setCurrentView('saved')}
         onOpenProgress={() => setCurrentView('progress')}
-        onOpenCertificate={() => setCurrentView('certificate')}
+        onOpenCertificate={handleOpenCertificate}
         onGoHome={() => setCurrentView('home')}
+        onOpenSync={() => setIsSyncModalOpen(true)}
+        onOpenBroadcasts={handleOpenBroadcasts}
+        onOpenAdmin={() => setIsAdminModalOpen(true)}
         savedCount={savedTopicIds.length}
         completedCount={completedTopicIds.size}
         totalTopics={ALL_TOPICS.length}
@@ -204,6 +405,9 @@ export function App() {
         fontScale={fontScale}
         onChangeFontScale={(delta) => setFontScale(prev => Math.min(130, Math.max(85, prev + delta)))}
         onToggleMobileSidebar={() => setIsMobileSidebarOpen(prev => !prev)}
+        currentStudent={currentStudent}
+        unreadBroadcastsCount={unreadBroadcastsCount}
+        isCertificateUnlocked={isCertificateUnlocked || completedTopicIds.size >= ALL_TOPICS.length}
       />
 
       <div className="flex-1 flex w-full">
@@ -214,15 +418,19 @@ export function App() {
           onGoHome={() => setCurrentView('home')}
           onOpenSaved={() => setCurrentView('saved')}
           onOpenProgress={() => setCurrentView('progress')}
-          onOpenCertificate={() => setCurrentView('certificate')}
+          onOpenCertificate={handleOpenCertificate}
           onOpenCapstone={(part) => {
             if (part) setSelectedCapstonePart(part);
             setCurrentView('capstone');
           }}
+          onOpenSync={() => setIsSyncModalOpen(true)}
+          onOpenBroadcasts={handleOpenBroadcasts}
           completedTopicIds={completedTopicIds}
           savedTopicIds={new Set(savedTopicIds)}
           isOpenMobile={isMobileSidebarOpen}
           onCloseMobile={() => setIsMobileSidebarOpen(false)}
+          isCertificateUnlocked={isCertificateUnlocked || completedTopicIds.size >= ALL_TOPICS.length}
+          unreadBroadcastsCount={unreadBroadcastsCount}
         />
 
         {/* Main Workspace Panel */}
@@ -231,11 +439,13 @@ export function App() {
             <HomeView
               onSelectTopic={handleSelectTopic}
               completedTopicIds={completedTopicIds}
-              onOpenCertificate={() => setCurrentView('certificate')}
+              onOpenCertificate={handleOpenCertificate}
               onOpenCapstone={(part) => {
                 if (part) setSelectedCapstonePart(part);
                 setCurrentView('capstone');
               }}
+              broadcasts={broadcasts}
+              onOpenBroadcasts={handleOpenBroadcasts}
             />
           )}
 
@@ -265,7 +475,7 @@ export function App() {
               completedTopicIds={completedTopicIds}
               onToggleCompleted={handleToggleCompleted}
               onSelectTopic={handleSelectTopic}
-              onOpenCertificate={() => setCurrentView('certificate')}
+              onOpenCertificate={handleOpenCertificate}
               onOpenCapstone={(part) => {
                 if (part) setSelectedCapstonePart(part);
                 setCurrentView('capstone');
@@ -285,7 +495,7 @@ export function App() {
               totalTopics={ALL_TOPICS.length}
               onGoBack={() => setCurrentView('home')}
               onGoToProgress={() => setCurrentView('progress')}
-              onUnlockAll={() => setCompletedTopicIds(new Set(ALL_TOPICS.map(t => t.id)))}
+              studentName={unlockedStudentName}
             />
           )}
 
@@ -305,6 +515,48 @@ export function App() {
         isOpen={isSearchOpen}
         onClose={() => setIsSearchOpen(false)}
         onSelectTopic={handleSelectTopic}
+      />
+
+      {/* Student Cloud Sync Modal */}
+      <StudentSyncModal
+        isOpen={isSyncModalOpen}
+        onClose={() => setIsSyncModalOpen(false)}
+        currentStudent={currentStudent}
+        onStudentLogin={handleStudentLogin}
+        onStudentLogout={handleStudentLogout}
+        onSyncNow={forceSyncToCloud}
+        isSyncing={isSyncing}
+        lastSyncTime={lastSyncTime}
+        currentCompletedCount={completedTopicIds.size}
+        currentSavedCount={savedTopicIds.length}
+      />
+
+      {/* Certificate Gate Modal */}
+      <CertificateGateModal
+        isOpen={isCertGateOpen}
+        onClose={() => setIsCertGateOpen(false)}
+        onUnlockSuccess={handleUnlockCertificateSuccess}
+        completedCount={completedTopicIds.size}
+        totalTopics={ALL_TOPICS.length}
+        currentStudent={currentStudent}
+        onOpenSyncModal={() => setIsSyncModalOpen(true)}
+      />
+
+      {/* Announcements & Shared Resources Modal */}
+      <BroadcastsModal
+        isOpen={isBroadcastsModalOpen}
+        onClose={() => setIsBroadcastsModalOpen(false)}
+        broadcasts={broadcasts}
+        onRefresh={refreshBroadcasts}
+        isLoading={loadingBroadcasts}
+      />
+
+      {/* Secret Instructor & Admin Dashboard Modal */}
+      <AdminDashboardModal
+        isOpen={isAdminModalOpen}
+        onClose={() => setIsAdminModalOpen(false)}
+        totalHandbookTopics={ALL_TOPICS.length}
+        onBroadcastsUpdated={refreshBroadcasts}
       />
     </div>
   );

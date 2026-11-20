@@ -151,3 +151,32 @@ export interface SectionMeta {
   topicIds: string[];
   milestoneChallenge?: SectionMilestoneChallenge;
 }
+
+export interface StudentProfile {
+  code: string;
+  name: string;
+  completedTopics: string[];
+  completedCount: number;
+  savedTopics: string[];
+  challengeStates: Record<string, ChallengeStatus>;
+  targetedReviewIds: string[];
+  certificateUnlocked: boolean;
+  createdAt: string;
+  lastActive: string;
+  userAgent?: string;
+}
+
+export type BroadcastType = 'link' | 'task' | 'announcement' | 'file';
+
+export interface BroadcastItem {
+  id: string;
+  title: string;
+  content: string;
+  type: BroadcastType;
+  url?: string;
+  badgeLabel?: string;
+  createdAt: string;
+  expiresAt?: string;
+  author?: string;
+}
+

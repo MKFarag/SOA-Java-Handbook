@@ -11,7 +11,10 @@ import {
   Filter,
   Award,
   Trophy,
-  ChevronsUpDown
+  ChevronsUpDown,
+  Lock,
+  Cloud,
+  Bell
 } from 'lucide-react';
 import { SECTIONS, ALL_TOPICS } from '../data/topics';
 import type { TopicDetail, PartType } from '../types';
@@ -24,10 +27,14 @@ interface SidebarProps {
   onOpenProgress: () => void;
   onOpenCertificate: () => void;
   onOpenCapstone: (part?: PartType) => void;
+  onOpenSync?: () => void;
+  onOpenBroadcasts?: () => void;
   completedTopicIds: Set<string>;
   savedTopicIds: Set<string>;
   isOpenMobile: boolean;
   onCloseMobile: () => void;
+  isCertificateUnlocked?: boolean;
+  unreadBroadcastsCount?: number;
 }
 
 interface PartConfig {
@@ -90,10 +97,14 @@ export const Sidebar: React.FC<SidebarProps> = ({
   onOpenProgress,
   onOpenCertificate,
   onOpenCapstone,
+  onOpenSync,
+  onOpenBroadcasts,
   completedTopicIds,
   savedTopicIds,
   isOpenMobile,
-  onCloseMobile
+  onCloseMobile,
+  isCertificateUnlocked = false,
+  unreadBroadcastsCount = 0
 }) => {
   const [filterQuery, setFilterQuery] = useState('');
 
@@ -257,16 +268,64 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 onOpenCertificate();
                 onCloseMobile();
               }}
-              className="w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-semibold text-amber-700 dark:text-amber-400 bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 transition-colors cursor-pointer"
+              className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-semibold transition-colors cursor-pointer ${
+                isCertificateUnlocked
+                  ? 'text-amber-700 dark:text-amber-400 bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30'
+                  : 'text-zinc-600 dark:text-zinc-400 bg-zinc-100 dark:bg-zinc-800/80 hover:bg-zinc-200 dark:hover:bg-zinc-700 border border-zinc-200 dark:border-zinc-700'
+              }`}
             >
               <div className="flex items-center gap-2.5">
-                <Award className="w-4 h-4 text-amber-500" />
+                {isCertificateUnlocked ? (
+                  <Award className="w-4 h-4 text-amber-500" />
+                ) : (
+                  <Lock className="w-4 h-4 text-zinc-400" />
+                )}
                 <span>Completion Certificate</span>
               </div>
-              <span className="text-[10px] uppercase font-mono font-bold text-amber-600 dark:text-amber-400">
-                MK Farag
+              <span className={`text-[10px] uppercase font-mono font-bold ${isCertificateUnlocked ? 'text-amber-600 dark:text-amber-400' : 'text-zinc-400'}`}>
+                {isCertificateUnlocked ? 'Verified' : '🔒 Locked'}
               </span>
             </button>
+
+            {onOpenSync && (
+              <button
+                type="button"
+                onClick={() => {
+                  onOpenSync();
+                  onCloseMobile();
+                }}
+                className="w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-semibold text-zinc-700 dark:text-zinc-200 hover:bg-zinc-200/60 dark:hover:bg-zinc-800 transition-colors cursor-pointer"
+              >
+                <div className="flex items-center gap-2.5">
+                  <Cloud className="w-4 h-4 text-orange-500" />
+                  <span>Cloud Sync & Code</span>
+                </div>
+                <span className="text-[10px] font-mono text-emerald-500">
+                  Sync
+                </span>
+              </button>
+            )}
+
+            {onOpenBroadcasts && (
+              <button
+                type="button"
+                onClick={() => {
+                  onOpenBroadcasts();
+                  onCloseMobile();
+                }}
+                className="w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-semibold text-zinc-700 dark:text-zinc-200 hover:bg-zinc-200/60 dark:hover:bg-zinc-800 transition-colors cursor-pointer"
+              >
+                <div className="flex items-center gap-2.5">
+                  <Bell className="w-4 h-4 text-blue-500" />
+                  <span>Announcements & Links</span>
+                </div>
+                {unreadBroadcastsCount !== undefined && unreadBroadcastsCount > 0 && (
+                  <span className="px-1.5 py-0.2 rounded-full text-[10px] font-bold bg-blue-500 text-white">
+                    {unreadBroadcastsCount}
+                  </span>
+                )}
+              </button>
+            )}
 
             <button
               type="button"

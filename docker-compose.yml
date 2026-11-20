@@ -1,11 +1,10 @@
 services:
-  handbook:
+  soa-handbook:
     build:
       context: .
       dockerfile: Dockerfile
-    image: mkfarag/java-handbook:latest
-    container_name: java_handbook_app
+    image: mkfarag/nti-java-soa-handbook:latest
+    container_name: nti_java_soa_handbook
     ports:
       - "3000:80"
     restart: unless-stopped
-
