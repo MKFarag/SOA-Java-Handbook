@@ -15,7 +15,10 @@ shortDescription: >-
 prerequisites:
   - 'Topic 04: Variables, Identifiers & Primitive Data Types'
   - 'Topic 08: Conditional Statements'
+relevanceLevel: MUST-KNOW / CORE
 ---
+> 🎯 **Roadmap Seal:** **`[MUST-KNOW / CORE]`** — *Essential modern foundation required for backend roles. Master this thoroughly.*
+
 ## 1. What It Is and Why It Exists
 
 A **method** is a named block of code designed to perform a specific task. Instead of writing the same calculation or business logic repeatedly across your application, you declare a method once and invoke (call) it whenever needed.

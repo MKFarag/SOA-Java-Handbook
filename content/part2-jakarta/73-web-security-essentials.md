@@ -17,8 +17,11 @@ prerequisites:
   - 'Topic 64: Web Architecture Fundamentals (HTTP Protocol)'
   - 'Topic 67: Request and Response Processing in Servlets'
   - 'Topic 70: State Management: Sessions and Cookies'
+relevanceLevel: ADVANCED / DEEP-DIVE
 ---
 # Web Security Essentials in Jakarta EE
+
+> 🚀 **Roadmap Seal:** **`[ADVANCED / DEEP-DIVE]`** — *Advanced enterprise specialization & architecture. Study once core fundamentals are solid.*
 
 ### 1. What It Is and Why It Exists
 Web applications are constantly exposed to automated vulnerability scanners, script injection, and credential hijacking. Writing server-side Java code requires strict adherence to security defenses against the most critical application vulnerabilities identified by OWASP (Open Web Application Security Project):

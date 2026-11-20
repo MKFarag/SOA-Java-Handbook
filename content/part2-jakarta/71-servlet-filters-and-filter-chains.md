@@ -16,8 +16,11 @@ shortDescription: >-
 prerequisites:
   - 'Topic 66: Servlet Lifecycle & Architecture'
   - 'Topic 67: Request and Response Processing in Servlets'
+relevanceLevel: MUST-KNOW / CORE
 ---
 # Servlet Filters and Filter Chains
+
+> 🎯 **Roadmap Seal:** **`[MUST-KNOW / CORE]`** — *Essential modern foundation required for backend roles. Master this thoroughly.*
 
 ### 1. What It Is and Why It Exists
 In any enterprise web application, many tasks are **cross-cutting concerns**: they do not belong to one specific business servlet, but must run for every incoming request or a subset of paths. Examples include:

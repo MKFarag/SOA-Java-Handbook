@@ -15,8 +15,11 @@ shortDescription: >-
 prerequisites:
   - 'Topic 33: Generics Fundamentals'
   - 'Topic 23: Interfaces & Modern Interface Evolution'
+relevanceLevel: ADVANCED / DEEP-DIVE
 ---
 # Comparable & Comparator
+
+> 🚀 **Roadmap Seal:** **`[ADVANCED / DEEP-DIVE]`** — *Advanced enterprise specialization & architecture. Study once core fundamentals are solid.*
 
 ### 1. What It Is and Why It Exists
 Sorting is fundamental to computing. When you tell Java to sort a collection of numbers or strings, it works out of the box because `Integer` and `String` have an intuitive, built-in numerical or alphabetical order. But when sorting your own custom business objects (such as `Product`, `Customer`, or `ServerNode`), Java does not know whether you wish to sort by price, creation date, customer name, or latency.

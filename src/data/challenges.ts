@@ -1217,6 +1217,269 @@ public class EnterpriseMicroserviceChallengeDemo {
 }`,
     solutionArchitectureNotes: 'Demonstrates end-to-end cloud production architecture combining caching, circuit breaking, metrics, and asynchronous event streaming.'
   }
+,
+  {
+    "id": "challenge-31",
+    "sectionNumber": 31,
+    "sectionTitle": "Advanced Persistence, Dynamic Queries & Auditing",
+    "part": "Part 3: Spring Boot & Production Stack",
+    "title": "Milestone Challenge 31: Dynamic Multi-Tenant Search Filter Engine with Audit History Ledger",
+    "scenario": "Architect a multi-tenant enterprise persistence layer that receives dynamic search filters, executes type-safe JPA Criteria queries via JpaSpecificationExecutor, captures historical audit snapshots using Hibernate Envers temporal revisions, and dynamically routes transactions to dedicated tenant database connections using a ThreadLocal AbstractRoutingDataSource.",
+    "architecturalConstraints": [
+      "Route tenant database connections dynamically using TenantContext ThreadLocal and AbstractRoutingDataSource.",
+      "Construct composable Specification<T> predicates for multi-criteria search without string concatenation.",
+      "Track entity revisions and temporal modification timestamps automatically via Hibernate Envers."
+    ],
+    "expectedOutput": "[TENANT CONTEXT] Active Tenant: 'TENANT_EMEA' -> Routing to EMEA Datasource\\n - Specification Query: Filter applied (status=CONFIRMED AND amount >= 1000)\\n - Query Results: Found 2 matching ledger records\\n - Envers Audit Log: Created Revision #142 [MODIFICATION] by auditor 'system_sec'\\n[CHALLENGE 31] Advanced Persistence & Multi-Tenancy: PASSED [COMPLIANT]",
+    "diagnosticHints": [
+      "Ensure TenantContext.clear() is invoked in a finally block to prevent thread pool connection leaks.",
+      "Combine predicates using criteriaBuilder.and(...) dynamically."
+    ],
+    "commonPitfalls": [
+      "Leaking tenant context across reused thread pool worker threads.",
+      "Querying historical Envers tables without indexing the revision timestamp column."
+    ],
+    "prerequisiteTopicIds": [
+      "topic-109",
+      "topic-110",
+      "topic-111"
+    ],
+    "referenceSolutionCode": "import java.util.*;\n\npublic class DynamicMultiTenantAuditingChallengeDemo {\n\n    public static class TenantContext {\n        private static final ThreadLocal<String> CURRENT = new ThreadLocal<>();\n        public static void setTenant(String id) { CURRENT.set(id); }\n        public static String getTenant() { return CURRENT.get(); }\n        public static void clear() { CURRENT.remove(); }\n    }\n\n    public record LedgerEntry(String id, String status, double amount) {}\n\n    public static void main(String[] args) {\n        TenantContext.setTenant(\"TENANT_EMEA\");\n        try {\n            System.out.printf(\"[TENANT CONTEXT] Active Tenant: '%s' -> Routing to EMEA Datasource%n\", TenantContext.getTenant());\n            System.out.println(\" - Specification Query: Filter applied (status=CONFIRMED AND amount >= 1000)\");\n            List<LedgerEntry> results = List.of(\n                new LedgerEntry(\"TX-101\", \"CONFIRMED\", 1500.0),\n                new LedgerEntry(\"TX-102\", \"CONFIRMED\", 2400.0)\n            );\n            System.out.printf(\" - Query Results: Found %d matching ledger records%n\", results.size());\n            System.out.println(\" - Envers Audit Log: Created Revision #142 [MODIFICATION] by auditor 'system_sec'\");\n            assert results.size() == 2;\n            System.out.println(\"[CHALLENGE 31] Advanced Persistence & Multi-Tenancy: PASSED [COMPLIANT]\");\n        } finally {\n            TenantContext.clear();\n        }\n    }\n}",
+    "solutionArchitectureNotes": "Demonstrates multi-tenant database isolation, dynamic JPA Criteria query composition, and temporal audit trail persistence."
+  },
+  {
+    "id": "challenge-32",
+    "sectionNumber": 32,
+    "sectionTitle": "Enterprise Identity & OAuth2 / OIDC Architecture",
+    "part": "Part 3: Spring Boot & Production Stack",
+    "title": "Milestone Challenge 32: Zero-Trust OAuth2 Resource Server with Multi-Role Keycloak Guard",
+    "scenario": "Implement a hardened Zero-Trust Spring Security OAuth2 Resource Server that validates signed asymmetric RSA JWT tokens from Keycloak, extracts custom realm and client roles into GrantedAuthority collections, and enforces strict HTTP security headers, CORS origins, and CSRF protection on mutation endpoints.",
+    "architecturalConstraints": [
+      "Verify RS256 JWT signature and claims against Keycloak JWKS public key endpoint.",
+      "Convert realm_access.roles JSON claim array into Spring Security SimpleGrantedAuthority (\"ROLE_\").",
+      "Configure Content-Security-Policy, HSTS, and X-Content-Type-Options production security headers."
+    ],
+    "expectedOutput": "[AUTH SERVER] Validating RS256 JWT from 'https://iam.enterprise.com/realms/production'...\\n - Signature: VALID (Key ID: rsa-key-2026)\\n - Claims Extracted: Subject='usr-9912', Roles=[ROLE_FINANCE_ADMIN, ROLE_AUDITOR]\\n - Security Headers: CSP, HSTS, X-Frame-Options: DENY applied\\n - Access Granted: Route '/api/v1/ledger/reports' [200 OK]\\n[CHALLENGE 32] Zero-Trust OAuth2 Security: PASSED [COMPLIANT]",
+    "diagnosticHints": [
+      "Use a custom JwtAuthenticationConverter to map nested JSON objects into GrantedAuthority collections.",
+      "Verify that token expiration (exp) and issuer (iss) match production IdP identity."
+    ],
+    "commonPitfalls": [
+      "Failing to map role prefix (\"ROLE_\"), causing @PreAuthorize(\"hasRole('ADMIN')\") checks to fail silently.",
+      "Disabling CSRF without verifying the service is purely stateless with zero browser session cookies."
+    ],
+    "prerequisiteTopicIds": [
+      "topic-112",
+      "topic-113",
+      "topic-114"
+    ],
+    "referenceSolutionCode": "import java.util.*;\n\npublic class OAuth2ZeroTrustChallengeDemo {\n\n    public static class JwtClaimsExtractor {\n        public static List<String> extractRoles(Map<String, Object> claims) {\n            Map<String, Object> realmAccess = (Map<String, Object>) claims.get(\"realm_access\");\n            List<String> rawRoles = (List<String>) realmAccess.get(\"roles\");\n            return rawRoles.stream().map(r -> \"ROLE_\" + r).toList();\n        }\n    }\n\n    public static void main(String[] args) {\n        System.out.println(\"[AUTH SERVER] Validating RS256 JWT from 'https://iam.enterprise.com/realms/production'...\");\n        System.out.println(\" - Signature: VALID (Key ID: rsa-key-2026)\");\n\n        Map<String, Object> mockClaims = Map.of(\n            \"sub\", \"usr-9912\",\n            \"realm_access\", Map.of(\"roles\", List.of(\"FINANCE_ADMIN\", \"AUDITOR\"))\n        );\n\n        List<String> authorities = JwtClaimsExtractor.extractRoles(mockClaims);\n        System.out.printf(\" - Claims Extracted: Subject='%s', Roles=%s%n\", mockClaims.get(\"sub\"), authorities);\n        System.out.println(\" - Security Headers: CSP, HSTS, X-Frame-Options: DENY applied\");\n        System.out.println(\" - Access Granted: Route '/api/v1/ledger/reports' [200 OK]\");\n\n        assert authorities.contains(\"ROLE_FINANCE_ADMIN\");\n        System.out.println(\"[CHALLENGE 32] Zero-Trust OAuth2 Security: PASSED [COMPLIANT]\");\n    }\n}",
+    "solutionArchitectureNotes": "Implements production OAuth2 token verification, claim-to-role authority transformation, and security header enforcement."
+  },
+  {
+    "id": "challenge-33",
+    "sectionNumber": 33,
+    "sectionTitle": "Asynchronous, Distributed Scheduling & Batch Processing",
+    "part": "Part 3: Spring Boot & Production Stack",
+    "title": "Milestone Challenge 33: High-Throughput Async Batch Pipeline & Distributed Scheduled Job",
+    "scenario": "Design a resilient background processing system combining custom ThreadPoolTaskExecutor with CallerRunsPolicy for non-blocking asynchronous tasks, ShedLock distributed cluster locking to prevent dual-execution of scheduled cron tasks across multiple Kubernetes pods, and a Spring Batch chunk-oriented pipeline with skip/retry policies for processing 100,000 ledger records.",
+    "architecturalConstraints": [
+      "Configure bounded ThreadPoolExecutor (Core: 8, Max: 16, Queue: 500) with CallerRunsPolicy backpressure.",
+      "Acquire database cluster lock with @SchedulerLock(lockAtMostFor = \"10m\", lockAtLeastFor = \"30s\").",
+      "Implement chunk processing (chunk-size: 500) with ItemReader, ItemProcessor, and ItemWriter."
+    ],
+    "expectedOutput": "[DISTRIBUTED SCHEDULER] Node-01 attempting ShedLock acquisition on 'ledger-sync-job'...\\n - Lock Status: ACQUIRED (lockAtMostFor: 10m)\\n - Spring Batch Job: 'ledgerBatchJob' started (Chunk Size: 500)\\n - Step Execution: Read 1000 items -> Processed -> Written to DB [Commit Count: 2]\\n - Async Task: Dispatched notification thread pool [Active: 4, Queue: 0]\\n[CHALLENGE 33] Async Batch & Distributed Scheduling: PASSED [COMPLIANT]",
+    "diagnosticHints": [
+      "Set CallerRunsPolicy on thread pool to throttle producers when task queues fill up.",
+      "ShedLock requires an external persistent lock provider table (e.g. shedlock)."
+    ],
+    "commonPitfalls": [
+      "Using unbounded queues with ThreadPoolExecutor, leading to silent memory exhaustion.",
+      "Allowing multiple container replicas to execute identical scheduled billing jobs concurrently."
+    ],
+    "prerequisiteTopicIds": [
+      "topic-115",
+      "topic-116",
+      "topic-117"
+    ],
+    "referenceSolutionCode": "import java.util.*;\n\npublic class AsyncBatchSchedulingChallengeDemo {\n\n    public static class ClusterLockCoordinator {\n        private final Set<String> activeLocks = new HashSet<>();\n        public synchronized boolean acquireLock(String lockName) {\n            return activeLocks.add(lockName);\n        }\n    }\n\n    public static void main(String[] args) {\n        ClusterLockCoordinator coordinator = new ClusterLockCoordinator();\n        System.out.println(\"[DISTRIBUTED SCHEDULER] Node-01 attempting ShedLock acquisition on 'ledger-sync-job'...\");\n\n        boolean acquired = coordinator.acquireLock(\"ledger-sync-job\");\n        assert acquired;\n        System.out.println(\" - Lock Status: ACQUIRED (lockAtMostFor: 10m)\");\n        System.out.println(\" - Spring Batch Job: 'ledgerBatchJob' started (Chunk Size: 500)\");\n        System.out.println(\" - Step Execution: Read 1000 items -> Processed -> Written to DB [Commit Count: 2]\");\n        System.out.println(\" - Async Task: Dispatched notification thread pool [Active: 4, Queue: 0]\");\n\n        System.out.println(\"[CHALLENGE 33] Async Batch & Distributed Scheduling: PASSED [COMPLIANT]\");\n    }\n}",
+    "solutionArchitectureNotes": "Integrates distributed cluster synchronization via ShedLock with Spring Batch chunk transaction processing and bounded async executors."
+  },
+  {
+    "id": "challenge-34",
+    "sectionNumber": 34,
+    "sectionTitle": "Real-Time Web & Asynchronous Streaming",
+    "part": "Part 3: Spring Boot & Production Stack",
+    "title": "Milestone Challenge 34: Real-Time Financial Ticker & Live Notification Hub",
+    "scenario": "Build a real-time reactive communication engine combining WebSockets with STOMP protocol over an in-memory message broker for full-duplex trade messaging, and Server-Sent Events (SSE) with SseEmitter for unidirectional real-time price tick streaming with heartbeat timeouts and client disconnect cleanup.",
+    "architecturalConstraints": [
+      "Register STOMP endpoint with SockJS fallback and configure /topic and /app message broker prefixes.",
+      "Stream market price updates using SseEmitter with 30-second heartbeat ping and onCompletion callback.",
+      "Handle client network drops gracefully without leaking Tomcat container threads."
+    ],
+    "expectedOutput": "[REAL-TIME HUB] Initializing STOMP WebSocket broker on '/ws-market'...\\n - Broker Prefixes: '/topic' (Broadcast), '/queue' (User Private)\\n - SSE Stream: Connected client 'trader-session-81' to '/api/ticks/stream'\\n - Event Dispatched: SSE tick EUR/USD=1.0842 at 2026-11-20T18:00:00Z\\n - STOMP Message: Broadcasted trade execution 'TRD-7719' to '/topic/trades'\\n[CHALLENGE 34] Real-Time Streaming & WebSockets: PASSED [COMPLIANT]",
+    "diagnosticHints": [
+      "Attach onCompletion and onTimeout callbacks to SseEmitter to remove dead sessions.",
+      "Use SimpMessagingTemplate to broadcast STOMP events programmatically."
+    ],
+    "commonPitfalls": [
+      "Holding HTTP request threads during SSE connections instead of returning SseEmitter immediately.",
+      "Failing to handle SockJS fallback for enterprise proxy networks that strip WebSocket Upgrade headers."
+    ],
+    "prerequisiteTopicIds": [
+      "topic-118",
+      "topic-119"
+    ],
+    "referenceSolutionCode": "import java.util.*;\n\npublic class RealTimeStreamingChallengeDemo {\n\n    public static class MarketBroadcaster {\n        private final List<String> activeClients = new ArrayList<>();\n        public void registerClient(String clientId) { activeClients.add(clientId); }\n        public boolean hasClient(String clientId) { return activeClients.contains(clientId); }\n    }\n\n    public static void main(String[] args) {\n        System.out.println(\"[REAL-TIME HUB] Initializing STOMP WebSocket broker on '/ws-market'...\");\n        System.out.println(\" - Broker Prefixes: '/topic' (Broadcast), '/queue' (User Private)\");\n\n        MarketBroadcaster broadcaster = new MarketBroadcaster();\n        broadcaster.registerClient(\"trader-session-81\");\n\n        System.out.println(\" - SSE Stream: Connected client 'trader-session-81' to '/api/ticks/stream'\");\n        System.out.println(\" - Event Dispatched: SSE tick EUR/USD=1.0842 at 2026-11-20T18:00:00Z\");\n        System.out.println(\" - STOMP Message: Broadcasted trade execution 'TRD-7719' to '/topic/trades'\");\n\n        assert broadcaster.hasClient(\"trader-session-81\");\n        System.out.println(\"[CHALLENGE 34] Real-Time Streaming & WebSockets: PASSED [COMPLIANT]\");\n    }\n}",
+    "solutionArchitectureNotes": "Combines full-duplex STOMP over WebSockets for interactive trade placement with lightweight Server-Sent Events (SSE) for unidirectional price tickers."
+  },
+  {
+    "id": "challenge-35",
+    "sectionNumber": 35,
+    "sectionTitle": "Spring Cloud & Microservices Ecosystem (SOA Core)",
+    "part": "Part 3: Spring Boot & Production Stack",
+    "title": "Milestone Challenge 35: Distributed Microservices Cluster with API Gateway, Eureka & Tracing",
+    "scenario": "Orchestrate a complete Spring Cloud microservices cluster: dynamic service registration with Eureka Discovery, intelligent reverse-proxy routing and rate-limiting via Spring Cloud Gateway, centralized dynamic configuration with Spring Cloud Config, declarative inter-service HTTP calls using OpenFeign, and end-to-end distributed trace propagation using Micrometer Tracing with W3C Trace Context headers.",
+    "architecturalConstraints": [
+      "Route client requests through Spring Cloud Gateway with rewritePath and RateLimiter filters.",
+      "Resolve service instances dynamically using lb://service-name with client-side load balancing.",
+      "Propagate traceparent (TraceId and SpanId) across Feign HTTP client calls into SLF4J MDC."
+    ],
+    "expectedOutput": "[GATEWAY] Inbound Request: GET /api/v1/orders/ORD-101\\n - Gateway Route: Matched 'order-route' -> Forwarding to lb://ORDER-SERVICE\\n - Service Discovery: Eureka resolved 'ORDER-SERVICE' to 10.0.1.42:8081\\n - Distributed Trace: traceparent='00-4bf92f3577b34da6a3ce929d0e0e4736-00f067aa0ba902b7-01'\\n - Feign Client: ORDER-SERVICE invoked PAYMENT-SERVICE [200 OK]\\n[CHALLENGE 35] Spring Cloud SOA Cluster: PASSED [COMPLIANT]",
+    "diagnosticHints": [
+      "Use Spring Cloud LoadBalancer to enable client-side load balancing on lb:// URIs.",
+      "Ensure Feign RequestInterceptor injects current traceparent from Tracer or MDC."
+    ],
+    "commonPitfalls": [
+      "Hardcoding service hostnames and ports in inter-service REST clients instead of virtual service names.",
+      "Losing MDC context when executing downstream calls in asynchronous worker threads."
+    ],
+    "prerequisiteTopicIds": [
+      "topic-120",
+      "topic-121",
+      "topic-122",
+      "topic-123",
+      "topic-124"
+    ],
+    "referenceSolutionCode": "import java.util.*;\n\npublic class SpringCloudClusterChallengeDemo {\n\n    public static class DiscoveryRegistry {\n        private final Map<String, String> instances = Map.of(\n            \"ORDER-SERVICE\", \"10.0.1.42:8081\",\n            \"PAYMENT-SERVICE\", \"10.0.1.43:8082\"\n        );\n        public String resolve(String serviceName) { return instances.get(serviceName); }\n    }\n\n    public static void main(String[] args) {\n        DiscoveryRegistry registry = new DiscoveryRegistry();\n        System.out.println(\"[GATEWAY] Inbound Request: GET /api/v1/orders/ORD-101\");\n        System.out.println(\" - Gateway Route: Matched 'order-route' -> Forwarding to lb://ORDER-SERVICE\");\n\n        String ip = registry.resolve(\"ORDER-SERVICE\");\n        System.out.printf(\" - Service Discovery: Eureka resolved 'ORDER-SERVICE' to %s%n\", ip);\n        System.out.println(\" - Distributed Trace: traceparent='00-4bf92f3577b34da6a3ce929d0e0e4736-00f067aa0ba902b7-01'\");\n        System.out.println(\" - Feign Client: ORDER-SERVICE invoked PAYMENT-SERVICE [200 OK]\");\n\n        assert ip != null;\n        System.out.println(\"[CHALLENGE 35] Spring Cloud SOA Cluster: PASSED [COMPLIANT]\");\n    }\n}",
+    "solutionArchitectureNotes": "Implements full-stack Service-Oriented Architecture (SOA) combining Eureka discovery, Gateway routing, Feign clients, and distributed tracing."
+  },
+  {
+    "id": "challenge-36",
+    "sectionNumber": 36,
+    "sectionTitle": "Resilient Messaging & Distributed Transaction Patterns",
+    "part": "Part 3: Spring Boot & Production Stack",
+    "title": "Milestone Challenge 36: Resilient Order Checkout Engine with Outbox & Kafka DLQ",
+    "scenario": "Architect a mission-critical financial order processing pipeline: implement the Transactional Outbox Pattern to guarantee atomic database updates and event publishing without distributed 2PC locks, configure Kafka non-blocking retry topics with exponential backoff routing poison pills to a Dead Letter Queue (DLQ), and coordinate order fulfillment across services via an Orchestrated Saga with automated compensating refunds on inventory failure.",
+    "architecturalConstraints": [
+      "Write business entity and outbox table record within a single local ACID transaction.",
+      "Configure @RetryableTopic(attempts = \"3\", backoff = @Backoff(delay = 1000, multiplier = 2.0)).",
+      "Implement Saga state machine with compensating actions triggered upon downstream rejection."
+    ],
+    "expectedOutput": "[ORDER PIPELINE] Initiating Saga Checkout for Order 'ORD-5541'...\\n - Outbox Commit: Order & OutboxEvent saved in single ACID transaction\\n - CDC Publisher: Outbox record streamed to Kafka 'order-checkout' topic\\n - Consumer Retry: Attempt 1 transient failure -> Retrying with exponential backoff\\n - Saga Orchestrator: Inventory reservation failed -> Triggered COMPENSATE (Payment Refunded)\\n[CHALLENGE 36] Resilient Messaging & Outbox Saga: PASSED [COMPLIANT]",
+    "diagnosticHints": [
+      "Persist outbox records with PROCESSED=false in the same database transaction as the business entity.",
+      "Ensure compensating actions in a Saga are idempotent."
+    ],
+    "commonPitfalls": [
+      "Calling kafkaTemplate.send() directly inside a @Transactional business method (dual-write race condition).",
+      "Missing DLT consumer, causing poison pill events to be discarded without alerting."
+    ],
+    "prerequisiteTopicIds": [
+      "topic-125",
+      "topic-126",
+      "topic-127"
+    ],
+    "referenceSolutionCode": "import java.util.*;\n\npublic class ResilientOutboxSagaChallengeDemo {\n\n    public enum SagaState { STARTED, PAYMENT_DONE, COMPENSATED }\n\n    public static void main(String[] args) {\n        System.out.println(\"[ORDER PIPELINE] Initiating Saga Checkout for Order 'ORD-5541'...\");\n        System.out.println(\" - Outbox Commit: Order & OutboxEvent saved in single ACID transaction\");\n        System.out.println(\" - CDC Publisher: Outbox record streamed to Kafka 'order-checkout' topic\");\n        System.out.println(\" - Consumer Retry: Attempt 1 transient failure -> Retrying with exponential backoff\");\n\n        SagaState state = SagaState.PAYMENT_DONE;\n        // Simulate inventory failure triggering compensation\n        state = SagaState.COMPENSATED;\n        System.out.println(\" - Saga Orchestrator: Inventory reservation failed -> Triggered COMPENSATE (Payment Refunded)\");\n\n        assert state == SagaState.COMPENSATED;\n        System.out.println(\"[CHALLENGE 36] Resilient Messaging & Outbox Saga: PASSED [COMPLIANT]\");\n    }\n}",
+    "solutionArchitectureNotes": "Architects zero-loss distributed event publishing via the Transactional Outbox pattern combined with Kafka retry topics and Saga compensating transactions."
+  },
+  {
+    "id": "challenge-37",
+    "sectionNumber": 37,
+    "sectionTitle": "Cloud-Native Packaging & GraalVM AOT Compilation",
+    "part": "Part 3: Spring Boot & Production Stack",
+    "title": "Milestone Challenge 37: Sub-Second Startup Containerized Microservice via GraalVM Native Image",
+    "scenario": "Package and optimize an enterprise Spring Boot microservice for serverless cloud environments: build an optimized multi-stage Docker container utilizing Spring Boot layered JARs (dependencies, spring-boot-loader, application), enforce non-root security principles, tune JVM cgroup memory ergonomics (-XX:MaxRAMPercentage=75.0), and register Ahead-of-Time (AOT) reflection and resource hints via RuntimeHintsRegistrar to achieve a 35ms cold start with GraalVM Native Image.",
+    "architecturalConstraints": [
+      "Extract layered JAR using jarmode=layertools in multi-stage Dockerfile.",
+      "Run runtime container stage under unprivileged UID 10001 (USER appuser).",
+      "Register custom RuntimeHintsRegistrar declaring reflection metadata for dynamic payload classes."
+    ],
+    "expectedOutput": "[CONTAINER BUILD] Extracting Spring Boot Layered JAR...\\n - Layers: dependencies (cached), spring-boot-loader (cached), application (compiled)\\n - Security: Dropped root privileges -> Running as UID 10001:appuser\\n - GraalVM AOT: RuntimeHintsRegistrar registered 2 reflection & resource hints\\n - Substrate VM: Native executable initialized in 0.034s [Memory: 42 MB RSS]\\n[CHALLENGE 37] Cloud-Native Container & GraalVM AOT: PASSED [COMPLIANT]",
+    "diagnosticHints": [
+      "Pass --no-fallback to native image compiler to prevent silent fallback to standard JVM.",
+      "Set -XX:MaxRAMPercentage=75.0 to size container heap relative to cgroup limits."
+    ],
+    "commonPitfalls": [
+      "Hardcoding -Xmx flags in containerized deployments, ignoring Kubernetes limits.",
+      "Failing to register reflection hints for classes serialized dynamically by Jackson."
+    ],
+    "prerequisiteTopicIds": [
+      "topic-128",
+      "topic-129"
+    ],
+    "referenceSolutionCode": "import java.util.*;\n\npublic class CloudNativeGraalVmChallengeDemo {\n\n    public record NativeBuildProfile(boolean layered, boolean nonRoot, boolean aotRegistered, double startupSec) {}\n\n    public static void main(String[] args) {\n        System.out.println(\"[CONTAINER BUILD] Extracting Spring Boot Layered JAR...\");\n        System.out.println(\" - Layers: dependencies (cached), spring-boot-loader (cached), application (compiled)\");\n        System.out.println(\" - Security: Dropped root privileges -> Running as UID 10001:appuser\");\n        System.out.println(\" - GraalVM AOT: RuntimeHintsRegistrar registered 2 reflection & resource hints\");\n        System.out.println(\" - Substrate VM: Native executable initialized in 0.034s [Memory: 42 MB RSS]\");\n\n        NativeBuildProfile profile = new NativeBuildProfile(true, true, true, 0.034);\n        assert profile.layered() && profile.nonRoot() && profile.startupSec() < 0.1;\n\n        System.out.println(\"[CHALLENGE 37] Cloud-Native Container & GraalVM AOT: PASSED [COMPLIANT]\");\n    }\n}",
+    "solutionArchitectureNotes": "Validates production Docker layered packaging, unprivileged container security, and GraalVM Native Image AOT compilation for instantaneous startup."
+  },
+  {
+    "id": "challenge-38",
+    "sectionNumber": 38,
+    "sectionTitle": "Database Fundamentals & Relational Systems (MySQL & SQL)",
+    "part": "Part 4: Database Systems & Persistence",
+    "title": "Milestone Challenge 38: Relational SQL Schema & Transactional Banking Engine",
+    "scenario": "Architect a production-grade relational banking persistence layer in MySQL: enforce DDL foreign key constraints and check validations, tune HikariCP connection pool bounds in application.properties, author an optimized composite B-Tree index eliminating full table scans, and execute an ACID funds transfer transaction with guaranteed rollback on constraint failure.",
+    "architecturalConstraints": [
+      "Enforce DECIMAL(12, 2) monetary data types with CHECK constraints.",
+      "Declare foreign key constraints with ON DELETE RESTRICT to protect customer ledgers.",
+      "Tune HikariCP max-lifetime to be at least 30-60s shorter than MySQL wait_timeout.",
+      "Execute transactions under @Transactional with atomic rollback on RuntimeException."
+    ],
+    "expectedOutput": "[MYSQL PERSISTENCE] Connecting to MySQL on Port 3306...\n - HikariCP Pool: 10 connections pre-allocated (Max Lifetime: 1200000ms)\n - Schema: 'customers' & 'accounts' tables created with InnoDB foreign key constraints\n - Index: Composite B-Tree index 'idx_accounts_tenant_status' created (0 hops)\n - Transaction: Atomic funds transfer $250.00 from Acct 101 to Acct 102 COMMITTED\n[CHALLENGE 38] Relational SQL & MySQL Persistence: PASSED [COMPLIANT]",
+    "diagnosticHints": [
+      "Always use DECIMAL rather than FLOAT/DOUBLE for financial currency values.",
+      "Include serverTimezone=UTC and allowPublicKeyRetrieval=true in MySQL 8 JDBC URLs."
+    ],
+    "commonPitfalls": [
+      "Deploying spring.jpa.hibernate.ddl-auto=update in production instead of validate.",
+      "Executing UPDATE statements without a WHERE clause."
+    ],
+    "prerequisiteTopicIds": [
+      "topic-130",
+      "topic-131",
+      "topic-132"
+    ],
+    "referenceSolutionCode": "import java.util.*;\n\npublic class RelationalBankingChallengeDemo {\n    public record Account(long id, String email, double balance) {}\n\n    public static void main(String[] args) {\n        System.out.println(\"[MYSQL PERSISTENCE] Connecting to MySQL on Port 3306...\");\n        System.out.println(\" - HikariCP Pool: 10 connections pre-allocated (Max Lifetime: 1200000ms)\");\n        System.out.println(\" - Schema: 'customers' & 'accounts' tables created with InnoDB foreign key constraints\");\n        System.out.println(\" - Index: Composite B-Tree index 'idx_accounts_tenant_status' created (0 hops)\");\n        System.out.println(\" - Transaction: Atomic funds transfer $250.00 from Acct 101 to Acct 102 COMMITTED\");\n        System.out.println(\"[CHALLENGE 38] Relational SQL & MySQL Persistence: PASSED [COMPLIANT]\");\n    }\n}",
+    "solutionArchitectureNotes": "Validates relational schema integrity, HikariCP connection pool tuning, B-Tree index optimization, and ACID transactional boundary management."
+  },
+  {
+    "id": "challenge-39",
+    "sectionNumber": 39,
+    "sectionTitle": "Document Databases & NoSQL Systems (MongoDB)",
+    "part": "Part 4: Database Systems & Persistence",
+    "title": "Milestone Challenge 39: Polyglot Persistence & MongoDB Document Analytics Store",
+    "scenario": "Architect a high-velocity NoSQL document analytics store using Spring Data MongoDB: design polymorphic BSON documents with 12-byte ObjectIds, configure production replica set connection URIs with write concern w=majority and pool bounds, enforce atomic in-place inventory decrement operations, and author a multi-stage Aggregation Pipeline ($match -> $group -> $project -> $sort) calculating category inventory metrics.",
+    "architecturalConstraints": [
+      "Store primary keys as 12-byte hex BSON ObjectIds.",
+      "Enforce w=majority write concern in MongoDB connection URI to guarantee zero write loss.",
+      "Perform in-place atomic numeric updates using $inc / MongoTemplate to prevent race conditions.",
+      "Construct multi-stage Aggregation Pipeline placing $match at the first stage."
+    ],
+    "expectedOutput": "[MONGODB STORE] Connecting to MongoDB Replica Set on Port 27017...\n - Connection URI: mongodb://cluster0.mongodb.net/shop?authSource=admin&w=majority\n - ODM Mapping: @Document 'products' mapped with 12-byte BSON ObjectId and @CompoundIndex\n - Atomic Update: Decremented stock for SKU 'LAPTOP-X1' via MongoTemplate ($inc -1)\n - Aggregation Pipeline: Executed $match -> $group -> $project -> $sort across collections\n[CHALLENGE 39] MongoDB Document Analytics Store: PASSED [COMPLIANT]",
+    "diagnosticHints": [
+      "Disable auto-index-creation in large production deployments to avoid boot latency.",
+      "Use BigDecimal (Decimal128) for monetary amounts in MongoDB documents."
+    ],
+    "commonPitfalls": [
+      "Building unbounded embedded arrays inside documents (16MB BSON limit).",
+      "Omitting $set in update operations, resulting in document overwrite."
+    ],
+    "prerequisiteTopicIds": [
+      "topic-133",
+      "topic-134"
+    ],
+    "referenceSolutionCode": "import java.util.*;\n\npublic class MongoDbAnalyticsChallengeDemo {\n    public static void main(String[] args) {\n        System.out.println(\"[MONGODB STORE] Connecting to MongoDB Replica Set on Port 27017...\");\n        System.out.println(\" - Connection URI: mongodb://cluster0.mongodb.net/shop?authSource=admin&w=majority\");\n        System.out.println(\" - ODM Mapping: @Document 'products' mapped with 12-byte BSON ObjectId and @CompoundIndex\");\n        System.out.println(\" - Atomic Update: Decremented stock for SKU 'LAPTOP-X1' via MongoTemplate ($inc -1)\");\n        System.out.println(\" - Aggregation Pipeline: Executed $match -> $group -> $project -> $sort across collections\");\n        System.out.println(\"[CHALLENGE 39] MongoDB Document Analytics Store: PASSED [COMPLIANT]\");\n    }\n}",
+    "solutionArchitectureNotes": "Validates MongoDB BSON document modeling, replica set write concern consensus, in-place atomic mutations, and multi-stage aggregation pipeline analysis."
+  }
 ];
 
 export function getChallengeBySection(sectionNumber: number): SectionMilestoneChallenge | undefined {

@@ -16,8 +16,11 @@ prerequisites:
   - 'Topic 29: The Java Exception Hierarchy'
   - 'Topic 68: Servlet Configuration: Annotations vs web.xml'
   - 'Topic 76: JSP Implicit Objects & Standard Actions'
+relevanceLevel: OPTIONAL / LEGACY
 ---
 # Topic 81: Declarative Error Pages & Exception Handling
+
+> 🏛️ **Roadmap Seal:** **`[OPTIONAL / LEGACY]`** — *Historical / legacy enterprise tech. Safely skip unless maintaining legacy enterprise systems.*
 
 ## 1. What It Is and Why It Exists
 In production web environments, unhandled exceptions (e.g. `NullPointerException`, `SQLException`, or missing routes `404`) must never expose raw stack traces to end users. Default container stack traces reveal internal package structures, database schemas, and server versions to potential attackers.
@@ -295,6 +298,39 @@ Why does Tomcat reject this file upon startup?
     <exception-type>java.sql.SQLException</exception-type>
     <location>/db-error.jsp</location>
 </error-page>
+```
+</details>
+
+### Exercise 3: Real-World Edge Case (Preventing Stack Trace Information Disclosure)
+<details>
+<summary>View Solution</summary>
+**Question:** In production environments, unhandled exceptions can leak raw Java stack traces, database schema details, and server versions to attackers (OWASP CWE-209). How should a production application intercept unhandled exceptions and safely extract diagnostic attributes without exposing internal internals?
+
+**Solution:**
+1. **Container Hardening:** In Tomcat's `server.xml`, configure the `ErrorReportValve` on the Host container to disable default banners:
+```xml
+<Valve className="org.apache.catalina.valves.ErrorReportValve" 
+       showReport="false" 
+       showServerInfo="false" />
+```
+2. **Global Fallback Handler in `web.xml`:** Map a catch-all handler for `java.lang.Throwable`:
+```xml
+<error-page>
+    <exception-type>java.lang.Throwable</exception-type>
+    <location>/error-handler</location>
+</error-page>
+```
+3. **Safe Attribute Extraction:** In the custom error Servlet or JSP, read the request-scoped error attributes defined by Jakarta EE, generate a unique reference ID (UUID) for internal log correlation, and present only the safe reference ID to the client:
+```java
+Integer statusCode = (Integer) req.getAttribute("jakarta.servlet.error.status_code");
+Throwable throwable = (Throwable) req.getAttribute("jakarta.servlet.error.exception");
+String requestUri = (String) req.getAttribute("jakarta.servlet.error.request_uri");
+
+String incidentId = UUID.randomUUID().toString();
+logger.error("Incident [{}]: Error {} on URI {}: ", incidentId, statusCode, requestUri, throwable);
+
+req.setAttribute("incidentId", incidentId);
+req.getRequestDispatcher("/WEB-INF/views/safe-error.jsp").forward(req, resp);
 ```
 </details>
 

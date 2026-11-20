@@ -16,7 +16,10 @@ shortDescription: >-
 prerequisites:
   - 'Topic 09: Switch Statements & Switch Expressions'
   - 'Topic 16: Classes, Objects & Memory Layout'
+relevanceLevel: ADVANCED / DEEP-DIVE
 ---
+> 🚀 **Roadmap Seal:** **`[ADVANCED / DEEP-DIVE]`** — *Advanced enterprise specialization & architecture. Study once core fundamentals are solid.*
+
 ## 1. What It Is and Why It Exists
 
 An **enumeration** (declared using the `enum` keyword, introduced in Java 5) is a specialized class type representing a fixed, type-safe set of named constant values. Unlike languages like C/C++ where enums are simply integer aliases, in Java **an enum is a full-fledged Object-Oriented class** extending `java.lang.Enum`.

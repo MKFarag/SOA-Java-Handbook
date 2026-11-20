@@ -15,8 +15,11 @@ shortDescription: >-
 prerequisites:
   - 'Topic 16: Classes, Objects & Memory Layout'
   - 'Topic 48: Threads and Thread Lifecycle'
+relevanceLevel: ADVANCED / DEEP-DIVE
 ---
 # Synchronization and Memory Visibility
+
+> 🚀 **Roadmap Seal:** **`[ADVANCED / DEEP-DIVE]`** — *Advanced enterprise specialization & architecture. Study once core fundamentals are solid.*
 
 ### 1. What It Is and Why It Exists
 When multiple threads execute concurrently and access shared, mutable data, two major classes of concurrency problems arise:

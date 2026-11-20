@@ -16,7 +16,10 @@ shortDescription: >-
 prerequisites:
   - 'Topic 04: Variables, Identifiers & Primitive Data Types'
   - 'Topic 08: Conditional Statements'
+relevanceLevel: MUST-KNOW / CORE
 ---
+> 🎯 **Roadmap Seal:** **`[MUST-KNOW / CORE]`** — *Essential modern foundation required for backend roles. Master this thoroughly.*
+
 ## 1. What It Is and Why It Exists
 
 A **loop** is a control flow structure that repeatedly executes a block of code as long as a specified boolean condition remains `true`. Each repetition of the loop block is termed an **iteration**.

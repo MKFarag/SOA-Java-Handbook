@@ -17,8 +17,11 @@ prerequisites:
   - 'Topic 65: Apache Tomcat & The WAR Structure'
   - 'Topic 66: Servlet Lifecycle & Architecture'
   - 'Topic 70: State Management: Sessions and Cookies'
+relevanceLevel: ADVANCED / DEEP-DIVE
 ---
 # Web Listeners and Application Lifecycle
+
+> 🚀 **Roadmap Seal:** **`[ADVANCED / DEEP-DIVE]`** — *Advanced enterprise specialization & architecture. Study once core fundamentals are solid.*
 
 ### 1. What It Is and Why It Exists
 In a web application, critical events occur continuously:

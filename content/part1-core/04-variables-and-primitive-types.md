@@ -16,7 +16,10 @@ shortDescription: >-
 prerequisites:
   - 'Topic 01: What is Programming & How Code Runs'
   - 'Topic 03: Your First Java Program'
+relevanceLevel: MUST-KNOW / CORE
 ---
+> 🎯 **Roadmap Seal:** **`[MUST-KNOW / CORE]`** — *Essential modern foundation required for backend roles. Master this thoroughly.*
+
 ## 1. What It Is and Why It Exists
 
 A **variable** is a named storage location in computer memory (RAM) that holds a value during program execution. In Java, every variable has a declared **data type**, which tells the compiler how much memory to reserve and what operations are legally permitted on that data.

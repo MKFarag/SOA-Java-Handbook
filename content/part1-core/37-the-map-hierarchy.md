@@ -15,8 +15,11 @@ shortDescription: >-
 prerequisites:
   - 'Topic 33: Generics Fundamentals'
   - 'Topic 36: The Set Hierarchy'
+relevanceLevel: MUST-KNOW / CORE
 ---
 # The Map Hierarchy
+
+> 🎯 **Roadmap Seal:** **`[MUST-KNOW / CORE]`** — *Essential modern foundation required for backend roles. Master this thoroughly.*
 
 ### 1. What It Is and Why It Exists
 In software design, data is rarely isolated. Most information exists as associative pairs: an employee ID maps to an employee record, a product SKU maps to inventory count, or a configuration key maps to a system setting. If you stored these in parallel lists, finding a value by its key would require searching the keys array sequentially ($O(n)$) and reading the corresponding value index.

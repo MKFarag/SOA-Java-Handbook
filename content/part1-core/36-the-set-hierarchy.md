@@ -15,8 +15,11 @@ shortDescription: >-
 prerequisites:
   - 'Topic 33: Generics Fundamentals'
   - 'Topic 19: Encapsulation & Data Integrity'
+relevanceLevel: MUST-KNOW / CORE
 ---
 # The Set Hierarchy
+
+> 🎯 **Roadmap Seal:** **`[MUST-KNOW / CORE]`** — *Essential modern foundation required for backend roles. Master this thoroughly.*
 
 ### 1. What It Is and Why It Exists
 In software engineering, you frequently need to store collections where duplicate elements are forbidden—such as active user sessions, unique IP addresses, or database primary keys. While you could check a list for duplicates before each addition, doing so on a list of $n$ elements requires scanning all existing items, taking $O(n)$ time. For large collections, this turns bulk additions into an unacceptably slow $O(n^2)$ process.

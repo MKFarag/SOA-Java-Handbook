@@ -38,14 +38,14 @@ export const ExerciseCard: React.FC<ExerciseCardProps> = ({ exercise, index }) =
   };
 
   return (
-    <div className="rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#1e1e1e] p-5 shadow-sm transition-all text-left">
+    <div className="rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#1e1e1e] p-3.5 sm:p-5 shadow-xs transition-all text-left">
       {/* Header */}
       <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-zinc-100 dark:border-zinc-800/80">
         <div className="flex items-center gap-2">
-          <span className="flex items-center justify-center w-6 h-6 rounded-full bg-orange-500/10 dark:bg-orange-500/20 text-orange-600 dark:text-orange-400 text-xs font-bold font-mono">
+          <span className="flex items-center justify-center w-6 h-6 rounded-full bg-orange-500/10 dark:bg-orange-500/20 text-orange-600 dark:text-orange-400 text-xs font-bold font-mono shrink-0">
             {index + 1}
           </span>
-          <h4 className="text-base font-semibold text-zinc-900 dark:text-zinc-100">
+          <h4 className="text-sm sm:text-base font-semibold text-zinc-900 dark:text-zinc-100">
             {exercise.title}
           </h4>
         </div>
@@ -53,7 +53,7 @@ export const ExerciseCard: React.FC<ExerciseCardProps> = ({ exercise, index }) =
       </div>
 
       {/* Prompt */}
-      <p className="mt-3 text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed font-sans">
+      <p className="mt-3 text-xs sm:text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed font-sans">
         {exercise.prompt}
       </p>
 
@@ -65,29 +65,29 @@ export const ExerciseCard: React.FC<ExerciseCardProps> = ({ exercise, index }) =
       )}
 
       {/* Toggle Button */}
-      <div className="mt-4 pt-3 border-t border-zinc-100 dark:border-zinc-800 flex items-center justify-between">
+      <div className="mt-3.5 pt-3 border-t border-zinc-100 dark:border-zinc-800 flex flex-wrap items-center justify-between gap-2">
         <button
           type="button"
           onClick={() => setShowSolution(!showSolution)}
-          className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md text-xs font-medium bg-zinc-100 dark:bg-zinc-800 hover:bg-orange-500/10 dark:hover:bg-orange-500/20 text-zinc-700 dark:text-zinc-300 hover:text-orange-600 dark:hover:text-orange-400 transition-colors border border-zinc-200 dark:border-zinc-700"
+          className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-zinc-100 dark:bg-zinc-800 hover:bg-orange-500/10 dark:hover:bg-orange-500/20 text-zinc-700 dark:text-zinc-300 hover:text-orange-600 dark:hover:text-orange-400 transition-colors border border-zinc-200 dark:border-zinc-700 cursor-pointer"
         >
           {showSolution ? (
             <>
               <EyeOff className="w-3.5 h-3.5" />
               <span>Hide Solution</span>
-              <ChevronUp className="w-3.5 h-3.5 ml-1" />
+              <ChevronUp className="w-3.5 h-3.5 ml-0.5" />
             </>
           ) : (
             <>
               <Eye className="w-3.5 h-3.5" />
-              <span>Reveal Solution & Explanation</span>
-              <ChevronDown className="w-3.5 h-3.5 ml-1" />
+              <span>Reveal Solution</span>
+              <ChevronDown className="w-3.5 h-3.5 ml-0.5" />
             </>
           )}
         </button>
 
         {showSolution && (
-          <span className="inline-flex items-center gap-1 text-xs text-emerald-500 font-medium">
+          <span className="inline-flex items-center gap-1 text-[11px] sm:text-xs text-emerald-500 font-medium">
             <CheckCircle2 className="w-3.5 h-3.5" />
             Solution Revealed
           </span>
@@ -96,13 +96,13 @@ export const ExerciseCard: React.FC<ExerciseCardProps> = ({ exercise, index }) =
 
       {/* Solution Section */}
       {showSolution && (
-        <div className="mt-4 p-4 rounded-lg bg-zinc-50 dark:bg-[#141416] border border-orange-500/20 animate-fadeIn">
+        <div className="mt-3 p-3 sm:p-4 rounded-xl bg-zinc-50 dark:bg-[#141416] border border-orange-500/20">
           <h5 className="text-xs font-bold uppercase tracking-wider text-orange-600 dark:text-orange-400 mb-2">
             Correct Solution:
           </h5>
           <CodeBlock code={exercise.solution} />
 
-          <h5 className="text-xs font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 mt-4 mb-1">
+          <h5 className="text-xs font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 mt-3 mb-1">
             Why This Works:
           </h5>
           <p className="text-xs font-sans text-zinc-600 dark:text-zinc-300 whitespace-pre-line leading-relaxed">

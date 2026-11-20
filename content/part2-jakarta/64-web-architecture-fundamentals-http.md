@@ -16,8 +16,11 @@ shortDescription: >-
 prerequisites:
   - 'Topic 01: What is Programming & How Code Runs'
   - 'Topic 45: Classic I/O Streams'
+relevanceLevel: MUST-KNOW / CORE
 ---
 # Web Architecture Fundamentals (HTTP Protocol)
+
+> 🎯 **Roadmap Seal:** **`[MUST-KNOW / CORE]`** — *Essential modern foundation required for backend roles. Master this thoroughly.*
 
 ### 1. What It Is and Why It Exists
 Before writing a single line of server-side servlet code, a web developer must understand the communication protocol governing the World Wide Web: the **Hypertext Transfer Protocol (HTTP)** (RFC 9110).

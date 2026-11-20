@@ -16,7 +16,10 @@ shortDescription: >-
 prerequisites:
   - 'Topic 20: Inheritance & Method Overriding'
   - 'Topic 22: Abstract Classes & Methods'
+relevanceLevel: MUST-KNOW / CORE
 ---
+> 🎯 **Roadmap Seal:** **`[MUST-KNOW / CORE]`** — *Essential modern foundation required for backend roles. Master this thoroughly.*
+
 ## 1. What It Is and Why It Exists
 
 An **interface** is an abstract reference type in Java that specifies a contract of behaviors that a class must implement using the `implements` keyword. While Java strictly limits a class to single inheritance (`extends OneClass`), a class can implement **multiple interfaces** (`implements InterfaceA, InterfaceB, InterfaceC`).

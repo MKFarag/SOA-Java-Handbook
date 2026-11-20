@@ -15,7 +15,10 @@ shortDescription: >-
 prerequisites:
   - 'Topic 04: Variables, Identifiers & Primitive Data Types'
   - 'Topic 05: Operators & Expressions'
+relevanceLevel: MUST-KNOW / CORE
 ---
+> 🎯 **Roadmap Seal:** **`[MUST-KNOW / CORE]`** — *Essential modern foundation required for backend roles. Master this thoroughly.*
+
 ## 1. What It Is and Why It Exists
 
 A **String** in Java is an object representing an immutable sequence of characters. Unlike primitive types, `String` is a reference type backed by the standard library class `java.lang.String`.

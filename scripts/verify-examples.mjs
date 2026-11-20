@@ -1722,6 +1722,189 @@ runTest('Spring Boot - Topic 108: KafkaMessagingDemo.java execution', () => {
   if (!out.includes('Topic 108 Apache Kafka Event-Driven Messaging verified successfully')) throw new Error(out);
 });
 
+runTest('Spring Boot - Topic 109: JpaSpecificationFilterDemo.java execution', () => {
+  const outDir = 'examples/web/classes';
+  execSync(`${JAVAC} -d ${outDir} examples/spring/JpaSpecificationFilterDemo.java`);
+  const out = execSync(`${JAVA} -ea -cp ${outDir} com.handbook.spring.JpaSpecificationFilterDemo`).toString();
+  if (!out.includes('Topic 109 JPA Specification Dynamic Filtering verified successfully.')) throw new Error(out);
+});
+
+runTest('Spring Boot - Topic 110: EntityAuditingEnversDemo.java execution', () => {
+  const outDir = 'examples/web/classes';
+  execSync(`${JAVAC} -d ${outDir} examples/spring/EntityAuditingEnversDemo.java`);
+  const out = execSync(`${JAVA} -ea -cp ${outDir} com.handbook.spring.EntityAuditingEnversDemo`).toString();
+  if (!out.includes('Topic 110 Entity Auditing and Envers versioning verified successfully.')) throw new Error(out);
+});
+
+runTest('Spring Boot - Topic 111: MultiTenantRoutingDemo.java execution', () => {
+  const outDir = 'examples/web/classes';
+  execSync(`${JAVAC} -d ${outDir} examples/spring/MultiTenantRoutingDemo.java`);
+  const out = execSync(`${JAVA} -ea -cp ${outDir} com.handbook.spring.MultiTenantRoutingDemo`).toString();
+  if (!out.includes('Topic 111 Multi-Tenancy Architecture and Routing DataSource verified successfully.')) throw new Error(out);
+});
+
+runTest('Spring Boot - Topic 112: OAuth2ResourceServerDemo.java execution', () => {
+  const outDir = 'examples/web/classes';
+  execSync(`${JAVAC} -d ${outDir} examples/spring/OAuth2ResourceServerDemo.java`);
+  const out = execSync(`${JAVA} -ea -cp ${outDir} com.handbook.spring.OAuth2ResourceServerDemo`).toString();
+  if (!out.includes('Topic 112 OAuth2 Resource Server verified successfully.')) throw new Error(out);
+});
+
+runTest('Spring Boot - Topic 113: OidcKeycloakIntegrationDemo.java execution', () => {
+  const outDir = 'examples/web/classes';
+  execSync(`${JAVAC} -d ${outDir} examples/spring/OidcKeycloakIntegrationDemo.java`);
+  const out = execSync(`${JAVA} -ea -cp ${outDir} com.handbook.spring.OidcKeycloakIntegrationDemo`).toString();
+  if (!out.includes('Topic 113 OpenID Connect and Keycloak integration verified successfully.')) throw new Error(out);
+});
+
+runTest('Spring Boot - Topic 114: ProductionCorsCsrfSecurityDemo.java execution', () => {
+  const outDir = 'examples/web/classes';
+  execSync(`${JAVAC} -d ${outDir} examples/spring/ProductionCorsCsrfSecurityDemo.java`);
+  const out = execSync(`${JAVA} -ea -cp ${outDir} com.handbook.spring.ProductionCorsCsrfSecurityDemo`).toString();
+  if (!out.includes('Topic 114 Production CORS, CSRF and Security Headers verified successfully.')) throw new Error(out);
+});
+
+runTest('Spring Boot - Topic 115: AsyncExecutionThreadPoolDemo.java execution', () => {
+  const outDir = 'examples/web/classes';
+  execSync(`${JAVAC} -d ${outDir} examples/spring/AsyncExecutionThreadPoolDemo.java`);
+  const out = execSync(`${JAVA} -ea -cp ${outDir} com.handbook.spring.AsyncExecutionThreadPoolDemo`).toString();
+  if (!out.includes('Topic 115 Asynchronous Task Execution verified successfully.')) throw new Error(out);
+});
+
+runTest('Spring Boot - Topic 116: DistributedShedLockSchedulerDemo.java execution', () => {
+  const outDir = 'examples/web/classes';
+  execSync(`${JAVAC} -d ${outDir} examples/spring/DistributedShedLockSchedulerDemo.java`);
+  const out = execSync(`${JAVA} -ea -cp ${outDir} com.handbook.spring.DistributedShedLockSchedulerDemo`).toString();
+  if (!out.includes('Topic 116 Distributed Scheduling and ShedLock verified successfully.')) throw new Error(out);
+});
+
+runTest('Spring Boot - Topic 117: SpringBatchChunkProcessingDemo.java execution', () => {
+  const outDir = 'examples/web/classes';
+  execSync(`${JAVAC} -d ${outDir} examples/spring/SpringBatchChunkProcessingDemo.java`);
+  const out = execSync(`${JAVA} -ea -cp ${outDir} com.handbook.spring.SpringBatchChunkProcessingDemo`).toString();
+  if (!out.includes('Topic 117 Spring Batch Chunk Processing verified successfully.')) throw new Error(out);
+});
+
+runTest('Spring Boot - Topic 118: WebSocketStompBrokerDemo.java execution', () => {
+  const outDir = 'examples/web/classes';
+  execSync(`${JAVAC} -d ${outDir} examples/spring/WebSocketStompBrokerDemo.java`);
+  const out = execSync(`${JAVA} -ea -cp ${outDir} com.handbook.spring.WebSocketStompBrokerDemo`).toString();
+  if (!out.includes('Topic 118 WebSockets and STOMP messaging verified successfully.')) throw new Error(out);
+});
+
+runTest('Spring Boot - Topic 119: ServerSentEventsStreamingDemo.java execution', () => {
+  const outDir = 'examples/web/classes';
+  execSync(`${JAVAC} -d ${outDir} examples/spring/ServerSentEventsStreamingDemo.java`);
+  const out = execSync(`${JAVA} -ea -cp ${outDir} com.handbook.spring.ServerSentEventsStreamingDemo`).toString();
+  if (!out.includes('Topic 119 Server-Sent Events and HTTP streaming verified successfully.')) throw new Error(out);
+});
+
+runTest('Spring Boot - Topic 120: ServiceDiscoveryEurekaDemo.java execution', () => {
+  const outDir = 'examples/web/classes';
+  execSync(`${JAVAC} -d ${outDir} examples/spring/ServiceDiscoveryEurekaDemo.java`);
+  const out = execSync(`${JAVA} -ea -cp ${outDir} com.handbook.spring.ServiceDiscoveryEurekaDemo`).toString();
+  if (!out.includes('Topic 120 Service Discovery with Eureka verified successfully.')) throw new Error(out);
+});
+
+runTest('Spring Boot - Topic 121: SpringCloudGatewayRoutingDemo.java execution', () => {
+  const outDir = 'examples/web/classes';
+  execSync(`${JAVAC} -d ${outDir} examples/spring/SpringCloudGatewayRoutingDemo.java`);
+  const out = execSync(`${JAVA} -ea -cp ${outDir} com.handbook.spring.SpringCloudGatewayRoutingDemo`).toString();
+  if (!out.includes('Topic 121 Spring Cloud Gateway routing verified successfully.')) throw new Error(out);
+});
+
+runTest('Spring Boot - Topic 122: CentralizedConfigRefreshDemo.java execution', () => {
+  const outDir = 'examples/web/classes';
+  execSync(`${JAVAC} -d ${outDir} examples/spring/CentralizedConfigRefreshDemo.java`);
+  const out = execSync(`${JAVA} -ea -cp ${outDir} com.handbook.spring.CentralizedConfigRefreshDemo`).toString();
+  if (!out.includes('Topic 122 Centralized Config Server and @RefreshScope verified successfully.')) throw new Error(out);
+});
+
+runTest('Spring Boot - Topic 123: DeclarativeRestClientFeignDemo.java execution', () => {
+  const outDir = 'examples/web/classes';
+  execSync(`${JAVAC} -d ${outDir} examples/spring/DeclarativeRestClientFeignDemo.java`);
+  const out = execSync(`${JAVA} -ea -cp ${outDir} com.handbook.spring.DeclarativeRestClientFeignDemo`).toString();
+  if (!out.includes('Topic 123 Declarative REST Clients verified successfully.')) throw new Error(out);
+});
+
+runTest('Spring Boot - Topic 124: DistributedTracingMdcDemo.java execution', () => {
+  const outDir = 'examples/web/classes';
+  execSync(`${JAVAC} -d ${outDir} examples/spring/DistributedTracingMdcDemo.java`);
+  const out = execSync(`${JAVA} -ea -cp ${outDir} com.handbook.spring.DistributedTracingMdcDemo`).toString();
+  if (!out.includes('Topic 124 Distributed Tracing and MDC verified successfully.')) throw new Error(out);
+});
+
+runTest('Spring Boot - Topic 125: KafkaResilienceDltDemo.java execution', () => {
+  const outDir = 'examples/web/classes';
+  execSync(`${JAVAC} -d ${outDir} examples/spring/KafkaResilienceDltDemo.java`);
+  const out = execSync(`${JAVA} -ea -cp ${outDir} com.handbook.spring.KafkaResilienceDltDemo`).toString();
+  if (!out.includes('Topic 125 Kafka Resilience and DLT verified successfully.')) throw new Error(out);
+});
+
+runTest('Spring Boot - Topic 126: TransactionalOutboxPatternDemo.java execution', () => {
+  const outDir = 'examples/web/classes';
+  execSync(`${JAVAC} -d ${outDir} examples/spring/TransactionalOutboxPatternDemo.java`);
+  const out = execSync(`${JAVA} -ea -cp ${outDir} com.handbook.spring.TransactionalOutboxPatternDemo`).toString();
+  if (!out.includes('Topic 126 Transactional Outbox Pattern verified successfully.')) throw new Error(out);
+});
+
+runTest('Spring Boot - Topic 127: SagaPatternOrchestrationDemo.java execution', () => {
+  const outDir = 'examples/web/classes';
+  execSync(`${JAVAC} -d ${outDir} examples/spring/SagaPatternOrchestrationDemo.java`);
+  const out = execSync(`${JAVA} -ea -cp ${outDir} com.handbook.spring.SagaPatternOrchestrationDemo`).toString();
+  if (!out.includes('Topic 127 Saga Pattern and Orchestration verified successfully.')) throw new Error(out);
+});
+
+runTest('Spring Boot - Topic 128: ProductionDockerLayeringDemo.java execution', () => {
+  const outDir = 'examples/web/classes';
+  execSync(`${JAVAC} -d ${outDir} examples/spring/ProductionDockerLayeringDemo.java`);
+  const out = execSync(`${JAVA} -ea -cp ${outDir} com.handbook.spring.ProductionDockerLayeringDemo`).toString();
+  if (!out.includes('Topic 128 Layered JAR & Docker container optimization verified successfully.')) throw new Error(out);
+});
+
+runTest('Spring Boot - Topic 129: GraalVmNativeAotDemo.java execution', () => {
+  const outDir = 'examples/web/classes';
+  execSync(`${JAVAC} -d ${outDir} examples/spring/GraalVmNativeAotDemo.java`);
+  const out = execSync(`${JAVA} -ea -cp ${outDir} com.handbook.spring.GraalVmNativeAotDemo`).toString();
+  if (!out.includes('Topic 129 GraalVM Native Image & AOT demo verified successfully.')) throw new Error(out);
+});
+
+// Part 4: Database Systems & Persistence
+runTest('Database - Topic 130: SqlVsNoSqlParadigmsDemo.java execution', () => {
+  const outDir = 'examples/web/classes';
+  execSync(`${JAVAC} -d ${outDir} examples/databases/SqlVsNoSqlParadigmsDemo.java`);
+  const out = execSync(`${JAVA} -cp ${outDir} com.handbook.databases.SqlVsNoSqlParadigmsDemo`).toString();
+  if (!out.includes('[SUCCESS] Topic 130 SQL vs NoSQL Paradigms Demo executed cleanly.')) throw new Error(out);
+});
+
+runTest('Database - Topic 131: MySqlQueriesAndOptimizationDemo.java execution', () => {
+  const outDir = 'examples/web/classes';
+  execSync(`${JAVAC} -d ${outDir} examples/databases/MySqlQueriesAndOptimizationDemo.java`);
+  const out = execSync(`${JAVA} -cp ${outDir} com.handbook.databases.MySqlQueriesAndOptimizationDemo`).toString();
+  if (!out.includes('[SUCCESS] Topic 131 MySQL Mastery Demo executed cleanly.')) throw new Error(out);
+});
+
+runTest('Database - Topic 132: JavaMySqlPersistencePropertiesDemo.java execution', () => {
+  const outDir = 'examples/web/classes';
+  execSync(`${JAVAC} -d ${outDir} examples/databases/JavaMySqlPersistencePropertiesDemo.java`);
+  const out = execSync(`${JAVA} -cp ${outDir} com.handbook.databases.JavaMySqlPersistencePropertiesDemo`).toString();
+  if (!out.includes('[SUCCESS] Topic 132 Java MySQL Persistence Demo executed cleanly.')) throw new Error(out);
+});
+
+runTest('Database - Topic 133: MongoDbDocumentAndAggregationDemo.java execution', () => {
+  const outDir = 'examples/web/classes';
+  execSync(`${JAVAC} -d ${outDir} examples/databases/MongoDbDocumentAndAggregationDemo.java`);
+  const out = execSync(`${JAVA} -cp ${outDir} com.handbook.databases.MongoDbDocumentAndAggregationDemo`).toString();
+  if (!out.includes('[SUCCESS] Topic 133 MongoDB Mastery Demo executed cleanly.')) throw new Error(out);
+});
+
+runTest('Database - Topic 134: JavaMongoDbPersistencePropertiesDemo.java execution', () => {
+  const outDir = 'examples/web/classes';
+  execSync(`${JAVAC} -d ${outDir} examples/databases/JavaMongoDbPersistencePropertiesDemo.java`);
+  const out = execSync(`${JAVA} -cp ${outDir} com.handbook.databases.JavaMongoDbPersistencePropertiesDemo`).toString();
+  if (!out.includes('[SUCCESS] Topic 134 Java MongoDB Persistence Demo executed cleanly.')) throw new Error(out);
+});
+
 runTest('Jakarta EE - WAR packaging for Tomcat', () => {
   const warBuild = 'examples/web/war-build';
   const webInfClasses = path.join(warBuild, 'WEB-INF/classes');

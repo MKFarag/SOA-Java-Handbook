@@ -2,7 +2,7 @@
 id: topic-94
 slug: centralized-global-exception-handling-rest-controller-advice
 topicNumber: 94
-title: 'Centralized Global Exception Handling via @RestControllerAdvice (RFC 7807)'
+title: Centralized Global Exception Handling via @RestControllerAdvice (RFC 7807)
 part: 'Part 3: Spring Boot & Production Stack'
 sectionNumber: 26
 sectionTitle: RESTful Web Services & Global Error Handling
@@ -10,16 +10,22 @@ versionBadge: Spring Boot 3.x / Java 21+
 difficulty: Intermediate
 readingTime: 16 min read
 shortDescription: >-
-  Architect bulletproof, centralized error handling for enterprise REST APIs using
-  @RestControllerAdvice, @ExceptionHandler, and the RFC 7807 Problem Details for
-  HTTP APIs specification introduced natively in Spring Framework 6.x.
+  Architect bulletproof, centralized error handling for enterprise REST APIs
+  using @RestControllerAdvice, @ExceptionHandler, and the RFC 7807 Problem
+  Details for HTTP APIs specification introduced natively in Spring Framework
+  6.x.
 prerequisites:
   - 'Topic 29: The Java Exception Hierarchy'
   - 'Topic 32: Custom Exceptions & Exception Chaining'
   - 'Topic 92: Production REST Controller Architecture with Spring Web MVC'
-  - 'Topic 93: Request Validation with Bean Validation & Custom Constraint Validators'
+  - >-
+    Topic 93: Request Validation with Bean Validation & Custom Constraint
+    Validators
+relevanceLevel: MUST-KNOW / CORE
 ---
 # Topic 94: Centralized Global Exception Handling via @RestControllerAdvice (RFC 7807)
+
+> 🎯 **Roadmap Seal:** **`[MUST-KNOW / CORE]`** — *Essential modern foundation required for backend roles. Master this thoroughly.*
 
 ## 1. What It Is and Why It Exists
 

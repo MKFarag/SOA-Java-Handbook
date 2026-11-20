@@ -15,8 +15,11 @@ shortDescription: >-
 prerequisites:
   - 'Topic 16: Classes, Objects & Memory Layout'
   - 'Topic 23: Interfaces & Modern Interface Evolution'
+relevanceLevel: ADVANCED / DEEP-DIVE
 ---
 # Annotations and Metadata
+
+> 🚀 **Roadmap Seal:** **`[ADVANCED / DEEP-DIVE]`** — *Advanced enterprise specialization & architecture. Study once core fundamentals are solid.*
 
 ### 1. What It Is and Why It Exists
 Before Java 5, associating metadata with program elements required separate external XML configuration files, naming conventions (like prefixing test methods with `"test..."`), or marker interfaces (`Serializable`, `Cloneable`). These approaches had severe drawbacks:

@@ -16,7 +16,10 @@ shortDescription: >-
 prerequisites:
   - 'Topic 16: Classes, Objects & Memory Layout'
   - 'Topic 17: Constructors & Object Initialization'
+relevanceLevel: MUST-KNOW / CORE
 ---
+> 🎯 **Roadmap Seal:** **`[MUST-KNOW / CORE]`** — *Essential modern foundation required for backend roles. Master this thoroughly.*
+
 ## 1. What It Is and Why It Exists
 
 **Inheritance** is an Object-Oriented mechanism allowing a new class (the **subclass** or derived class) to inherit the state (fields) and behaviors (methods) of an existing class (the **superclass** or base class) using the `extends` keyword. Inheritance models an **"IS-A"** relationship (e.g., a `Manager` IS-A `Employee`).

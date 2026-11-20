@@ -16,7 +16,10 @@ shortDescription: >-
 prerequisites:
   - 'Topic 11: Methods, Parameters & Return Values'
   - 'Topic 16: Classes, Objects & Memory Layout'
+relevanceLevel: MUST-KNOW / CORE
 ---
+> 🎯 **Roadmap Seal:** **`[MUST-KNOW / CORE]`** — *Essential modern foundation required for backend roles. Master this thoroughly.*
+
 ## 1. What It Is and Why It Exists
 
 A **constructor** is a specialized block of code executed immediately when an object is instantiated with the `new` keyword. Its primary responsibility is to initialize instance fields and guarantee that the newly created object enters memory in a valid, consistent state (enforcing class invariants).

@@ -16,8 +16,11 @@ prerequisites:
   - 'Topic 18: Packages and Access Modifiers'
   - 'Topic 57: ClassLoaders & JIT Compilation'
   - 'Topic 59: Reflection API & MethodHandles'
+relevanceLevel: ADVANCED / DEEP-DIVE
 ---
 # Java Platform Module System (JPMS)
+
+> 🚀 **Roadmap Seal:** **`[ADVANCED / DEEP-DIVE]`** — *Advanced enterprise specialization & architecture. Study once core fundamentals are solid.*
 
 ### 1. What It Is and Why It Exists
 Before Java 9, the Java runtime suffered from architectural vulnerabilities collectively known as **"JAR Hell"** and **"Classpath Hell"**:

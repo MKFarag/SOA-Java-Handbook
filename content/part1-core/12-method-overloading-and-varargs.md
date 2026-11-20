@@ -16,7 +16,10 @@ shortDescription: >-
 prerequisites:
   - 'Topic 04: Variables, Identifiers & Primitive Data Types'
   - 'Topic 11: Methods, Parameters & Return Values'
+relevanceLevel: MUST-KNOW / CORE
 ---
+> 🎯 **Roadmap Seal:** **`[MUST-KNOW / CORE]`** — *Essential modern foundation required for backend roles. Master this thoroughly.*
+
 ## 1. What It Is and Why It Exists
 
 **Method Overloading** allows multiple methods within the same class to share the exact same name, provided their parameter lists differ in number, type, or ordering. Overloading provides clean, intuitive APIs: instead of inventing clunky names like `printInt()`, `printString()`, and `printDouble()`, you provide a unified `print()` method that adapts to whatever data type is passed.

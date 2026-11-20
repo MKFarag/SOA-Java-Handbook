@@ -16,8 +16,11 @@ shortDescription: >-
 prerequisites:
   - 'Topic 75: JSP Syntax Elements: Directives, Scriptlets & Expressions'
   - 'Topic 76: JSP Implicit Objects & Standard Actions'
+relevanceLevel: OPTIONAL / LEGACY
 ---
 # Expression Language (EL) & JSTL Core Tags
+
+> 🏛️ **Roadmap Seal:** **`[OPTIONAL / LEGACY]`** — *Historical / legacy enterprise tech. Safely skip unless maintaining legacy enterprise systems.*
 
 ### 1. What It Is and Why It Exists
 Early versions of JSP were plagued by Java scriptlets (`<% ... %>`). Mixing Java control flow (`for`, `if`, `try/catch`) with HTML produced unreadable, fragile markup that was difficult for frontend web designers to edit and prone to `NullPointerException` crashes.

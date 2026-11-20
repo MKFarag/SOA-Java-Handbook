@@ -16,7 +16,10 @@ shortDescription: >-
 prerequisites:
   - 'Topic 04: Variables, Identifiers & Primitive Data Types'
   - 'Topic 11: Methods, Parameters & Return Values'
+relevanceLevel: MUST-KNOW / CORE
 ---
+> 🎯 **Roadmap Seal:** **`[MUST-KNOW / CORE]`** — *Essential modern foundation required for backend roles. Master this thoroughly.*
+
 ## 1. What It Is and Why It Exists
 
 **Variable Scope** defines the region of a program where a variable is accessible by name. In Java, variable scope is strictly delimited by curly braces `{ ... }` (block scope). Once execution exits a block, the variables declared within it cease to exist on the Call Stack and can no longer be accessed.

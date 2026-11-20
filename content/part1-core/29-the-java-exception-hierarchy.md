@@ -16,7 +16,10 @@ shortDescription: >-
 prerequisites:
   - 'Topic 11: Methods, Parameters & Return Values'
   - 'Topic 20: Inheritance & Method Overriding'
+relevanceLevel: MUST-KNOW / CORE
 ---
+> 🎯 **Roadmap Seal:** **`[MUST-KNOW / CORE]`** — *Essential modern foundation required for backend roles. Master this thoroughly.*
+
 ## 1. What It Is and Why It Exists
 
 An **exception** is an abnormal event or exceptional condition that disrupts the normal sequential execution flow of a program. When an exceptional condition occurs, Java instantiates an object representing the error and **throws** it up the Call Stack.

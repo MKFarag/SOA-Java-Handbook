@@ -15,8 +15,11 @@ shortDescription: >-
 prerequisites:
   - 'Topic 33: Generics Fundamentals'
   - 'Topic 14: One-Dimensional Arrays'
+relevanceLevel: MUST-KNOW / CORE
 ---
 # The List Hierarchy
+
+> 🎯 **Roadmap Seal:** **`[MUST-KNOW / CORE]`** — *Essential modern foundation required for backend roles. Master this thoroughly.*
 
 ### 1. What It Is and Why It Exists
 In basic programming, standard arrays (`T[]`) have a rigid, unchangeable capacity fixed at creation time. If an application needs to store an unpredictable stream of items—such as incoming user HTTP requests or database records—resizing an array manually requires allocating new arrays and copying memory repeatedly.

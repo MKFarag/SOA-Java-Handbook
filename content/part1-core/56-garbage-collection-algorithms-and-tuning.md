@@ -15,8 +15,11 @@ shortDescription: >-
 prerequisites:
   - 'Topic 16: Classes, Objects & Memory Layout'
   - 'Topic 55: Java Memory Model & Runtime Data Areas'
+relevanceLevel: ADVANCED / DEEP-DIVE
 ---
 # Garbage Collection Algorithms and Tuning
+
+> 🚀 **Roadmap Seal:** **`[ADVANCED / DEEP-DIVE]`** — *Advanced enterprise specialization & architecture. Study once core fundamentals are solid.*
 
 ### 1. What It Is and Why It Exists
 In languages like C and C++, developers must manually manage memory by calling `malloc()` and `free()`. Manual memory management is notorious for catastrophic bugs:

@@ -16,8 +16,11 @@ prerequisites:
   - 'Topic 16: Classes, Objects & Memory Layout'
   - 'Topic 23: Interfaces & Default Methods'
   - 'Topic 58: Annotations & Metadata'
+relevanceLevel: ADVANCED / DEEP-DIVE
 ---
 # Topic 84: Contexts & Dependency Injection (CDI)
+
+> 🚀 **Roadmap Seal:** **`[ADVANCED / DEEP-DIVE]`** — *Advanced enterprise specialization & architecture. Study once core fundamentals are solid.*
 
 ## 1. What It Is and Why It Exists
 In complex software systems, hardcoding object instantiations via `new ServiceImpl()` tightly couples callers to concrete implementations. Tightly coupled code is notoriously difficult to unit-test, impossible to swap dynamically across environments (test vs production), and forces classes to manage their dependencies' lifecycles manually.
@@ -299,6 +302,24 @@ public class ClockProducer {
     }
 }
 ```
+</details>
+
+### Exercise 3: Real-World Edge Case (Scope Mismatch & Thread Safety in CDI Singletons)
+<details>
+<summary>View Solution</summary>
+**Question:** An application defines an `@ApplicationScoped` service bean that directly holds a mutable field `private User currentUser`. When 50 users access the web app simultaneously, users report seeing other people's account profiles. Furthermore, how does CDI allow an `@ApplicationScoped` bean to inject a short-lived `@RequestScoped` bean without holding onto stale data?
+
+**Solution:**
+1. **The Shared State Concurrency Bug:** `@ApplicationScoped` beans are singletons instantiated once per application runtime. All concurrent HTTP threads share the exact same instance in memory. Storing user-specific or request-specific state in instance fields creates immediate race conditions and severe data leakage across threads. Mutable user state must be strictly scoped to `@RequestScoped` or passed as method parameters.
+2. **CDI Client Proxies:** When an `@ApplicationScoped` bean injects a `@RequestScoped` bean:
+```java
+@ApplicationScoped
+public class OrderService {
+    @Inject
+    private UserSessionContext userContext; // @RequestScoped
+}
+```
+CDI does **not** inject the raw instance. Instead, it injects a dynamic **Contextual Client Proxy**. When `orderService.process()` invokes `userContext.getUserId()`, the proxy intercepts the call, consults the active thread's request context, and forwards the method call to the specific instance created for that HTTP request.
 </details>
 
 ---

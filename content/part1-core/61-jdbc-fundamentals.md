@@ -15,8 +15,11 @@ shortDescription: >-
 prerequisites:
   - 'Topic 16: Classes, Objects & Memory Layout'
   - 'Topic 31: Try-With-Resources & AutoCloseable'
+relevanceLevel: MUST-KNOW / CORE
 ---
 # JDBC Fundamentals & Transactions
+
+> 🎯 **Roadmap Seal:** **`[MUST-KNOW / CORE]`** — *Essential modern foundation required for backend roles. Master this thoroughly.*
 
 ### 1. What It Is and Why It Exists
 Every enterprise application requires persistent storage to record transactions, user profiles, and operational data. Relational database management systems (RDBMS) such as PostgreSQL, MySQL, Oracle, and SQLite communicate using SQL (Structured Query Language). However, each database engine has its own proprietary network wire protocol and binary format.

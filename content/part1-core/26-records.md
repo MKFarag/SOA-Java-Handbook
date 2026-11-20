@@ -16,7 +16,10 @@ shortDescription: >-
 prerequisites:
   - 'Topic 16: Classes, Objects & Memory Layout'
   - 'Topic 19: Encapsulation & Data Integrity'
+relevanceLevel: ADVANCED / DEEP-DIVE
 ---
+> 🚀 **Roadmap Seal:** **`[ADVANCED / DEEP-DIVE]`** — *Advanced enterprise specialization & architecture. Study once core fundamentals are solid.*
+
 ## 1. What It Is and Why It Exists
 
 A **Record** (introduced in Java 14 and finalized in **Java 16 via JEP 395**) is a specialized class declaration designed to act as a transparent, immutable carrier for shallowly immutable data.

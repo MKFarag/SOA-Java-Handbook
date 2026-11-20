@@ -74,14 +74,15 @@ Issue Date: ${issueDate}`;
       },
       stampVerdict: stampMode === 'funny' ? "100% Fake Certificate, But You Are Perfect!" : "Officially Verified",
       curriculum: {
-        title: "The Definitive Java & Jakarta EE Handbook",
+        title: "The Definitive SOA & Java Handbook",
         version: "2026 LTS Zero to Production",
         modulesTotal: totalTopics,
         modulesCompleted: completedCount,
         parts: [
           "Part 1: Java Core (Java 8 through 26 LTS)",
           "Part 2: Java EE & Jakarta EE (Jakarta EE 10 & 11, Tomcat 10.1)",
-          "Part 3: Spring Boot & Modern Production Ecosystem (Spring Framework 6 / Boot 3)"
+          "Part 3: Spring Boot & Modern Production Ecosystem (Spring Framework 6 / Boot 3)",
+          "Part 4: Database Systems & Persistence (SQL/NoSQL, MySQL, MongoDB)"
         ],
         testSuitesPassed: 160,
         status: isAllCompleted ? "Completed & Verified" : "In Progress"
@@ -109,7 +110,7 @@ Issue Date: ${issueDate}`;
   };
 
   return (
-    <div className="max-w-5xl mx-auto py-8 px-4 sm:px-6 lg:px-8 space-y-6 text-left">
+    <div className="max-w-5xl mx-auto py-5 sm:py-8 px-3 sm:px-6 lg:px-8 space-y-5 sm:space-y-6 text-left">
       
       {/* Top Controls Toolbar (Hidden on Print) */}
       <div className="no-print space-y-4">
@@ -312,7 +313,7 @@ Issue Date: ${issueDate}`;
           <div className="text-center space-y-1.5">
             <div className="inline-flex items-center justify-center gap-2 text-[10px] sm:text-xs font-mono font-bold tracking-widest text-amber-700 uppercase">
               <span className="w-6 sm:w-8 h-[1px] bg-amber-600/50 inline-block" />
-              <span>THE DEFINITIVE JAVA &amp; JAKARTA EE HANDBOOK</span>
+              <span>THE DEFINITIVE SOA &amp; JAVA HANDBOOK</span>
               <span className="w-6 sm:w-8 h-[1px] bg-amber-600/50 inline-block" />
             </div>
 

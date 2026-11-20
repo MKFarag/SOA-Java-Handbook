@@ -15,8 +15,11 @@ shortDescription: >-
 prerequisites:
   - 'Topic 40: Lambdas & Functional Interfaces'
   - 'Topic 16: Classes, Objects & Memory Layout'
+relevanceLevel: MUST-KNOW / CORE
 ---
 # Optional Type Handling
+
+> 🎯 **Roadmap Seal:** **`[MUST-KNOW / CORE]`** — *Essential modern foundation required for backend roles. Master this thoroughly.*
 
 ### 1. What It Is and Why It Exists
 Tony Hoare, the inventor of the null pointer reference, famously called it his "billion-dollar mistake." Returning `null` from a method gives zero compile-time indication that a value might be missing. If the caller forgets to write an explicit `if (obj != null)` check before invoking a method or reading a field, the application crashes unpredictably with a `NullPointerException` (NPE).

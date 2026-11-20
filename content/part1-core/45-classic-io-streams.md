@@ -15,8 +15,11 @@ shortDescription: >-
 prerequisites:
   - 'Topic 31: Try-With-Resources & AutoCloseable'
   - 'Topic 07: Strings & Text Blocks'
+relevanceLevel: ADVANCED / DEEP-DIVE
 ---
 # Classic I/O Streams
+
+> 🚀 **Roadmap Seal:** **`[ADVANCED / DEEP-DIVE]`** — *Advanced enterprise specialization & architecture. Study once core fundamentals are solid.*
 
 ### 1. What It Is and Why It Exists
 Programs exist in volatile RAM memory: when a machine loses power or an application restarts, all in-memory variables and state vanish. To persist state or exchange data with hardware peripherals, network sockets, and disks, software must communicate using **Input/Output (I/O) Streams**.

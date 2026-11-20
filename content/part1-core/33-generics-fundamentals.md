@@ -15,8 +15,11 @@ shortDescription: >-
 prerequisites:
   - 'Topic 16: Classes, Objects & Memory Layout'
   - 'Topic 23: Interfaces & Modern Interface Evolution'
+relevanceLevel: MUST-KNOW / CORE
 ---
 # Generics Fundamentals
+
+> 🎯 **Roadmap Seal:** **`[MUST-KNOW / CORE]`** — *Essential modern foundation required for backend roles. Master this thoroughly.*
 
 ### 1. What It Is and Why It Exists
 Before Java 5, collections stored raw `Object` references. When you placed an integer or string into a list, Java treated it as a generic `Object`. When extracting that element, you had to manually cast it back to its specific type. If an unexpected type entered the collection, your code crashed at runtime with a `ClassCastException`.

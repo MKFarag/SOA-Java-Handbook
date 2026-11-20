@@ -10,16 +10,20 @@ versionBadge: Spring Framework 6.x / Boot 3.x
 difficulty: Intermediate
 readingTime: 16 min read
 shortDescription: >-
-  Master Spring stereotype annotations, component scanning mechanics, the critical
-  trade-offs between Constructor, Setter, and Field injection, ambiguity resolution
-  with @Qualifier and @Primary, and the complete 8-phase Bean Lifecycle pipeline.
+  Master Spring stereotype annotations, component scanning mechanics, the
+  critical trade-offs between Constructor, Setter, and Field injection,
+  ambiguity resolution with @Qualifier and @Primary, and the complete 8-phase
+  Bean Lifecycle pipeline.
 prerequisites:
   - 'Topic 18: Packages & Access Modifiers'
   - 'Topic 20: Inheritance & Method Overriding'
   - 'Topic 58: Annotations & Metadata Processing'
   - 'Topic 88: Spring Framework Core: BeanFactory vs ApplicationContext'
+relevanceLevel: MUST-KNOW / CORE
 ---
 # Topic 89: Component Scanning, Injection Strategies & Bean Lifecycle Callbacks
+
+> 🎯 **Roadmap Seal:** **`[MUST-KNOW / CORE]`** — *Essential modern foundation required for backend roles. Master this thoroughly.*
 
 ## 1. What It Is and Why It Exists
 

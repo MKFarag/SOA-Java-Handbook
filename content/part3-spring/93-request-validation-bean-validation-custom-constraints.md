@@ -2,7 +2,7 @@
 id: topic-93
 slug: request-validation-bean-validation-custom-constraints
 topicNumber: 93
-title: 'Request Validation with Bean Validation & Custom Constraint Validators'
+title: Request Validation with Bean Validation & Custom Constraint Validators
 part: 'Part 3: Spring Boot & Production Stack'
 sectionNumber: 26
 sectionTitle: RESTful Web Services & Global Error Handling
@@ -11,14 +11,20 @@ difficulty: Intermediate
 readingTime: 16 min read
 shortDescription: >-
   Implement strict API payload contracts using Jakarta Bean Validation (@Valid),
-  standard JSR-380 constraints (@NotBlank, @Email, @Positive, @Size), and authoring
-  custom constraint annotations backed by ConstraintValidator implementations.
+  standard JSR-380 constraints (@NotBlank, @Email, @Positive, @Size), and
+  authoring custom constraint annotations backed by ConstraintValidator
+  implementations.
 prerequisites:
   - 'Topic 86: Jakarta Bean Validation'
-  - 'Topic 91: Externalized Configuration, YAML Hierarchies & Multi-Profile Deployment'
+  - >-
+    Topic 91: Externalized Configuration, YAML Hierarchies & Multi-Profile
+    Deployment
   - 'Topic 92: Production REST Controller Architecture with Spring Web MVC'
+relevanceLevel: MUST-KNOW / CORE
 ---
 # Topic 93: Request Validation with Bean Validation & Custom Constraint Validators
+
+> 🎯 **Roadmap Seal:** **`[MUST-KNOW / CORE]`** — *Essential modern foundation required for backend roles. Master this thoroughly.*
 
 ## 1. What It Is and Why It Exists
 

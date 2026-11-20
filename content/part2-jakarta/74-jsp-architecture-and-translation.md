@@ -16,8 +16,11 @@ shortDescription: >-
 prerequisites:
   - 'Topic 65: Apache Tomcat & The WAR Structure'
   - 'Topic 66: Servlet Lifecycle & Architecture'
+relevanceLevel: OPTIONAL / LEGACY
 ---
 # JSP Architecture & Translation Lifecycle
+
+> 🏛️ **Roadmap Seal:** **`[OPTIONAL / LEGACY]`** — *Historical / legacy enterprise tech. Safely skip unless maintaining legacy enterprise systems.*
 
 ### 1. What It Is and Why It Exists
 Writing HTML markup by concatenating Java Strings inside an `HttpServlet` (e.g. `out.println("<html><body>...")`) is tedious, unmaintainable, and prone to syntax bugs. **Jakarta Pages (formerly JavaServer Pages / JSP)** was created to invert this model: allowing web developers to write standard HTML markup with embedded server-side Java expressions and tags.

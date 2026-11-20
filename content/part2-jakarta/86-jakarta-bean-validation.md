@@ -16,8 +16,11 @@ prerequisites:
   - 'Topic 16: Classes, Objects & Memory Layout'
   - 'Topic 58: Annotations & Metadata'
   - 'Topic 80: Form Handling, Validation & Multipart File Uploads'
+relevanceLevel: ADVANCED / DEEP-DIVE
 ---
 # Topic 86: Jakarta Bean Validation
+
+> 🚀 **Roadmap Seal:** **`[ADVANCED / DEEP-DIVE]`** — *Advanced enterprise specialization & architecture. Study once core fundamentals are solid.*
 
 ## 1. What It Is and Why It Exists
 Data validation is a universal requirement in enterprise applications. Traditionally, validation logic was duplicated across multiple layers:
@@ -305,6 +308,46 @@ public class ProductOrder {
     @Future(message = "Delivery date must be in the future")
     private LocalDate deliveryDate;
 }
+```
+</details>
+
+### Exercise 3: Real-World Edge Case (Cross-Field Class-Level Validation)
+<details>
+<summary>View Solution</summary>
+**Question:** Field-level annotations (`@NotNull`, `@Future`) cannot compare two fields against each other. How do you implement a custom cross-field constraint in Jakarta Bean Validation ensuring that a `BookingRequest` has a `startDate` that is strictly before its `endDate`?
+
+**Solution:**
+1. **Define the Custom Annotation:** Apply `@Target(ElementType.TYPE)` so it decorates the entire class:
+```java
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+@Constraint(validatedBy = ValidDateRangeValidator.class)
+@Documented
+public @interface ValidDateRange {
+    String message() default "Start date must occur before end date";
+    Class<?>[] groups() default {};
+    Class<? extends Payload>[] payload() default {};
+}
+```
+2. **Implement `ConstraintValidator`:**
+```java
+public class ValidDateRangeValidator implements ConstraintValidator<ValidDateRange, BookingRequest> {
+    @Override
+    public boolean isValid(BookingRequest req, ConstraintValidatorContext context) {
+        if (req == null || req.getStartDate() == null || req.getEndDate() == null) {
+            return true; // Null safety handled by @NotNull
+        }
+        return req.getStartDate().isBefore(req.getEndDate());
+    }
+}
+```
+3. **Annotate the DTO:**
+```java
+@ValidDateRange
+public record BookingRequest(
+    @NotNull LocalDate startDate,
+    @NotNull LocalDate endDate
+) {}
 ```
 </details>
 

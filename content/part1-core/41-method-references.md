@@ -15,8 +15,11 @@ shortDescription: >-
 prerequisites:
   - 'Topic 40: Lambdas & Functional Interfaces'
   - 'Topic 11: Methods, Parameters & Return Values'
+relevanceLevel: MUST-KNOW / CORE
 ---
 # Method References
+
+> 🎯 **Roadmap Seal:** **`[MUST-KNOW / CORE]`** — *Essential modern foundation required for backend roles. Master this thoroughly.*
 
 ### 1. What It Is and Why It Exists
 Lambda expressions allow you to define anonymous behavior concisely. However, very frequently, a lambda does nothing more than invoke an already existing named method on a class or object (such as `s -> System.out.println(s)` or `str -> str.toUpperCase()`). Having to restate parameters on both sides of the arrow (`s -> ... s`) adds visual noise and redundant syntax.

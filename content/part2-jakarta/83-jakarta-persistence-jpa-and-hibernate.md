@@ -16,8 +16,11 @@ prerequisites:
   - 'Topic 16: Classes, Objects & Memory Layout'
   - 'Topic 58: Annotations & Metadata'
   - 'Topic 61: JDBC Fundamentals'
+relevanceLevel: MUST-KNOW / CORE
 ---
 # Topic 83: Jakarta Persistence (JPA) & Object-Relational Mapping (ORM)
+
+> 🎯 **Roadmap Seal:** **`[MUST-KNOW / CORE]`** — *Essential modern foundation required for backend roles. Master this thoroughly.*
 
 ## 1. What It Is and Why It Exists
 Object-Relational Mapping (ORM) solves the fundamental paradigm gap between object-oriented programming (classes, objects, polymorphism, inheritance) and relational database management systems (tables, rows, foreign keys, set theory). This disparity is known as the **object-relational impedance mismatch**.
@@ -341,6 +344,26 @@ public class Product {
     // Getters and setters
 }
 ```
+</details>
+
+### Exercise 3: Real-World Edge Case (LazyInitializationException & The OSIV Anti-Pattern)
+<details>
+<summary>View Solution</summary>
+**Question:** In a Jakarta web application, a Servlet queries a `Customer` entity inside a transactional service layer. When the JSP view attempts to render the customer's orders via `${customer.orders}`, the server crashes with:
+`org.hibernate.LazyInitializationException: could not initialize proxy [Order] - no Session`.
+Why did this happen, and why is enabling "Open Session in View" (OSIV) considered dangerous in high-load production architectures?
+
+**Solution:**
+1. **The Root Cause:** Collections mapped with `fetch = FetchType.LAZY` (default for `@OneToMany` and `@ManyToMany`) use bytecode proxies. When the transactional service method exits, the JPA `EntityManager` / Hibernate `Session` is closed and the connection is returned to the pool. When the view layer subsequently attempts to access the uninitialized proxy, no active database session exists to dispatch the query.
+2. **The Danger of OSIV:** Enabling OSIV keeps the database connection bound to the HTTP worker thread throughout the entire view rendering phase. If client rendering is delayed (e.g., slow network, large HTML tables, external API calls in tags), the database connection remains locked, starving the connection pool and leading to complete application hang under moderate concurrent traffic.
+3. **The Production Fix:** Fetch all required child data explicitly inside the transaction using JPQL `JOIN FETCH` or fetch profiles:
+```java
+@NamedQuery(
+    name = "Customer.findWithOrders",
+    query = "SELECT c FROM Customer c LEFT JOIN FETCH c.orders WHERE c.id = :id"
+)
+```
+Alternatively, map data directly to an immutable DTO record before leaving the transactional service layer.
 </details>
 
 ---

@@ -129,6 +129,34 @@
 - [x] Topic 106: High-Performance Distributed Caching with Caffeine & Redis (DistributedCachingDemo.java on JDK 26)
 - [x] Topic 107: Resilience & Fault Tolerance with Resilience4j (Circuit Breaker, RateLimiter) (Resilience4jDemo.java on JDK 26)
 - [x] Topic 108: Event-Driven Enterprise Messaging with Apache Kafka (KafkaMessagingDemo.java on JDK 26)
+- [x] Topic 109: Dynamic Queries via JPA Criteria API & Spring Data Specifications (JpaSpecificationFilterDemo.java on JDK 26)
+- [x] Topic 110: Automated Entity Auditing & Temporal History with Hibernate Envers (EntityAuditingEnversDemo.java on JDK 26)
+- [x] Topic 111: Multi-Tenancy Architecture & Dynamic RoutingDataSource (MultiTenantRoutingDemo.java on JDK 26)
+- [x] Topic 112: Spring Security OAuth2 Resource Server & JWT Verification (OAuth2ResourceServerDemo.java on JDK 26)
+- [x] Topic 113: OpenID Connect (OIDC) & Keycloak Identity Provider Integration (OidcKeycloakIntegrationDemo.java on JDK 26)
+- [x] Topic 114: Production CORS, CSRF Defense & Security Response Headers (ProductionCorsCsrfSecurityDemo.java on JDK 26)
+- [x] Topic 115: Asynchronous Task Execution & Custom ThreadPoolTaskExecutors (AsyncExecutionThreadPoolDemo.java on JDK 26)
+- [x] Topic 116: Distributed Scheduling & Cluster Synchronization with ShedLock (DistributedShedLockSchedulerDemo.java on JDK 26)
+- [x] Topic 117: Spring Batch Architecture & Chunk-Oriented Processing (SpringBatchChunkProcessingDemo.java on JDK 26)
+- [x] Topic 118: Real-Time WebSockets & STOMP Protocol Messaging (WebSocketStompBrokerDemo.java on JDK 26)
+- [x] Topic 119: Server-Sent Events (SSE) & Reactive HTTP Streaming (ServerSentEventsStreamingDemo.java on JDK 26)
+- [x] Topic 120: Service Discovery & Dynamic Registration with Netflix Eureka (ServiceDiscoveryEurekaDemo.java on JDK 26)
+- [x] Topic 121: Enterprise API Gateway Architecture & Spring Cloud Gateway (SpringCloudGatewayRoutingDemo.java on JDK 26)
+- [x] Topic 122: Centralized Configuration Management with Spring Cloud Config & `@RefreshScope` (CentralizedConfigRefreshDemo.java on JDK 26)
+- [x] Topic 123: Declarative Inter-Service HTTP Clients with OpenFeign & Spring 6 RestClient (DeclarativeRestClientFeignDemo.java on JDK 26)
+- [x] Topic 124: Distributed Tracing & Correlation IDs with Micrometer Tracing & Zipkin (DistributedTracingMdcDemo.java on JDK 26)
+- [x] Topic 125: Kafka Production Resilience: Non-Blocking Retries & Dead Letter Topics (DLT) (KafkaResilienceDltDemo.java on JDK 26)
+- [x] Topic 126: Transactional Outbox Pattern & CDC for Zero-Loss Event Publishing (TransactionalOutboxPatternDemo.java on JDK 26)
+- [x] Topic 127: Distributed Transactions & Saga Pattern in Microservices (SagaPatternOrchestrationDemo.java on JDK 26)
+- [x] Topic 128: Production Dockerization, Layered JARs & Container Optimization (ProductionDockerLayeringDemo.java on JDK 26)
+- [x] Topic 129: GraalVM Native Image & Ahead-of-Time (AOT) Compilation (GraalVmNativeAotDemo.java on JDK 26)
+
+### Part 4: Database Systems & Persistence (SQL & NoSQL)
+- [x] Topic 130: SQL vs NoSQL: Paradigms, ACID vs BASE & Architectural Trade-Offs (SqlVsNoSqlParadigmsDemo.java on JDK 26)
+- [x] Topic 131: Relational Databases & MySQL Mastery (XAMPP Setup, DDL, DML, Joins & Query Tuning) (MySqlQueriesAndOptimizationDemo.java on JDK 26)
+- [x] Topic 132: Java MySQL Persistence (Spring Data JPA, Hibernate & Complete Properties Configuration) (JavaMySqlPersistencePropertiesDemo.java on JDK 26)
+- [x] Topic 133: NoSQL & MongoDB Mastery (Architecture, Compass, CRUD & Aggregation) (MongoDbDocumentAndAggregationDemo.java on JDK 26)
+- [x] Topic 134: Java MongoDB Persistence (Spring Data MongoDB & Complete Connection Properties) (JavaMongoDbPersistencePropertiesDemo.java on JDK 26)
 
 ---
 
@@ -140,7 +168,7 @@
 - [x] **UI-03:** Integrate `VSCode_Dark_Brighter.icls` theme palette into syntax highlighting engine (`src/index.css` & `src/components/CodeBlock.tsx`).
 
 ### B. Section Milestone Challenge & Assessment System
-- [x] **CAP-01:** Define Section Milestone Challenges (Challenges 01–30) with clear problem statements and expected outputs (`src/data/challenges.ts`).
+- [x] **CAP-01:** Define Section Milestone Challenges (Challenges 01–37) with clear problem statements and expected outputs (`src/data/challenges.ts`).
 - [x] **CAP-02:** Build the Dual-State Self-Check UI component (`src/components/MilestoneChallengeCard.tsx`):
   - Button 1: `[✅ I Solved It]`: Reveals reference solution, architectural notes, and marks milestone as Mastered.
   - Button 2: `[🤔 Need Assistance]`: Reveals guided diagnostic hints, unlocks solution, and tags prerequisite topics for the "Targeted Review" dashboard.

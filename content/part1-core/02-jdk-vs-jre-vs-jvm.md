@@ -15,7 +15,10 @@ shortDescription: >-
   JAVA_HOME with zero confusion.
 prerequisites:
   - 'Topic 01: What is Programming & How Code Runs'
+relevanceLevel: MUST-KNOW / CORE
 ---
+> 🎯 **Roadmap Seal:** **`[MUST-KNOW / CORE]`** — *Essential modern foundation required for backend roles. Master this thoroughly.*
+
 ## 1. What It Is and Why It Exists
 
 To write and run software in Java, you must understand the three concentric components that form the Java ecosystem: the **JVM**, the **JRE**, and the **JDK**. Many beginners get confused because they download "Java" without knowing which layer they actually installed.

@@ -16,8 +16,11 @@ shortDescription: >-
 prerequisites:
   - 'Topic 74: JSP Architecture & Translation Lifecycle'
   - 'Topic 75: JSP Syntax Elements: Directives, Scriptlets & Expressions'
+relevanceLevel: OPTIONAL / LEGACY
 ---
 # JSP Implicit Objects & Standard Actions
+
+> 🏛️ **Roadmap Seal:** **`[OPTIONAL / LEGACY]`** — *Historical / legacy enterprise tech. Safely skip unless maintaining legacy enterprise systems.*
 
 ### 1. What It Is and Why It Exists
 When writing scriptlets or expressions inside a JSP, you do not need to manually instantiate or declare request and response objects. The Jasper engine automatically declares **9 Implicit Objects** at the very beginning of the translated `_jspService()` method.

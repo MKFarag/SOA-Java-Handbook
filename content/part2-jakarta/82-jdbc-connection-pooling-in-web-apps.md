@@ -15,8 +15,11 @@ shortDescription: >-
 prerequisites:
   - 'Topic 61: JDBC Fundamentals'
   - 'Topic 72: Web Listeners & Application Lifecycle'
+relevanceLevel: ADVANCED / DEEP-DIVE
 ---
 # Topic 82: JDBC Connection Pooling in Web Applications
+
+> 🚀 **Roadmap Seal:** **`[ADVANCED / DEEP-DIVE]`** — *Advanced enterprise specialization & architecture. Study once core fundamentals are solid.*
 
 ## 1. What It Is and Why It Exists
 Every standard JDBC `DriverManager.getConnection()` call incurs severe performance penalties:
@@ -414,6 +417,24 @@ try (Connection conn = ds.getConnection();
     ps.setLong(2, accountId);
     ps.executeUpdate();
 }
+```
+</details>
+
+### Exercise 3: Real-World Edge Case (Pool Sizing & Active Leak Detection)
+<details>
+<summary>View Solution</summary>
+**Question:** A development team observes that under high web traffic (1,000 concurrent HTTP requests), database queries are timing out. A junior engineer increases the connection pool `maxPoolSize` from 20 to 500, but throughput drops drastically and CPU usage on the database server spikes to 100%. Why did this happen, and what configuration catches connections held open too long?
+
+**Solution:**
+1. **The Fallacy of Oversized Pools:** PostgreSQL and MySQL execute queries using OS threads or processes. When 500 connections compete simultaneously on a database server with 8 or 16 CPU cores, the operating system spends more time performing CPU thread context switching and disk spindle queuing than executing queries. According to the PostgreSQL/Hikari sizing research formula:
+   $$\text{Pool Size} = (\text{Core Count} \times 2) + \text{Effective Spindle Count}$$
+   A small pool (e.g. 15–30 connections) keeps the CPU cache warm and delivers maximum transaction throughput.
+2. **Leak Detection Configuration:** In pools like HikariCP or Tomcat JDBC, configure active leak detection to log a stack trace if a thread borrows a connection and holds it longer than expected (e.g., waiting for an external HTTP API response while inside an open DB transaction):
+```properties
+# HikariCP Configuration
+dataSource.maximumPoolSize=25
+dataSource.connectionTimeout=30000
+dataSource.leakDetectionThreshold=5000  # Logs a warning if held > 5 seconds
 ```
 </details>
 

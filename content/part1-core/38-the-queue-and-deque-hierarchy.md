@@ -15,8 +15,11 @@ shortDescription: >-
 prerequisites:
   - 'Topic 33: Generics Fundamentals'
   - 'Topic 35: The List Hierarchy'
+relevanceLevel: ADVANCED / DEEP-DIVE
 ---
 # The Queue & Deque Hierarchy
+
+> 🚀 **Roadmap Seal:** **`[ADVANCED / DEEP-DIVE]`** — *Advanced enterprise specialization & architecture. Study once core fundamentals are solid.*
 
 ### 1. What It Is and Why It Exists
 Programs frequently process tasks in a specific operational sequence:

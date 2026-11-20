@@ -13,6 +13,7 @@ import { CertificateGateModal } from './components/CertificateGateModal';
 import { AdminDashboardModal } from './components/AdminDashboardModal';
 import { BroadcastsModal } from './components/BroadcastsModal';
 import { SiteAccessGateModal } from './components/SiteAccessGateModal';
+import { MobileNav } from './components/MobileNav';
 import { ALL_TOPICS, getTopicById } from './data/topics';
 import type { ChallengeStatus, PartType, StudentProfile, BroadcastItem } from './types';
 import { saveStudentProfile, getBroadcasts, getSiteAccessConfig, loadStudentProfile } from './services/firebaseService';
@@ -439,7 +440,7 @@ export function App() {
         isCertificateUnlocked={isCertificateUnlocked || completedTopicIds.size >= ALL_TOPICS.length}
       />
 
-      <div className="flex-1 flex w-full">
+      <div className="flex-1 flex w-full pt-14 sm:pt-16">
         {/* Sticky Sidebar Navigation */}
         <Sidebar
           activeTopicId={currentView === 'topic' ? activeTopicId : null}
@@ -463,7 +464,7 @@ export function App() {
         />
 
         {/* Main Workspace Panel */}
-        <main className="flex-1 lg:pl-72 md:lg:pl-80 w-full min-h-[calc(100vh-4rem)]">
+        <main className="flex-1 lg:pl-72 xl:pl-80 w-full min-h-[calc(100vh-3.5rem)] sm:min-h-[calc(100vh-4rem)] pb-20 lg:pb-8">
           {currentView === 'home' && (
             <HomeView
               onSelectTopic={handleSelectTopic}
@@ -593,6 +594,27 @@ export function App() {
         isOpen={!isSiteUnlocked}
         onUnlocked={handleSiteUnlocked}
         onOpenAdmin={() => setIsAdminModalOpen(true)}
+      />
+
+      {/* Mobile Bottom Navigation Bar */}
+      <MobileNav
+        currentView={currentView}
+        onGoHome={() => {
+          setCurrentView('home');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }}
+        onToggleSidebar={() => setIsMobileSidebarOpen(prev => !prev)}
+        onOpenSearch={() => setIsSearchOpen(true)}
+        onOpenSaved={() => {
+          setCurrentView('saved');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }}
+        onOpenProgress={() => {
+          setCurrentView('progress');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }}
+        savedCount={savedTopicIds.length}
+        percentComplete={Math.round((completedTopicIds.size / Math.max(ALL_TOPICS.length, 1)) * 100)}
       />
     </div>
   );

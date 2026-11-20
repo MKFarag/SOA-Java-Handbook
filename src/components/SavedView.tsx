@@ -31,7 +31,7 @@ export const SavedView: React.FC<SavedViewProps> = ({
   };
 
   return (
-    <div className="max-w-4xl mx-auto py-10 px-4 sm:px-6 lg:px-8 space-y-8 text-left">
+    <div className="max-w-4xl mx-auto py-5 sm:py-10 px-3 sm:px-6 lg:px-8 space-y-6 sm:space-y-8 text-left">
       {/* Header */}
       <div className="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-zinc-200 dark:border-zinc-800">
         <div className="space-y-1">
@@ -74,7 +74,7 @@ export const SavedView: React.FC<SavedViewProps> = ({
           {savedTopics.map((topic, index) => (
             <div
               key={topic.id}
-              className="p-4 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#1e1e1e] shadow-xs flex items-center justify-between gap-4 group hover:border-amber-500/40 transition-all"
+              className="p-3 sm:p-4 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#1e1e1e] shadow-xs flex items-center justify-between gap-2.5 sm:gap-4 group hover:border-amber-500/40 transition-all"
             >
               {/* Left: Reorder buttons & Index */}
               <div className="flex items-center gap-3 shrink-0">

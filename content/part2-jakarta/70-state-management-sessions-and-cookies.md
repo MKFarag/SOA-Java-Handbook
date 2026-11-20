@@ -16,8 +16,11 @@ shortDescription: >-
 prerequisites:
   - 'Topic 64: Web Architecture Fundamentals (HTTP Protocol)'
   - 'Topic 67: Request and Response Processing in Servlets'
+relevanceLevel: MUST-KNOW / CORE
 ---
 # State Management: Sessions and Cookies
+
+> 🎯 **Roadmap Seal:** **`[MUST-KNOW / CORE]`** — *Essential modern foundation required for backend roles. Master this thoroughly.*
 
 ### 1. What It Is and Why It Exists
 HTTP is by definition a **stateless protocol**. When a client makes a request to a server, the server processes it, returns a response, and completely forgets who the client was. Every subsequent request arrives as an isolated transaction.

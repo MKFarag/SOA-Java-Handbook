@@ -15,8 +15,11 @@ shortDescription: >-
 prerequisites:
   - 'Topic 37: The Map Hierarchy'
   - 'Topic 49: Synchronization and Memory Visibility'
+relevanceLevel: ADVANCED / DEEP-DIVE
 ---
 # Explicit Locks and Concurrent Collections
+
+> 🚀 **Roadmap Seal:** **`[ADVANCED / DEEP-DIVE]`** — *Advanced enterprise specialization & architecture. Study once core fundamentals are solid.*
 
 ### 1. What It Is and Why It Exists
 While the `synchronized` keyword provides basic mutual exclusion, it suffers from several practical limitations in high-concurrency environments:

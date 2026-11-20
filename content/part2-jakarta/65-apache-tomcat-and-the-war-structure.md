@@ -15,8 +15,11 @@ shortDescription: >-
 prerequisites:
   - 'Topic 62: Build Automation: Maven & Gradle'
   - 'Topic 63: The Great Transition: Java EE to Jakarta EE'
+relevanceLevel: MUST-KNOW / CORE
 ---
 # Apache Tomcat & The WAR Structure
+
+> 🎯 **Roadmap Seal:** **`[MUST-KNOW / CORE]`** — *Essential modern foundation required for backend roles. Master this thoroughly.*
 
 ### 1. What It Is and Why It Exists
 Java desktop applications are packaged as Java Archives (`.jar`) and executed by invoking `public static void main(String[] args)`. However, enterprise web applications do not contain a `main` method. Instead, they are packaged as **Web Archives (`.war`)** and deployed inside a **Web Container** (or **Servlet Container**) such as **Apache Tomcat**.

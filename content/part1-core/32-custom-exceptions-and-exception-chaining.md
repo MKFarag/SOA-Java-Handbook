@@ -15,7 +15,10 @@ shortDescription: >-
 prerequisites:
   - 'Topic 29: The Java Exception Hierarchy'
   - 'Topic 30: Checked vs Unchecked Exceptions'
+relevanceLevel: MUST-KNOW / CORE
 ---
+> 🎯 **Roadmap Seal:** **`[MUST-KNOW / CORE]`** — *Essential modern foundation required for backend roles. Master this thoroughly.*
+
 ## 1. What It Is and Why It Exists
 
 A **Custom Exception** is a user-defined exception class designed to represent domain-specific failure conditions in an application (e.g., `InsufficientFundsException`, `UserNotFoundException`, `InventoryDepletedException`).

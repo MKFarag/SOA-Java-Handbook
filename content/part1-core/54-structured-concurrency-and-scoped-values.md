@@ -15,8 +15,11 @@ shortDescription: >-
 prerequisites:
   - 'Topic 51: Executor Framework and Thread Pools'
   - 'Topic 53: Virtual Threads (Project Loom)'
+relevanceLevel: ADVANCED / DEEP-DIVE
 ---
 # Structured Concurrency and Scoped Values
+
+> 🚀 **Roadmap Seal:** **`[ADVANCED / DEEP-DIVE]`** — *Advanced enterprise specialization & architecture. Study once core fundamentals are solid.*
 
 ### 1. What It Is and Why It Exists
 In traditional multithreaded programming, concurrency is largely **unstructured**. When a method spawns subtasks across an `ExecutorService`, those threads have independent lifecycles:

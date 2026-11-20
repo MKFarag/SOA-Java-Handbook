@@ -16,7 +16,10 @@ shortDescription: >-
 prerequisites:
   - 'Topic 03: Your First Java Program'
   - 'Topic 16: Classes, Objects & Memory Layout'
+relevanceLevel: MUST-KNOW / CORE
 ---
+> 🎯 **Roadmap Seal:** **`[MUST-KNOW / CORE]`** — *Essential modern foundation required for backend roles. Master this thoroughly.*
+
 ## 1. What It Is and Why It Exists
 
 A **package** is a namespace mechanism that organizes related classes, interfaces, records, and enums into directory structures, preventing class naming collisions across large projects. By convention, packages follow reverse Internet domain name notation (e.g., `com.company.project.module`).

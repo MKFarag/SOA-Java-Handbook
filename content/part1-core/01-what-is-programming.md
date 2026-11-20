@@ -14,7 +14,10 @@ shortDescription: >-
   instructions through compilation, bytecode, and the Java Virtual Machine.
 prerequisites:
   - None (Absolute Zero Starting Point)
+relevanceLevel: MUST-KNOW / CORE
 ---
+> 🎯 **Roadmap Seal:** **`[MUST-KNOW / CORE]`** — *Essential modern foundation required for backend roles. Master this thoroughly.*
+
 ## 1. What It Is and Why It Exists
 
 **What is Programming?**  

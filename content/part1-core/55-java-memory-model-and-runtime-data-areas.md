@@ -16,8 +16,11 @@ prerequisites:
   - 'Topic 02: JDK vs JRE vs JVM & Setup'
   - 'Topic 16: Classes, Objects & Memory Layout'
   - 'Topic 49: Synchronization & Memory Visibility'
+relevanceLevel: ADVANCED / DEEP-DIVE
 ---
 # Java Memory Model & Runtime Data Areas
+
+> 🚀 **Roadmap Seal:** **`[ADVANCED / DEEP-DIVE]`** — *Advanced enterprise specialization & architecture. Study once core fundamentals are solid.*
 
 ### 1. What It Is and Why It Exists
 When the Java Virtual Machine (JVM) executes a Java application, it manages several distinct runtime data areas defined by the JVM Specification. Understanding how the JVM divides memory is essential for writing high-performance applications, diagnosing memory leaks, and tuning garbage collection.

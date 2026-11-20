@@ -15,8 +15,11 @@ shortDescription: >-
 prerequisites:
   - 'Topic 48: Threads and Thread Lifecycle'
   - 'Topic 50: Explicit Locks and Concurrent Collections'
+relevanceLevel: ADVANCED / DEEP-DIVE
 ---
 # Executor Framework and Thread Pools
+
+> 🚀 **Roadmap Seal:** **`[ADVANCED / DEEP-DIVE]`** — *Advanced enterprise specialization & architecture. Study once core fundamentals are solid.*
 
 ### 1. What It Is and Why It Exists
 Creating a new operating system thread via `new Thread()` is an expensive operation:

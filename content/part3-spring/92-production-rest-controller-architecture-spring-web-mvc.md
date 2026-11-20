@@ -2,7 +2,7 @@
 id: topic-92
 slug: production-rest-controller-architecture-spring-web-mvc
 topicNumber: 92
-title: 'Production REST Controller Architecture with Spring Web MVC'
+title: Production REST Controller Architecture with Spring Web MVC
 part: 'Part 3: Spring Boot & Production Stack'
 sectionNumber: 26
 sectionTitle: RESTful Web Services & Global Error Handling
@@ -10,16 +10,21 @@ versionBadge: Spring Boot 3.x / Java 21+
 difficulty: Intermediate
 readingTime: 16 min read
 shortDescription: >-
-  Architect resilient, production-grade REST APIs using Spring Web MVC: HTTP method
-  mappings (@GetMapping to @DeleteMapping), URI template variables (@PathVariable),
-  query parameters (@RequestParam), payload deserialization (@RequestBody), and
-  explicit HTTP status code semantics via ResponseEntity<T>.
+  Architect resilient, production-grade REST APIs using Spring Web MVC: HTTP
+  method mappings (@GetMapping to @DeleteMapping), URI template variables
+  (@PathVariable), query parameters (@RequestParam), payload deserialization
+  (@RequestBody), and explicit HTTP status code semantics via ResponseEntity<T>.
 prerequisites:
   - 'Topic 64: Web Architecture Fundamentals (HTTP Protocol)'
-  - 'Topic 89: Component Scanning, Injection Strategies & Bean Lifecycle Callbacks'
+  - >-
+    Topic 89: Component Scanning, Injection Strategies & Bean Lifecycle
+    Callbacks
   - 'Topic 90: Auto-Configuration Mechanics, Starters & Embedded Runtimes'
+relevanceLevel: MUST-KNOW / CORE
 ---
 # Topic 92: Production REST Controller Architecture with Spring Web MVC
+
+> 🎯 **Roadmap Seal:** **`[MUST-KNOW / CORE]`** — *Essential modern foundation required for backend roles. Master this thoroughly.*
 
 ## 1. What It Is and Why It Exists
 

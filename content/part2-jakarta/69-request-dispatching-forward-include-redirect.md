@@ -17,8 +17,11 @@ prerequisites:
   - 'Topic 64: Web Architecture Fundamentals (HTTP Protocol)'
   - 'Topic 66: Servlet Lifecycle & Architecture'
   - 'Topic 67: Request and Response Processing in Servlets'
+relevanceLevel: MUST-KNOW / CORE
 ---
 # Request Dispatching: Forward vs Include vs Redirect
+
+> 🎯 **Roadmap Seal:** **`[MUST-KNOW / CORE]`** — *Essential modern foundation required for backend roles. Master this thoroughly.*
 
 ### 1. What It Is and Why It Exists
 In production web development, a single incoming request rarely finishes its entire lifecycle inside a single monolithic class. Modern architectures (such as Model-View-Controller) separate concerns: a **Servlet Controller** receives input, validates parameters, and interacts with a database, while a presentation view (**JSP or HTML template**) renders the final visual output.

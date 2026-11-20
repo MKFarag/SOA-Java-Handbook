@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { 
+  Coffee,
   Home, 
   Bookmark, 
   CheckCircle2, 
@@ -8,13 +9,15 @@ import {
   Layers, 
   Server, 
   Leaf,
+  Database,
   Filter,
   Award,
   Trophy,
   ChevronsUpDown,
   Lock,
   Cloud,
-  Bell
+  Bell,
+  X
 } from 'lucide-react';
 import { SECTIONS, ALL_TOPICS } from '../data/topics';
 import type { TopicDetail, PartType } from '../types';
@@ -86,6 +89,18 @@ const PARTS: PartConfig[] = [
     activeBorder: 'border-l-2 border-emerald-500',
     activeText: 'text-emerald-600 dark:text-emerald-400 font-semibold',
     tagColor: 'text-emerald-600 dark:text-emerald-400 bg-emerald-500/10'
+  },
+  {
+    part: 'Part 4: Database Systems & Persistence',
+    label: 'Part 4: Database Systems & Persistence (SQL & NoSQL)',
+    shortLabel: 'Databases',
+    icon: Database,
+    accentColor: 'text-amber-600 dark:text-amber-400',
+    badgeBg: 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20',
+    activeBg: 'bg-amber-500/15 dark:bg-amber-500/20',
+    activeBorder: 'border-l-2 border-amber-500',
+    activeText: 'text-amber-600 dark:text-amber-400 font-semibold',
+    tagColor: 'text-amber-600 dark:text-amber-400 bg-amber-500/10'
   }
 ];
 
@@ -115,13 +130,15 @@ export const Sidebar: React.FC<SidebarProps> = ({
       return saved ? JSON.parse(saved) : {
         'Part 1: Java Core': true,
         'Part 2: Java EE & Jakarta EE': true,
-        'Part 3: Spring Boot & Production Stack': true
+        'Part 3: Spring Boot & Production Stack': true,
+        'Part 4: Database Systems & Persistence': true
       };
     } catch {
       return {
         'Part 1: Java Core': true,
         'Part 2: Java EE & Jakarta EE': true,
-        'Part 3: Spring Boot & Production Stack': true
+        'Part 3: Spring Boot & Production Stack': true,
+        'Part 4: Database Systems & Persistence': true
       };
     }
   });
@@ -190,7 +207,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
     return (
       topic.title.toLowerCase().includes(q) ||
       topic.shortDescription.toLowerCase().includes(q) ||
-      topic.versionBadge.toLowerCase().includes(q)
+      topic.versionBadge.toLowerCase().includes(q) ||
+      (topic.relevanceLevel && topic.relevanceLevel.toLowerCase().includes(q))
     );
   };
 
@@ -206,12 +224,37 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
       {/* Sidebar Container */}
       <aside
-        className={`fixed top-16 bottom-0 left-0 z-40 w-72 md:w-80 bg-zinc-50 dark:bg-[#141416] border-r border-zinc-200 dark:border-zinc-800 transition-transform duration-200 ease-in-out lg:translate-x-0 overflow-y-auto ${
+        className={`fixed inset-y-0 left-0 lg:top-16 z-50 w-72 sm:w-80 bg-zinc-50 dark:bg-[#141416] border-r border-zinc-200 dark:border-zinc-800 transition-transform duration-200 ease-in-out lg:translate-x-0 overflow-y-auto pb-20 lg:pb-6 shadow-2xl lg:shadow-none ${
           isOpenMobile ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
-        <div className="p-4 space-y-4 text-left">
+        <div className="p-3.5 sm:p-4 space-y-3.5 sm:space-y-4 text-left">
           
+          {/* Mobile Drawer Header with Close Button */}
+          <div className="lg:hidden flex items-center justify-between pb-3 pt-1 border-b border-zinc-200 dark:border-zinc-800">
+            <div className="flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center text-white shadow-xs">
+                <Coffee className="w-4 h-4" />
+              </div>
+              <div>
+                <span className="text-xs font-bold text-zinc-900 dark:text-zinc-100 block">
+                  SOA &amp; Java Topics
+                </span>
+                <span className="text-[10px] text-zinc-400 font-mono">
+                  {ALL_TOPICS.length} Modules Catalog
+                </span>
+              </div>
+            </div>
+            <button
+              type="button"
+              onClick={onCloseMobile}
+              className="p-1.5 rounded-lg text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 hover:bg-zinc-200/60 dark:hover:bg-zinc-800 cursor-pointer"
+              title="Close drawer"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
+
           {/* Top Quick Links */}
           <div className="space-y-1 pb-3 border-b border-zinc-200 dark:border-zinc-800">
             <button

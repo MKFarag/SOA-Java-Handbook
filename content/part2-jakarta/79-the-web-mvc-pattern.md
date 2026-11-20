@@ -16,8 +16,11 @@ prerequisites:
   - 'Topic 66: Servlet Lifecycle & Architecture'
   - 'Topic 69: Request Dispatching: Forward, Include & Redirect'
   - 'Topic 77: Expression Language (EL) & JSTL'
+relevanceLevel: MUST-KNOW / CORE
 ---
 # Topic 79: The Web MVC Pattern (Model-View-Controller)
+
+> 🎯 **Roadmap Seal:** **`[MUST-KNOW / CORE]`** — *Essential modern foundation required for backend roles. Master this thoroughly.*
 
 ## 1. What It Is and Why It Exists
 The Model-View-Controller (MVC) pattern is an architectural design paradigm that decouples user interface presentation from core business data and routing logic. In Jakarta EE web applications, MVC Model 2 divides responsibility across three discrete components:
@@ -333,6 +336,18 @@ User user = userService.findById(Long.parseLong(idParam));
 req.setAttribute("user", user);
 req.getRequestDispatcher("/WEB-INF/views/profile.jsp").forward(req, resp);
 ```
+</details>
+
+### Exercise 3: Real-World Edge Case (Security & View Encapsulation)
+<details>
+<summary>View Solution</summary>
+**Question:** Why do production Jakarta web applications place all JSP view files inside the `/WEB-INF/views/` directory rather than under the public `/webapp` root directory? What security risk occurs if views are placed in the public root?
+
+**Solution:**
+Any file placed directly in the web application root (outside `/WEB-INF/`) is directly accessible via a browser URL (e.g., `https://example.com/profile.jsp`).
+
+1. **Bypassing the Controller:** If a user requests `profile.jsp` directly, the Servlet controller never executes. Consequently, authentication checks, validation, and model attribute binding (`req.setAttribute("user", ...)`) never happen, resulting in broken EL expressions or unauthenticated page rendering.
+2. **Exposing Sensitive Code:** According to the Jakarta Servlet Specification, the container strictly prohibits client browsers from requesting anything inside `/WEB-INF/` directly (returns HTTP 404). However, server-side dispatching via `req.getRequestDispatcher("/WEB-INF/views/profile.jsp").forward(req, resp)` is fully permitted. This guarantees that views can **only** be rendered through a designated Controller servlet.
 </details>
 
 ---

@@ -15,7 +15,10 @@ shortDescription: >-
 prerequisites:
   - 'Topic 04: Variables, Identifiers & Primitive Data Types'
   - 'Topic 05: Operators & Expressions'
+relevanceLevel: MUST-KNOW / CORE
 ---
+> 🎯 **Roadmap Seal:** **`[MUST-KNOW / CORE]`** — *Essential modern foundation required for backend roles. Master this thoroughly.*
+
 ## 1. What It Is and Why It Exists
 
 **Type casting** is the process of converting a value from one data type to another. Because Java is strongly typed, the compiler continuously checks whether a value of type A can safely reside inside a variable of type B.

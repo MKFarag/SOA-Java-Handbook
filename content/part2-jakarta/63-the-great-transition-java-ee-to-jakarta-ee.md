@@ -16,8 +16,11 @@ shortDescription: >-
 prerequisites:
   - 'Topic 18: Packages & Access Modifiers'
   - 'Topic 60: Java Platform Module System (JPMS)'
+relevanceLevel: OPTIONAL / LEGACY
 ---
 # The Great Transition: Java EE to Jakarta EE
+
+> 🏛️ **Roadmap Seal:** **`[OPTIONAL / LEGACY]`** — *Historical / legacy enterprise tech. Safely skip unless maintaining legacy enterprise systems.*
 
 ### 1. What It Is and Why It Exists
 For nearly two decades, the standard enterprise server-side platform for Java was **Java 2 Platform, Enterprise Edition (J2EE)** and later **Java Platform, Enterprise Edition (Java EE)**, stewarded originally by Sun Microsystems and subsequently Oracle. Enterprise Java specifications—such as Servlets, JavaServer Pages (JSP), Enterprise JavaBeans (EJB), Java Persistence API (JPA), and JAX-RS—governed billions of dollars in global commerce, banking, and government infrastructure. All of these APIs lived within the venerable `javax.*` package namespace (e.g., `javax.servlet.http.HttpServlet`, `javax.persistence.Entity`).

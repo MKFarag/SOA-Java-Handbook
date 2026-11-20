@@ -5,6 +5,7 @@ import {
   Layers, 
   Server, 
   Leaf, 
+  Database,
   Terminal, 
   Clock,
   ShieldCheck
@@ -85,6 +86,13 @@ export const CapstoneProjectView: React.FC<CapstoneProjectViewProps> = ({
           bg: 'bg-emerald-500/10 border-emerald-500/30 text-emerald-500',
           accent: 'border-emerald-500'
         };
+      case 'Part 4: Database Systems & Persistence':
+        return {
+          icon: Database,
+          color: 'text-amber-500',
+          bg: 'bg-amber-500/10 border-amber-500/30 text-amber-500',
+          accent: 'border-amber-500'
+        };
     }
   };
 
@@ -93,10 +101,10 @@ export const CapstoneProjectView: React.FC<CapstoneProjectViewProps> = ({
   const isSolutionRevealed = Boolean(revealedSolutions[project.id]);
 
   return (
-    <div className="max-w-5xl mx-auto px-4 py-8 space-y-8 text-left">
+    <div className="max-w-5xl mx-auto px-3 sm:px-6 lg:px-8 py-5 sm:py-8 space-y-6 sm:space-y-8 text-left">
       
       {/* Header Banner */}
-      <div className="relative overflow-hidden rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-gradient-to-br from-zinc-50 via-zinc-100/50 to-zinc-50 dark:from-zinc-900/90 dark:via-zinc-900/50 dark:to-zinc-950 p-6 sm:p-8">
+      <div className="relative overflow-hidden rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-gradient-to-br from-zinc-50 via-zinc-100/50 to-zinc-50 dark:from-zinc-900/90 dark:via-zinc-900/50 dark:to-zinc-950 p-4 sm:p-8">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="space-y-2">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-purple-500/10 text-purple-600 dark:text-purple-400 border border-purple-500/20">

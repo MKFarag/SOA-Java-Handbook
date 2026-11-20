@@ -17,8 +17,11 @@ prerequisites:
   - 'Topic 58: Annotations & Metadata'
   - 'Topic 65: Apache Tomcat & The WAR Structure'
   - 'Topic 66: Servlet Lifecycle & Architecture'
+relevanceLevel: OPTIONAL / LEGACY
 ---
 # Servlet Configuration: @WebServlet vs web.xml
+
+> 🏛️ **Roadmap Seal:** **`[OPTIONAL / LEGACY]`** — *Historical / legacy enterprise tech. Safely skip unless maintaining legacy enterprise systems.*
 
 ### 1. What It Is and Why It Exists
 Before a Servlet container can route an incoming HTTP request (e.g., `GET /catalog/electronics`) to a Java class, it requires a **configuration mapping** that defines:

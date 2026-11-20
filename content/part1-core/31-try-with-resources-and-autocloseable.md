@@ -16,7 +16,10 @@ shortDescription: >-
 prerequisites:
   - 'Topic 23: Interfaces & Modern Interface Evolution'
   - 'Topic 29: The Java Exception Hierarchy'
+relevanceLevel: MUST-KNOW / CORE
 ---
+> 🎯 **Roadmap Seal:** **`[MUST-KNOW / CORE]`** — *Essential modern foundation required for backend roles. Master this thoroughly.*
+
 ## 1. What It Is and Why It Exists
 
 **Try-with-resources** (also known as Automatic Resource Management or ARM, introduced in **Java 7**) is a specialized `try` statement that guarantees that one or more opened resources are automatically closed at the end of the statement, regardless of whether the block completes normally or throws an exception.

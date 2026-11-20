@@ -15,8 +15,11 @@ shortDescription: >-
   expressions (<%= %>).
 prerequisites:
   - 'Topic 74: JSP Architecture & Translation Lifecycle'
+relevanceLevel: OPTIONAL / LEGACY
 ---
 # JSP Syntax Elements: Directives, Scriptlets & Expressions
+
+> 🏛️ **Roadmap Seal:** **`[OPTIONAL / LEGACY]`** — *Historical / legacy enterprise tech. Safely skip unless maintaining legacy enterprise systems.*
 
 ### 1. What It Is and Why It Exists
 To provide dynamic functionality, Jakarta Pages defines a concise set of syntax delimiters that tell the Jasper compiler how to handle different segments of a `.jsp` file. Each element instructs Jasper where to place the code in the generated servlet:

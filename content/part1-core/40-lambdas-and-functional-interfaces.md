@@ -15,8 +15,11 @@ shortDescription: >-
 prerequisites:
   - 'Topic 23: Interfaces & Modern Interface Evolution'
   - 'Topic 24: Nested, Inner, Local & Anonymous Classes'
+relevanceLevel: MUST-KNOW / CORE
 ---
 # Lambdas & Functional Interfaces
+
+> 🎯 **Roadmap Seal:** **`[MUST-KNOW / CORE]`** — *Essential modern foundation required for backend roles. Master this thoroughly.*
 
 ### 1. What It Is and Why It Exists
 Before Java 8, passing behavior (a piece of executable logic) into a method required declaring a full interface and instantiating an **anonymous inner class**. Writing five to eight lines of boilerplate ceremonies just to pass a simple comparator or click listener was tedious, cluttered code, and obscured business intent.

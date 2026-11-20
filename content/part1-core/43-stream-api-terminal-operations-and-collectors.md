@@ -15,8 +15,11 @@ shortDescription: >-
 prerequisites:
   - 'Topic 42: Stream API: Pipeline Fundamentals'
   - 'Topic 37: The Map Hierarchy'
+relevanceLevel: MUST-KNOW / CORE
 ---
 # Stream API: Terminal Operations & Collectors
+
+> 🎯 **Roadmap Seal:** **`[MUST-KNOW / CORE]`** — *Essential modern foundation required for backend roles. Master this thoroughly.*
 
 ### 1. What It Is and Why It Exists
 Intermediate operations define the steps of a stream pipeline, but they do nothing on their own. To materialize results—whether calculating a sum, finding an element, or accumulating values into collections—you must execute a **terminal operation**.

@@ -16,7 +16,10 @@ shortDescription: >-
 prerequisites:
   - 'Topic 20: Inheritance & Method Overriding'
   - 'Topic 23: Interfaces & Modern Interface Evolution'
+relevanceLevel: ADVANCED / DEEP-DIVE
 ---
+> 🚀 **Roadmap Seal:** **`[ADVANCED / DEEP-DIVE]`** — *Advanced enterprise specialization & architecture. Study once core fundamentals are solid.*
+
 ## 1. What It Is and Why It Exists
 
 A **Sealed Class or Interface** (introduced in Java 15 preview and finalized in **Java 17 LTS via JEP 409**) restricts which other classes or interfaces may extend or implement it.

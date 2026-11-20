@@ -15,8 +15,11 @@ shortDescription: >-
 prerequisites:
   - 'Topic 40: Lambdas and Functional Interfaces'
   - 'Topic 51: Executor Framework and Thread Pools'
+relevanceLevel: ADVANCED / DEEP-DIVE
 ---
 # Asynchronous Pipelines with CompletableFuture
+
+> 🚀 **Roadmap Seal:** **`[ADVANCED / DEEP-DIVE]`** — *Advanced enterprise specialization & architecture. Study once core fundamentals are solid.*
 
 ### 1. What It Is and Why It Exists
 Before Java 8, the standard `Future<V>` interface had major shortcomings:

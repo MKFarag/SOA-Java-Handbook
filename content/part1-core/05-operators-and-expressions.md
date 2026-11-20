@@ -15,7 +15,10 @@ shortDescription: >-
   precedence.
 prerequisites:
   - 'Topic 04: Variables, Identifiers & Primitive Data Types'
+relevanceLevel: MUST-KNOW / CORE
 ---
+> 🎯 **Roadmap Seal:** **`[MUST-KNOW / CORE]`** — *Essential modern foundation required for backend roles. Master this thoroughly.*
+
 ## 1. What It Is and Why It Exists
 
 An **operator** is a special character or symbol that performs specific mathematical, relational, or logical transformations on one, two, or three **operands** (variables or values) and produces a new result. An **expression** is any valid combination of variables, literals, method calls, and operators that evaluates to a single value.

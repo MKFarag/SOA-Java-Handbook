@@ -16,8 +16,11 @@ prerequisites:
   - 'Topic 64: Web Architecture Fundamentals (HTTP Protocol)'
   - 'Topic 66: Servlet Lifecycle & Architecture'
   - 'Topic 84: Contexts & Dependency Injection (CDI)'
+relevanceLevel: ADVANCED / DEEP-DIVE
 ---
 # Topic 85: Jakarta RESTful Web Services (JAX-RS)
+
+> 🚀 **Roadmap Seal:** **`[ADVANCED / DEEP-DIVE]`** — *Advanced enterprise specialization & architecture. Study once core fundamentals are solid.*
 
 ## 1. What It Is and Why It Exists
 Representational State Transfer (REST) is an architectural style for networked hypermedia applications that leverages standard HTTP verbs (GET, POST, PUT, DELETE, PATCH), URI resources, and standardized MIME representations (JSON, XML).
@@ -295,6 +298,40 @@ public Response getUsers(@QueryParam("status") @DefaultValue("ALL") String statu
     return Response.ok(users).build();
 }
 ```
+</details>
+
+### Exercise 3: Real-World Edge Case (URI Ambiguity & Regex Path Restrictions)
+<details>
+<summary>View Solution</summary>
+**Question:** A JAX-RS resource declares two endpoints:
+```java
+@GET
+@Path("/{id}")
+public Response getUserById(@PathParam("id") Long id) { ... }
+
+@GET
+@Path("/current")
+public Response getCurrentUser() { ... }
+```
+When an HTTP client invokes `GET /users/current`, the server intermittently crashes with `NumberFormatException: For input string: "current"` or fails to execute `getCurrentUser()`. Why does this occur, and how do you resolve URI pattern ambiguity in JAX-RS?
+
+**Solution:**
+1. **URI Matching Algorithm:** JAX-RS sorts matching candidate methods based on literal character counts and regex matching. However, if path parameters are unbounded, the router may evaluate `/{id}` first. Attempting to parse the literal String `"current"` into `Long id` triggers a parameter conversion error before method execution.
+2. **The Production Fix:** Constrain the path template parameter using regular expressions so the parameter only matches numeric strings:
+```java
+@GET
+@Path("/{id: [0-9]+}")
+public Response getUserById(@PathParam("id") Long id) {
+    return Response.ok(userService.findById(id)).build();
+}
+
+@GET
+@Path("/current")
+public Response getCurrentUser() {
+    return Response.ok(securityContext.getUserPrincipal()).build();
+}
+```
+With the regex constraint `[0-9]+`, any non-numeric request such as `/users/current` bypasses the ID method completely and reliably routes to `getCurrentUser()`.
 </details>
 
 ---

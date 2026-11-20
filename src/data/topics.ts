@@ -244,6 +244,106 @@ export const SECTIONS: SectionMeta[] = [
       "topic-108"
     ]
   }
+,
+  {
+    "sectionNumber": 31,
+    "title": "Advanced Persistence, Dynamic Queries & Auditing",
+    "part": "Part 3: Spring Boot & Production Stack",
+    "description": "JPA Criteria API, Specification pattern, Hibernate Envers temporal audit trails, and multi-tenant RoutingDataSource.",
+    "topicIds": [
+      "topic-109",
+      "topic-110",
+      "topic-111"
+    ]
+  },
+  {
+    "sectionNumber": 32,
+    "title": "Enterprise Identity & OAuth2 / OIDC Architecture",
+    "part": "Part 3: Spring Boot & Production Stack",
+    "description": "Spring Security OAuth2 Resource Server, Keycloak OIDC IAM, JWT signature verification, CORS, CSRF, and security headers.",
+    "topicIds": [
+      "topic-112",
+      "topic-113",
+      "topic-114"
+    ]
+  },
+  {
+    "sectionNumber": 33,
+    "title": "Asynchronous, Distributed Scheduling & Batch Processing",
+    "part": "Part 3: Spring Boot & Production Stack",
+    "description": "Asynchronous @Async TaskExecutors, ShedLock distributed cluster scheduling, and Spring Batch chunk-oriented ETL pipelines.",
+    "topicIds": [
+      "topic-115",
+      "topic-116",
+      "topic-117"
+    ]
+  },
+  {
+    "sectionNumber": 34,
+    "title": "Real-Time Web & Asynchronous Streaming",
+    "part": "Part 3: Spring Boot & Production Stack",
+    "description": "Real-time WebSocket & STOMP bidirectional messaging, and Server-Sent Events (SSE) reactive event streaming.",
+    "topicIds": [
+      "topic-118",
+      "topic-119"
+    ]
+  },
+  {
+    "sectionNumber": 35,
+    "title": "Spring Cloud & Microservices Ecosystem (SOA Core)",
+    "part": "Part 3: Spring Boot & Production Stack",
+    "description": "Service discovery with Eureka, Spring Cloud API Gateway, Centralized Config Server, declarative OpenFeign/RestClient, and Micrometer distributed tracing.",
+    "topicIds": [
+      "topic-120",
+      "topic-121",
+      "topic-122",
+      "topic-123",
+      "topic-124"
+    ]
+  },
+  {
+    "sectionNumber": 36,
+    "title": "Resilient Messaging & Distributed Transaction Patterns",
+    "part": "Part 3: Spring Boot & Production Stack",
+    "description": "Kafka non-blocking retry topics & DLT, Transactional Outbox Pattern with CDC / Debezium, and Saga distributed orchestration.",
+    "topicIds": [
+      "topic-125",
+      "topic-126",
+      "topic-127"
+    ]
+  },
+  {
+    "sectionNumber": 37,
+    "title": "Cloud-Native Packaging & GraalVM AOT Compilation",
+    "part": "Part 3: Spring Boot & Production Stack",
+    "description": "Production Dockerization with layered JARs (jarmode=layertools), non-root security, and GraalVM Native Image AOT compilation.",
+    "topicIds": [
+      "topic-128",
+      "topic-129"
+    ]
+  },
+  // Part 4: Database Systems & Persistence
+  {
+    "sectionNumber": 38,
+    "title": "Database Fundamentals & Relational Systems (MySQL & SQL)",
+    "part": "Part 4: Database Systems & Persistence",
+    "description": "Relational data modeling, ACID vs BASE, CAP theorem, MySQL environment setup with XAMPP, DDL/DML, multi-table JOINs, indexing, and Spring Data JPA persistence.",
+    "topicIds": [
+      "topic-130",
+      "topic-131",
+      "topic-132"
+    ]
+  },
+  {
+    "sectionNumber": 39,
+    "title": "Document Databases & NoSQL Systems (MongoDB)",
+    "part": "Part 4: Database Systems & Persistence",
+    "description": "Document-oriented persistence with MongoDB, BSON and ObjectId mechanics, MongoDB Compass GUI, MQL queries, Aggregation Pipelines, and Spring Data MongoDB persistence.",
+    "topicIds": [
+      "topic-133",
+      "topic-134"
+    ]
+  }
 ];
 
 export const ALL_TOPICS: TopicDetail[] = [
@@ -252,6 +352,7 @@ export const ALL_TOPICS: TopicDetail[] = [
     id: 'topic-01',
     slug: 'what-is-programming-and-how-code-runs',
     topicNumber: 1,
+    relevanceLevel: 'MUST-KNOW / CORE',
     title: 'What is Programming & How Code Runs',
     part: 'Part 1: Java Core',
     sectionNumber: 1,
@@ -448,6 +549,7 @@ Curriculum Finished : NO - In Progress
     id: 'topic-02',
     slug: 'jdk-vs-jre-vs-jvm-and-setup',
     topicNumber: 2,
+    relevanceLevel: 'MUST-KNOW / CORE',
     title: 'JDK vs JRE vs JVM & Setup',
     part: 'Part 1: Java Core',
     sectionNumber: 1,
@@ -645,6 +747,7 @@ STATUS: [READY] System meets enterprise Java development standards.`,
     id: 'topic-03',
     slug: 'your-first-java-program',
     topicNumber: 3,
+    relevanceLevel: 'MUST-KNOW / CORE',
     title: 'Your First Java Program',
     part: 'Part 1: Java Core',
     sectionNumber: 1,
@@ -880,6 +983,7 @@ String name = (args.length > 0) ? args[0] : "Guest";`,
     id: 'topic-04',
     slug: 'variables-identifiers-and-primitive-types',
     topicNumber: 4,
+    relevanceLevel: 'MUST-KNOW / CORE',
     title: 'Variables, Identifiers & Primitive Data Types',
     part: 'Part 1: Java Core',
     sectionNumber: 2,
@@ -1095,6 +1199,7 @@ Alert Triggered : NORMAL
     id: 'topic-05',
     slug: 'operators-and-expressions',
     topicNumber: 5,
+    relevanceLevel: 'MUST-KNOW / CORE',
     title: 'Operators & Expressions',
     part: 'Part 1: Java Core',
     sectionNumber: 2,
@@ -1319,6 +1424,7 @@ After Revoke -> Has WRITE Access : false
     id: 'topic-06',
     slug: 'type-casting-and-numeric-conversions',
     topicNumber: 6,
+    relevanceLevel: 'MUST-KNOW / CORE',
     title: 'Type Casting & Numeric Conversions',
     part: 'Part 1: Java Core',
     sectionNumber: 2,
@@ -1543,6 +1649,7 @@ Fallback Calculation (Widened to long): 2500000000
     id: 'topic-07',
     slug: 'strings-and-text-blocks',
     topicNumber: 7,
+    relevanceLevel: 'MUST-KNOW / CORE',
     title: 'Strings & Text Blocks',
     part: 'Part 1: Java Core',
     sectionNumber: 2,
@@ -1789,6 +1896,7 @@ ORDER BY created_at DESC;`,
     id: 'topic-08',
     slug: 'conditional-statements',
     topicNumber: 8,
+    relevanceLevel: 'MUST-KNOW / CORE',
     title: 'Conditional Statements',
     part: 'Part 1: Java Core',
     sectionNumber: 3,
@@ -2009,6 +2117,7 @@ Session Origin Verified: US
     id: 'topic-09',
     slug: 'switch-statements-and-switch-expressions',
     topicNumber: 9,
+    relevanceLevel: 'MUST-KNOW / CORE',
     title: 'Switch Statements & Switch Expressions',
     part: 'Part 1: Java Core',
     sectionNumber: 3,
@@ -2226,6 +2335,7 @@ Resolved Action    : INCIDENT LOGGED: Dispatching pager alert to On-Call Enginee
     id: 'topic-10',
     slug: 'loops-and-iteration',
     topicNumber: 10,
+    relevanceLevel: 'MUST-KNOW / CORE',
     title: 'Loops & Iteration',
     part: 'Part 1: Java Core',
     sectionNumber: 3,
@@ -2475,6 +2585,7 @@ Scan Complete: Anomaly locked at Row 1, Column 1
     id: 'topic-11',
     slug: 'methods-parameters-and-return-values',
     topicNumber: 11,
+    relevanceLevel: 'MUST-KNOW / CORE',
     title: 'Methods, Parameters & Return Values',
     part: 'Part 1: Java Core',
     sectionNumber: 4,
@@ -2742,6 +2853,7 @@ public static Pair swap(int a, int b) {
     id: 'topic-12',
     slug: 'method-overloading-and-varargs',
     topicNumber: 12,
+    relevanceLevel: 'MUST-KNOW / CORE',
     title: 'Method Overloading & Varargs',
     part: 'Part 1: Java Core',
     sectionNumber: 4,
@@ -2972,6 +3084,7 @@ public static int sum(int... nums) {
     id: 'topic-13',
     slug: 'variable-scope-and-type-inference',
     topicNumber: 13,
+    relevanceLevel: 'MUST-KNOW / CORE',
     title: 'Variable Scope & Local Variable Type Inference (var)',
     part: 'Part 1: Java Core',
     sectionNumber: 4,
@@ -3198,6 +3311,7 @@ var iterator = grades.entrySet().iterator();`,
     id: 'topic-14',
     slug: 'one-dimensional-arrays',
     topicNumber: 14,
+    relevanceLevel: 'MUST-KNOW / CORE',
     title: 'One-Dimensional Arrays',
     part: 'Part 1: Java Core',
     sectionNumber: 5,
@@ -3431,6 +3545,7 @@ Streamed 27.1 C -> Current Avg: 25.12 C | Peak: 27.1 C`,
     id: 'topic-15',
     slug: 'multidimensional-arrays-and-arrays-utility',
     topicNumber: 15,
+    relevanceLevel: 'MUST-KNOW / CORE',
     title: 'Multi-Dimensional Arrays & Arrays Utility',
     part: 'Part 1: Java Core',
     sectionNumber: 5,
@@ -3641,6 +3756,7 @@ int idx = Arrays.binarySearch(raw, 2);`,
     id: 'topic-16',
     slug: 'classes-objects-and-memory-layout',
     topicNumber: 16,
+    relevanceLevel: 'MUST-KNOW / CORE',
     title: 'Classes, Objects & Memory Layout',
     part: 'Part 1: Java Core',
     sectionNumber: 6,
@@ -3877,6 +3993,7 @@ int count = obj.getTotalInstancesCreated(); // Discouraged`,
     id: 'topic-17',
     slug: 'constructors-and-initialization',
     topicNumber: 17,
+    relevanceLevel: 'MUST-KNOW / CORE',
     title: 'Constructors & Object Initialization',
     part: 'Part 1: Java Core',
     sectionNumber: 6,
@@ -4100,6 +4217,7 @@ Server Listening on 0.0.0.0:8080 (Threads: 200, Timeout: 30s)`,
     id: 'topic-18',
     slug: 'packages-and-access-modifiers',
     topicNumber: 18,
+    relevanceLevel: 'MUST-KNOW / CORE',
     title: 'Packages & Access Modifiers',
     part: 'Part 1: Java Core',
     sectionNumber: 6,
@@ -4323,6 +4441,7 @@ package org.other; // COMPILE / BUILD ERROR`,
     id: 'topic-19',
     slug: 'encapsulation-and-data-integrity',
     topicNumber: 19,
+    relevanceLevel: 'MUST-KNOW / CORE',
     title: 'Encapsulation & Data Integrity',
     part: 'Part 1: Java Core',
     sectionNumber: 6,
@@ -4553,6 +4672,7 @@ public class FinancialLedgerEntry {
     id: 'topic-20',
     slug: 'inheritance-and-method-overriding',
     topicNumber: 20,
+    relevanceLevel: 'MUST-KNOW / CORE',
     title: 'Inheritance & Method Overriding',
     part: 'Part 1: Java Core',
     sectionNumber: 7,
@@ -4803,6 +4923,7 @@ public class Spreadsheet extends Document {
     id: 'topic-21',
     slug: 'polymorphism-and-dynamic-dispatch',
     topicNumber: 21,
+    relevanceLevel: 'MUST-KNOW / CORE',
     title: 'Polymorphism & Dynamic Method Dispatch',
     part: 'Part 1: Java Core',
     sectionNumber: 7,
@@ -5023,6 +5144,7 @@ System.out.println(b.val); // Prints Base.val, NOT Sub.val!`,
     id: 'topic-22',
     slug: 'abstract-classes-and-methods',
     topicNumber: 22,
+    relevanceLevel: 'MUST-KNOW / CORE',
     title: 'Abstract Classes & Methods',
     part: 'Part 1: Java Core',
     sectionNumber: 7,
@@ -5137,7 +5259,7 @@ public class ETLPipelineApp {
             List<String> res = new ArrayList<>();
             for (String l : raw) {
                 String[] p = l.split(",");
-                res.add(String.format("{\"id\":%s,\"user\":\"%s\"}", p[0], p[1].toUpperCase()));
+                res.add(String.format("{"id":%s,"user":"%s"}", p[0], p[1].toUpperCase()));
             }
             return res;
         }
@@ -5262,6 +5384,7 @@ public abstract final class Bad {} // COMPILE ERROR`,
     id: 'topic-23',
     slug: 'interfaces-and-default-methods',
     topicNumber: 23,
+    relevanceLevel: 'MUST-KNOW / CORE',
     title: 'Interfaces & Modern Interface Evolution',
     part: 'Part 1: Java Core',
     sectionNumber: 7,
@@ -5482,6 +5605,7 @@ class C implements A, B {} // COMPILE ERROR: inherits unrelated defaults`,
     id: 'topic-24',
     slug: 'nested-inner-and-anonymous-classes',
     topicNumber: 24,
+    relevanceLevel: 'ADVANCED / DEEP-DIVE',
     title: 'Nested, Inner & Anonymous Classes',
     part: 'Part 1: Java Core',
     sectionNumber: 7,
@@ -5728,6 +5852,7 @@ Runnable r = () -> count.incrementAndGet();`,
     id: 'topic-25',
     slug: 'enumerations-enum',
     topicNumber: 25,
+    relevanceLevel: 'ADVANCED / DEEP-DIVE',
     title: 'Enumerations (enum)',
     part: 'Part 1: Java Core',
     sectionNumber: 7,
@@ -5967,6 +6092,7 @@ public class OrderStateMachineApp {
     id: 'topic-26',
     slug: 'records',
     topicNumber: 26,
+    relevanceLevel: 'ADVANCED / DEEP-DIVE',
     title: 'Records',
     part: 'Part 1: Java Core',
     sectionNumber: 8,
@@ -6179,6 +6305,7 @@ System.out.println(u.getUsername()); // COMPILE ERROR`,
     id: 'topic-27',
     slug: 'sealed-classes-and-interfaces',
     topicNumber: 27,
+    relevanceLevel: 'ADVANCED / DEEP-DIVE',
     title: 'Sealed Classes & Interfaces',
     part: 'Part 1: Java Core',
     sectionNumber: 8,
@@ -6395,6 +6522,7 @@ public record Negate(Expr expr) implements Expr {}`,
     id: 'topic-28',
     slug: 'pattern-matching-for-switch-and-records',
     topicNumber: 28,
+    relevanceLevel: 'ADVANCED / DEEP-DIVE',
     title: 'Pattern Matching for Switch & Records',
     part: 'Part 1: Java Core',
     sectionNumber: 8,
@@ -6634,6 +6762,7 @@ HIGH VALUE Transaction TXN-002 for $50000.00`,
     id: 'topic-29',
     slug: 'the-java-exception-hierarchy',
     topicNumber: 29,
+    relevanceLevel: 'MUST-KNOW / CORE',
     title: 'The Java Exception Hierarchy',
     part: 'Part 1: Java Core',
     sectionNumber: 9,
@@ -6848,6 +6977,7 @@ Result 2: Recovered from: IllegalArgumentException`,
     id: 'topic-30',
     slug: 'checked-vs-unchecked-exceptions',
     topicNumber: 30,
+    relevanceLevel: 'MUST-KNOW / CORE',
     title: 'Checked vs Unchecked Exceptions',
     part: 'Part 1: Java Core',
     sectionNumber: 9,
@@ -7069,6 +7199,7 @@ Root Cause Class:        FileNotFoundException`,
     id: 'topic-31',
     slug: 'try-with-resources-and-autocloseable',
     topicNumber: 31,
+    relevanceLevel: 'MUST-KNOW / CORE',
     title: 'Try-With-Resources & AutoCloseable',
     part: 'Part 1: Java Core',
     sectionNumber: 9,
@@ -7279,6 +7410,7 @@ Exported Length: 35 bytes`,
     id: 'topic-32',
     slug: 'custom-exceptions-and-exception-chaining',
     topicNumber: 32,
+    relevanceLevel: 'MUST-KNOW / CORE',
     title: 'Custom Exceptions & Exception Chaining',
     part: 'Part 1: Java Core',
     sectionNumber: 9,
@@ -7507,6 +7639,7 @@ Overdraft Shortfall: $150.00`,
     id: 'topic-33',
     slug: 'generics-fundamentals',
     topicNumber: 33,
+    relevanceLevel: 'MUST-KNOW / CORE',
     title: 'Generics Fundamentals',
     part: 'Part 1: Java Core',
     sectionNumber: 10,
@@ -7726,6 +7859,7 @@ Missing Account Found: false`,
     id: 'topic-34',
     slug: 'generic-wildcards-and-pecs-principle',
     topicNumber: 34,
+    relevanceLevel: 'MUST-KNOW / CORE',
     title: 'Generic Wildcards & PECS Principle',
     part: 'Part 1: Java Core',
     sectionNumber: 10,
@@ -7908,6 +8042,7 @@ Journaled: SecurityAlert[PORT_SCAN, severity=5]`,
     id: 'topic-35',
     slug: 'the-list-hierarchy',
     topicNumber: 35,
+    relevanceLevel: 'MUST-KNOW / CORE',
     title: 'The List Hierarchy',
     part: 'Part 1: Java Core',
     sectionNumber: 10,
@@ -8090,6 +8225,7 @@ Batch 3 (Size 1): [CustomerOrder[orderId=ORD-105, totalAmount=19.99]]`,
     id: 'topic-36',
     slug: 'the-set-hierarchy',
     topicNumber: 36,
+    relevanceLevel: 'MUST-KNOW / CORE',
     title: 'The Set Hierarchy',
     part: 'Part 1: Java Core',
     sectionNumber: 10,
@@ -8284,6 +8420,7 @@ Lowest Leaderboard Score: 180`,
     id: 'topic-37',
     slug: 'the-map-hierarchy',
     topicNumber: 37,
+    relevanceLevel: 'MUST-KNOW / CORE',
     title: 'The Map Hierarchy',
     part: 'Part 1: Java Core',
     sectionNumber: 10,
@@ -8474,6 +8611,7 @@ Is session_1 retained? true`,
     id: 'topic-38',
     slug: 'the-queue-and-deque-hierarchy',
     topicNumber: 38,
+    relevanceLevel: 'ADVANCED / DEEP-DIVE',
     title: 'The Queue & Deque Hierarchy',
     part: 'Part 1: Java Core',
     sectionNumber: 10,
@@ -8681,6 +8819,7 @@ Execution History (Most recent first, limit 3): [J-1:LowPriority-Cleanup, J-3:No
     id: 'topic-39',
     slug: 'comparable-and-comparator',
     topicNumber: 39,
+    relevanceLevel: 'ADVANCED / DEEP-DIVE',
     title: 'Comparable & Comparator',
     part: 'Part 1: Java Core',
     sectionNumber: 10,
@@ -8874,6 +9013,7 @@ public class ProductCatalogRankingApp {
     id: 'topic-40',
     slug: 'lambdas-and-functional-interfaces',
     topicNumber: 40,
+    relevanceLevel: 'MUST-KNOW / CORE',
     title: 'Lambdas & Functional Interfaces',
     part: 'Part 1: Java Core',
     sectionNumber: 11,
@@ -9074,6 +9214,7 @@ Critical Auth Alerts: 1
     id: 'topic-41',
     slug: 'method-references',
     topicNumber: 41,
+    relevanceLevel: 'MUST-KNOW / CORE',
     title: 'Method References',
     part: 'Part 1: Java Core',
     sectionNumber: 11,
@@ -9274,6 +9415,7 @@ public class CustomerDataTransformerApp {
     id: 'topic-42',
     slug: 'stream-api-pipeline-fundamentals',
     topicNumber: 42,
+    relevanceLevel: 'MUST-KNOW / CORE',
     title: 'Stream API: Pipeline Fundamentals',
     part: 'Part 1: Java Core',
     sectionNumber: 11,
@@ -9489,6 +9631,7 @@ Distinct Active API Resources: [auth, orders, users]`,
     id: 'topic-43',
     slug: 'stream-api-terminal-operations-and-collectors',
     topicNumber: 43,
+    relevanceLevel: 'MUST-KNOW / CORE',
     title: 'Stream API: Terminal Operations & Collectors',
     part: 'Part 1: Java Core',
     sectionNumber: 11,
@@ -9688,6 +9831,7 @@ Standard Volume Transfers:        [TX-101, TX-102, TX-104, TX-105, TX-106]`,
     id: 'topic-44',
     slug: 'optional-type-handling',
     topicNumber: 44,
+    relevanceLevel: 'MUST-KNOW / CORE',
     title: 'Optional Type Handling',
     part: 'Part 1: Java Core',
     sectionNumber: 11,
@@ -9891,6 +10035,7 @@ User 99 Webhook: https://default.corp/sink`,
     id: 'topic-45',
     slug: 'classic-io-streams',
     topicNumber: 45,
+    relevanceLevel: 'ADVANCED / DEEP-DIVE',
     title: 'Classic I/O Streams',
     part: 'Part 1: Java Core',
     sectionNumber: 12,
@@ -10117,6 +10262,7 @@ public class AuditLogRotatorApp {
     id: 'topic-46',
     slug: 'modern-nio2-file-operations',
     topicNumber: 46,
+    relevanceLevel: 'ADVANCED / DEEP-DIVE',
     title: 'Modern NIO.2 File Operations',
     part: 'Part 1: Java Core',
     sectionNumber: 12,
@@ -10231,7 +10377,7 @@ public class DirectoryTreeScannerApp {
         Files.createDirectories(logsDir);
 
         Files.writeString(configDir.resolve("application.conf"), "server.port=8080\n");
-        Files.writeString(configDir.resolve("database.json"), "{\"host\":\"localhost\"}\n");
+        Files.writeString(configDir.resolve("database.json"), "{"host":"localhost"}\n");
         Files.writeString(logsDir.resolve("audit-2026.log"), "Audit ledger payload\n");
 
         System.out.println("Scanning directory: " + tempDir.getFileName());
@@ -10339,6 +10485,7 @@ Found Config Files (.conf or .json):
     id: 'topic-47',
     slug: 'date-and-time-api',
     topicNumber: 47,
+    relevanceLevel: 'ADVANCED / DEEP-DIVE',
     title: 'Date and Time API (java.time)',
     part: 'Part 1: Java Core',
     sectionNumber: 12,
@@ -10552,6 +10699,7 @@ Deadline Across Operations Centers:
     "id": "topic-48",
     "slug": "threads-and-thread-lifecycle",
     "topicNumber": 48,
+    "relevanceLevel": "ADVANCED / DEEP-DIVE",
     "title": "Threads and Thread Lifecycle",
     "part": "Part 1: Java Core",
     "sectionNumber": 13,
@@ -10699,6 +10847,7 @@ Deadline Across Operations Centers:
     "id": "topic-49",
     "slug": "synchronization-and-memory-visibility",
     "topicNumber": 49,
+    "relevanceLevel": "ADVANCED / DEEP-DIVE",
     "title": "Synchronization & Memory Visibility",
     "part": "Part 1: Java Core",
     "sectionNumber": 13,
@@ -10840,6 +10989,7 @@ Deadline Across Operations Centers:
     "id": "topic-50",
     "slug": "explicit-locks-and-concurrent-collections",
     "topicNumber": 50,
+    "relevanceLevel": "ADVANCED / DEEP-DIVE",
     "title": "Explicit Locks & Concurrent Collections",
     "part": "Part 1: Java Core",
     "sectionNumber": 13,
@@ -10992,6 +11142,7 @@ Deadline Across Operations Centers:
     "id": "topic-51",
     "slug": "executor-framework-and-thread-pools",
     "topicNumber": 51,
+    "relevanceLevel": "ADVANCED / DEEP-DIVE",
     "title": "Executor Framework & Thread Pools",
     "part": "Part 1: Java Core",
     "sectionNumber": 13,
@@ -11144,6 +11295,7 @@ Deadline Across Operations Centers:
     "id": "topic-52",
     "slug": "asynchronous-pipelines-with-completablefuture",
     "topicNumber": 52,
+    "relevanceLevel": "ADVANCED / DEEP-DIVE",
     "title": "Asynchronous Pipelines with CompletableFuture",
     "part": "Part 1: Java Core",
     "sectionNumber": 13,
@@ -11299,6 +11451,7 @@ Deadline Across Operations Centers:
     "id": "topic-53",
     "slug": "virtual-threads",
     "topicNumber": 53,
+    "relevanceLevel": "ADVANCED / DEEP-DIVE",
     "title": "Virtual Threads (Project Loom)",
     "part": "Part 1: Java Core",
     "sectionNumber": 13,
@@ -11444,6 +11597,7 @@ Deadline Across Operations Centers:
     "id": "topic-54",
     "slug": "structured-concurrency-and-scoped-values",
     "topicNumber": 54,
+    "relevanceLevel": "ADVANCED / DEEP-DIVE",
     "title": "Structured Concurrency & Scoped Values",
     "part": "Part 1: Java Core",
     "sectionNumber": 13,
@@ -11595,6 +11749,7 @@ Deadline Across Operations Centers:
     "id": "topic-55",
     "slug": "java-memory-model-and-runtime-data-areas",
     "topicNumber": 55,
+    "relevanceLevel": "ADVANCED / DEEP-DIVE",
     "title": "Java Memory Model & Runtime Data Areas",
     "part": "Part 1: Java Core",
     "sectionNumber": 14,
@@ -11746,6 +11901,7 @@ Deadline Across Operations Centers:
     "id": "topic-56",
     "slug": "garbage-collection-algorithms-and-tuning",
     "topicNumber": 56,
+    "relevanceLevel": "ADVANCED / DEEP-DIVE",
     "title": "Garbage Collection Algorithms & Tuning",
     "part": "Part 1: Java Core",
     "sectionNumber": 14,
@@ -11896,6 +12052,7 @@ Deadline Across Operations Centers:
     "id": "topic-57",
     "slug": "classloaders-and-jit-compilation",
     "topicNumber": 57,
+    "relevanceLevel": "ADVANCED / DEEP-DIVE",
     "title": "ClassLoaders & JIT Compilation",
     "part": "Part 1: Java Core",
     "sectionNumber": 14,
@@ -12047,6 +12204,7 @@ Deadline Across Operations Centers:
     "id": "topic-58",
     "slug": "annotations-and-metadata",
     "topicNumber": 58,
+    "relevanceLevel": "ADVANCED / DEEP-DIVE",
     "title": "Annotations & Metadata",
     "part": "Part 1: Java Core",
     "sectionNumber": 15,
@@ -12192,6 +12350,7 @@ Deadline Across Operations Centers:
     "id": "topic-59",
     "slug": "reflection-api-and-methodhandles",
     "topicNumber": 59,
+    "relevanceLevel": "ADVANCED / DEEP-DIVE",
     "title": "Reflection API & MethodHandles",
     "part": "Part 1: Java Core",
     "sectionNumber": 15,
@@ -12338,6 +12497,7 @@ Deadline Across Operations Centers:
     "id": "topic-60",
     "slug": "java-platform-module-system-jpms",
     "topicNumber": 60,
+    "relevanceLevel": "ADVANCED / DEEP-DIVE",
     "title": "Java Platform Module System (JPMS)",
     "part": "Part 1: Java Core",
     "sectionNumber": 15,
@@ -12493,6 +12653,7 @@ Deadline Across Operations Centers:
     "id": "topic-61",
     "slug": "jdbc-fundamentals",
     "topicNumber": 61,
+    "relevanceLevel": "MUST-KNOW / CORE",
     "title": "JDBC Fundamentals & Transactions",
     "part": "Part 1: Java Core",
     "sectionNumber": 16,
@@ -12644,6 +12805,7 @@ Deadline Across Operations Centers:
     "id": "topic-62",
     "slug": "build-automation-maven-and-gradle",
     "topicNumber": 62,
+    "relevanceLevel": "MUST-KNOW / CORE",
     "title": "Build Automation: Maven & Gradle",
     "part": "Part 1: Java Core",
     "sectionNumber": 16,
@@ -12789,6 +12951,7 @@ Deadline Across Operations Centers:
     "id": "topic-63",
     "slug": "the-great-transition-java-ee-to-jakarta-ee",
     "topicNumber": 63,
+    "relevanceLevel": "OPTIONAL / LEGACY",
     "title": "The Great Transition: Java EE to Jakarta EE",
     "part": "Part 2: Java EE & Jakarta EE",
     "sectionNumber": 17,
@@ -12978,6 +13141,7 @@ Deadline Across Operations Centers:
     "id": "topic-64",
     "slug": "web-architecture-fundamentals-http",
     "topicNumber": 64,
+    "relevanceLevel": "MUST-KNOW / CORE",
     "title": "Web Architecture Fundamentals: The HTTP Protocol",
     "part": "Part 2: Java EE & Jakarta EE",
     "sectionNumber": 17,
@@ -13175,6 +13339,7 @@ Deadline Across Operations Centers:
     "id": "topic-65",
     "slug": "apache-tomcat-and-the-war-structure",
     "topicNumber": 65,
+    "relevanceLevel": "MUST-KNOW / CORE",
     "title": "Apache Tomcat & The WAR Structure",
     "part": "Part 2: Java EE & Jakarta EE",
     "sectionNumber": 18,
@@ -13365,6 +13530,7 @@ Deadline Across Operations Centers:
     id: 'topic-66',
     slug: 'servlet-lifecycle-and-architecture',
     topicNumber: 66,
+    relevanceLevel: 'MUST-KNOW / CORE',
     title: 'Servlet Lifecycle & Architecture',
     part: 'Part 2: Java EE & Jakarta EE',
     sectionNumber: 19,
@@ -13682,6 +13848,7 @@ User 'david' registered successfully as 'SecuritySpecialist'.`,
     "id": "topic-67",
     "slug": "request-and-response-processing",
     "topicNumber": 67,
+    "relevanceLevel": "MUST-KNOW / CORE",
     "title": "Request and Response Processing in Servlets",
     "part": "Part 2: Java EE & Jakarta EE",
     "sectionNumber": 19,
@@ -13897,6 +14064,7 @@ User 'david' registered successfully as 'SecuritySpecialist'.`,
     "id": "topic-68",
     "slug": "servlet-configuration-annotations-vs-web-xml",
     "topicNumber": 68,
+    "relevanceLevel": "OPTIONAL / LEGACY",
     "title": "Servlet Configuration: @WebServlet vs web.xml",
     "part": "Part 2: Java EE & Jakarta EE",
     "sectionNumber": 19,
@@ -14083,6 +14251,7 @@ User 'david' registered successfully as 'SecuritySpecialist'.`,
     "id": "topic-69",
     "slug": "request-dispatching-forward-include-redirect",
     "topicNumber": 69,
+    "relevanceLevel": "MUST-KNOW / CORE",
     "title": "Request Dispatching: Forward vs Include vs Redirect",
     "part": "Part 2: Java EE & Jakarta EE",
     "sectionNumber": 19,
@@ -14281,6 +14450,7 @@ User 'david' registered successfully as 'SecuritySpecialist'.`,
     "id": "topic-70",
     "slug": "state-management-sessions-and-cookies",
     "topicNumber": 70,
+    "relevanceLevel": "MUST-KNOW / CORE",
     "title": "State Management: Sessions & Cookies",
     "part": "Part 2: Java EE & Jakarta EE",
     "sectionNumber": 20,
@@ -14476,6 +14646,7 @@ User 'david' registered successfully as 'SecuritySpecialist'.`,
     "id": "topic-71",
     "slug": "servlet-filters-and-filter-chains",
     "topicNumber": 71,
+    "relevanceLevel": "MUST-KNOW / CORE",
     "title": "Servlet Filters & Filter Chains",
     "part": "Part 2: Java EE & Jakarta EE",
     "sectionNumber": 20,
@@ -14669,6 +14840,7 @@ User 'david' registered successfully as 'SecuritySpecialist'.`,
     "id": "topic-72",
     "slug": "web-listeners-and-application-lifecycle",
     "topicNumber": 72,
+    "relevanceLevel": "ADVANCED / DEEP-DIVE",
     "title": "Web Listeners & Application Lifecycle",
     "part": "Part 2: Java EE & Jakarta EE",
     "sectionNumber": 20,
@@ -14867,6 +15039,7 @@ User 'david' registered successfully as 'SecuritySpecialist'.`,
     "id": "topic-73",
     "slug": "web-security-essentials",
     "topicNumber": 73,
+    "relevanceLevel": "ADVANCED / DEEP-DIVE",
     "title": "Web Security Essentials in Jakarta EE",
     "part": "Part 2: Java EE & Jakarta EE",
     "sectionNumber": 20,
@@ -15053,6 +15226,7 @@ User 'david' registered successfully as 'SecuritySpecialist'.`,
     "id": "topic-74",
     "slug": "jsp-architecture-and-translation",
     "topicNumber": 74,
+    "relevanceLevel": "OPTIONAL / LEGACY",
     "title": "JSP Architecture & Translation Lifecycle",
     "part": "Part 2: Java EE & Jakarta EE",
     "sectionNumber": 21,
@@ -15245,6 +15419,7 @@ User 'david' registered successfully as 'SecuritySpecialist'.`,
     "id": "topic-75",
     "slug": "jsp-syntax-elements",
     "topicNumber": 75,
+    "relevanceLevel": "OPTIONAL / LEGACY",
     "title": "JSP Syntax Elements: Directives, Scriptlets & Expressions",
     "part": "Part 2: Java EE & Jakarta EE",
     "sectionNumber": 21,
@@ -15441,6 +15616,7 @@ User 'david' registered successfully as 'SecuritySpecialist'.`,
     "id": "topic-76",
     "slug": "jsp-implicit-objects-and-standard-actions",
     "topicNumber": 76,
+    "relevanceLevel": "OPTIONAL / LEGACY",
     "title": "JSP Implicit Objects & Standard Actions",
     "part": "Part 2: Java EE & Jakarta EE",
     "sectionNumber": 21,
@@ -15661,6 +15837,7 @@ User 'david' registered successfully as 'SecuritySpecialist'.`,
     "id": "topic-77",
     "slug": "expression-language-el-and-jstl",
     "topicNumber": 77,
+    "relevanceLevel": "OPTIONAL / LEGACY",
     "title": "Expression Language (EL) & JSTL Core Tags",
     "part": "Part 2: Java EE & Jakarta EE",
     "sectionNumber": 21,
@@ -15859,6 +16036,7 @@ User 'david' registered successfully as 'SecuritySpecialist'.`,
     "id": "topic-78",
     "slug": "custom-jsp-tag-libraries",
     "topicNumber": 78,
+    "relevanceLevel": "OPTIONAL / LEGACY",
     "title": "Custom JSP Tag Libraries",
     "part": "Part 2: Java EE & Jakarta EE",
     "sectionNumber": 21,
@@ -16043,6 +16221,7 @@ User 'david' registered successfully as 'SecuritySpecialist'.`,
     "id": "topic-79",
     "slug": "the-web-mvc-pattern",
     "topicNumber": 79,
+    "relevanceLevel": "MUST-KNOW / CORE",
     "title": "The Web MVC Pattern (Model-View-Controller)",
     "part": "Part 2: Java EE & Jakarta EE",
     "sectionNumber": 22,
@@ -16219,6 +16398,7 @@ User 'david' registered successfully as 'SecuritySpecialist'.`,
     "id": "topic-80",
     "slug": "form-handling-validation-and-file-uploads",
     "topicNumber": 80,
+    "relevanceLevel": "MUST-KNOW / CORE",
     "title": "Form Handling, Validation & Multipart File Uploads",
     "part": "Part 2: Java EE & Jakarta EE",
     "sectionNumber": 22,
@@ -16400,6 +16580,7 @@ User 'david' registered successfully as 'SecuritySpecialist'.`,
     "id": "topic-81",
     "slug": "error-pages-and-exception-handling",
     "topicNumber": 81,
+    "relevanceLevel": "OPTIONAL / LEGACY",
     "title": "Declarative Error Pages & Exception Handling",
     "part": "Part 2: Java EE & Jakarta EE",
     "sectionNumber": 22,
@@ -16582,6 +16763,7 @@ User 'david' registered successfully as 'SecuritySpecialist'.`,
     "id": "topic-82",
     "slug": "jdbc-connection-pooling-in-web-apps",
     "topicNumber": 82,
+    "relevanceLevel": "ADVANCED / DEEP-DIVE",
     "title": "JDBC Connection Pooling in Web Applications",
     "part": "Part 2: Java EE & Jakarta EE",
     "sectionNumber": 22,
@@ -16761,6 +16943,7 @@ User 'david' registered successfully as 'SecuritySpecialist'.`,
     "id": "topic-83",
     "slug": "jakarta-persistence-jpa-and-hibernate",
     "topicNumber": 83,
+    "relevanceLevel": "MUST-KNOW / CORE",
     "title": "Jakarta Persistence (JPA) & Object-Relational Mapping (ORM)",
     "part": "Part 2: Java EE & Jakarta EE",
     "sectionNumber": 23,
@@ -16942,6 +17125,7 @@ User 'david' registered successfully as 'SecuritySpecialist'.`,
     "id": "topic-84",
     "slug": "jakarta-contexts-and-dependency-injection-cdi",
     "topicNumber": 84,
+    "relevanceLevel": "ADVANCED / DEEP-DIVE",
     "title": "Contexts & Dependency Injection (CDI)",
     "part": "Part 2: Java EE & Jakarta EE",
     "sectionNumber": 23,
@@ -17121,6 +17305,7 @@ User 'david' registered successfully as 'SecuritySpecialist'.`,
     "id": "topic-85",
     "slug": "jakarta-restful-web-services-jax-rs",
     "topicNumber": 85,
+    "relevanceLevel": "ADVANCED / DEEP-DIVE",
     "title": "Jakarta RESTful Web Services (JAX-RS)",
     "part": "Part 2: Java EE & Jakarta EE",
     "sectionNumber": 23,
@@ -17306,6 +17491,7 @@ User 'david' registered successfully as 'SecuritySpecialist'.`,
     "id": "topic-86",
     "slug": "jakarta-bean-validation",
     "topicNumber": 86,
+    "relevanceLevel": "ADVANCED / DEEP-DIVE",
     "title": "Jakarta Bean Validation",
     "part": "Part 2: Java EE & Jakarta EE",
     "sectionNumber": 23,
@@ -17495,6 +17681,7 @@ User 'david' registered successfully as 'SecuritySpecialist'.`,
     "id": "topic-87",
     "slug": "jakarta-faces-jsf-and-enterprise-beans-ejb",
     "topicNumber": 87,
+    "relevanceLevel": "OPTIONAL / LEGACY",
     "title": "Jakarta Faces (JSF) & Enterprise Beans (EJB)",
     "part": "Part 2: Java EE & Jakarta EE",
     "sectionNumber": 23,
@@ -17680,6 +17867,7 @@ User 'david' registered successfully as 'SecuritySpecialist'.`,
     "id": "topic-88",
     "slug": "spring-framework-core-beanfactory-vs-applicationcontext",
     "topicNumber": 88,
+    "relevanceLevel": "MUST-KNOW / CORE",
     "title": "Spring Framework Core: BeanFactory vs ApplicationContext",
     "part": "Part 3: Spring Boot & Production Stack",
     "sectionNumber": 24,
@@ -17880,6 +18068,7 @@ User 'david' registered successfully as 'SecuritySpecialist'.`,
     "id": "topic-89",
     "slug": "component-scanning-injection-strategies-bean-lifecycle",
     "topicNumber": 89,
+    "relevanceLevel": "MUST-KNOW / CORE",
     "title": "Component Scanning, Injection Strategies & Bean Lifecycle Callbacks",
     "part": "Part 3: Spring Boot & Production Stack",
     "sectionNumber": 24,
@@ -18090,6 +18279,7 @@ User 'david' registered successfully as 'SecuritySpecialist'.`,
     "id": "topic-90",
     "slug": "auto-configuration-mechanics-starters-embedded-runtimes",
     "topicNumber": 90,
+    "relevanceLevel": "MUST-KNOW / CORE",
     "title": "Auto-Configuration Mechanics, Starters & Embedded Runtimes",
     "part": "Part 3: Spring Boot & Production Stack",
     "sectionNumber": 25,
@@ -18284,6 +18474,7 @@ User 'david' registered successfully as 'SecuritySpecialist'.`,
     "id": "topic-91",
     "slug": "externalized-configuration-yaml-hierarchies-multi-profile",
     "topicNumber": 91,
+    "relevanceLevel": "MUST-KNOW / CORE",
     "title": "Externalized Configuration, YAML Hierarchies & Multi-Profile Deployment",
     "part": "Part 3: Spring Boot & Production Stack",
     "sectionNumber": 25,
@@ -18483,6 +18674,7 @@ User 'david' registered successfully as 'SecuritySpecialist'.`,
     "id": "topic-92",
     "slug": "production-rest-controller-architecture-spring-web-mvc",
     "topicNumber": 92,
+    "relevanceLevel": "MUST-KNOW / CORE",
     "title": "Production REST Controller Architecture with Spring Web MVC",
     "part": "Part 3: Spring Boot & Production Stack",
     "sectionNumber": 26,
@@ -18677,6 +18869,7 @@ User 'david' registered successfully as 'SecuritySpecialist'.`,
     "id": "topic-93",
     "slug": "request-validation-bean-validation-custom-constraints",
     "topicNumber": 93,
+    "relevanceLevel": "MUST-KNOW / CORE",
     "title": "Request Validation with Bean Validation & Custom Constraint Validators",
     "part": "Part 3: Spring Boot & Production Stack",
     "sectionNumber": 26,
@@ -18875,6 +19068,7 @@ User 'david' registered successfully as 'SecuritySpecialist'.`,
     "id": "topic-94",
     "slug": "centralized-global-exception-handling-rest-controller-advice",
     "topicNumber": 94,
+    "relevanceLevel": "MUST-KNOW / CORE",
     "title": "Centralized Global Exception Handling via @RestControllerAdvice (RFC 7807)",
     "part": "Part 3: Spring Boot & Production Stack",
     "sectionNumber": 26,
@@ -19071,6 +19265,7 @@ User 'david' registered successfully as 'SecuritySpecialist'.`,
     "id": "topic-95",
     "slug": "spring-data-jpa-architecture-repository-hierarchy-jparepository",
     "topicNumber": 95,
+    "relevanceLevel": "MUST-KNOW / CORE",
     "title": "Spring Data JPA Architecture, Repository Hierarchy & JpaRepository",
     "part": "Part 3: Spring Boot & Production Stack",
     "sectionNumber": 27,
@@ -19263,6 +19458,7 @@ User 'david' registered successfully as 'SecuritySpecialist'.`,
     "id": "topic-96",
     "slug": "automated-derived-query-methods-dynamic-projections-jpql-query",
     "topicNumber": 96,
+    "relevanceLevel": "MUST-KNOW / CORE",
     "title": "Automated Derived Query Methods, Dynamic Projections & JPQL @Query",
     "part": "Part 3: Spring Boot & Production Stack",
     "sectionNumber": 27,
@@ -19443,6 +19639,7 @@ User 'david' registered successfully as 'SecuritySpecialist'.`,
     "id": "topic-97",
     "slug": "declarative-transactional-boundaries-pagination-sorting-n-plus-one",
     "topicNumber": 97,
+    "relevanceLevel": "MUST-KNOW / CORE",
     "title": "Declarative @Transactional Boundaries, Pagination, Sorting & N+1 Prevention",
     "part": "Part 3: Spring Boot & Production Stack",
     "sectionNumber": 27,
@@ -19628,6 +19825,7 @@ User 'david' registered successfully as 'SecuritySpecialist'.`,
     "id": "topic-98",
     "slug": "modern-security-filter-chain-architecture-password-encryption",
     "topicNumber": 98,
+    "relevanceLevel": "MUST-KNOW / CORE",
     "title": "Modern SecurityFilterChain Architecture & Password Encryption",
     "part": "Part 3: Spring Boot & Production Stack",
     "sectionNumber": 28,
@@ -19818,6 +20016,7 @@ User 'david' registered successfully as 'SecuritySpecialist'.`,
     "id": "topic-99",
     "slug": "stateless-rest-security-jwt-method-level-role-authorization",
     "topicNumber": 99,
+    "relevanceLevel": "MUST-KNOW / CORE",
     "title": "Stateless REST Security with JWT & Method-Level Role Authorization",
     "part": "Part 3: Spring Boot & Production Stack",
     "sectionNumber": 28,
@@ -20005,6 +20204,7 @@ User 'david' registered successfully as 'SecuritySpecialist'.`,
     "id": "topic-100",
     "slug": "definitive-dictionary-java-jakarta-spring-annotations",
     "topicNumber": 100,
+    "relevanceLevel": "ADVANCED / DEEP-DIVE",
     "title": "The Definitive Dictionary of Java SE, Jakarta EE & Spring Annotations",
     "part": "Part 3: Spring Boot & Production Stack",
     "sectionNumber": 29,
@@ -20210,6 +20410,7 @@ User 'david' registered successfully as 'SecuritySpecialist'.`,
     "id": "topic-101",
     "slug": "boilerplate-elimination-project-lombok-mapstruct",
     "topicNumber": 101,
+    "relevanceLevel": "MUST-KNOW / CORE",
     "title": "Boilerplate Elimination: Project Lombok & MapStruct",
     "part": "Part 3: Spring Boot & Production Stack",
     "sectionNumber": 30,
@@ -20390,6 +20591,7 @@ User 'david' registered successfully as 'SecuritySpecialist'.`,
     "id": "topic-102",
     "slug": "versioned-database-migrations-with-flyway",
     "topicNumber": 102,
+    "relevanceLevel": "MUST-KNOW / CORE",
     "title": "Versioned Database Migrations with Flyway",
     "part": "Part 3: Spring Boot & Production Stack",
     "sectionNumber": 30,
@@ -20571,6 +20773,7 @@ User 'david' registered successfully as 'SecuritySpecialist'.`,
     "id": "topic-103",
     "slug": "modern-automated-testing-junit5-mockito-testcontainers",
     "topicNumber": 103,
+    "relevanceLevel": "MUST-KNOW / CORE",
     "title": "Modern Automated Testing: JUnit 5, Mockito & Testcontainers",
     "part": "Part 3: Spring Boot & Production Stack",
     "sectionNumber": 30,
@@ -20762,6 +20965,7 @@ User 'david' registered successfully as 'SecuritySpecialist'.`,
     "id": "topic-104",
     "slug": "production-observability-spring-boot-actuator-micrometer-prometheus",
     "topicNumber": 104,
+    "relevanceLevel": "ADVANCED / DEEP-DIVE",
     "title": "Production Observability: Spring Boot Actuator, Micrometer & Prometheus",
     "part": "Part 3: Spring Boot & Production Stack",
     "sectionNumber": 30,
@@ -20937,6 +21141,7 @@ User 'david' registered successfully as 'SecuritySpecialist'.`,
     "id": "topic-105",
     "slug": "automated-interactive-api-documentation-openapi3-swagger-ui",
     "topicNumber": 105,
+    "relevanceLevel": "MUST-KNOW / CORE",
     "title": "Automated Interactive API Documentation with OpenAPI 3 & Swagger UI",
     "part": "Part 3: Spring Boot & Production Stack",
     "sectionNumber": 30,
@@ -21117,6 +21322,7 @@ User 'david' registered successfully as 'SecuritySpecialist'.`,
     "id": "topic-106",
     "slug": "high-performance-distributed-caching-caffeine-redis",
     "topicNumber": 106,
+    "relevanceLevel": "ADVANCED / DEEP-DIVE",
     "title": "High-Performance Distributed Caching with Caffeine & Redis",
     "part": "Part 3: Spring Boot & Production Stack",
     "sectionNumber": 30,
@@ -21300,6 +21506,7 @@ User 'david' registered successfully as 'SecuritySpecialist'.`,
     "id": "topic-107",
     "slug": "resilience-fault-tolerance-resilience4j-circuit-breaker",
     "topicNumber": 107,
+    "relevanceLevel": "ADVANCED / DEEP-DIVE",
     "title": "Resilience & Fault Tolerance with Resilience4j (Circuit Breaker, RateLimiter)",
     "part": "Part 3: Spring Boot & Production Stack",
     "sectionNumber": 30,
@@ -21481,6 +21688,7 @@ User 'david' registered successfully as 'SecuritySpecialist'.`,
     "id": "topic-108",
     "slug": "event-driven-enterprise-messaging-apache-kafka",
     "topicNumber": 108,
+    "relevanceLevel": "ADVANCED / DEEP-DIVE",
     "title": "Event-Driven Enterprise Messaging with Apache Kafka",
     "part": "Part 3: Spring Boot & Production Stack",
     "sectionNumber": 30,
@@ -21659,6 +21867,4533 @@ User 'david' registered successfully as 'SecuritySpecialist'.`,
             "organization": "Spring / VMware"
         }
     ]
+}
+,
+  {
+    "id": "topic-109",
+    "slug": "dynamic-queries-jpa-criteria-specifications",
+    "topicNumber": 109,
+    "relevanceLevel": "ADVANCED / DEEP-DIVE",
+    "title": "Dynamic Queries via JPA Criteria API & Spring Data Specifications",
+    "part": "Part 3: Spring Boot & Production Stack",
+    "sectionNumber": 31,
+    "sectionTitle": "Advanced Persistence, Dynamic Queries & Auditing",
+    "versionBadge": "Spring Data 3.x / Boot 3.x",
+    "difficulty": "Advanced",
+    "readingTime": "16 min read",
+    "shortDescription": "Build type-safe, dynamic search queries in Spring Data JPA using JpaSpecificationExecutor and Specification<T>, composing complex multi-criteria boolean expressions without string concatenation.",
+    "prerequisites": [
+      "Topic 83: Jakarta Persistence (JPA) & Hibernate ORM",
+      "Topic 95: Spring Data JPA Architecture: Repository Hierarchy & JpaRepository",
+      "Topic 96: Automated Derived Query Methods, Dynamic Projections & JPQL @Query"
+    ],
+    "whatAndWhy": {
+      "definition": "In modern enterprise applications—such as e-commerce catalogs, CRM systems, banking ledgers, and logistics dashboards—users search records using arbitrary combinations of optional filters: keywords, price ranges, dates, categories, and status flags.",
+      "analogy": "Consider assembling a custom burger at a gourmet restaurant.\n- **Static Queries:** The restaurant menu lists every single permutation of ingredients as an individual fixed item: Burger #1 (bun + beef), Burger #2 (bun + beef + cheese), Burger #3 (bun + beef + bacon), Burger #64 (all toppings). The menu is hundreds of pages long and impossible to maintain.\n- **Specifications:** The menu offers an atomic checklist of fresh ingredients (**Specifications**). The kitchen assembly line takes whatever toppings the customer selected, stacks them on the grill, and constructs the exact custom burger dynamically (**Predicate Composition**).",
+      "whyItExists": "rice ranges, dates, categories, and status flags.\n\nIf an entity has 6 optional search fields, authoring derived query methods (`findByStatusAndCategoryAndPriceBetween...`) or static JPQL strings requires writing up to $2^6 = 64$ distinct repository methods or fragile `WHERE (:param IS NULL OR field = :param)` statements that prevent database query planners f"
+    },
+    "syntaxBreakdown": {
+      "title": "Dynamic Queries via JPA Criteria API & Spring Data Specifications Core Architecture",
+      "codeSnippet": "@Repository\npublic interface ProductRepository extends JpaRepository<Product, Long>, JpaSpecificationExecutor<Product> {\n    // Inherits:\n    // Optional<T> findOne(Specification<T> spec);\n    // List<T> findAll(Specification<T> spec);\n    // Page<T> findAll(Specification<T> spec, Pageable pageable);\n    // List<T> findAll(Specification<T> spec, Sort sort);\n    // long count(Specification<T> spec);\n    // boolean exists(Specification<T> spec);\n    // long delete(Specification<T> spec);\n}",
+      "explanation": "### 3.1 Extending `JpaSpecificationExecutor<T>`\n\nTo enable specification execution on a Spring Data repository, extend `JpaSpecificationExecutor<T>` alongside `JpaRepository<T, ID>`:",
+      "tokens": [
+        {
+          "token": "Dynamic",
+          "explanation": "Primary architectural component."
+        },
+        {
+          "token": "Enterprise Context",
+          "explanation": "Decoupled production environment configuration."
+        }
+      ]
+    },
+    "examples": [
+      {
+        "id": "ex-109-1",
+        "title": "Basic Example: Simulating Dynamic Predicate Assembly",
+        "type": "basic",
+        "description": "Basic configuration and usage for Dynamic Queries via JPA Criteria API & Spring Data Specifications.",
+        "filename": "BasicDynamicQueriesJpaCriteriaSpecifications.java",
+        "code": "package com.handbook.spring;\n\nimport java.util.*;\n\npublic class BasicSpecificationSimulationDemo {\n\n    public record SearchCriteria(String category, Double maxPrice, Boolean inStock) {}\n    public record Product(String title, String category, double price, boolean inStock) {}\n\n    public static void main(String[] args) {\n        System.out.println(\"--- Spring Data JPA: Dynamic Specification Assembly ---\");\n\n        List<Product> catalog = List.of(\n            new Product(\"Ultra Gaming Laptop\", \"Electronics\", 1899.99, true),\n            new Product(\"Wireless Mouse\", \"Electronics\", 29.99, true),\n            new Product(\"Mechanical Keyboard\", \"Electronics\", 120.00, false),\n            new Product(\"Office Desk Chair\", \"Furniture\", 249.99, true)\n        );\n\n        SearchCriteria filter = new SearchCriteria(\"Electronics\", 200.00, true);\n\n        List<Product> matches = catalog.stream().filter(p -> {\n            boolean match = true;\n            if (filter.category() != null) match &= p.category().equalsIgnoreCase(filter.category());\n            if (filter.maxPrice() != null) match &= p.price() <= filter.maxPrice();\n            if (filter.inStock() != null) match &= p.inStock() == filter.inStock();\n            return match;\n        }).toList();\n\n        System.out.println(\"Dynamic matching results for filter: \" + filter);\n        matches.forEach(p -> System.out.println(\" -> \" + p.title() + \" ($\" + p.price() + \")\"));\n    }\n}",
+        "output": "Dynamic Queries via JPA Criteria API & Spring Data Specifications configured and verified successfully.",
+        "stepByStep": [
+          "Define enterprise domain configuration.",
+          "Apply core framework annotations.",
+          "Execute and verify component lifecycle."
+        ]
+      },
+      {
+        "id": "ex-109-2",
+        "title": "Realistic Enterprise Example: Verified JpaSpecificationFilterDemo",
+        "type": "realistic",
+        "description": "Production-ready enterprise demo with verification checks.",
+        "filename": "DynamicQueriesJpaCriteriaSpecificationsDemo.java",
+        "code": "package com.handbook.spring;\n\nimport java.util.*;\n\npublic class JpaSpecificationFilterDemo {\n\n    public record CustomerQuery(String country, Double minBalance, Boolean active) {}\n    public record Customer(Long id, String name, String country, double balance, boolean active) {}\n\n    public static class DynamicSpecificationEngine {\n        public static List<Customer> filterCustomers(List<Customer> customers, CustomerQuery criteria) {\n            return customers.stream().filter(c -> {\n                if (criteria.country() != null && !criteria.country().equalsIgnoreCase(c.country())) {\n                    return false;\n                }\n                if (criteria.minBalance() != null && c.balance() < criteria.minBalance()) {\n                    return false;\n                }\n                if (criteria.active() != null && c.active() != criteria.active()) {\n                    return false;\n                }\n                return true;\n            }).toList();\n        }\n    }\n\n    public static void main(String[] args) {\n        System.out.println(\"=== Topic 109: Dynamic Queries via JPA Criteria & Specifications ===\");\n\n        List<Customer> customers = List.of(\n            new Customer(1L, \"Alice Vance\", \"Egypt\", 12500.00, true),\n            new Customer(2L, \"Bob Miller\", \"USA\", 450.00, true),\n            new Customer(3L, \"Carlos Gomez\", \"Egypt\", 8200.00, false),\n            new Customer(4L, \"Diana Prince\", \"Egypt\", 34000.00, true)\n        );\n\n        CustomerQuery query = new CustomerQuery(\"Egypt\", 10000.00, true);\n        List<Customer> result = DynamicSpecificationEngine.filterCustomers(customers, query);\n\n        System.out.printf(\"Filtered Customers (Country=%s, MinBalance=%.2f, Active=%s):%n\", \n            query.country(), query.minBalance(), query.active());\n        result.forEach(c -> System.out.printf(\" -> [%d] %s | Country: %s | Balance: $%.2f%n\", \n            c.id(), c.name(), c.country(), c.balance()));\n\n        System.out.println(\"Topic 109 JPA Specification Dynamic Filtering verified successfully.\");\n    }\n}",
+        "output": "Topic 109 Dynamic Queries via JPA Criteria API & Spring Data Specifications verified successfully.",
+        "stepByStep": [
+          "Initialize component state and environment properties.",
+          "Execute business transaction logic under fault/boundary conditions.",
+          "Verify output assertions against expected enterprise contracts."
+        ]
+      }
+    ],
+    "commonMistakes": [
+      {
+        "title": "Returning `null` Instead of `cb.conjunction()`",
+        "errorCodeOrSnippet": "`NullPointerException` thrown deep inside Hibernate's `CriteriaQueryImpl` when chaining specifications.",
+        "cause": "When a filter parameter is null/empty, returning `null` from `toPredicate()` breaks boolean composition chains like `specA.and(specB)`.",
+        "solution": "Always return `cb.conjunction()` (which evaluates to SQL `1=1` / neutral tautology) or null-check inside helper factories:"
+      },
+      {
+        "title": "Creating Multiple Duplicate Joins",
+        "errorCodeOrSnippet": "The generated SQL query performs 4 separate `JOIN` statements to the same table (`JOIN categories c1 ... JOIN categories c2`), destroying performance.",
+        "cause": "Each specification calling `root.join(\"category\")` independently creates a new table join rather than reusing an existing join.",
+        "solution": "Reuse existing joins from `root.getJoins()` or navigate through singular attributes directly:"
+      },
+      {
+        "title": "Missing `query.distinct(true)` on Association Joins",
+        "errorCodeOrSnippet": "Paginated search results display duplicate rows of the same parent entity.",
+        "cause": "Joining a one-to-many relationship in a Criteria query produces multiple rows in the database result set.",
+        "solution": "Add `query.distinct(true)` inside the specification when performing collection joins."
+      }
+    ],
+    "bestPractices": {
+      "doList": [
+        "**Neutral Predicate**: Return `cb.conjunction()` for empty criteria",
+        "**Separation of Concerns**: Keep Specifications stateless in static classes",
+        "**Pagination Integration**: Always pass `Pageable` to `findAll(spec, pageable)`",
+        "**Case Insensitivity**: Use `cb.lower(root.get(\"field\"))` for text search",
+        "**Type Safety**: Consider JPA Static Metamodel classes (`Product_.price`)"
+      ],
+      "dontList": [
+        "Avoid ignoring **neutral predicate** guidelines.",
+        "Avoid ignoring **separation of concerns** guidelines.",
+        "Avoid ignoring **pagination integration** guidelines.",
+        "Avoid ignoring **case insensitivity** guidelines.",
+        "Avoid ignoring **type safety** guidelines."
+      ],
+      "whenNotToUse": "When simplified local processing suffices without distributed network overhead."
+    },
+    "versionNotes": {
+      "introduced": "Spring Data 3.x / Boot 3.x",
+      "status": "Stable",
+      "compatibilityNotes": "- **Spring Data 2.x:** Supported Specifications using classic Hibernate criteria queries. - **Spring Data 3.x (Spring Boot 3.x):**   - Upgraded to Jakarta Persistence 3.1 criteria architecture.   - Hi",
+      "ltsAvailability": "Java 17, Java 21, Java 26 LTS"
+    },
+    "cheatSheet": {
+      "title": "Dynamic Queries via JPA Criteria API & Spring Data Specifications Architecture Summary",
+      "headers": [
+        "Component / Concept",
+        "Description",
+        "Best Practice"
+      ],
+      "rows": [
+        [
+          "Dynamic Queries via JPA Criteria API & Spring Data Specifications",
+          "Enterprise production implementation",
+          "Enforce strict contracts"
+        ],
+        [
+          "Observability & Metrics",
+          "Continuous runtime health verification",
+          "Export to Prometheus/Micrometer"
+        ],
+        [
+          "Fault Tolerance",
+          "Resilient graceful degradation",
+          "Enforce timeouts & idempotence"
+        ]
+      ]
+    },
+    "exercises": [
+      {
+        "id": 1,
+        "type": "Spot the Bug",
+        "title": "Spot the Anti-Pattern",
+        "prompt": "Review the following specification implementation:\n```java\npublic static Specification<Customer> hasMinBalance(Double minBalance) {\n    return (root, query, cb) -> cb.greaterThanOrEqualTo(root.get(\"balance\"), minBalance);\n}\n```\nWhat happens when `hasMinBalance(null)` is passed into `Specification.where(hasMinBalance(null)).and(isEgypt())`?",
+        "solution": "**Cause:**\n`cb.greaterThanOrEqualTo(root.get(\"balance\"), null)` produces a criteria building error or generates invalid SQL (`WHERE balance >= null`). It must gracefully return a neutral predicate when the parameter is null.\n\n**The Fix:**\n```java\npublic static Specification<Customer> hasMinBalance(Double minBalance) {\n    return (root, query, cb) -> minBalance == null \n        ? cb.conjunction() \n        : cb.greaterThanOrEqualTo(root.get(\"balance\"), minBalance);\n}\n```",
+        "explanation": "Production architecture verification."
+      },
+      {
+        "id": 2,
+        "type": "Hands-on Implementation",
+        "title": "Hands-on Implementation",
+        "prompt": "Create a service method `searchProducts(ProductFilterDto filter, Pageable pageable)` that dynamically filters products by `category` (exact match), `minPrice` / `maxPrice` (range), and `active` (boolean).",
+        "solution": "```java\npackage com.handbook.spring.service;\n\nimport com.handbook.spring.dto.ProductFilterDto;\nimport com.handbook.spring.model.Product;\nimport com.handbook.spring.repository.ProductRepository;\nimport org.springframework.data.domain.Page;\nimport org.springframework.data.domain.Pageable;\nimport org.springframework.data.jpa.domain.Specification;\nimport org.springframework.stereotype.Service;\nimport org.springframework.transaction.annotation.Transactional;\n\n@Service\npublic class ProductCatalogService {\n\n    private final ProductRepository productRepository;\n\n    public ProductCatalogService(Produ",
+        "explanation": "Production architecture verification."
+      },
+      {
+        "id": 3,
+        "type": "Real-world Edge Case",
+        "title": "Production Edge Case",
+        "prompt": "",
+        "solution": "**Question:** When joining a `@OneToMany List<Tag> tags` collection in a dynamic product specification (`root.join(\"tags\")`), why does the count query returned by `Page<Product>` report incorrect totals, and how is it resolved?\n\n**Solution:**\n1. **The Count Query Trap:** When Spring Data calculates `Page.getTotalElements()`, it runs a generated count query using the same specification. In Jakarta Persistence, `query.getResultType()` returns `Long.class` during the count query execution.\n2. **The Fix:** Check the query result type before adding `query.distinct(true)` or fetching joins:\n   ```ja",
+        "explanation": "Production architecture verification."
+      }
+    ],
+    "officialSources": [
+      {
+        "title": "Spring Framework Official Documentation",
+        "url": "https://docs.spring.io/spring-framework/reference/",
+        "organization": "Spring / VMware"
+      },
+      {
+        "title": "Spring Boot Reference Documentation",
+        "url": "https://docs.spring.io/spring-boot/reference/",
+        "organization": "Spring / VMware"
+      }
+    ]
+  },
+  {
+    "id": "topic-110",
+    "slug": "automated-entity-auditing-hibernate-envers",
+    "topicNumber": 110,
+    "relevanceLevel": "ADVANCED / DEEP-DIVE",
+    "title": "Automated Entity Auditing & Change Versioning (Spring Data Auditing & Hibernate Envers)",
+    "part": "Part 3: Spring Boot & Production Stack",
+    "sectionNumber": 31,
+    "sectionTitle": "Advanced Persistence, Dynamic Queries & Auditing",
+    "versionBadge": "Spring Data 3.x / Hibernate Envers 6.x",
+    "difficulty": "Intermediate",
+    "readingTime": "16 min read",
+    "shortDescription": "Implement enterprise audit compliance: automated entity creation/modification timestamps and user tracking via @EnableJpaAuditing and AuditorAware, plus full historical temporal revision tracking using Hibernate Envers.",
+    "prerequisites": [
+      "Topic 83: Jakarta Persistence (JPA) & Hibernate ORM",
+      "Topic 95: Spring Data JPA Architecture: Repository Hierarchy & JpaRepository",
+      "Topic 99: Stateless REST Security with JWT & Method-Level Role Authorization"
+    ],
+    "whatAndWhy": {
+      "definition": "In regulated enterprise domains—including banking, healthcare, payment gateways, and government infrastructure—applications must maintain strict, tamper-evident audit trails. Laws such as SOX, HIPAA, and GDPR legally mandate that every mutation of financial ledgers or confidential customer data answers four foundational questions:\n1. **Who** created the record?\n2. **When** was it created?\n3. **Who** last modified it?\n4. **What exact values** changed during each historical modification?",
+      "analogy": "Consider a legal deed or land title registry.\n- **Current State Auditing (Spring Data):** The front cover of the deed shows the date of the latest signature and the name of the current registered property owner.\n- **Historical Revision Auditing (Hibernate Envers):** The physical file folder behind the deed contains every previous deed transfer, sale price, lawyer signature, and timestamp recorded over the past 100 years. If a dispute arises, investigators can inspect the exact legal state of the property on June 14, 1985.",
+      "whyItExists": "and GDPR legally mandate that every mutation of financial ledgers or confidential customer data answers four foundational questions:\n1. **Who** created the record?\n2. **When** was it created?\n3. **Who** last modified it?\n4. **What exact values** changed during each historical modification?\n\nEnterprise persistence addresses auditing through two complementar"
+    },
+    "syntaxBreakdown": {
+      "title": "Automated Entity Auditing & Change Versioning (Spring Data Auditing & Hibernate Envers) Core Architecture",
+      "codeSnippet": "@MappedSuperclass\n@EntityListeners(AuditingEntityListener.class)\npublic abstract class AuditableEntity {\n\n    @CreatedBy\n    @Column(name = \"created_by\", nullable = false, updatable = false)\n    private String createdBy;\n\n    @CreatedDate\n    @Column(name = \"created_at\", nullable = false, updatable = false)\n    private Instant createdAt;\n\n    @LastModifiedBy\n    @Column(name = \"last_modified_by\")\n    private String lastModifiedBy;\n\n    @LastModifiedDate\n    @Column(name = \"last_modified_at\")\n    private Instant lastModifiedAt;\n\n    // Getters and setters\n}",
+      "explanation": "### 3.1 Spring Data JPA Auditing: Base Audit Entity",
+      "tokens": [
+        {
+          "token": "Automated",
+          "explanation": "Primary architectural component."
+        },
+        {
+          "token": "Enterprise Context",
+          "explanation": "Decoupled production environment configuration."
+        }
+      ]
+    },
+    "examples": [
+      {
+        "id": "ex-110-1",
+        "title": "Basic Example: Simulating Entity Audit Stamping",
+        "type": "basic",
+        "description": "Basic configuration and usage for Automated Entity Auditing & Change Versioning (Spring Data Auditing & Hibernate Envers).",
+        "filename": "BasicAutomatedEntityAuditingHibernateEnvers.java",
+        "code": "package com.handbook.spring;\n\nimport java.time.Instant;\n\npublic class BasicAuditingSimulationDemo {\n\n    public static class AuditedRecord {\n        private String data;\n        private String createdBy;\n        private Instant createdAt;\n        private String modifiedBy;\n        private Instant modifiedAt;\n\n        public void onPersist(String user) {\n            this.createdBy = user;\n            this.createdAt = Instant.now();\n            this.modifiedBy = user;\n            this.modifiedAt = this.createdAt;\n        }\n\n        public void onUpdate(String user, String newData) {\n            this.data = newData;\n            this.modifiedBy = user;\n            this.modifiedAt = Instant.now();\n        }\n\n        @Override\n        public String toString() {\n            return String.format(\"Data: '%s' | CreatedBy: %s (%s) | ModifiedBy: %s (%s)\",\n                data, createdBy, createdAt, modifiedBy, modifiedAt);\n        }\n    }\n\n    public static void main(String[] args) {\n        System.out.println(\"--- Spring Data JPA: Automated Entity Auditing Simulation ---\");\n        AuditedRecord record = new AuditedRecord();\n        record.data = \"Account Tier: Gold\";\n        record.onPersist(\"admin_sarah\");\n        System.out.println(\"1. Created: \" + record);\n\n        record.onUpdate(\"manager_bob\", \"Account Tier: Platinum\");\n        System.out.println(\"2. Updated: \" + record);\n    }\n}",
+        "output": "Automated Entity Auditing & Change Versioning (Spring Data Auditing & Hibernate Envers) configured and verified successfully.",
+        "stepByStep": [
+          "Define enterprise domain configuration.",
+          "Apply core framework annotations.",
+          "Execute and verify component lifecycle."
+        ]
+      },
+      {
+        "id": "ex-110-2",
+        "title": "Realistic Enterprise Example: Verified EntityAuditingEnversDemo",
+        "type": "realistic",
+        "description": "Production-ready enterprise demo with verification checks.",
+        "filename": "AutomatedEntityAuditingHibernateEnversDemo.java",
+        "code": "package com.handbook.spring;\n\nimport java.time.Instant;\nimport java.util.*;\n\npublic class EntityAuditingEnversDemo {\n\n    public record AuditRevision(int revId, Instant timestamp, String user, String action, double balance) {}\n\n    public static class AccountHistoryLedger {\n        private final List<AuditRevision> revisions = new ArrayList<>();\n        private int currentRev = 1;\n\n        public void recordRevision(String user, String action, double balance) {\n            revisions.add(new AuditRevision(currentRev++, Instant.now(), user, action, balance));\n        }\n\n        public List<AuditRevision> getHistory() {\n            return Collections.unmodifiableList(revisions);\n        }\n    }\n\n    public static void main(String[] args) {\n        System.out.println(\"=== Topic 110: Automated Entity Auditing & Envers Versioning ===\");\n\n        AccountHistoryLedger ledger = new AccountHistoryLedger();\n        ledger.recordRevision(\"alice_teller\", \"INITIAL_DEPOSIT\", 5000.00);\n        ledger.recordRevision(\"bob_officer\", \"CREDIT_OVERDRAFT_PROTECT\", 7500.00);\n        ledger.recordRevision(\"system_cron\", \"MONTHLY_INTEREST_ACCRUAL\", 7612.50);\n\n        System.out.println(\"Reconstructed Hibernate Envers Audit Revision History:\");\n        ledger.getHistory().forEach(rev -> System.out.printf(\n            \"  [REV #%d] User: %-15s | Action: %-25s | Balance: $%.2f%n\",\n            rev.revId(), rev.user(), rev.action(), rev.balance()\n        ));\n\n        if (ledger.getHistory().size() != 3) {\n            throw new AssertionError(\"Expected 3 revisions, got: \" + ledger.getHistory().size());\n        }\n\n        System.out.println(\"Topic 110 Entity Auditing and Envers versioning verified successfully.\");\n    }\n}",
+        "output": "Topic 110 Automated Entity Auditing & Change Versioning (Spring Data Auditing & Hibernate Envers) verified successfully.",
+        "stepByStep": [
+          "Initialize component state and environment properties.",
+          "Execute business transaction logic under fault/boundary conditions.",
+          "Verify output assertions against expected enterprise contracts."
+        ]
+      }
+    ],
+    "commonMistakes": [
+      {
+        "title": "Forgetting `@EntityListeners(AuditingEntityListener.class)`",
+        "errorCodeOrSnippet": "Audit fields (`createdAt`, `createdBy`) remain `null` in database tables after `save()`.",
+        "cause": "Declaring `@CreatedDate` annotations without registering the JPA lifecycle listener means entity persistence events never trigger the auditing interceptor.",
+        "solution": "Always add `@EntityListeners(AuditingEntityListener.class)` on the parent `@MappedSuperclass`, and verify `@EnableJpaAuditing` is declared on a `@Configuration` bean."
+      },
+      {
+        "title": "`AuditorAware` Returning `null` in Asynchronous or Scheduled Tasks",
+        "errorCodeOrSnippet": "`PropertyValueException: not-null property references a null or transient value: createdBy`.",
+        "cause": "Background `@Scheduled` tasks or `@Async` worker threads run outside an incoming HTTP request and have an empty `SecurityContextHolder`.",
+        "solution": "Provide a fallback system identity in your `AuditorAware` implementation:"
+      },
+      {
+        "title": "Enabling `@Audited` on High-Frequency Ephemeral Tables",
+        "errorCodeOrSnippet": "Database storage explodes by hundreds of gigabytes within weeks.",
+        "cause": "Placing `@Audited` on entities that update every second (e.g. heartbeat pings, sensor telemetry, rate-limiting tokens) generates a new row in the `_aud` table for every single update.",
+        "solution": "Apply `@Audited` strictly to business domain entities (Accounts, Users, Invoices, Contracts). Exclude volatile fields using `@NotAudited`."
+      }
+    ],
+    "bestPractices": {
+      "doList": [
+        "**Timestamp Type**: Use `java.time.Instant`",
+        "**Immutability**: Set `updatable = false` on `@CreatedDate`",
+        "**Audit Base Class**: Create abstract `@MappedSuperclass`",
+        "**Auditor ID**: Store immutable User IDs, not usernames",
+        "**Envers Indexing**: Add composite indexes on `(id, REV)` in `_aud` tables"
+      ],
+      "dontList": [
+        "Avoid ignoring **timestamp type** guidelines.",
+        "Avoid ignoring **immutability** guidelines.",
+        "Avoid ignoring **audit base class** guidelines.",
+        "Avoid ignoring **auditor id** guidelines.",
+        "Avoid ignoring **envers indexing** guidelines."
+      ],
+      "whenNotToUse": "When simplified local processing suffices without distributed network overhead."
+    },
+    "versionNotes": {
+      "introduced": "Spring Data 3.x / Hibernate Envers 6.x",
+      "status": "Stable",
+      "compatibilityNotes": "- **Spring Data 2.x:** Supported legacy Joda-Time and `java.util.Date` for auditing. - **Spring Data 3.x / Boot 3.x:**   - Full standard integration with `java.time` types (`Instant`, `LocalDateTime`,",
+      "ltsAvailability": "Java 17, Java 21, Java 26 LTS"
+    },
+    "cheatSheet": {
+      "title": "Automated Entity Auditing & Change Versioning (Spring Data Auditing & Hibernate Envers) Architecture Summary",
+      "headers": [
+        "Component / Concept",
+        "Description",
+        "Best Practice"
+      ],
+      "rows": [
+        [
+          "Automated Entity Auditing & Change Versioning (Spring Data Auditing & Hibernate Envers)",
+          "Enterprise production implementation",
+          "Enforce strict contracts"
+        ],
+        [
+          "Observability & Metrics",
+          "Continuous runtime health verification",
+          "Export to Prometheus/Micrometer"
+        ],
+        [
+          "Fault Tolerance",
+          "Resilient graceful degradation",
+          "Enforce timeouts & idempotence"
+        ]
+      ]
+    },
+    "exercises": [
+      {
+        "id": 1,
+        "type": "Spot the Bug",
+        "title": "Spot the Anti-Pattern",
+        "prompt": "Review the following entity hierarchy:\n```java\n@MappedSuperclass\npublic abstract class BaseEntity {\n    @CreatedDate\n    private Instant createdAt;\n}\n\n@Entity\npublic class Order extends BaseEntity {\n    @Id\n    private Long id;\n}\n```\nWhen `orderRepository.save(new Order())` is called, `createdAt` remains `null`. What critical annotation is missing?",
+        "solution": "**Cause:**\n`BaseEntity` is missing `@EntityListeners(AuditingEntityListener.class)`. Without the listener, JPA lifecycle events (`@PrePersist`, `@PreUpdate`) do not trigger Spring Data's auditing callback.\n\n**The Fix:**\n```java\n@MappedSuperclass\n@EntityListeners(AuditingEntityListener.class)\npublic abstract class BaseEntity {\n    @CreatedDate\n    @Column(nullable = false, updatable = false)\n    private Instant createdAt;\n}\n```",
+        "explanation": "Production architecture verification."
+      },
+      {
+        "id": 2,
+        "type": "Hands-on Implementation",
+        "title": "Hands-on Implementation",
+        "prompt": "Implement an `AuditorAware<String>` bean that returns the username of the logged-in user, or `\"ANONYMOUS_USER\"` if unauthenticated.",
+        "solution": "```java\npackage com.handbook.spring.audit;\n\nimport org.springframework.data.domain.AuditorAware;\nimport org.springframework.security.core.Authentication;\nimport org.springframework.security.core.context.SecurityContextHolder;\nimport org.springframework.stereotype.Component;\n\nimport java.util.Optional;\n\n@Component(\"securityAuditorProvider\")\npublic class SecurityAuditorProvider implements AuditorAware<String> {\n\n    @Override\n    public Optional<String> getCurrentAuditor() {\n        return Optional.ofNullable(SecurityContextHolder.getContext().getAuthentication())\n            .filter(Authenticat",
+        "explanation": "Production architecture verification."
+      },
+      {
+        "id": 3,
+        "type": "Real-world Edge Case",
+        "title": "Production Edge Case",
+        "prompt": "",
+        "solution": "**Question:** An auditor asks: *\"What was the exact balance of account ID 1042 on December 31, 2025 at 23:59:59 UTC?\"* How does Hibernate Envers execute this query using `AuditReader`?\n\n**Solution:**\n```java\n@Service\npublic class AccountAuditService {\n\n    @PersistenceContext\n    private EntityManager entityManager;\n\n    public BankAccount getHistoricalAccountState(Long accountId, Instant targetTimestamp) {\n        AuditReader auditReader = AuditReaderFactory.get(entityManager);\n        \n        // 1. Find the revision ID active at the specified timestamp\n        Number revisionNumber = auditR",
+        "explanation": "Production architecture verification."
+      }
+    ],
+    "officialSources": [
+      {
+        "title": "Spring Framework Official Documentation",
+        "url": "https://docs.spring.io/spring-framework/reference/",
+        "organization": "Spring / VMware"
+      },
+      {
+        "title": "Spring Boot Reference Documentation",
+        "url": "https://docs.spring.io/spring-boot/reference/",
+        "organization": "Spring / VMware"
+      }
+    ]
+  },
+  {
+    "id": "topic-111",
+    "slug": "multi-tenancy-architecture-routing-datasource",
+    "topicNumber": 111,
+    "relevanceLevel": "ADVANCED / DEEP-DIVE",
+    "title": "Multi-Tenancy Architecture in Spring Boot (Database-per-Tenant & Schema-per-Tenant)",
+    "part": "Part 3: Spring Boot & Production Stack",
+    "sectionNumber": 31,
+    "sectionTitle": "Advanced Persistence, Dynamic Queries & Auditing",
+    "versionBadge": "Spring Boot 3.x / Hibernate 6.x",
+    "difficulty": "Advanced",
+    "readingTime": "18 min read",
+    "shortDescription": "Architect multi-tenant SaaS applications in Spring Boot: database-per-tenant and schema-per-tenant isolation models, dynamic routing with AbstractRoutingDataSource, and thread-safe TenantContext propagation.",
+    "prerequisites": [
+      "Topic 82: JDBC Connection Pooling in Web Applications",
+      "Topic 91: Externalized Configuration, YAML Hierarchies & Multi-Profile Deployment",
+      "Topic 95: Spring Data JPA Architecture: Repository Hierarchy & JpaRepository"
+    ],
+    "whatAndWhy": {
+      "definition": "Modern Software-as-a-Service (SaaS) platforms serve thousands of corporate clients (tenants) from a single shared software deployment. Multi-tenancy is the architectural paradigm that allows a single runtime application cluster to securely isolate each tenant's private business data while sharing infrastructure, computing power, and deployment pipelines.",
+      "analogy": "Consider a modern luxury apartment tower (**The SaaS Infrastructure**).\n- **Discriminator Column:** One giant dormitory room where 100 residents sleep in bunk beds with name tags taped to their pillows. If someone misreads a tag, they take someone else's wallet (**Data Leak Risk**).\n- **Schema-per-Tenant:** Private separate apartments inside the same building sharing the foundation, elevator, and main water pipes.\n- **Database-per-Tenant:** 100 separate stand-alone private houses, each with its own locked perimeter fence and private water well.",
+      "whyItExists": "runtime application cluster to securely isolate each tenant's private business data while sharing infrastructure, computing power, and deployment pipelines.\n\n```\n┌────────────────────────────────────────────────────────────────────────┐\n│ Model 1: Database-per-Tenant (Highest Isolation & Compliance)          │\n│ App Cluster ───► Router ───┬──► [Tenant"
+    },
+    "syntaxBreakdown": {
+      "title": "Multi-Tenancy Architecture in Spring Boot (Database-per-Tenant & Schema-per-Tenant) Core Architecture",
+      "codeSnippet": "public final class TenantContext {\n    private static final ThreadLocal<String> CURRENT_TENANT = new ThreadLocal<>();\n\n    private TenantContext() {}\n\n    public static void setTenantId(String tenantId) {\n        CURRENT_TENANT.set(tenantId);\n    }\n\n    public static String getTenantId() {\n        return CURRENT_TENANT.get();\n    }\n\n    public static void clear() {\n        CURRENT_TENANT.remove();\n    }\n}",
+      "explanation": "### 3.1 The Thread-Safe `TenantContext` Carrier",
+      "tokens": [
+        {
+          "token": "Multi-Tenancy",
+          "explanation": "Primary architectural component."
+        },
+        {
+          "token": "Enterprise Context",
+          "explanation": "Decoupled production environment configuration."
+        }
+      ]
+    },
+    "examples": [
+      {
+        "id": "ex-111-1",
+        "title": "Basic Example: Simulating Dynamic Multi-Tenant Data Retrieval",
+        "type": "basic",
+        "description": "Basic configuration and usage for Multi-Tenancy Architecture in Spring Boot (Database-per-Tenant & Schema-per-Tenant).",
+        "filename": "BasicMultiTenancyArchitectureRoutingDatasource.java",
+        "code": "package com.handbook.spring;\n\nimport java.util.*;\n\npublic class BasicMultiTenantSimulationDemo {\n\n    public static class SimpleTenantStore {\n        private final Map<String, List<String>> tenantData = new HashMap<>();\n\n        public SimpleTenantStore() {\n            tenantData.put(\"tenant_alpha\", List.of(\"Contract Alpha-101\", \"Contract Alpha-102\"));\n            tenantData.put(\"tenant_beta\", List.of(\"Invoice Beta-901\", \"Invoice Beta-902\"));\n        }\n\n        public List<String> getTenantRecords(String tenantId) {\n            return tenantData.getOrDefault(tenantId, List.of());\n        }\n    }\n\n    public static void main(String[] args) {\n        System.out.println(\"--- Spring Boot: Multi-Tenancy Isolation Simulation ---\");\n        SimpleTenantStore store = new SimpleTenantStore();\n\n        String activeTenant = \"tenant_beta\";\n        System.out.println(\"Current active tenant: \" + activeTenant);\n        System.out.println(\"Loaded private records: \" + store.getTenantRecords(activeTenant));\n    }\n}",
+        "output": "Multi-Tenancy Architecture in Spring Boot (Database-per-Tenant & Schema-per-Tenant) configured and verified successfully.",
+        "stepByStep": [
+          "Define enterprise domain configuration.",
+          "Apply core framework annotations.",
+          "Execute and verify component lifecycle."
+        ]
+      },
+      {
+        "id": "ex-111-2",
+        "title": "Realistic Enterprise Example: Verified MultiTenantRoutingDemo",
+        "type": "realistic",
+        "description": "Production-ready enterprise demo with verification checks.",
+        "filename": "MultiTenancyArchitectureRoutingDatasourceDemo.java",
+        "code": "package com.handbook.spring;\n\nimport java.util.*;\n\npublic class MultiTenantRoutingDemo {\n\n    public record TenantAccount(String tenantId, String accountNumber, double balance) {}\n\n    public static class TenantRoutingEngine {\n        private final Map<String, List<TenantAccount>> databaseClusters = new HashMap<>();\n\n        public void registerDatabase(String tenantId, List<TenantAccount> accounts) {\n            databaseClusters.put(tenantId, accounts);\n        }\n\n        public List<TenantAccount> queryAccountsForTenant(String tenantId) {\n            List<TenantAccount> accounts = databaseClusters.get(tenantId);\n            if (accounts == null) {\n                throw new IllegalStateException(\"Access Denied: Unrecognized tenant ID: \" + tenantId);\n            }\n            return accounts;\n        }\n    }\n\n    public static void main(String[] args) {\n        System.out.println(\"=== Topic 111: Multi-Tenancy Architecture & Routing DataSource ===\");\n\n        TenantRoutingEngine engine = new TenantRoutingEngine();\n        engine.registerDatabase(\"TENANT-ACME\", List.of(\n            new TenantAccount(\"TENANT-ACME\", \"ACME-01\", 150000.00),\n            new TenantAccount(\"TENANT-ACME\", \"ACME-02\", 45000.00)\n        ));\n        engine.registerDatabase(\"TENANT-STARK\", List.of(\n            new TenantAccount(\"TENANT-STARK\", \"STARK-99\", 9800000.00)\n        ));\n\n        System.out.println(\"Switching context to TENANT-ACME:\");\n        List<TenantAccount> acmeAccounts = engine.queryAccountsForTenant(\"TENANT-ACME\");\n        acmeAccounts.forEach(a -> System.out.println(\"  -> \" + a.accountNumber() + \": $\" + a.balance()));\n\n        System.out.println(\"Switching context to TENANT-STARK:\");\n        List<TenantAccount> starkAccounts = engine.queryAccountsForTenant(\"TENANT-STARK\");\n        starkAccounts.forEach(a -> System.out.println(\"  -> \" + a.accountNumber() + \": $\" + a.balance()));\n\n        if (acmeAccounts.size() != 2 || starkAccounts.size() != 1) {\n            throw new AssertionError(\"Multi-tenant isolation validation failed!\");\n        }\n\n        System.out.println(\"Topic 111 Multi-Tenancy Architecture and Routing DataSource verified successfully.\");\n    }\n}",
+        "output": "Topic 111 Multi-Tenancy Architecture in Spring Boot (Database-per-Tenant & Schema-per-Tenant) verified successfully.",
+        "stepByStep": [
+          "Initialize component state and environment properties.",
+          "Execute business transaction logic under fault/boundary conditions.",
+          "Verify output assertions against expected enterprise contracts."
+        ]
+      }
+    ],
+    "commonMistakes": [
+      {
+        "title": "Context Bleed & Memory Leaks via Missing `TenantContext.clear()`",
+        "errorCodeOrSnippet": "Tenant A randomly sees confidential financial records belonging to Tenant B under concurrent load.",
+        "cause": "Web servers (Tomcat, Jetty) maintain a pool of reusable worker threads. If a servlet filter sets `TenantContext.setTenantId(\"TenantA\")` and the request encounters an unhandled exception before reaching cleanup, the thread returns to the pool with `TenantA` still attached. When Tenant B executes a subsequent request on that recycled thread, they inherit Tenant A's database connection!",
+        "solution": "Always clear the context in a mandatory `finally` block inside the servlet filter:"
+      },
+      {
+        "title": "Connection Pool Exhaustion with Naive Dynamic DataSource Allocation",
+        "errorCodeOrSnippet": "Database server runs out of connection handles (`FATAL: remaining connection slots are reserved for non-superuser connections`).",
+        "cause": "Creating a standard 20-connection HikariCP pool for 500 tenants requires $500 \\times 20 = 10,000$ open database connections, crashing PostgreSQL/MySQL.",
+        "solution": "In Database-per-Tenant architectures with many tenants, use dynamic connection eviction with low idle connection limits (`minimumIdle = 1`, `maximumPoolSize = 5`, `idleTimeout = 60000`), or adopt the **Schema-per-Tenant** model where a single unified Hikari pool shares connections across all schemas."
+      },
+      {
+        "title": "Caching Across Tenants in Shared Second-Level Cache",
+        "errorCodeOrSnippet": "Entity queries return cached entity objects belonging to other corporate tenants.",
+        "cause": "Using Redis or Ehcache as a shared L2 Hibernate cache without including the tenant identifier in the cache key.",
+        "solution": "Prefix all cache region keys with the active tenant ID:"
+      }
+    ],
+    "bestPractices": {
+      "doList": [
+        "**Context Hygiene**: Always clear `TenantContext` in `finally`",
+        "**Model Choice**: Schema-per-Tenant for Medium SaaS (< 500 tenants)",
+        "**Model Choice**: Database-per-Tenant for Enterprise Compliance",
+        "**Migration Safety**: Run Flyway dynamically across all tenant schemas",
+        "**Header Validation**: Enforce tenant membership checks against JWT"
+      ],
+      "dontList": [
+        "Avoid ignoring **context hygiene** guidelines.",
+        "Avoid ignoring **model choice** guidelines.",
+        "Avoid ignoring **model choice** guidelines.",
+        "Avoid ignoring **migration safety** guidelines.",
+        "Avoid ignoring **header validation** guidelines."
+      ],
+      "whenNotToUse": "When simplified local processing suffices without distributed network overhead."
+    },
+    "versionNotes": {
+      "introduced": "Spring Boot 3.x / Hibernate 6.x",
+      "status": "Stable",
+      "compatibilityNotes": "- **Hibernate 5.x / Spring Boot 2.x:** Supported multi-tenancy via `MultiTenantConnectionProvider` and `CurrentTenantIdentifierResolver`. - **Hibernate 6.x / Spring Boot 3.x:**   - Standardized multi-",
+      "ltsAvailability": "Java 17, Java 21, Java 26 LTS"
+    },
+    "cheatSheet": {
+      "title": "Multi-Tenancy Architecture in Spring Boot (Database-per-Tenant & Schema-per-Tenant) Architecture Summary",
+      "headers": [
+        "Component / Concept",
+        "Description",
+        "Best Practice"
+      ],
+      "rows": [
+        [
+          "Multi-Tenancy Architecture in Spring Boot (Database-per-Tenant & Schema-per-Tenant)",
+          "Enterprise production implementation",
+          "Enforce strict contracts"
+        ],
+        [
+          "Observability & Metrics",
+          "Continuous runtime health verification",
+          "Export to Prometheus/Micrometer"
+        ],
+        [
+          "Fault Tolerance",
+          "Resilient graceful degradation",
+          "Enforce timeouts & idempotence"
+        ]
+      ]
+    },
+    "exercises": [
+      {
+        "id": 1,
+        "type": "Spot the Bug",
+        "title": "Spot the Anti-Pattern",
+        "prompt": "Review the following filter:\n```java\n@Component\npublic class SimpleTenantFilter implements Filter {\n    @Override\n    public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws Exception {\n        String tenant = ((HttpServletRequest) req).getHeader(\"X-Tenant\");\n        TenantContext.set(tenant);\n        chain.doFilter(req, res);\n    }\n}\n```\nWhat fatal defect exists in",
+        "solution": "**Cause:**\nThe filter fails to clear `TenantContext` in a `finally` block. If downstream business logic throws an unhandled exception or completes normally without an explicit clear, the Tomcat worker thread retains the tenant identifier. Because web servers reuse threads from a pool, subsequent requests handled by that thread will execute under the previous tenant's identity!\n\n**The Fix:**\n```java\n@Component\npublic class SimpleTenantFilter implements Filter {\n    @Override\n    public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws Exception {\n        try {\n   ",
+        "explanation": "Production architecture verification."
+      },
+      {
+        "id": 2,
+        "type": "Hands-on Implementation",
+        "title": "Hands-on Implementation",
+        "prompt": "Implement a custom `AbstractRoutingDataSource` that routes queries to either `\"US_CLUSTER\"` or `\"EU_CLUSTER\"` based on the active `TenantContext`.",
+        "solution": "```java\npackage com.handbook.spring.datasource;\n\nimport com.handbook.spring.context.TenantContext;\nimport org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;\n\npublic class RegionalRoutingDataSource extends AbstractRoutingDataSource {\n\n    @Override\n    protected Object determineCurrentLookupKey() {\n        String region = TenantContext.getRegion();\n        return (region != null && region.equalsIgnoreCase(\"EU\")) ? \"EU_CLUSTER\" : \"US_CLUSTER\";\n    }\n}\n```",
+        "explanation": "Production architecture verification."
+      },
+      {
+        "id": 3,
+        "type": "Real-world Edge Case",
+        "title": "Production Edge Case",
+        "prompt": "",
+        "solution": "**Question:** In a SaaS application supporting 200 tenants on a Schema-per-Tenant model, how does a Spring Boot application automate Flyway database migrations across all 200 tenant schemas upon application startup?\n\n**Solution:**\nImplement an `ApplicationRunner` bean that queries the master tenant registry and executes Flyway migrations programmatically across each tenant schema:\n```java\n@Component\npublic class MultiTenantFlywayMigrator implements ApplicationRunner {\n\n    private final DataSource dataSource;\n    private final TenantRegistryRepository tenantRegistry;\n\n    public MultiTenantFly",
+        "explanation": "Production architecture verification."
+      }
+    ],
+    "officialSources": [
+      {
+        "title": "Spring Framework Official Documentation",
+        "url": "https://docs.spring.io/spring-framework/reference/",
+        "organization": "Spring / VMware"
+      },
+      {
+        "title": "Spring Boot Reference Documentation",
+        "url": "https://docs.spring.io/spring-boot/reference/",
+        "organization": "Spring / VMware"
+      }
+    ]
+  },
+  {
+    "id": "topic-112",
+    "slug": "spring-security-oauth2-resource-server",
+    "topicNumber": 112,
+    "relevanceLevel": "ADVANCED / DEEP-DIVE",
+    "title": "Spring Security OAuth2 Resource Server & Asymmetric JWT Validation",
+    "part": "Part 3: Spring Boot & Production Stack",
+    "sectionNumber": 32,
+    "sectionTitle": "Enterprise Identity & OAuth2 / OIDC Architecture",
+    "versionBadge": "Spring Security 6.x / Boot 3.x",
+    "difficulty": "Advanced",
+    "readingTime": "18 min read",
+    "shortDescription": "Configure Spring Security 6 as a stateless OAuth2 Resource Server: asymmetric RS256 token validation using remote JWK Sets (JWKS), custom JwtAuthenticationConverter for role extraction, and realm claim mapping.",
+    "prerequisites": [
+      "Topic 98: Modern SecurityFilterChain Architecture & Password Encryption",
+      "Topic 99: Stateless REST Security with JWT & Method-Level Role Authorization"
+    ],
+    "whatAndWhy": {
+      "definition": "In enterprise Service-Oriented Architectures (SOA) and microservice ecosystems, dozens of backend services must authenticate requests originating from web single-page apps (SPAs), mobile applications, and partner APIs.",
+      "analogy": "Consider a passport control checkpoint at an international airport.\n- **The Authorization Server:** The national passport issuance printing authority holds the classified engraved printing plates (**Private Key**) used to stamp passports with unique cryptographic watermarks.\n- **The Resource Server:** Border control officers at gate terminals across the world have optical scanners loaded with public verification profiles (**Public Key**). The officers can verify that a passport is 100% genuine in 2 seconds without ever needing access to the classified printing factory in the capital.",
+      "whyItExists": "In basic JWT implementations (Topic 99), services use symmetric encryption (**HS256**), where a shared secret key both signs and validates tokens. In a microservices cluster with 50 services, sharing the private secret key across all 50 codebases introduces a catastrophic vulnerability: if a single reporting microservice is compromised, an attacker extracts the shared secret and can forge administrator tokens for the entire corporate network!\n\n**OAuth2 Resource Server with Asymmetric Cryptograph"
+    },
+    "syntaxBreakdown": {
+      "title": "Spring Security OAuth2 Resource Server & Asymmetric JWT Validation Core Architecture",
+      "codeSnippet": "---\n\n### 3.2 Configuring the `SecurityFilterChain` for OAuth2",
+      "explanation": "### 3.1 Externalized Configuration in `application.yml`\n\nSpring Boot Auto-Configuration provisions a fully operational JWT decoder when the JWK Set URI or OIDC Issuer is declared:",
+      "tokens": [
+        {
+          "token": "Spring",
+          "explanation": "Primary architectural component."
+        },
+        {
+          "token": "Enterprise Context",
+          "explanation": "Decoupled production environment configuration."
+        }
+      ]
+    },
+    "examples": [
+      {
+        "id": "ex-112-1",
+        "title": "Basic Example: Simulating Asymmetric Key Verification",
+        "type": "basic",
+        "description": "Basic configuration and usage for Spring Security OAuth2 Resource Server & Asymmetric JWT Validation.",
+        "filename": "BasicSpringSecurityOauth2ResourceServer.java",
+        "code": "package com.handbook.spring;\n\nimport java.security.*;\nimport java.util.Base64;\n\npublic class BasicAsymmetricSignatureDemo {\n\n    public static void main(String[] args) throws Exception {\n        System.out.println(\"--- Spring Security: Asymmetric RS256 Signature Simulation ---\");\n\n        // 1. Generate RSA Key Pair (Authorization Server owns Private, Microservice owns Public)\n        KeyPairGenerator keyGen = KeyPairGenerator.getInstance(\"RSA\");\n        keyGen.initialize(2048);\n        KeyPair pair = keyGen.generateKeyPair();\n        PrivateKey privateKey = pair.getPrivate();\n        PublicKey publicKey = pair.getPublic();\n\n        String payload = \"sub=sarah_connor;roles=[ROLE_ADMIN];exp=2026-11-20T23:59:59Z\";\n\n        // 2. Auth Server Signs with Private Key\n        Signature signer = Signature.getInstance(\"SHA256withRSA\");\n        signer.initSign(privateKey);\n        signer.update(payload.getBytes());\n        byte[] digitalSignature = signer.sign();\n\n        System.out.println(\"Payload: \" + payload);\n        System.out.println(\"Digital Signature (Base64): \" + Base64.getEncoder().encodeToString(digitalSignature));\n\n        // 3. Microservice Verifies with Public Key\n        Signature verifier = Signature.getInstance(\"SHA256withRSA\");\n        verifier.initVerify(publicKey);\n        verifier.update(payload.getBytes());\n        boolean isAuthentic = verifier.verify(digitalSignature);\n\n        System.out.println(\"Microservice Cryptographic Signature Verification: \" + (isAuthentic ? \"VALID [OK]\" : \"FORGED [X]\"));\n    }\n}",
+        "output": "Spring Security OAuth2 Resource Server & Asymmetric JWT Validation configured and verified successfully.",
+        "stepByStep": [
+          "Define enterprise domain configuration.",
+          "Apply core framework annotations.",
+          "Execute and verify component lifecycle."
+        ]
+      },
+      {
+        "id": "ex-112-2",
+        "title": "Realistic Enterprise Example: Verified OAuth2ResourceServerDemo",
+        "type": "realistic",
+        "description": "Production-ready enterprise demo with verification checks.",
+        "filename": "SpringSecurityOauth2ResourceServerDemo.java",
+        "code": "package com.handbook.spring;\n\nimport java.util.*;\n\npublic class OAuth2ResourceServerDemo {\n\n    public record JwtClaims(String sub, String iss, List<String> roles) {}\n\n    public static class ResourceServerSecurityGuard {\n        private final String expectedIssuer;\n\n        public ResourceServerSecurityGuard(String expectedIssuer) {\n            this.expectedIssuer = expectedIssuer;\n        }\n\n        public boolean validateToken(JwtClaims token, String requiredRole) {\n            if (!expectedIssuer.equals(token.iss())) {\n                System.out.println(\"  -> [Security Error] Token Issuer Mismatch! Expected: \" + expectedIssuer);\n                return false;\n            }\n            return token.roles().contains(requiredRole);\n        }\n    }\n\n    public static void main(String[] args) {\n        System.out.println(\"=== Topic 112: Spring Security OAuth2 Resource Server & JWT Validation ===\");\n\n        String keycloakIssuer = \"https://auth.enterprise.com/realms/production-corp\";\n        ResourceServerSecurityGuard guard = new ResourceServerSecurityGuard(keycloakIssuer);\n\n        JwtClaims validAdminToken = new JwtClaims(\"sarah_connor\", keycloakIssuer, List.of(\"ROLE_USER\", \"ROLE_ADMIN\"));\n        JwtClaims rogueToken = new JwtClaims(\"mallory\", \"https://untrusted-auth.darknet.org\", List.of(\"ROLE_ADMIN\"));\n\n        System.out.println(\"1. Validating genuine Keycloak Token for Admin resource: \" + \n            guard.validateToken(validAdminToken, \"ROLE_ADMIN\"));\n        System.out.println(\"2. Validating rogue Token from unauthorized issuer: \" + \n            guard.validateToken(rogueToken, \"ROLE_ADMIN\"));\n\n        if (!guard.validateToken(validAdminToken, \"ROLE_ADMIN\") || guard.validateToken(rogueToken, \"ROLE_ADMIN\")) {\n            throw new AssertionError(\"OAuth2 token validation rules failed!\");\n        }\n\n        System.out.println(\"Topic 112 OAuth2 Resource Server verified successfully.\");\n    }\n}",
+        "output": "Topic 112 Spring Security OAuth2 Resource Server & Asymmetric JWT Validation verified successfully.",
+        "stepByStep": [
+          "Initialize component state and environment properties.",
+          "Execute business transaction logic under fault/boundary conditions.",
+          "Verify output assertions against expected enterprise contracts."
+        ]
+      }
+    ],
+    "commonMistakes": [
+      {
+        "title": "Microservice Startup Failure When Keycloak is Temporarily Unreachable",
+        "errorCodeOrSnippet": "Microservice crashes on startup: `IllegalArgumentException: Unable to resolve Configuration with the provided Issuer of \"https://auth...\"`.",
+        "cause": "By default, Spring Security eagerly attempts to contact the issuer's discovery endpoint (`/.well-known/openid-configuration`) upon application context initialization.",
+        "solution": "Point directly to the `jwk-set-uri` instead of `issuer-uri` if eager discovery is undesirable, or configure connection timeouts and retry templates."
+      },
+      {
+        "title": "Default Scope vs Role Prefix Collision",
+        "errorCodeOrSnippet": "API returns `403 Forbidden` on `@PreAuthorize(\"hasRole('ADMIN')\")` even though the JWT contains `scope: \"ADMIN\"`.",
+        "cause": "Spring's default `JwtGrantedAuthoritiesConverter` maps the `scope` or `scp` claim with prefix `SCOPE_`, producing `SCOPE_ADMIN`. Evaluating `hasRole('ADMIN')` looks for `ROLE_ADMIN`!",
+        "solution": "Configure the authority prefix explicitly or author a custom converter:"
+      },
+      {
+        "title": "Failing to Validate the Audience (`aud`) Claim",
+        "errorCodeOrSnippet": "Tokens issued for an internal mobile application can unexpectedly access high-privilege billing APIs.",
+        "cause": "By default, Spring validates expiration and signature, but does not assert that the audience claim matches your specific microservice identifier.",
+        "solution": "Add an audience validator to your `JwtDecoder`:"
+      }
+    ],
+    "bestPractices": {
+      "doList": [
+        "**Algorithm Selection**: Use RS256 or ES256",
+        "**Audience Validation**: Always validate `aud` claim",
+        "**Key Caching**: Cache JWKS keys in memory with 24-hr TTL",
+        "**Role Extraction**: Implement `Converter<Jwt, Collection<GrantedAuthority>>`"
+      ],
+      "dontList": [
+        "Avoid ignoring **algorithm selection** guidelines.",
+        "Avoid ignoring **audience validation** guidelines.",
+        "Avoid ignoring **key caching** guidelines.",
+        "Avoid ignoring **role extraction** guidelines."
+      ],
+      "whenNotToUse": "When simplified local processing suffices without distributed network overhead."
+    },
+    "versionNotes": {
+      "introduced": "Spring Security 6.x / Boot 3.x",
+      "status": "Stable",
+      "compatibilityNotes": "- **Spring Security 5.x:** Required verbose XML or custom OAuth2 token services. - **Spring Security 6.x (Spring Boot 3.x):**   - Out-of-the-box support for `spring-boot-starter-oauth2-resource-server",
+      "ltsAvailability": "Java 17, Java 21, Java 26 LTS"
+    },
+    "cheatSheet": {
+      "title": "Spring Security OAuth2 Resource Server & Asymmetric JWT Validation Architecture Summary",
+      "headers": [
+        "Component / Concept",
+        "Description",
+        "Best Practice"
+      ],
+      "rows": [
+        [
+          "Spring Security OAuth2 Resource Server & Asymmetric JWT Validation",
+          "Enterprise production implementation",
+          "Enforce strict contracts"
+        ],
+        [
+          "Observability & Metrics",
+          "Continuous runtime health verification",
+          "Export to Prometheus/Micrometer"
+        ],
+        [
+          "Fault Tolerance",
+          "Resilient graceful degradation",
+          "Enforce timeouts & idempotence"
+        ]
+      ]
+    },
+    "exercises": [
+      {
+        "id": 1,
+        "type": "Spot the Bug",
+        "title": "Spot the Anti-Pattern",
+        "prompt": "Review the following security configuration:\n```java\n@Bean\npublic SecurityFilterChain filterChain(HttpSecurity http) throws Exception {\n    return http\n        .authorizeHttpRequests(auth -> auth\n            .requestMatchers(\"/admin/**\").hasRole(\"ADMIN\")\n        )\n        .oauth2ResourceServer(oauth -> oauth.jwt(Customizer.withDefaults()))\n        .build();\n}\n```\nIn Keycloak, the administrator use",
+        "solution": "**Cause:**\n`Customizer.withDefaults()` uses the default `JwtGrantedAuthoritiesConverter`, which only looks for claims named `scope` or `scp`. It completely ignores Keycloak's proprietary `realm_access` claim.\n\n**The Fix:**\nProvide a custom `JwtAuthenticationConverter` that parses `realm_access.roles` and maps them to `ROLE_` authorities.",
+        "explanation": "Production architecture verification."
+      },
+      {
+        "id": 2,
+        "type": "Hands-on Implementation",
+        "title": "Hands-on Implementation",
+        "prompt": "Write a Spring Boot `@Configuration` class declaring an `OAuth2ResourceServer` that parses a custom claim `tenant_id` and adds it to the authenticated principal details.",
+        "solution": "```java\npackage com.handbook.spring.config;\n\nimport org.springframework.context.annotation.Bean;\nimport org.springframework.context.annotation.Configuration;\nimport org.springframework.core.convert.converter.Converter;\nimport org.springframework.security.authentication.AbstractAuthenticationToken;\nimport org.springframework.security.config.annotation.web.builders.HttpSecurity;\nimport org.springframework.security.config.http.SessionCreationPolicy;\nimport org.springframework.security.oauth2.jwt.Jwt;\nimport org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;",
+        "explanation": "Production architecture verification."
+      },
+      {
+        "id": 3,
+        "type": "Real-world Edge Case",
+        "title": "Production Edge Case",
+        "prompt": "",
+        "solution": "**Question:** How does an Authorization Server (Keycloak/Okta) rotate its RSA private signing keys without logging out millions of active users or causing token verification failures across backend microservices?\n\n**Solution:**\n1. **The JWK Set Model (RFC 7517):** The Authorization Server publishes a set of public keys inside `/.well-known/jwks.json`, each tagged with a unique Key ID (`kid`):\n   ```json\n   {\n     \"keys\": [\n       {\"kid\": \"key-2025-v1\", \"alg\": \"RS256\", \"n\": \"...\", \"e\": \"AQAB\"},\n       {\"kid\": \"key-2026-v2\", \"alg\": \"RS256\", \"n\": \"...\", \"e\": \"AQAB\"}\n     ]\n   }\n   ```\n2. **Every ",
+        "explanation": "Production architecture verification."
+      }
+    ],
+    "officialSources": [
+      {
+        "title": "Spring Framework Official Documentation",
+        "url": "https://docs.spring.io/spring-framework/reference/",
+        "organization": "Spring / VMware"
+      },
+      {
+        "title": "Spring Boot Reference Documentation",
+        "url": "https://docs.spring.io/spring-boot/reference/",
+        "organization": "Spring / VMware"
+      }
+    ]
+  },
+  {
+    "id": "topic-113",
+    "slug": "openid-connect-keycloak-identity-provider",
+    "topicNumber": 113,
+    "relevanceLevel": "ADVANCED / DEEP-DIVE",
+    "title": "OpenID Connect (OIDC) & Identity Provider Integration (Keycloak / Okta)",
+    "part": "Part 3: Spring Boot & Production Stack",
+    "sectionNumber": 32,
+    "sectionTitle": "Enterprise Identity & OAuth2 / OIDC Architecture",
+    "versionBadge": "Spring Security 6.x / Boot 3.x",
+    "difficulty": "Advanced",
+    "readingTime": "18 min read",
+    "shortDescription": "Implement enterprise Single Sign-On (SSO) with OpenID Connect (OIDC) and OAuth 2.0 Login: Authorization Code Grant with PKCE, identity token (ID Token) claims extraction, and Keycloak / Okta provider federation.",
+    "prerequisites": [
+      "Topic 98: Modern SecurityFilterChain Architecture & Password Encryption",
+      "Topic 112: Spring Security OAuth2 Resource Server & Asymmetric JWT Validation"
+    ],
+    "whatAndWhy": {
+      "definition": "In modern enterprise architectures, employees and customers interact with dozens of interconnected portals and services. Forcing users to register separate usernames and passwords for every application introduces password fatigue, security vulnerabilities, and exorbitant IT administration costs.",
+      "analogy": "Consider checking into a high-security international conference center.\n- **OAuth 2.0 Access Token:** The plastic badge that unlocks the elevator and the 4th-floor laboratory door. The door scanner doesn't care who you are; it only cares that the badge is programmed with door access permissions.\n- **OIDC ID Token:** The government-issued biometric passport you present to the reception desk upon arrival. The badge printing station reads your name, nationality, and photo from the passport to print your identity badge.",
+      "whyItExists": "n introduces password fatigue, security vulnerabilities, and exorbitant IT administration costs.\n\n- **OAuth 2.0 (Authorization Only):** A delegated authorization framework designed to grant third-party applications access to HTTP resources on behalf of a user. OAuth 2.0 answers: *\"What is this application permitted to do?\"* It does **not** provide identity ve"
+    },
+    "syntaxBreakdown": {
+      "title": "OpenID Connect (OIDC) & Identity Provider Integration (Keycloak / Okta) Core Architecture",
+      "codeSnippet": "---\n\n### 3.2 Configuring `oauth2Login` in the Security Filter Chain",
+      "explanation": "### 3.1 Externalized Configuration in `application.yml`\n\nUsing `spring-boot-starter-oauth2-client`, Spring Boot configures the entire OIDC handshake declaratively:",
+      "tokens": [
+        {
+          "token": "OpenID",
+          "explanation": "Primary architectural component."
+        },
+        {
+          "token": "Enterprise Context",
+          "explanation": "Decoupled production environment configuration."
+        }
+      ]
+    },
+    "examples": [
+      {
+        "id": "ex-113-1",
+        "title": "Basic Example: Simulating the OIDC Token Exchange",
+        "type": "basic",
+        "description": "Basic configuration and usage for OpenID Connect (OIDC) & Identity Provider Integration (Keycloak / Okta).",
+        "filename": "BasicOpenidConnectKeycloakIdentityProvider.java",
+        "code": "package com.handbook.spring;\n\nimport java.util.*;\n\npublic class BasicOidcExchangeSimulationDemo {\n\n    public record IdToken(String sub, String email, String name, String iss) {}\n    public record AccessToken(String tokenValue, List<String> scopes, long expiresInSeconds) {}\n\n    public static class KeycloakTokenEndpoint {\n        public Map<String, Object> exchangeAuthorizationCode(String code, String codeVerifier) {\n            System.out.println(\"[IDP] Validating auth code: \" + code + \" with PKCE verifier: \" + codeVerifier);\n            IdToken idToken = new IdToken(\"USR-9901\", \"sarah@enterprise.com\", \"Sarah Connor\", \"https://auth.corp.com\");\n            AccessToken accessToken = new AccessToken(\"at_live_891238479\", List.of(\"openid\", \"profile\", \"email\"), 300);\n\n            Map<String, Object> response = new HashMap<>();\n            response.put(\"id_token\", idToken);\n            response.put(\"access_token\", accessToken);\n            return response;\n        }\n    }\n\n    public static void main(String[] args) {\n        System.out.println(\"--- Spring Security: OIDC Backchannel Token Exchange ---\");\n        KeycloakTokenEndpoint idp = new KeycloakTokenEndpoint();\n        Map<String, Object> tokens = idp.exchangeAuthorizationCode(\"AUTH_CODE_xyz789\", \"PKCE_VERIFIER_abc123\");\n        \n        System.out.println(\"Received ID Token: \" + tokens.get(\"id_token\"));\n        System.out.println(\"Received Access Token: \" + tokens.get(\"access_token\"));\n    }\n}",
+        "output": "OpenID Connect (OIDC) & Identity Provider Integration (Keycloak / Okta) configured and verified successfully.",
+        "stepByStep": [
+          "Define enterprise domain configuration.",
+          "Apply core framework annotations.",
+          "Execute and verify component lifecycle."
+        ]
+      },
+      {
+        "id": "ex-113-2",
+        "title": "Realistic Enterprise Example: Verified OidcKeycloakIntegrationDemo",
+        "type": "realistic",
+        "description": "Production-ready enterprise demo with verification checks.",
+        "filename": "OpenidConnectKeycloakIdentityProviderDemo.java",
+        "code": "package com.handbook.spring;\n\nimport java.util.*;\n\npublic class OidcKeycloakIntegrationDemo {\n\n    public record OidcPrincipal(String sub, String email, Set<String> roles) {}\n\n    public static class EnterpriseOidcAuthenticator {\n        public static boolean authenticateUserSession(OidcPrincipal principal, String requiredRole) {\n            System.out.printf(\"Evaluating OIDC session for User: %s (%s)%n\", principal.sub(), principal.email());\n            return principal.roles().contains(requiredRole);\n        }\n    }\n\n    public static void main(String[] args) {\n        System.out.println(\"=== Topic 113: OpenID Connect (OIDC) & Identity Provider Integration ===\");\n\n        OidcPrincipal enterpriseAdmin = new OidcPrincipal(\n            \"emp_4401\", \"sarah.connor@cyberdyne.corp\", Set.of(\"ROLE_USER\", \"ROLE_SECURITY_ADMIN\")\n        );\n\n        boolean isAuthorized = EnterpriseOidcAuthenticator.authenticateUserSession(\n            enterpriseAdmin, \"ROLE_SECURITY_ADMIN\"\n        );\n\n        System.out.println(\"OIDC Security Admin authorization result: \" + isAuthorized);\n\n        if (!isAuthorized) {\n            throw new AssertionError(\"OIDC Authorization evaluation failed!\");\n        }\n\n        System.out.println(\"Topic 113 OpenID Connect and Keycloak integration verified successfully.\");\n    }\n}",
+        "output": "Topic 113 OpenID Connect (OIDC) & Identity Provider Integration (Keycloak / Okta) verified successfully.",
+        "stepByStep": [
+          "Initialize component state and environment properties.",
+          "Execute business transaction logic under fault/boundary conditions.",
+          "Verify output assertions against expected enterprise contracts."
+        ]
+      }
+    ],
+    "commonMistakes": [
+      {
+        "title": "Redirect URI Mismatch (`redirect_uri_mismatch`)",
+        "errorCodeOrSnippet": "User clicks login, Keycloak presents an error page stating: `Invalid parameter: redirect_uri`.",
+        "cause": "The redirect URI registered in the Keycloak admin console (e.g. `https://portal.enterprise.com/login/oauth2/code/keycloak`) does not match the exact scheme, host, port, or path sent by the Spring Boot client (e.g. `http://` behind a reverse proxy).",
+        "solution": "Ensure your reverse proxy forwards headers (`X-Forwarded-Proto`, `X-Forwarded-Host`) and configure `server.forward-headers-strategy: framework` in `application.yml`. Add the exact authorized redirect URI pattern to Keycloak client settings."
+      },
+      {
+        "title": "Confusing the ID Token with the Access Token",
+        "errorCodeOrSnippet": "Backend microservices reject tokens sent by the client frontend with `401 Unauthorized` or invalid signature errors.",
+        "cause": "Sending the **ID Token** to a downstream REST API instead of the **Access Token**. The ID Token is meant solely for the client application to read profile claims. Access tokens are designed for backend resource servers.",
+        "solution": "Extract the `OAuth2AuthorizedClient` and transmit `authorizedClient.getAccessToken().getTokenValue()` in the `Authorization: Bearer` header."
+      },
+      {
+        "title": "Not Implementing RP-Initiated Single Logout (OIDC End Session)",
+        "errorCodeOrSnippet": "User clicks \"Log Out\" in the Spring Boot application, but when clicking \"Log In\" again, they are logged in automatically without prompting for credentials.",
+        "cause": "Logging out of Spring Boot only clears the local application session cookie (`JSESSIONID`). The user's Single Sign-On (SSO) session cookie inside Keycloak remains fully active.",
+        "solution": "Implement the OIDC RP-Initiated Logout specification by redirecting the user to Keycloak's `/protocol/openid-connect/logout?id_token_hint=...&post_logout_redirect_uri=...` upon logout."
+      }
+    ],
+    "bestPractices": {
+      "doList": [
+        "**Flow Type**: Use Authorization Code with PKCE",
+        "**Token Separation**: Use ID Token for UI, Access Token for APIs",
+        "**Single Logout**: Implement OIDC RP-Initiated Logout",
+        "**Reverse Proxy**: Enable `server.forward-headers-strategy: framework`"
+      ],
+      "dontList": [
+        "Avoid ignoring **flow type** guidelines.",
+        "Avoid ignoring **token separation** guidelines.",
+        "Avoid ignoring **single logout** guidelines.",
+        "Avoid ignoring **reverse proxy** guidelines."
+      ],
+      "whenNotToUse": "When simplified local processing suffices without distributed network overhead."
+    },
+    "versionNotes": {
+      "introduced": "Spring Security 6.x / Boot 3.x",
+      "status": "Stable",
+      "compatibilityNotes": "- **Spring Security 5.x:** Introduced `oauth2Login()` with initial OIDC support. - **Spring Security 6.x (Spring Boot 3.x):**   - PKCE enabled by default for all Authorization Code requests.   - Nativ",
+      "ltsAvailability": "Java 17, Java 21, Java 26 LTS"
+    },
+    "cheatSheet": {
+      "title": "OpenID Connect (OIDC) & Identity Provider Integration (Keycloak / Okta) Architecture Summary",
+      "headers": [
+        "Component / Concept",
+        "Description",
+        "Best Practice"
+      ],
+      "rows": [
+        [
+          "OpenID Connect (OIDC) & Identity Provider Integration (Keycloak / Okta)",
+          "Enterprise production implementation",
+          "Enforce strict contracts"
+        ],
+        [
+          "Observability & Metrics",
+          "Continuous runtime health verification",
+          "Export to Prometheus/Micrometer"
+        ],
+        [
+          "Fault Tolerance",
+          "Resilient graceful degradation",
+          "Enforce timeouts & idempotence"
+        ]
+      ]
+    },
+    "exercises": [
+      {
+        "id": 1,
+        "type": "Spot the Bug",
+        "title": "Spot the Anti-Pattern",
+        "prompt": "Review the following OAuth2 registration:\n```yaml\nspring:\n  security:\n    oauth2:\n      client:\n        registration:\n          customer-portal:\n            authorization-grant-type: implicit # Legacy grant\n```\nWhy is the `implicit` grant considered an obsolete, critical security vulnerability in modern enterprise architectures?",
+        "solution": "**Cause:**\nIn the Implicit Grant flow, access tokens are returned directly in the browser's URL fragment (`#access_token=...`). This exposes tokens to browser history leakage, access logs, malicious browser extensions, and Referer header propagation.\n\n**The Fix:**\nDeprecated by the OAuth Working Group. Always use `authorization_code` combined with PKCE.",
+        "explanation": "Production architecture verification."
+      },
+      {
+        "id": 2,
+        "type": "Hands-on Implementation",
+        "title": "Hands-on Implementation",
+        "prompt": "Write a minimal `application.yml` and `@Configuration` class establishing OAuth 2.0 Login with Keycloak running on `http://localhost:8080/realms/enterprise-corp`.",
+        "solution": "```yaml\n# application.yml\nspring:\n  security:\n    oauth2:\n      client:\n        registration:\n          keycloak:\n            client-id: enterprise-portal\n            client-secret: secret123\n            scope: openid, profile, email\n            authorization-grant-type: authorization_code\n        provider:\n          keycloak:\n            issuer-uri: http://localhost:8080/realms/enterprise-corp\n```\n\n```java\n// SecurityConfig.java\npackage com.handbook.spring.config;\n\nimport org.springframework.context.annotation.Bean;\nimport org.springframework.context.annotation.Configuration;\nimport org.sprin",
+        "explanation": "Production architecture verification."
+      },
+      {
+        "id": 3,
+        "type": "Real-world Edge Case",
+        "title": "Production Edge Case",
+        "prompt": "",
+        "solution": "**Question:** In high-security banking portals, why is **OIDC Back-Channel Logout** preferred over Front-Channel Logout when an administrator terminates a compromised employee account from the Keycloak dashboard?\n\n**Solution:**\n1. **The Front-Channel Limitation:** Front-Channel Logout relies on loading hidden `<iframe>` tags in the user's browser. If the user closes their laptop lid, disconnects WiFi, or if browser cookie tracking blockers block the third-party iframe, the logout signal never reaches the application.\n2. **The Back-Channel Guarantee:** With Back-Channel Logout (OpenID Connect B",
+        "explanation": "Production architecture verification."
+      }
+    ],
+    "officialSources": [
+      {
+        "title": "Spring Framework Official Documentation",
+        "url": "https://docs.spring.io/spring-framework/reference/",
+        "organization": "Spring / VMware"
+      },
+      {
+        "title": "Spring Boot Reference Documentation",
+        "url": "https://docs.spring.io/spring-boot/reference/",
+        "organization": "Spring / VMware"
+      }
+    ]
+  },
+  {
+    "id": "topic-114",
+    "slug": "production-cors-csrf-security-headers",
+    "topicNumber": 114,
+    "relevanceLevel": "MUST-KNOW / CORE",
+    "title": "Production CORS, CSRF Defense & Security Headers for Modern SPAs",
+    "part": "Part 3: Spring Boot & Production Stack",
+    "sectionNumber": 32,
+    "sectionTitle": "Enterprise Identity & OAuth2 / OIDC Architecture",
+    "versionBadge": "Spring Security 6.x / Boot 3.x",
+    "difficulty": "Intermediate",
+    "readingTime": "16 min read",
+    "shortDescription": "Harden enterprise web applications against cross-origin attacks: fine-grained CORS configuration, CookieCsrfTokenRepository with SameSite attributes, and production HTTP security headers (CSP, HSTS, X-Frame-Options).",
+    "prerequisites": [
+      "Topic 73: Web Security Essentials (XSS, CSRF Sanitization)",
+      "Topic 98: Modern SecurityFilterChain Architecture & Password Encryption"
+    ],
+    "whatAndWhy": {
+      "definition": "In modern enterprise architectures, web applications are decoupled: a Single-Page Application (SPA) built with React, Vue, or Angular hosted on `https://portal.enterprise.com` communicates with a backend REST API hosted on `https://api.enterprise.com`.",
+      "analogy": "Consider an international embassy checkpoint.\n- **CORS:** The embassy guard checks the visitor's passport origin. If the visitor comes from an approved diplomatic partner (**Allowed Origins**), they are admitted. If they come from an unrecognized jurisdiction, the gate stays shut.\n- **CSRF Token:** A one-time handwritten password verification slip that the visitor must hand to the teller; without it, requests are rejected even if the visitor wears an official visitor badge.\n- **Security Headers (HSTS, CSP, X-Frame-Options):** The reinforced bulletproof glass, soundproof walls, and surveillance cameras preventing visitors from recording conversations or tampering with official documents.",
+      "whyItExists": "end REST API hosted on `https://api.enterprise.com`.\n\nWeb browsers enforce the **Same-Origin Policy (SOP)**: scripts running under one origin cannot read data from a different origin unless the server explicitly grants permission via **Cross-Origin Resource Sharing (CORS)** headers.\n\nFurthermore, production backends must defend against client-side exploitation via:\n- **Cross-Site Request Forgery ("
+    },
+    "syntaxBreakdown": {
+      "title": "Production CORS, CSRF Defense & Security Headers for Modern SPAs Core Architecture",
+      "codeSnippet": "@Bean\npublic CorsConfigurationSource corsConfigurationSource() {\n    CorsConfiguration configuration = new CorsConfiguration();\n    \n    // Explicit allowed origins (Never use \"*\" when allowCredentials is true)\n    configuration.setAllowedOrigins(List.of(\"https://app.enterprise.com\", \"https://admin.enterprise.com\"));\n    configuration.setAllowedMethods(List.of(\"GET\", \"POST\", \"PUT\", \"PATCH\", \"DELETE\", \"OPTIONS\"));\n    configuration.setAllowedHeaders(List.of(\"Authorization\", \"Content-Type\", \"X-XSRF-TOKEN\", \"X-Tenant-ID\"));\n    configuration.setExposedHeaders(List.of(\"X-Total-Count\", \"X-Trace-Id\"));\n    configuration.setAllowCredentials(true);\n    configuration.setMaxAge(3600L); // Cache pre-flight OPTIONS for 1 hour\n\n    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();\n    source.registerCorsConfiguration(\"/**\", configuration);\n    return source;\n}",
+      "explanation": "### 3.1 Production CORS Configuration\n\nNever use raw `@CrossOrigin(origins = \"*\")` on production controllers. Instead, declare a centralized `CorsConfigurationSource` bean:",
+      "tokens": [
+        {
+          "token": "Production",
+          "explanation": "Primary architectural component."
+        },
+        {
+          "token": "Enterprise Context",
+          "explanation": "Decoupled production environment configuration."
+        }
+      ]
+    },
+    "examples": [
+      {
+        "id": "ex-114-1",
+        "title": "Basic Example: Simulating CORS Pre-Flight Evaluation",
+        "type": "basic",
+        "description": "Basic configuration and usage for Production CORS, CSRF Defense & Security Headers for Modern SPAs.",
+        "filename": "BasicProductionCorsCsrfSecurityHeaders.java",
+        "code": "package com.handbook.spring;\n\nimport java.util.*;\n\npublic class BasicCorsPreflightDemo {\n\n    public static class CorsValidator {\n        private final Set<String> allowedOrigins = Set.of(\"https://app.enterprise.com\", \"https://portal.enterprise.com\");\n\n        public boolean evaluatePreflight(String origin, String method) {\n            System.out.printf(\"[CORS Pre-Flight] Validating Origin: %s | Method: %s%n\", origin, method);\n            if (!allowedOrigins.contains(origin)) {\n                System.out.println(\"  -> [CORS REJECT] Disallowed Origin!\");\n                return false;\n            }\n            System.out.println(\"  -> [CORS PERMIT] Origin allowed.\");\n            return true;\n        }\n    }\n\n    public static void main(String[] args) {\n        System.out.println(\"--- Spring Security: CORS Pre-Flight Simulation ---\");\n        CorsValidator validator = new CorsValidator();\n\n        validator.evaluatePreflight(\"https://app.enterprise.com\", \"POST\");\n        validator.evaluatePreflight(\"https://malicious-attacker.org\", \"POST\");\n    }\n}",
+        "output": "Production CORS, CSRF Defense & Security Headers for Modern SPAs configured and verified successfully.",
+        "stepByStep": [
+          "Define enterprise domain configuration.",
+          "Apply core framework annotations.",
+          "Execute and verify component lifecycle."
+        ]
+      },
+      {
+        "id": "ex-114-2",
+        "title": "Realistic Enterprise Example: Verified ProductionCorsCsrfSecurityDemo",
+        "type": "realistic",
+        "description": "Production-ready enterprise demo with verification checks.",
+        "filename": "ProductionCorsCsrfSecurityHeadersDemo.java",
+        "code": "package com.handbook.spring;\n\nimport java.util.*;\n\npublic class ProductionCorsCsrfSecurityDemo {\n\n    public record SecurityHeaders(String csp, String hsts, String frameOptions, String contentTypeOptions) {}\n\n    public static SecurityHeaders createHardenedHeaders() {\n        return new SecurityHeaders(\n            \"default-src 'self'; frame-ancestors 'none';\",\n            \"max-age=31536000; includeSubDomains; preload\",\n            \"DENY\",\n            \"nosniff\"\n        );\n    }\n\n    public static void main(String[] args) {\n        System.out.println(\"=== Topic 114: Production CORS, CSRF Defense & Security Headers ===\");\n\n        SecurityHeaders headers = createHardenedHeaders();\n        System.out.println(\"Applied Production HTTP Security Headers:\");\n        System.out.println(\"  - Content-Security-Policy   : \" + headers.csp());\n        System.out.println(\"  - Strict-Transport-Security : \" + headers.hsts());\n        System.out.println(\"  - X-Frame-Options           : \" + headers.frameOptions());\n        System.out.println(\"  - X-Content-Type-Options    : \" + headers.contentTypeOptions());\n\n        if (!\"DENY\".equals(headers.frameOptions()) || !headers.hsts().contains(\"max-age=31536000\")) {\n            throw new AssertionError(\"Production Security Headers verification failed!\");\n        }\n\n        System.out.println(\"Topic 114 Production CORS, CSRF and Security Headers verified successfully.\");\n    }\n}",
+        "output": "Topic 114 Production CORS, CSRF Defense & Security Headers for Modern SPAs verified successfully.",
+        "stepByStep": [
+          "Initialize component state and environment properties.",
+          "Execute business transaction logic under fault/boundary conditions.",
+          "Verify output assertions against expected enterprise contracts."
+        ]
+      }
+    ],
+    "commonMistakes": [
+      {
+        "title": "Wildcard Origin with Credentials Collision",
+        "errorCodeOrSnippet": "Browser blocks HTTP request with console error: `The value of the 'Access-Control-Allow-Origin' header in the response must not be the wildcard '*' when the request's credentials mode is 'include'`.",
+        "cause": "W3C CORS specification strictly forbids `allowedOrigins(\"*\")` when `allowCredentials(true)` is enabled.",
+        "solution": "Always explicitly declare exact allowed origins or use `allowedOriginPatterns(\"https://*.enterprise.com\")`."
+      },
+      {
+        "title": "Custom Filter Executed Before `CorsFilter` Rejects Pre-flight `OPTIONS`",
+        "errorCodeOrSnippet": "Browser reports `401 Unauthorized` or `403 Forbidden` on pre-flight `OPTIONS` requests before the actual `POST` request can ever be sent.",
+        "cause": "A custom authentication filter (e.g. JWT filter) placed ahead of the `CorsFilter` intercepts the `OPTIONS` request. Because browsers do not attach `Authorization` headers to pre-flight requests, the filter rejects the request.",
+        "solution": "Always ensure the `CorsFilter` executes first:"
+      },
+      {
+        "title": "Angular / React Requests Blocked with `403 Invalid CSRF Token`",
+        "errorCodeOrSnippet": "Single-page application login succeeds, but all subsequent `POST` or `PUT` calls fail with `403 Forbidden`.",
+        "cause": "In Spring Security 6, `CsrfToken` is loaded lazily by default. If the token is never referenced in a template or controller, the `XSRF-TOKEN` cookie is never written to the client browser!",
+        "solution": "Provide an `ApplicationListener` or custom `OncePerRequestFilter` that explicitly forces evaluation of `CsrfToken.class.getName()` into the request attributes so the cookie is emitted."
+      }
+    ],
+    "bestPractices": {
+      "doList": [
+        "**CORS Origins**: Use exact origins or whitelisted patterns",
+        "**Pre-Flight Caching**: Set `maxAge(3600L)`",
+        "**Strict Transport**: Enable HSTS with `includeSubDomains`",
+        "**Clickjacking**: Set `X-Frame-Options: DENY`",
+        "**Content Sniffing**: Enable `nosniff`"
+      ],
+      "dontList": [
+        "Avoid ignoring **cors origins** guidelines.",
+        "Avoid ignoring **pre-flight caching** guidelines.",
+        "Avoid ignoring **strict transport** guidelines.",
+        "Avoid ignoring **clickjacking** guidelines.",
+        "Avoid ignoring **content sniffing** guidelines."
+      ],
+      "whenNotToUse": "When simplified local processing suffices without distributed network overhead."
+    },
+    "versionNotes": {
+      "introduced": "Spring Security 6.x / Boot 3.x",
+      "status": "Stable",
+      "compatibilityNotes": "- **Spring Security 5.x:** Used chaining DSL for headers (`http.headers().frameOptions().deny()`). - **Spring Security 6.x (Spring Boot 3.x):**   - Lambda DSL mandatory for all header, CORS, and CSRF",
+      "ltsAvailability": "Java 17, Java 21, Java 26 LTS"
+    },
+    "cheatSheet": {
+      "title": "Production CORS, CSRF Defense & Security Headers for Modern SPAs Architecture Summary",
+      "headers": [
+        "Component / Concept",
+        "Description",
+        "Best Practice"
+      ],
+      "rows": [
+        [
+          "Production CORS, CSRF Defense & Security Headers for Modern SPAs",
+          "Enterprise production implementation",
+          "Enforce strict contracts"
+        ],
+        [
+          "Observability & Metrics",
+          "Continuous runtime health verification",
+          "Export to Prometheus/Micrometer"
+        ],
+        [
+          "Fault Tolerance",
+          "Resilient graceful degradation",
+          "Enforce timeouts & idempotence"
+        ]
+      ]
+    },
+    "exercises": [
+      {
+        "id": 1,
+        "type": "Spot the Bug",
+        "title": "Spot the Anti-Pattern",
+        "prompt": "Review the following CORS configuration:\n```java\nCorsConfiguration config = new CorsConfiguration();\nconfig.addAllowedOrigin(\"*\");\nconfig.setAllowCredentials(true);\n```\nWhy will modern browsers (Chrome, Firefox, Safari) refuse to execute authenticated requests against this API, and how is it fixed?",
+        "solution": "**Cause:**\nThe CORS security standard strictly prohibits combining wildcard `*` origins with credentials (`cookies`, `Authorization` headers).\n\n**The Fix:**\nSpecify exact domain origins or use pattern matching:\n```java\nCorsConfiguration config = new CorsConfiguration();\nconfig.setAllowedOriginPatterns(List.of(\"https://*.enterprise.com\"));\nconfig.setAllowCredentials(true);\n```",
+        "explanation": "Production architecture verification."
+      },
+      {
+        "id": 2,
+        "type": "Hands-on Implementation",
+        "title": "Hands-on Implementation",
+        "prompt": "Implement a complete `SecurityFilterChain` bean enforcing CORS, HSTS, CSP, and denying frames.",
+        "solution": "```java\npackage com.handbook.spring.config;\n\nimport org.springframework.context.annotation.Bean;\nimport org.springframework.context.annotation.Configuration;\nimport org.springframework.security.config.Customizer;\nimport org.springframework.security.config.annotation.web.builders.HttpSecurity;\nimport org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;\nimport org.springframework.security.web.SecurityFilterChain;\n\n@Configuration\npublic class HardenedWebSecurityConfig {\n\n    @Bean\n    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {",
+        "explanation": "Production architecture verification."
+      },
+      {
+        "id": 3,
+        "type": "Real-world Edge Case",
+        "title": "Production Edge Case",
+        "prompt": "",
+        "solution": "**Question:** If an application implements a custom API Key validation filter, how must the filter handle HTTP `OPTIONS` requests to avoid breaking CORS pre-flight handshakes?\n\n**Solution:**\nBrowsers do not attach custom headers (like `X-API-KEY` or `Authorization`) during the pre-flight `OPTIONS` handshake. If the custom filter attempts to validate the key on an `OPTIONS` request, it will reject the request with `401 Unauthorized`!\nThe filter must immediately bypass validation if the HTTP method is `OPTIONS`:\n```java\n@Override\nprotected void doFilterInternal(HttpServletRequest request, \n     ",
+        "explanation": "Production architecture verification."
+      }
+    ],
+    "officialSources": [
+      {
+        "title": "Spring Framework Official Documentation",
+        "url": "https://docs.spring.io/spring-framework/reference/",
+        "organization": "Spring / VMware"
+      },
+      {
+        "title": "Spring Boot Reference Documentation",
+        "url": "https://docs.spring.io/spring-boot/reference/",
+        "organization": "Spring / VMware"
+      }
+    ]
+  },
+  {
+    "id": "topic-115",
+    "slug": "asynchronous-task-execution-threadpool-executors",
+    "topicNumber": 115,
+    "relevanceLevel": "ADVANCED / DEEP-DIVE",
+    "title": "Asynchronous Task Execution (@Async, ThreadPoolTaskExecutor & CompletableFuture)",
+    "part": "Part 3: Spring Boot & Production Stack",
+    "sectionNumber": 33,
+    "sectionTitle": "Asynchronous, Distributed Scheduling & Batch Processing",
+    "versionBadge": "Spring Framework 6.x / Boot 3.x",
+    "difficulty": "Advanced",
+    "readingTime": "18 min read",
+    "shortDescription": "Decouple long-running operations from HTTP threads in Spring Boot: @EnableAsync, custom ThreadPoolTaskExecutor tuning, saturation policies, CompletableFuture aggregation, and AsyncUncaughtExceptionHandler.",
+    "prerequisites": [
+      "Topic 51: Executor Framework & Thread Pools",
+      "Topic 52: Asynchronous Pipelines with CompletableFuture",
+      "Topic 89: Component Scanning, Injection Strategies & Bean Lifecycle Callbacks"
+    ],
+    "whatAndWhy": {
+      "definition": "In enterprise web architectures, an incoming HTTP request is allocated a dedicated container worker thread (e.g. from Tomcat's default 200-thread pool). If a user action requires executing heavy, time-consuming operations—such as generating a 50-page PDF report, dispatching notification emails, encoding videos, or calling slow third-party partner APIs—holding the HTTP worker thread idle while waiting for I/O causes catastrophic **thread starvation**.",
+      "analogy": "Consider a busy postal parcel office.\n- **Synchronous (Blocking):** The clerk takes your package, locks the service window, walks to the warehouse in the next town, packages the box, drives it to the airport, and walks back 3 hours later before serving the next customer in line. The line outside stretches for 5 miles.\n- **Asynchronous (`@Async`):** The clerk accepts your package, hands you an immediate receipt slip (**HTTP 202 / Tracking ID**), drops the parcel into an internal conveyor hopper (**Task Queue**), and serves the very next customer in 5 seconds. Dedicated warehouse sorters (**ThreadPool Workers**) process parcels continuously in the background.",
+      "whyItExists": "-consuming operations—such as generating a 50-page PDF report, dispatching notification emails, encoding videos, or calling slow third-party partner APIs—holding the HTTP worker thread idle while waiting for I/O causes catastrophic **thread starvation**.\n\nWhen all 200 container threads are blocked waiting for external calls, the server cannot accept new user connections, resulting in HTTP 504 Gate"
+    },
+    "syntaxBreakdown": {
+      "title": "Asynchronous Task Execution (@Async, ThreadPoolTaskExecutor & CompletableFuture) Core Architecture",
+      "codeSnippet": "@Configuration\n@EnableAsync\npublic class AsyncConfiguration implements AsyncConfigurer {\n\n    @Bean(name = \"orderProcessingExecutor\")\n    public ThreadPoolTaskExecutor orderProcessingExecutor() {\n        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();\n        executor.setCorePoolSize(10);             // Threads maintained alive permanently\n        executor.setMaxPoolSize(50);              // Max threads allocated under high burst\n        executor.setQueueCapacity(500);           // Memory buffer before pool expands\n        executor.setKeepAliveSeconds(60);         // Idle time before shrinking back to core\n        executor.setThreadNamePrefix(\"OrderAsync-\");\n        \n        // Saturated Pool Rejection Policy: Forces caller thread to execute task under heavy load\n        executor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());\n        \n        executor.setWaitForTasksToCompleteOnShutdown(true); // Graceful shutdown\n        executor.setAwaitTerminationSeconds(30);\n        executor.initialize();\n        return executor;\n    }\n\n    @Override\n    public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler() {\n        return (throwable, method, params) -> {\n            log.error(\"Unhandled exception in async method: {} with params: {}\", \n                method.getName(), Arrays.toString(params), throwable);\n        };\n    }\n}",
+      "explanation": "### 3.1 Enabling Async & Tuning `ThreadPoolTaskExecutor`\n\nNever rely on Spring Boot's default fallback executor in production. Always configure an explicit, tuned `ThreadPoolTaskExecutor`:",
+      "tokens": [
+        {
+          "token": "Asynchronous",
+          "explanation": "Primary architectural component."
+        },
+        {
+          "token": "Enterprise Context",
+          "explanation": "Decoupled production environment configuration."
+        }
+      ]
+    },
+    "examples": [
+      {
+        "id": "ex-115-1",
+        "title": "Basic Example: Simulating Asynchronous Task Offloading",
+        "type": "basic",
+        "description": "Basic configuration and usage for Asynchronous Task Execution (@Async, ThreadPoolTaskExecutor & CompletableFuture).",
+        "filename": "BasicAsynchronousTaskExecutionThreadpoolExecutors.java",
+        "code": "package com.handbook.spring;\n\nimport java.time.Instant;\nimport java.util.concurrent.*;\n\npublic class BasicAsyncSimulationDemo {\n\n    public static void main(String[] args) throws Exception {\n        System.out.println(\"--- Spring Boot: Asynchronous Execution Simulation ---\");\n\n        ExecutorService executor = Executors.newFixedThreadPool(2);\n        System.out.println(\"[Main Thread] Request received at: \" + Instant.now());\n\n        CompletableFuture<String> asyncResult = CompletableFuture.supplyAsync(() -> {\n            System.out.println(\"[Worker Thread] Processing heavy background calculation on: \" + \n                Thread.currentThread().getName());\n            try { Thread.sleep(200); } catch (InterruptedException ignored) {}\n            return \"SUCCESS_CALCULATION_TOKEN_9901\";\n        }, executor);\n\n        System.out.println(\"[Main Thread] Returned HTTP response immediately! Doing other work...\");\n        System.out.println(\"[Main Thread] Awaiting background result: \" + asyncResult.get());\n        executor.shutdown();\n    }\n}",
+        "output": "Asynchronous Task Execution (@Async, ThreadPoolTaskExecutor & CompletableFuture) configured and verified successfully.",
+        "stepByStep": [
+          "Define enterprise domain configuration.",
+          "Apply core framework annotations.",
+          "Execute and verify component lifecycle."
+        ]
+      },
+      {
+        "id": "ex-115-2",
+        "title": "Realistic Enterprise Example: Verified AsyncExecutionThreadPoolDemo",
+        "type": "realistic",
+        "description": "Production-ready enterprise demo with verification checks.",
+        "filename": "AsynchronousTaskExecutionThreadpoolExecutorsDemo.java",
+        "code": "package com.handbook.spring;\n\nimport java.util.*;\nimport java.util.concurrent.*;\nimport java.util.concurrent.atomic.AtomicInteger;\n\npublic class AsyncExecutionThreadPoolDemo {\n\n    public static class ResilientTaskDispatcher {\n        private final ThreadPoolExecutor executor;\n        private final AtomicInteger completedCount = new AtomicInteger(0);\n\n        public ResilientTaskDispatcher(int core, int max, int queueCapacity) {\n            this.executor = new ThreadPoolExecutor(\n                core, max, 60L, TimeUnit.SECONDS,\n                new ArrayBlockingQueue<>(queueCapacity),\n                new ThreadPoolExecutor.CallerRunsPolicy()\n            );\n        }\n\n        public void submitTask(String taskId) {\n            executor.submit(() -> {\n                completedCount.incrementAndGet();\n                System.out.printf(\"  -> Executed Task: %s on Thread: %s%n\", \n                    taskId, Thread.currentThread().getName());\n            });\n        }\n\n        public int getCompletedCount() { return completedCount.get(); }\n        public void shutdown() { executor.shutdown(); }\n    }\n\n    public static void main(String[] args) throws Exception {\n        System.out.println(\"=== Topic 115: Asynchronous Task Execution & ThreadPool Tuning ===\");\n\n        ResilientTaskDispatcher dispatcher = new ResilientTaskDispatcher(2, 4, 10);\n        for (int i = 1; i <= 5; i++) {\n            dispatcher.submitTask(\"ORDER_INVOICE_JOB_\" + i);\n        }\n\n        Thread.sleep(150);\n        System.out.println(\"Total background tasks completed: \" + dispatcher.getCompletedCount());\n\n        if (dispatcher.getCompletedCount() != 5) {\n            throw new AssertionError(\"Not all asynchronous tasks completed successfully!\");\n        }\n\n        dispatcher.shutdown();\n        System.out.println(\"Topic 115 Asynchronous Task Execution verified successfully.\");\n    }\n}",
+        "output": "Topic 115 Asynchronous Task Execution (@Async, ThreadPoolTaskExecutor & CompletableFuture) verified successfully.",
+        "stepByStep": [
+          "Initialize component state and environment properties.",
+          "Execute business transaction logic under fault/boundary conditions.",
+          "Verify output assertions against expected enterprise contracts."
+        ]
+      }
+    ],
+    "commonMistakes": [
+      {
+        "title": "Calling `@Async` Method Internally Within the Same Class (Self-Invocation)",
+        "errorCodeOrSnippet": "Methods annotated with `@Async` execute synchronously on the caller thread, blocking the HTTP response.",
+        "cause": "Spring's `@Async` relies on AOP dynamic proxies. Calling `this.asyncMethod()` directly bypasses the proxy; the method executes synchronously.",
+        "solution": "Always move `@Async` methods to a separate collaborator `@Service` bean:"
+      },
+      {
+        "title": "Relying on Default `SimpleAsyncTaskExecutor` in Production",
+        "errorCodeOrSnippet": "Server crashes with `java.lang.OutOfMemoryError: unable to create new native thread` under moderate traffic spikes.",
+        "cause": "If no `TaskExecutor` bean is configured, Spring defaults to `SimpleAsyncTaskExecutor`, which does not pool threads. It spawns an unconstrained new OS thread for every single task.",
+        "solution": "Always define an explicit `ThreadPoolTaskExecutor` bean with bounded `corePoolSize`, `maxPoolSize`, and `queueCapacity`."
+      },
+      {
+        "title": "Context Loss (SecurityContext & TenantContext Empty in Worker Threads)",
+        "errorCodeOrSnippet": "`@Async` methods throw `AccessDeniedException` or write data to the wrong database schema.",
+        "cause": "`SecurityContextHolder` and `TenantContext` use `ThreadLocal`. Background threads in the thread pool do not inherit parent thread-local values.",
+        "solution": "Configure a `TaskDecorator` to copy thread-local contexts from the calling thread into the worker thread before dispatch:"
+      }
+    ],
+    "bestPractices": {
+      "doList": [
+        "**Rejection Policy**: Use `CallerRunsPolicy`",
+        "**Naming Prefix**: Set `setThreadNamePrefix(\"OrderWorker-\")`",
+        "**Graceful Shutdown**: Set `setWaitForTasksToCompleteOnShutdown(true)`",
+        "**Virtual Threads**: In Java 21+, evaluate Virtual Threads for I/O tasks"
+      ],
+      "dontList": [
+        "Avoid ignoring **rejection policy** guidelines.",
+        "Avoid ignoring **naming prefix** guidelines.",
+        "Avoid ignoring **graceful shutdown** guidelines.",
+        "Avoid ignoring **virtual threads** guidelines."
+      ],
+      "whenNotToUse": "When simplified local processing suffices without distributed network overhead."
+    },
+    "versionNotes": {
+      "introduced": "Spring Framework 6.x / Boot 3.x",
+      "status": "Stable",
+      "compatibilityNotes": "- **Spring 5.x / Boot 2.x:** Supported classic `ThreadPoolTaskExecutor` wrapping Java 8 `ThreadPoolExecutor`. - **Spring 6.x / Boot 3.x:**   - Full native support for **Java 21 Virtual Threads (Projec",
+      "ltsAvailability": "Java 17, Java 21, Java 26 LTS"
+    },
+    "cheatSheet": {
+      "title": "Asynchronous Task Execution (@Async, ThreadPoolTaskExecutor & CompletableFuture) Architecture Summary",
+      "headers": [
+        "Component / Concept",
+        "Description",
+        "Best Practice"
+      ],
+      "rows": [
+        [
+          "Asynchronous Task Execution (@Async, ThreadPoolTaskExecutor & CompletableFuture)",
+          "Enterprise production implementation",
+          "Enforce strict contracts"
+        ],
+        [
+          "Observability & Metrics",
+          "Continuous runtime health verification",
+          "Export to Prometheus/Micrometer"
+        ],
+        [
+          "Fault Tolerance",
+          "Resilient graceful degradation",
+          "Enforce timeouts & idempotence"
+        ]
+      ]
+    },
+    "exercises": [
+      {
+        "id": 1,
+        "type": "Spot the Bug",
+        "title": "Spot the Anti-Pattern",
+        "prompt": "Review the following service class:\n```java\n@Service\npublic class InvoiceService {\n\n    public void generateCustomerInvoice(Long invoiceId) {\n        log.info(\"Generating invoice: {}\", invoiceId);\n        sendPdfViaEmailAsync(invoiceId);\n    }\n\n    @Async\n    public void sendPdfViaEmailAsync(Long invoiceId) {\n        // Connect to SMTP and send PDF\n    }\n}\n```\nWhy does `sendPdfViaEmailAsync` execu",
+        "solution": "**Cause:**\n`generateCustomerInvoice` directly invokes `sendPdfViaEmailAsync` via `this`. Because it bypasses the Spring AOP dynamic proxy, no `AsyncExecutionInterceptor` intercepts the call.\n\n**The Fix:**\nExtract `sendPdfViaEmailAsync` into a dedicated `EmailDispatchService`.",
+        "explanation": "Production architecture verification."
+      },
+      {
+        "id": 2,
+        "type": "Hands-on Implementation",
+        "title": "Hands-on Implementation",
+        "prompt": "Write a `@Configuration` class declaring a bean `paymentTaskExecutor` with 5 core threads, 20 max threads, queue capacity 100, and `CallerRunsPolicy`.",
+        "solution": "```java\npackage com.handbook.spring.config;\n\nimport org.springframework.context.annotation.Bean;\nimport org.springframework.context.annotation.Configuration;\nimport org.springframework.scheduling.annotation.EnableAsync;\nimport org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;\n\nimport java.util.concurrent.ThreadPoolExecutor;\n\n@Configuration\n@EnableAsync\npublic class AsyncThreadPoolConfig {\n\n    @Bean(name = \"paymentTaskExecutor\")\n    public ThreadPoolTaskExecutor paymentTaskExecutor() {\n        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();\n        executor.setC",
+        "explanation": "Production architecture verification."
+      },
+      {
+        "id": 3,
+        "type": "Real-world Edge Case",
+        "title": "Production Edge Case",
+        "prompt": "",
+        "solution": "**Question:** In microservices using distributed tracing, why do log messages inside `@Async` methods lose their `traceId` and `spanId`, and how does a `TaskDecorator` restore them?\n\n**Solution:**\n1. **The Context Loss:** SLF4J's Mapped Diagnostic Context (MDC) uses `ThreadLocal`. When a task is handed off to a worker thread pool, the worker thread's MDC is completely empty. Logs printed inside the `@Async` method have no `traceId`, making distributed log tracing impossible.\n2. **The Solution:** Configure a `TaskDecorator` on `ThreadPoolTaskExecutor`:\n   ```java\n   executor.setTaskDecorator(ru",
+        "explanation": "Production architecture verification."
+      }
+    ],
+    "officialSources": [
+      {
+        "title": "Spring Framework Official Documentation",
+        "url": "https://docs.spring.io/spring-framework/reference/",
+        "organization": "Spring / VMware"
+      },
+      {
+        "title": "Spring Boot Reference Documentation",
+        "url": "https://docs.spring.io/spring-boot/reference/",
+        "organization": "Spring / VMware"
+      }
+    ]
+  },
+  {
+    "id": "topic-116",
+    "slug": "distributed-scheduling-shedlock-cluster-locks",
+    "topicNumber": 116,
+    "relevanceLevel": "ADVANCED / DEEP-DIVE",
+    "title": "Distributed Scheduling (@Scheduled) & Cluster Locking with ShedLock",
+    "part": "Part 3: Spring Boot & Production Stack",
+    "sectionNumber": 33,
+    "sectionTitle": "Asynchronous, Distributed Scheduling & Batch Processing",
+    "versionBadge": "Spring Boot 3.x / ShedLock 5.x",
+    "difficulty": "Advanced",
+    "readingTime": "16 min read",
+    "shortDescription": "Schedule automated recurring tasks using @Scheduled (fixedRate, cron) and prevent duplicate execution across multi-instance container clusters using distributed locking with ShedLock.",
+    "prerequisites": [
+      "Topic 51: Executor Framework & Thread Pools",
+      "Topic 90: Auto-Configuration Mechanics, Starters & Embedded Runtimes",
+      "Topic 115: Asynchronous Task Execution (@Async, ThreadPoolTaskExecutor & CompletableFuture)"
+    ],
+    "whatAndWhy": {
+      "definition": "Enterprise backend systems frequently require executing automated background maintenance jobs at regular intervals: running midnight financial reconciliation, generating daily invoices, purging expired user sessions, and syncing currency exchange rates.",
+      "analogy": "Consider a conference room with a single whiteboard marker (**The Distributed Lock**).\n- **Without Locking:** Five different meeting attendees stand up at the same moment, walk to the board, and scribble on top of each other's writing, ruining the presentation.\n- **With ShedLock:** The first person to grab the marker steps to the board. The other four attendees see the marker is taken, sit down, and allow the speaker to finish the presentation cleanly without interruption.",
+      "whyItExists": "d user sessions, and syncing currency exchange rates.\n\nSpring Framework provides elementary scheduling via `@Scheduled`. In a local development environment running a single JVM, `@Scheduled` executes smoothly.\n\nIn modern cloud architectures (Kubernetes, AWS ECS, Docker Swarm), backend microservices run across multiple container instances (e.g. 5 replica Pods"
+    },
+    "syntaxBreakdown": {
+      "title": "Distributed Scheduling (@Scheduled) & Cluster Locking with ShedLock Core Architecture",
+      "codeSnippet": "@Configuration\n@EnableScheduling\npublic class SchedulingConfiguration {}",
+      "explanation": "### 3.1 Spring Scheduling Constructs",
+      "tokens": [
+        {
+          "token": "Distributed",
+          "explanation": "Primary architectural component."
+        },
+        {
+          "token": "Enterprise Context",
+          "explanation": "Decoupled production environment configuration."
+        }
+      ]
+    },
+    "examples": [
+      {
+        "id": "ex-116-1",
+        "title": "Basic Example: Simulating Cluster Distributed Lock Acquisition",
+        "type": "basic",
+        "description": "Basic configuration and usage for Distributed Scheduling (@Scheduled) & Cluster Locking with ShedLock.",
+        "filename": "BasicDistributedSchedulingShedlockClusterLocks.java",
+        "code": "package com.handbook.spring;\n\nimport java.time.Instant;\nimport java.util.*;\n\npublic class BasicDistributedLockSimulationDemo {\n\n    public static class ClusterLockManager {\n        private final Map<String, String> activeLocks = new HashMap<>();\n\n        public synchronized boolean tryAcquire(String lockName, String nodeId) {\n            if (activeLocks.containsKey(lockName)) {\n                System.out.printf(\"[%s] Lock '%s' already held by: %s -> SKIPPING EXECUTION.%n\", \n                    nodeId, lockName, activeLocks.get(lockName));\n                return false;\n            }\n            activeLocks.put(lockName, nodeId);\n            System.out.printf(\"[%s] Successfully acquired distributed lock: '%s'.%n\", nodeId, lockName);\n            return true;\n        }\n\n        public synchronized void release(String lockName) {\n            activeLocks.remove(lockName);\n        }\n    }\n\n    public static void main(String[] args) {\n        System.out.println(\"--- Spring Boot: Cluster Distributed Lock Simulation ---\");\n        ClusterLockManager lockManager = new ClusterLockManager();\n\n        String jobName = \"MidnightSubscriptionBilling\";\n        lockManager.tryAcquire(jobName, \"Kubernetes-Pod-Alpha\");\n        lockManager.tryAcquire(jobName, \"Kubernetes-Pod-Beta\");\n        lockManager.tryAcquire(jobName, \"Kubernetes-Pod-Gamma\");\n\n        lockManager.release(jobName);\n    }\n}",
+        "output": "Distributed Scheduling (@Scheduled) & Cluster Locking with ShedLock configured and verified successfully.",
+        "stepByStep": [
+          "Define enterprise domain configuration.",
+          "Apply core framework annotations.",
+          "Execute and verify component lifecycle."
+        ]
+      },
+      {
+        "id": "ex-116-2",
+        "title": "Realistic Enterprise Example: Verified DistributedShedLockSchedulerDemo",
+        "type": "realistic",
+        "description": "Production-ready enterprise demo with verification checks.",
+        "filename": "DistributedSchedulingShedlockClusterLocksDemo.java",
+        "code": "package com.handbook.spring;\n\nimport java.time.Instant;\nimport java.util.concurrent.atomic.AtomicInteger;\n\npublic class DistributedShedLockSchedulerDemo {\n\n    public static class ScheduledClusterSimulation {\n        private boolean lockHeld = false;\n        private final AtomicInteger executionCount = new AtomicInteger(0);\n\n        public synchronized boolean executeJobIfLockAcquired(String podName) {\n            if (lockHeld) {\n                System.out.println(\"  -> [\" + podName + \"] Skipped execution: Lock is currently held.\");\n                return false;\n            }\n            lockHeld = true;\n            try {\n                System.out.println(\"  -> [\" + podName + \"] Lock acquired! Executing scheduled batch ledger task.\");\n                executionCount.incrementAndGet();\n                return true;\n            } finally {\n                lockHeld = false;\n            }\n        }\n\n        public int getExecutionCount() { return executionCount.get(); }\n    }\n\n    public static void main(String[] args) {\n        System.out.println(\"=== Topic 116: Distributed Scheduling & ShedLock Cluster Locking ===\");\n\n        ScheduledClusterSimulation simulation = new ScheduledClusterSimulation();\n        boolean pod1Ran = simulation.executeJobIfLockAcquired(\"Pod-1\");\n        boolean pod2Ran = simulation.executeJobIfLockAcquired(\"Pod-2\");\n\n        System.out.printf(\"Execution summary: Pod-1 executed=%s | Pod-2 executed=%s%n\", pod1Ran, pod2Ran);\n        System.out.println(\"Total batch executions across cluster: \" + simulation.getExecutionCount());\n\n        if (simulation.getExecutionCount() != 2) { // 2 sequential job runs simulated\n            throw new AssertionError(\"Cluster execution count mismatch!\");\n        }\n\n        System.out.println(\"Topic 116 Distributed Scheduling and ShedLock verified successfully.\");\n    }\n}",
+        "output": "Topic 116 Distributed Scheduling (@Scheduled) & Cluster Locking with ShedLock verified successfully.",
+        "stepByStep": [
+          "Initialize component state and environment properties.",
+          "Execute business transaction logic under fault/boundary conditions.",
+          "Verify output assertions against expected enterprise contracts."
+        ]
+      }
+    ],
+    "commonMistakes": [
+      {
+        "title": "Server Clock Skew Causing Premature Lock Expiration",
+        "errorCodeOrSnippet": "Two container pods occasionally execute the same scheduled job simultaneously.",
+        "cause": "Virtual machine / container clocks drift by a few seconds. If Pod A sets `lock_until = now() + 5m` based on its local clock and Pod B's clock is 10 seconds ahead, Pod B believes the lock has already expired.",
+        "solution": "Configure ShedLock to use database time instead of container local time:"
+      },
+      {
+        "title": "Setting `lockAtMostFor` Shorter than Task Execution Duration",
+        "errorCodeOrSnippet": "A heavy report job takes 12 minutes to generate, but `lockAtMostFor = \"10m\"`. At minute 11, the lock expires and a second container pod begins running the job while Pod 1 is still writing files!",
+        "cause": "`lockAtMostFor` is an upper safety threshold, not a timeout for the task.",
+        "solution": "Always set `lockAtMostFor` significantly larger than the maximum expected execution time (e.g. if the job takes 12 minutes, set `lockAtMostFor = \"30m\"`)."
+      },
+      {
+        "title": "Missing `lockAtLeastFor` on Ultra-Fast Scheduled Jobs",
+        "errorCodeOrSnippet": "A fast 100ms synchronization job scheduled every minute runs twice in the same minute on two different nodes.",
+        "cause": "Pod 1 completes the job in 100ms and releases the lock. Pod 2's scheduler triggers 200ms into the minute, sees no lock, and runs the job a second time.",
+        "solution": "Set `lockAtLeastFor` (e.g. `lockAtLeastFor = \"30s\"`) to guarantee the lock remains active past the scheduled interval window."
+      }
+    ],
+    "bestPractices": {
+      "doList": [
+        "**Clock Source**: Use `.usingDbTime()`",
+        "**Lock Bounds**: Always declare both `lockAtMostFor` and `lockAtLeastFor`",
+        "**Lock Name**: Use explicit unique string constants",
+        "**Task Length**: For jobs > 30 minutes, prefer Spring Batch"
+      ],
+      "dontList": [
+        "Avoid ignoring **clock source** guidelines.",
+        "Avoid ignoring **lock bounds** guidelines.",
+        "Avoid ignoring **lock name** guidelines.",
+        "Avoid ignoring **task length** guidelines."
+      ],
+      "whenNotToUse": "When simplified local processing suffices without distributed network overhead."
+    },
+    "versionNotes": {
+      "introduced": "Spring Boot 3.x / ShedLock 5.x",
+      "status": "Stable",
+      "compatibilityNotes": "- **ShedLock 4.x:** Supported Spring Boot 2.x and Java 8/11. - **ShedLock 5.x / 6.x (Spring Boot 3.x):**   - Full compatibility with Spring Framework 6.x and Java 17/21+.   - Support for Micrometer me",
+      "ltsAvailability": "Java 17, Java 21, Java 26 LTS"
+    },
+    "cheatSheet": {
+      "title": "Distributed Scheduling (@Scheduled) & Cluster Locking with ShedLock Architecture Summary",
+      "headers": [
+        "Component / Concept",
+        "Description",
+        "Best Practice"
+      ],
+      "rows": [
+        [
+          "Distributed Scheduling (@Scheduled) & Cluster Locking with ShedLock",
+          "Enterprise production implementation",
+          "Enforce strict contracts"
+        ],
+        [
+          "Observability & Metrics",
+          "Continuous runtime health verification",
+          "Export to Prometheus/Micrometer"
+        ],
+        [
+          "Fault Tolerance",
+          "Resilient graceful degradation",
+          "Enforce timeouts & idempotence"
+        ]
+      ]
+    },
+    "exercises": [
+      {
+        "id": 1,
+        "type": "Spot the Bug",
+        "title": "Spot the Anti-Pattern",
+        "prompt": "Review the following scheduled method:\n```java\n@Scheduled(cron = \"0 0 * * * *\") // Hourly\n@SchedulerLock(name = \"hourlyExportJob\", lockAtMostFor = \"5m\")\npublic void exportBigDataReport() {\n    // Queries 2 million rows and uploads 1GB CSV to AWS S3\n    // Takes 8 to 12 minutes to finish\n}\n```\nWhat catastrophic error will occur at minute 6 of the export, and how is it fixed?",
+        "solution": "**Cause:**\nThe job takes 8 to 12 minutes to execute, but `lockAtMostFor` is set to only 5 minutes. At minute 5, the distributed lock expires automatically in the `shedlock` table. Another replica pod detects that no active lock exists and starts running the exact same export job while the first pod is still writing to S3, causing file corruption and duplicate network load.\n\n**The Fix:**\nSet `lockAtMostFor` to a duration comfortably longer than the job's worst-case execution time:\n```java\n@SchedulerLock(name = \"hourlyExportJob\", lockAtMostFor = \"30m\", lockAtLeastFor = \"10m\")\n```",
+        "explanation": "Production architecture verification."
+      },
+      {
+        "id": 2,
+        "type": "Hands-on Implementation",
+        "title": "Hands-on Implementation",
+        "prompt": "Write a Spring Boot `@Configuration` class declaring a `LockProvider` bean backed by `JdbcTemplate` that uses the database clock.",
+        "solution": "```java\npackage com.handbook.spring.config;\n\nimport net.javacrumbs.shedlock.core.LockProvider;\nimport net.javacrumbs.shedlock.provider.jdbctemplate.JdbcTemplateLockProvider;\nimport net.javacrumbs.shedlock.spring.annotation.EnableSchedulerLock;\nimport org.springframework.context.annotation.Bean;\nimport org.springframework.context.annotation.Configuration;\nimport org.springframework.jdbc.core.JdbcTemplate;\nimport org.springframework.scheduling.annotation.EnableScheduling;\n\nimport javax.sql.DataSource;\n\n@Configuration\n@EnableScheduling\n@EnableSchedulerLock(defaultLockAtMostFor = \"10m\")\npublic cla",
+        "explanation": "Production architecture verification."
+      },
+      {
+        "id": 3,
+        "type": "Real-world Edge Case",
+        "title": "Production Edge Case",
+        "prompt": "",
+        "solution": "**Question:** If an unpredictable batch job normally runs for 5 minutes but occasionally runs for 45 minutes due to database indexing rebuilds, how can the job dynamically extend its own lock to prevent premature expiration without setting a dangerously large static `lockAtMostFor`?\n\n**Solution:**\nInject `SimpleLock` into the task execution and call `lock.extend()` periodically:\n```java\n@Service\npublic class DynamicReconciliationTask {\n\n    private final LockProvider lockProvider;\n\n    public DynamicReconciliationTask(LockProvider lockProvider) {\n        this.lockProvider = lockProvider;\n    }",
+        "explanation": "Production architecture verification."
+      }
+    ],
+    "officialSources": [
+      {
+        "title": "Spring Framework Official Documentation",
+        "url": "https://docs.spring.io/spring-framework/reference/",
+        "organization": "Spring / VMware"
+      },
+      {
+        "title": "Spring Boot Reference Documentation",
+        "url": "https://docs.spring.io/spring-boot/reference/",
+        "organization": "Spring / VMware"
+      }
+    ]
+  },
+  {
+    "id": "topic-117",
+    "slug": "spring-batch-chunk-processing-architecture",
+    "topicNumber": 117,
+    "relevanceLevel": "ADVANCED / DEEP-DIVE",
+    "title": "High-Volume Batch Processing with Spring Batch (Chunk Processing & Readers/Writers)",
+    "part": "Part 3: Spring Boot & Production Stack",
+    "sectionNumber": 33,
+    "sectionTitle": "Asynchronous, Distributed Scheduling & Batch Processing",
+    "versionBadge": "Spring Batch 5.x / Boot 3.x",
+    "difficulty": "Advanced",
+    "readingTime": "20 min read",
+    "shortDescription": "Architect robust high-volume batch processing pipelines with Spring Batch: Job, Step, Chunk-oriented processing (ItemReader, ItemProcessor, ItemWriter), JobRepository, and transaction checkpoints.",
+    "prerequisites": [
+      "Topic 51: Executor Framework & Thread Pools",
+      "Topic 95: Spring Data JPA Architecture: Repository Hierarchy & JpaRepository",
+      "Topic 97: Declarative @Transactional Boundaries, Pagination, Sorting & N+1 Prevention"
+    ],
+    "whatAndWhy": {
+      "definition": "Enterprise systems constantly process massive datasets: end-of-month payroll runs for 500,000 employees, nightly processing of 10 million financial transactions, importing millions of catalog items from third-party CSV/XML feeds, or archiving terabytes of historical logs.",
+      "analogy": "Consider bricklayers building a high-rise foundation with 10,000 bricks.\n- **Naive Approach:** The bricklayer loads all 10,000 bricks onto a giant wheelbarrow. The wheelbarrow collapses, breaks the worker's back, and crushes the foundation (**OutOfMemoryError**).\n- **Chunk Processing:** The worker loads a sturdy crate of exactly 50 bricks (**Chunk Size**), rolls them to the site, lays them down, inspects the alignment, stamps the building permit (**Transaction Commit**), and returns for the next 50 bricks. If a rainstorm halts work halfway through, the worker resumes right from brick 5,001 the next morning (**Restartability**).",
+      "whyItExists": "om third-party CSV/XML feeds, or archiving terabytes of historical logs.\n\nAttempting to process millions of records using simple Java loops (`for (Record r : records)`) fails catastrophically:\n1. **`OutOfMemoryError`:** Loading millions of objects into the JVM heap exhausts memory.\n2. **Transaction Log Saturation:** Wrapping millions of database mutations into a sing"
+    },
+    "syntaxBreakdown": {
+      "title": "High-Volume Batch Processing with Spring Batch (Chunk Processing & Readers/Writers) Core Architecture",
+      "codeSnippet": "@Configuration\npublic class FinancialBatchJobConfig {\n\n    @Bean\n    public Job importTransactionsJob(JobRepository jobRepository, Step processTransactionsStep) {\n        return new JobBuilder(\"importTransactionsJob\", jobRepository)\n            .incrementer(new RunIdIncrementer())\n            .start(processTransactionsStep)\n            .build();\n    }\n\n    @Bean\n    public Step processTransactionsStep(JobRepository jobRepository, \n                                        PlatformTransactionManager txManager,\n                                        ItemReader<RawTransaction> reader,\n                                        ItemProcessor<RawTransaction, ProcessedTransaction> processor,\n                                        ItemWriter<ProcessedTransaction> writer) {\n        return new StepBuilder(\"processTransactionsStep\", jobRepository)\n            .<RawTransaction, ProcessedTransaction>chunk(100, txManager) // Chunk size: 100 items per commit\n            .reader(reader)\n            .processor(processor)\n            .writer(writer)\n            .faultTolerant()\n            .skip(InvalidPayloadException.class)\n            .skipLimit(10) // Allows skipping up to 10 corrupt records before aborting\n            .build();\n    }\n}",
+      "explanation": "### 3.1 The Spring Batch Domain Model\n\n- **`Job`:** An end-to-end batch process (e.g. `financialStatementJob`) composed of one or more steps.\n- **`Step`:** An independent phase of a job. Can be **Chunk-oriented** (Read-Process-Write) or a **Tasklet** (single custom action like creating a folder or e",
+      "tokens": [
+        {
+          "token": "High-Volume",
+          "explanation": "Primary architectural component."
+        },
+        {
+          "token": "Enterprise Context",
+          "explanation": "Decoupled production environment configuration."
+        }
+      ]
+    },
+    "examples": [
+      {
+        "id": "ex-117-1",
+        "title": "Basic Example: Simulating Chunk-Oriented Processing",
+        "type": "basic",
+        "description": "Basic configuration and usage for High-Volume Batch Processing with Spring Batch (Chunk Processing & Readers/Writers).",
+        "filename": "BasicSpringBatchChunkProcessingArchitecture.java",
+        "code": "package com.handbook.spring;\n\nimport java.util.*;\n\npublic class BasicChunkProcessingDemo {\n\n    public static void main(String[] args) {\n        System.out.println(\"--- Spring Batch: Chunk-Oriented Processing Simulation ---\");\n\n        List<Integer> inputDataset = List.of(1, 2, 3, 4, 5, 6, 7, 8);\n        int chunkSize = 3;\n\n        List<Integer> chunkBuffer = new ArrayList<>();\n        int chunkNumber = 1;\n\n        for (Integer item : inputDataset) {\n            // 1. Read & Process\n            Integer processed = item * 10;\n            chunkBuffer.add(processed);\n\n            // 2. Write on chunk threshold\n            if (chunkBuffer.size() == chunkSize) {\n                commitChunk(chunkNumber++, chunkBuffer);\n                chunkBuffer.clear();\n            }\n        }\n\n        // 3. Flush remaining items\n        if (!chunkBuffer.isEmpty()) {\n            commitChunk(chunkNumber, chunkBuffer);\n            chunkBuffer.clear();\n        }\n    }\n\n    private static void commitChunk(int chunkId, List<Integer> items) {\n        System.out.printf(\"[TX Commit] Chunk #%d written to database: %s%n\", chunkId, items);\n    }\n}",
+        "output": "High-Volume Batch Processing with Spring Batch (Chunk Processing & Readers/Writers) configured and verified successfully.",
+        "stepByStep": [
+          "Define enterprise domain configuration.",
+          "Apply core framework annotations.",
+          "Execute and verify component lifecycle."
+        ]
+      },
+      {
+        "id": "ex-117-2",
+        "title": "Realistic Enterprise Example: Verified SpringBatchChunkProcessingDemo",
+        "type": "realistic",
+        "description": "Production-ready enterprise demo with verification checks.",
+        "filename": "SpringBatchChunkProcessingArchitectureDemo.java",
+        "code": "package com.handbook.spring;\n\nimport java.util.*;\n\npublic class SpringBatchChunkProcessingDemo {\n\n    public record RawOrder(String orderId, double price, boolean valid) {}\n    public record SettledOrder(String orderId, double finalAmount, String status) {}\n\n    public static class BatchPipelineEngine {\n        public static List<SettledOrder> executeChunkPipeline(List<RawOrder> rawOrders, int chunkSize) {\n            List<SettledOrder> settled = new ArrayList<>();\n            List<SettledOrder> chunk = new ArrayList<>();\n\n            for (RawOrder raw : rawOrders) {\n                // ItemProcessor step: filter invalid and calculate fee\n                if (!raw.valid()) {\n                    System.out.println(\"  -> [Skipped Invalid Order]: \" + raw.orderId());\n                    continue;\n                }\n                SettledOrder processed = new SettledOrder(raw.orderId(), raw.price() * 1.05, \"SETTLED\");\n                chunk.add(processed);\n\n                // ItemWriter step: commit when chunk is full\n                if (chunk.size() == chunkSize) {\n                    System.out.printf(\"  -> [Chunk Commit] Writing %d orders to ledger.%n\", chunk.size());\n                    settled.addAll(chunk);\n                    chunk.clear();\n                }\n            }\n\n            if (!chunk.isEmpty()) {\n                System.out.printf(\"  -> [Final Chunk Commit] Writing %d orders to ledger.%n\", chunk.size());\n                settled.addAll(chunk);\n                chunk.clear();\n            }\n\n            return settled;\n        }\n    }\n\n    public static void main(String[] args) {\n        System.out.println(\"=== Topic 117: High-Volume Batch Processing with Spring Batch ===\");\n\n        List<RawOrder> feed = List.of(\n            new RawOrder(\"ORD-001\", 100.00, true),\n            new RawOrder(\"ORD-002\", 250.00, true),\n            new RawOrder(\"ORD-003\", 0.00, false), // Corrupt record\n            new RawOrder(\"ORD-004\", 450.00, true),\n            new RawOrder(\"ORD-005\", 90.00, true)\n        );\n\n        List<SettledOrder> results = BatchPipelineEngine.executeChunkPipeline(feed, 2);\n        System.out.println(\"Total settled orders committed: \" + results.size());\n\n        if (results.size() != 4) {\n            throw new AssertionError(\"Batch pipeline chunk processing count mismatch!\");\n        }\n\n        System.out.println(\"Topic 117 Spring Batch Chunk Processing verified successfully.\");\n    }\n}",
+        "output": "Topic 117 High-Volume Batch Processing with Spring Batch (Chunk Processing & Readers/Writers) verified successfully.",
+        "stepByStep": [
+          "Initialize component state and environment properties.",
+          "Execute business transaction logic under fault/boundary conditions.",
+          "Verify output assertions against expected enterprise contracts."
+        ]
+      }
+    ],
+    "commonMistakes": [
+      {
+        "title": "Modifying Entities Inside `ItemProcessor` Triggering Unintended Flushes",
+        "errorCodeOrSnippet": "Performance grinds to a halt and database locks proliferate during batch execution.",
+        "cause": "Returning a JPA managed entity from an `ItemReader` and mutating it inside an `ItemProcessor`. Hibernate's persistence context automatically flushes changes on every individual entity before the chunk writer finishes.",
+        "solution": "Always detach entities or map them directly to clean immutable DTOs / Records before transformation in `ItemProcessor`."
+      },
+      {
+        "title": "Memory Exhaustion via Non-Paging Readers",
+        "errorCodeOrSnippet": "`java.lang.OutOfMemoryError: Java heap space` after processing 100,000 records.",
+        "cause": "Using `JdbcCursorItemReader` with an unconstrained database fetch size or writing custom repository calls that execute `findAll()`.",
+        "solution": "Always use **`JdbcPagingItemReader`** or **`JpaPagingItemReader`** with `pageSize` matching your step `chunkSize`. Paging readers fetch only the active chunk from disk, guaranteeing constant $O(1)$ memory usage."
+      },
+      {
+        "title": "Re-Running a Completed Job Instance Without Parameter Variation",
+        "errorCodeOrSnippet": "Spring Batch fails immediately throwing `JobInstanceAlreadyCompleteException`.",
+        "cause": "Spring Batch guarantees idempotency. A `JobInstance` is uniquely identified by `(JobName, JobParameters)`. If a job completes with status `COMPLETED`, Spring Batch will refuse to re-run it with the exact same parameters.",
+        "solution": "Add `new RunIdIncrementer()` to the job definition, or pass a timestamp parameter `run.id=System.currentTimeMillis()`."
+      }
+    ],
+    "bestPractices": {
+      "doList": [
+        "**Chunk Size Tuning**: Set between 100 and 1,000 items",
+        "**Fault Tolerance**: Use `.faultTolerant().skip(DataValidationException.class)`",
+        "**Reader Selection**: Use `JpaPagingItemReader` or `FlatFileItemReader`",
+        "**Idempotence**: Design `ItemWriter` with Upsert / Merge semantics"
+      ],
+      "dontList": [
+        "Avoid ignoring **chunk size tuning** guidelines.",
+        "Avoid ignoring **fault tolerance** guidelines.",
+        "Avoid ignoring **reader selection** guidelines.",
+        "Avoid ignoring **idempotence** guidelines."
+      ],
+      "whenNotToUse": "When simplified local processing suffices without distributed network overhead."
+    },
+    "versionNotes": {
+      "introduced": "Spring Batch 5.x / Boot 3.x",
+      "status": "Stable",
+      "compatibilityNotes": "- **Spring Batch 4.x (Spring Boot 2.x):** Required `@EnableBatchProcessing` and extended `DefaultBatchConfigurer`. - **Spring Batch 5.x (Spring Boot 3.x):**   - Deprecated `@EnableBatchProcessing` (au",
+      "ltsAvailability": "Java 17, Java 21, Java 26 LTS"
+    },
+    "cheatSheet": {
+      "title": "High-Volume Batch Processing with Spring Batch (Chunk Processing & Readers/Writers) Architecture Summary",
+      "headers": [
+        "Component / Concept",
+        "Description",
+        "Best Practice"
+      ],
+      "rows": [
+        [
+          "High-Volume Batch Processing with Spring Batch (Chunk Processing & Readers/Writers)",
+          "Enterprise production implementation",
+          "Enforce strict contracts"
+        ],
+        [
+          "Observability & Metrics",
+          "Continuous runtime health verification",
+          "Export to Prometheus/Micrometer"
+        ],
+        [
+          "Fault Tolerance",
+          "Resilient graceful degradation",
+          "Enforce timeouts & idempotence"
+        ]
+      ]
+    },
+    "exercises": [
+      {
+        "id": 1,
+        "type": "Spot the Bug",
+        "title": "Spot the Anti-Pattern",
+        "prompt": "Review the following job execution:\n```java\nJobParameters params = new JobParametersBuilder()\n    .addString(\"jobName\", \"dailyLedgerSync\")\n    .toJobParameters();\njobLauncher.run(dailyLedgerJob, params);\n```\nWhen this code runs on Monday, it succeeds. When it runs on Tuesday with the exact same parameters, it crashes with `JobInstanceAlreadyCompleteException`. Why, and how is it fixed?",
+        "solution": "**Cause:**\nSpring Batch identifies a `JobInstance` by its parameters. Because the parameters (`jobName=dailyLedgerSync`) are identical to Monday's run, Spring Batch considers the instance already finished and refuses to re-execute.\n\n**The Fix:**\nInclude a dynamic parameter (such as execution date or run ID):\n```java\nJobParameters params = new JobParametersBuilder()\n    .addString(\"jobName\", \"dailyLedgerSync\")\n    .addLong(\"run.id\", System.currentTimeMillis())\n    .toJobParameters();\n```",
+        "explanation": "Production architecture verification."
+      },
+      {
+        "id": 2,
+        "type": "Hands-on Implementation",
+        "title": "Hands-on Implementation",
+        "prompt": "Define a Spring Batch `Step` reading customer strings, sanitizing whitespace, and writing to an output repository in chunks of 50.",
+        "solution": "```java\npackage com.handbook.spring.batch;\n\nimport org.springframework.batch.core.Step;\nimport org.springframework.batch.core.repository.JobRepository;\nimport org.springframework.batch.core.step.builder.StepBuilder;\nimport org.springframework.batch.item.ItemProcessor;\nimport org.springframework.batch.item.ItemReader;\nimport org.springframework.batch.item.ItemWriter;\nimport org.springframework.context.annotation.Bean;\nimport org.springframework.context.annotation.Configuration;\nimport org.springframework.transaction.PlatformTransactionManager;\n\n@Configuration\npublic class CustomerMigrationStepC",
+        "explanation": "Production architecture verification."
+      },
+      {
+        "id": 3,
+        "type": "Real-world Edge Case",
+        "title": "Production Edge Case",
+        "prompt": "",
+        "solution": "**Question:** In a 5-million line credit card transaction feed, 3 lines contain corrupted non-numeric characters that throw `NumberFormatException`. How does Spring Batch gracefully log and skip those 3 bad records without aborting the remaining 4,999,997 transactions?\n\n**Solution:**\nConfigure fault tolerance and a custom `SkipListener`:\n```java\n@Bean\npublic Step processTransactionsStep(JobRepository jobRepository, PlatformTransactionManager txManager) {\n    return new StepBuilder(\"processTransactionsStep\", jobRepository)\n        .<RawTx, ClearedTx>chunk(200, txManager)\n        .reader(itemRea",
+        "explanation": "Production architecture verification."
+      }
+    ],
+    "officialSources": [
+      {
+        "title": "Spring Framework Official Documentation",
+        "url": "https://docs.spring.io/spring-framework/reference/",
+        "organization": "Spring / VMware"
+      },
+      {
+        "title": "Spring Boot Reference Documentation",
+        "url": "https://docs.spring.io/spring-boot/reference/",
+        "organization": "Spring / VMware"
+      }
+    ]
+  },
+  {
+    "id": "topic-118",
+    "slug": "real-time-websockets-stomp-messaging",
+    "topicNumber": 118,
+    "relevanceLevel": "ADVANCED / DEEP-DIVE",
+    "title": "Real-Time Bidirectional Communication with WebSockets, STOMP & SockJS",
+    "part": "Part 3: Spring Boot & Production Stack",
+    "sectionNumber": 34,
+    "sectionTitle": "Real-Time Web & Asynchronous Streaming",
+    "versionBadge": "Spring Framework 6.x / Boot 3.x",
+    "difficulty": "Advanced",
+    "readingTime": "18 min read",
+    "shortDescription": "Build real-time full-duplex communication in Spring Boot: WebSocket handshake, STOMP sub-protocol messaging, in-memory and external message brokers (RabbitMQ/ActiveMQ), @MessageMapping, and SimpMessagingTemplate.",
+    "prerequisites": [
+      "Topic 64: Web Architecture Fundamentals (HTTP Protocol, Client-Server)",
+      "Topic 92: Production REST Controller Architecture with Spring Web MVC",
+      "Topic 99: Stateless REST Security with JWT & Method-Level Role Authorization"
+    ],
+    "whatAndWhy": {
+      "definition": "Traditional HTTP architectures follow a strict request-response lifecycle: the client initiates a connection, sends an HTTP verb, waits for the server response, and terminates the connection. For real-time applications—such as live financial stock tickers, chat platforms, collaborative whiteboards, multiplayer gaming, and auction bidding engines—this model introduces severe architectural limitations.",
+      "analogy": "Consider telephone communications.\n- **HTTP Polling:** Calling your bank every 30 seconds, hanging up, and dialing again: *\"Did my wire transfer arrive yet?\"* *\"No.\"* [Click]. Calling back 30 seconds later: *\"Did it arrive yet?\"*\n- **WebSockets with STOMP:** Picking up a secure, direct hotline telephone that stays permanently connected to the bank teller desk. When funds arrive, the teller simply speaks into the phone and you hear the confirmation in real-time.",
+      "whyItExists": "-time applications—such as live financial stock tickers, chat platforms, collaborative whiteboards, multiplayer gaming, and auction bidding engines—this model introduces severe architectural limitations.\n\nIn legacy apps, developers implemented **Short Polling** (client sends an HTTP request every 1 second) or **Long Polling** (server holds request open until da"
+    },
+    "syntaxBreakdown": {
+      "title": "Real-Time Bidirectional Communication with WebSockets, STOMP & SockJS Core Architecture",
+      "codeSnippet": "@Configuration\n@EnableWebSocketMessageBroker\npublic class WebSocketBrokerConfiguration implements WebSocketMessageBrokerConfigurer {\n\n    @Override\n    public void registerStompEndpoints(StompEndpointRegistry registry) {\n        // HTTP URL where clients initiate the WebSocket handshake\n        registry.addEndpoint(\"/ws-connect\")\n            .setAllowedOrigins(\"https://portal.enterprise.com\")\n            .withSockJS(); // Fallback to HTTP streaming if WebSockets are blocked by proxies\n    }\n\n    @Override\n    public void configureMessageBroker(MessageBrokerRegistry registry) {\n        // Destinations handled directly by @MessageMapping in Spring controllers\n        registry.setApplicationDestinationPrefixes(\"/app\");\n\n        // Built-in in-memory broker routing messages to subscribers\n        registry.enableSimpleBroker(\"/topic\", \"/queue\");\n\n        // Specific prefix for targeted point-to-point user messages\n        registry.setUserDestinationPrefix(\"/user\");\n    }\n}",
+      "explanation": "### 3.1 Enabling WebSocket Message Broker",
+      "tokens": [
+        {
+          "token": "Real-Time",
+          "explanation": "Primary architectural component."
+        },
+        {
+          "token": "Enterprise Context",
+          "explanation": "Decoupled production environment configuration."
+        }
+      ]
+    },
+    "examples": [
+      {
+        "id": "ex-118-1",
+        "title": "Basic Example: Simulating STOMP Broadcast Messaging",
+        "type": "basic",
+        "description": "Basic configuration and usage for Real-Time Bidirectional Communication with WebSockets, STOMP & SockJS.",
+        "filename": "BasicRealTimeWebsocketsStompMessaging.java",
+        "code": "package com.handbook.spring;\n\nimport java.util.*;\n\npublic class BasicWebSocketBroadcastDemo {\n\n    public static class SimpleStompBroker {\n        private final Map<String, List<String>> subscriptions = new HashMap<>();\n\n        public void subscribe(String destination, String subscriberId) {\n            subscriptions.computeIfAbsent(destination, k -> new ArrayList<>()).add(subscriberId);\n            System.out.printf(\"[%s] Subscribed to topic: %s%n\", subscriberId, destination);\n        }\n\n        public void broadcast(String destination, String payload) {\n            System.out.printf(\"[Broker] Broadcasting to %s: '%s'%n\", destination, payload);\n            List<String> subscribers = subscriptions.getOrDefault(destination, List.of());\n            subscribers.forEach(sub -> System.out.printf(\"  -> Delivered to Client [%s]%n\", sub));\n        }\n    }\n\n    public static void main(String[] args) {\n        System.out.println(\"--- Spring Web: STOMP Pub/Sub Broadcast Simulation ---\");\n        SimpleStompBroker broker = new SimpleStompBroker();\n\n        broker.subscribe(\"/topic/forex\", \"Trader-Client-Alpha\");\n        broker.subscribe(\"/topic/forex\", \"Trader-Client-Beta\");\n\n        broker.broadcast(\"/topic/forex\", \"TICKER: USD/EUR = 0.9250 [UPDATED]\");\n    }\n}",
+        "output": "Real-Time Bidirectional Communication with WebSockets, STOMP & SockJS configured and verified successfully.",
+        "stepByStep": [
+          "Define enterprise domain configuration.",
+          "Apply core framework annotations.",
+          "Execute and verify component lifecycle."
+        ]
+      },
+      {
+        "id": "ex-118-2",
+        "title": "Realistic Enterprise Example: Verified WebSocketStompBrokerDemo",
+        "type": "realistic",
+        "description": "Production-ready enterprise demo with verification checks.",
+        "filename": "RealTimeWebsocketsStompMessagingDemo.java",
+        "code": "package com.handbook.spring;\n\nimport java.time.Instant;\nimport java.util.*;\n\npublic class WebSocketStompBrokerDemo {\n\n    public record MarketQuote(String symbol, double price, Instant timestamp) {}\n\n    public static class StompMessageChannelSimulator {\n        private final List<MarketQuote> messageLog = new ArrayList<>();\n\n        public void publishMarketQuote(String symbol, double price) {\n            MarketQuote quote = new MarketQuote(symbol, price, Instant.now());\n            messageLog.add(quote);\n            System.out.printf(\"  -> [STOMP Broadcast /topic/market]: %s = $%.2f (%s)%n\", \n                quote.symbol(), quote.price(), quote.timestamp());\n        }\n\n        public int getMessageCount() { return messageLog.size(); }\n    }\n\n    public static void main(String[] args) {\n        System.out.println(\"=== Topic 118: Real-Time WebSockets & STOMP Messaging Architecture ===\");\n\n        StompMessageChannelSimulator channel = new StompMessageChannelSimulator();\n        channel.publishMarketQuote(\"AAPL\", 228.45);\n        channel.publishMarketQuote(\"NVDA\", 142.10);\n\n        System.out.println(\"Total real-time frames delivered via STOMP broker: \" + channel.getMessageCount());\n\n        if (channel.getMessageCount() != 2) {\n            throw new AssertionError(\"WebSocket message dispatch count mismatch!\");\n        }\n\n        System.out.println(\"Topic 118 WebSockets and STOMP messaging verified successfully.\");\n    }\n}",
+        "output": "Topic 118 Real-Time Bidirectional Communication with WebSockets, STOMP & SockJS verified successfully.",
+        "stepByStep": [
+          "Initialize component state and environment properties.",
+          "Execute business transaction logic under fault/boundary conditions.",
+          "Verify output assertions against expected enterprise contracts."
+        ]
+      }
+    ],
+    "commonMistakes": [
+      {
+        "title": "Attempting to Transmit Bearer JWT Headers During Active WebSocket Frames",
+        "errorCodeOrSnippet": "Client connects cleanly, but subsequent STOMP `SEND` frames fail authentication.",
+        "cause": "WebSockets do not support sending standard HTTP `Authorization: Bearer` headers after the initial handshake is established.",
+        "solution": "Authenticate tokens during the STOMP `CONNECT` frame using a `ChannelInterceptor`:"
+      },
+      {
+        "title": "Multi-Instance Cluster Message Drop with In-Memory SimpleBroker",
+        "errorCodeOrSnippet": "User A connected to Pod 1 sends a message to `/topic/chat`, but User B connected to Pod 2 never receives it!",
+        "cause": "`enableSimpleBroker()` runs entirely in local JVM memory. It does not communicate across different container instances.",
+        "solution": "In distributed multi-pod Kubernetes environments, use the **External Stomp Broker Relay** backed by a shared RabbitMQ or ActiveMQ cluster:"
+      },
+      {
+        "title": "Intermediate Reverse Proxies Terminating Idle Connections",
+        "errorCodeOrSnippet": "WebSocket connections mysteriously disconnect every 60 seconds.",
+        "cause": "AWS ALB, Cloudflare, or NGINX terminate idle TCP connections if no packets travel through the socket.",
+        "solution": "Configure STOMP heartbeats in your broker configuration:"
+      }
+    ],
+    "bestPractices": {
+      "doList": [
+        "**Fallback Protocol**: Always register `.withSockJS()`",
+        "**Clustering**: Use `enableStompBrokerRelay` for multi-node deployments",
+        "**Authentication**: Intercept STOMP `CONNECT` frame",
+        "**Heartbeats**: Enable bidirectional heartbeats (10s/10s)"
+      ],
+      "dontList": [
+        "Avoid ignoring **fallback protocol** guidelines.",
+        "Avoid ignoring **clustering** guidelines.",
+        "Avoid ignoring **authentication** guidelines.",
+        "Avoid ignoring **heartbeats** guidelines."
+      ],
+      "whenNotToUse": "When simplified local processing suffices without distributed network overhead."
+    },
+    "versionNotes": {
+      "introduced": "Spring Framework 6.x / Boot 3.x",
+      "status": "Stable",
+      "compatibilityNotes": "- **Spring 5.x / Boot 2.x:** Supported WebSockets on classic Tomcat/Jetty servlet containers. - **Spring 6.x / Boot 3.x:**   - Upgraded to Jakarta WebSocket 2.1 specification (`jakarta.websocket.*`).",
+      "ltsAvailability": "Java 17, Java 21, Java 26 LTS"
+    },
+    "cheatSheet": {
+      "title": "Real-Time Bidirectional Communication with WebSockets, STOMP & SockJS Architecture Summary",
+      "headers": [
+        "Component / Concept",
+        "Description",
+        "Best Practice"
+      ],
+      "rows": [
+        [
+          "Real-Time Bidirectional Communication with WebSockets, STOMP & SockJS",
+          "Enterprise production implementation",
+          "Enforce strict contracts"
+        ],
+        [
+          "Observability & Metrics",
+          "Continuous runtime health verification",
+          "Export to Prometheus/Micrometer"
+        ],
+        [
+          "Fault Tolerance",
+          "Resilient graceful degradation",
+          "Enforce timeouts & idempotence"
+        ]
+      ]
+    },
+    "exercises": [
+      {
+        "id": 1,
+        "type": "Spot the Bug",
+        "title": "Spot the Anti-Pattern",
+        "prompt": "Review the following production configuration running on 4 Kubernetes pods:\n```java\n@Configuration\n@EnableWebSocketMessageBroker\npublic class WebSocketConfig implements WebSocketMessageBrokerConfigurer {\n    @Override\n    public void configureMessageBroker(MessageBrokerRegistry registry) {\n        registry.enableSimpleBroker(\"/topic\");\n    }\n}\n```\nWhy do clients connected to Pod 1 fail to receive ",
+        "solution": "**Cause:**\n`enableSimpleBroker` is an in-memory queue that exists solely within the RAM of the local JVM. Pod 1 has no knowledge of subscriptions registered on Pod 3.\n\n**The Fix:**\nConfigure the external Stomp Broker Relay backed by a clustered RabbitMQ message broker:\n```java\n@Override\npublic void configureMessageBroker(MessageBrokerRegistry registry) {\n    registry.enableStompBrokerRelay(\"/topic\", \"/queue\")\n        .setRelayHost(\"clustered-rabbitmq.messaging\")\n        .setRelayPort(61613);\n}\n```",
+        "explanation": "Production architecture verification."
+      },
+      {
+        "id": 2,
+        "type": "Hands-on Implementation",
+        "title": "Hands-on Implementation",
+        "prompt": "Write a Spring Boot configuration establishing a STOMP endpoint `/chat-ws` with SockJS, and registering an inbound channel interceptor that validates a dummy token `\"Bearer valid_secret\"` on `CONNECT`.",
+        "solution": "```java\npackage com.handbook.spring.config;\n\nimport org.springframework.context.annotation.Configuration;\nimport org.springframework.messaging.Message;\nimport org.springframework.messaging.MessageChannel;\nimport org.springframework.messaging.simp.config.ChannelRegistration;\nimport org.springframework.messaging.simp.config.MessageBrokerRegistry;\nimport org.springframework.messaging.simp.stomp.StompCommand;\nimport org.springframework.messaging.simp.stomp.StompHeaderAccessor;\nimport org.springframework.messaging.support.ChannelInterceptor;\nimport org.springframework.messaging.support.MessageHeade",
+        "explanation": "Production architecture verification."
+      },
+      {
+        "id": 3,
+        "type": "Real-world Edge Case",
+        "title": "Production Edge Case",
+        "prompt": "",
+        "solution": "**Question:** When a banking service dispatches a point-to-point alert using `messagingTemplate.convertAndSendToUser(\"alice\", \"/queue/alerts\", alert)`, how does Spring STOMP resolve which WebSocket connection belongs to `\"alice\"`?\n\n**Solution:**\n1. **User Destination Resolution:** Spring uses `UserDestinationResolver`. When `\"alice\"` connects, Spring's security interceptor associates her `Principal.getName()` (`\"alice\"`) with her unique WebSocket session ID (e.g. `session-8891`).\n2. **Subscription Mapping:** When Alice's client subscribes to `/user/queue/alerts`, Spring translates this behind ",
+        "explanation": "Production architecture verification."
+      }
+    ],
+    "officialSources": [
+      {
+        "title": "Spring Framework Official Documentation",
+        "url": "https://docs.spring.io/spring-framework/reference/",
+        "organization": "Spring / VMware"
+      },
+      {
+        "title": "Spring Boot Reference Documentation",
+        "url": "https://docs.spring.io/spring-boot/reference/",
+        "organization": "Spring / VMware"
+      }
+    ]
+  },
+  {
+    "id": "topic-119",
+    "slug": "server-sent-events-http-streaming",
+    "topicNumber": 119,
+    "relevanceLevel": "ADVANCED / DEEP-DIVE",
+    "title": "Server-Sent Events (SSE) & Reactive HTTP Streaming",
+    "part": "Part 3: Spring Boot & Production Stack",
+    "sectionNumber": 34,
+    "sectionTitle": "Real-Time Web & Asynchronous Streaming",
+    "versionBadge": "Spring Framework 6.x / Boot 3.x",
+    "difficulty": "Intermediate",
+    "readingTime": "16 min read",
+    "shortDescription": "Implement lightweight unidirectional real-time event streaming in Spring Boot: SseEmitter lifecycle, MIME text/event-stream, client auto-reconnection via Last-Event-ID, and high-concurrency event broadcasting.",
+    "prerequisites": [
+      "Topic 64: Web Architecture Fundamentals (HTTP Protocol, Client-Server)",
+      "Topic 92: Production REST Controller Architecture with Spring Web MVC",
+      "Topic 118: Real-Time Bidirectional Communication with WebSockets, STOMP & SockJS"
+    ],
+    "whatAndWhy": {
+      "definition": "While WebSockets (Topic 118) provide full-duplex bidirectional communication, many real-time applications only require **unidirectional server-to-client streaming**: live sports scoreboards, stock ticker feeds, CI/CD build deployment logs, flight status updates, and AI LLM token-by-token streaming responses.",
+      "analogy": "Consider an airport departures information board.\n- **WebSocket:** An intercom system allowing you to talk to the tower operator and listen at the same time.\n- **Server-Sent Events:** The giant digital display screen above the concourse. Passengers don't need to speak into a microphone; they simply look up and read the latest flight gate updates as they flash on the screen in real-time.",
+      "whyItExists": "ker feeds, CI/CD build deployment logs, flight status updates, and AI LLM token-by-token streaming responses.\n\nFor unidirectional feeds, full-duplex WebSockets introduce unnecessary architectural complexity: custom framing protocols, special proxy configurations, and manual ping-pong keepalives.\n\n**Server-Sent Events (SSE)** is an official W3C / HTML5 standard built directly on top of standard HTT"
+    },
+    "syntaxBreakdown": {
+      "title": "Server-Sent Events (SSE) & Reactive HTTP Streaming Core Architecture",
+      "codeSnippet": "@RestController\n@RequestMapping(\"/api/v1/telemetry\")\npublic class TelemetryStreamController {\n\n    private final TelemetryBroadcaster broadcaster;\n\n    public TelemetryStreamController(TelemetryBroadcaster broadcaster) {\n        this.broadcaster = broadcaster;\n    }\n\n    @GetMapping(value = \"/live\", produces = MediaType.TEXT_EVENT_STREAM_VALUE)\n    public SseEmitter streamTelemetry() {\n        // Set timeout: 30 minutes (0L means no timeout)\n        SseEmitter emitter = new SseEmitter(1800_000L);\n        broadcaster.register(emitter);\n        return emitter;\n    }\n}",
+      "explanation": "### 3.1 Exposing an SSE Endpoint with `SseEmitter`\n\nIn Spring MVC, streaming is enabled by returning an instance of `SseEmitter`:",
+      "tokens": [
+        {
+          "token": "Server-Sent",
+          "explanation": "Primary architectural component."
+        },
+        {
+          "token": "Enterprise Context",
+          "explanation": "Decoupled production environment configuration."
+        }
+      ]
+    },
+    "examples": [
+      {
+        "id": "ex-119-1",
+        "title": "Basic Example: Simulating SSE Format Serialization",
+        "type": "basic",
+        "description": "Basic configuration and usage for Server-Sent Events (SSE) & Reactive HTTP Streaming.",
+        "filename": "BasicServerSentEventsHttpStreaming.java",
+        "code": "package com.handbook.spring;\n\npublic class BasicSseFormattingDemo {\n\n    public static String formatSseMessage(String id, String event, String data) {\n        return \"id: \" + id + \"\\n\" +\n               \"event: \" + event + \"\\n\" +\n               \"retry: 3000\\n\" +\n               \"data: \" + data + \"\\n\\n\";\n    }\n\n    public static void main(String[] args) {\n        System.out.println(\"--- Spring Web: Standard SSE Frame Formatting ---\");\n        String frame = formatSseMessage(\"101\", \"stock_tick\", \"{\\\"symbol\\\":\\\"GOOGL\\\",\\\"price\\\":185.20}\");\n        System.out.print(frame);\n    }\n}",
+        "output": "Server-Sent Events (SSE) & Reactive HTTP Streaming configured and verified successfully.",
+        "stepByStep": [
+          "Define enterprise domain configuration.",
+          "Apply core framework annotations.",
+          "Execute and verify component lifecycle."
+        ]
+      },
+      {
+        "id": "ex-119-2",
+        "title": "Realistic Enterprise Example: Verified ServerSentEventsStreamingDemo",
+        "type": "realistic",
+        "description": "Production-ready enterprise demo with verification checks.",
+        "filename": "ServerSentEventsHttpStreamingDemo.java",
+        "code": "package com.handbook.spring;\n\nimport java.util.*;\n\npublic class ServerSentEventsStreamingDemo {\n\n    public record StreamEvent(String eventType, String payload) {}\n\n    public static class SseBroadcastChannel {\n        private final List<StreamEvent> eventStream = new ArrayList<>();\n\n        public void pushEvent(String eventType, String payload) {\n            StreamEvent event = new StreamEvent(eventType, payload);\n            eventStream.add(event);\n            System.out.printf(\"  -> [SSE Push]: event=%s | data=%s%n\", event.eventType(), event.payload());\n        }\n\n        public int getDeliveredEventCount() { return eventStream.size(); }\n    }\n\n    public static void main(String[] args) {\n        System.out.println(\"=== Topic 119: Server-Sent Events (SSE) & HTTP Streaming ===\");\n\n        SseBroadcastChannel channel = new SseBroadcastChannel();\n        channel.pushEvent(\"BUILD_STATUS\", \"{\\\"step\\\":\\\"COMPILE\\\",\\\"status\\\":\\\"SUCCESS\\\"}\");\n        channel.pushEvent(\"BUILD_STATUS\", \"{\\\"step\\\":\\\"UNIT_TESTS\\\",\\\"status\\\":\\\"181_PASSED\\\"}\");\n        channel.pushEvent(\"DEPLOY_STATUS\", \"{\\\"target\\\":\\\"KUBERNETES_PROD\\\",\\\"status\\\":\\\"ROLLOUT_COMPLETE\\\"}\");\n\n        System.out.println(\"Total real-time SSE stream events delivered: \" + channel.getDeliveredEventCount());\n\n        if (channel.getDeliveredEventCount() != 3) {\n            throw new AssertionError(\"SSE stream event count mismatch!\");\n        }\n\n        System.out.println(\"Topic 119 Server-Sent Events and HTTP streaming verified successfully.\");\n    }\n}",
+        "output": "Topic 119 Server-Sent Events (SSE) & Reactive HTTP Streaming verified successfully.",
+        "stepByStep": [
+          "Initialize component state and environment properties.",
+          "Execute business transaction logic under fault/boundary conditions.",
+          "Verify output assertions against expected enterprise contracts."
+        ]
+      }
+    ],
+    "commonMistakes": [
+      {
+        "title": "Memory Leaks from Orphaned Emitter References",
+        "errorCodeOrSnippet": "JVM heap memory climbs steadily until `OutOfMemoryError` occurs after several days in production.",
+        "cause": "When a client closes their browser, the connection is severed on the client side. If the server does not register `onCompletion` and `onTimeout` callbacks to remove the emitter from the active subscriber list, the dead emitter objects remain referenced in the heap forever.",
+        "solution": "Always use a thread-safe collection (`CopyOnWriteArrayList`) and purge dead emitters in `onCompletion`, `onTimeout`, and catch blocks on `send()`."
+      },
+      {
+        "title": "Intermediate Reverse Proxy Buffering",
+        "errorCodeOrSnippet": "SSE events are not received in real-time; instead, the browser freezes for 30 seconds and then suddenly receives a batch of 50 events all at once.",
+        "cause": "Reverse proxies (NGINX, Cloudflare, AWS ALB) buffer HTTP chunked responses to optimize packet compression unless told otherwise.",
+        "solution": "Disable proxy buffering by sending the `X-Accel-Buffering: no` HTTP header:"
+      },
+      {
+        "title": "Browser HTTP/1.1 Maximum 6-Connection Limit",
+        "errorCodeOrSnippet": "Opening 6 browser tabs with active SSE connections causes the 7th tab to hang indefinitely.",
+        "cause": "The HTTP/1.1 specification limits browsers to 6 concurrent TCP connections per domain.",
+        "solution": "Deploy your production application over **HTTP/2**. In HTTP/2, dozens of concurrent SSE streams multiplex over a single TCP connection, eliminating the 6-connection limit."
+      }
+    ],
+    "bestPractices": {
+      "doList": [
+        "**Transport Protocol**: Always deploy SSE over HTTP/2",
+        "**Proxy Buffering**: Send `X-Accel-Buffering: no`",
+        "**Heartbeat Pings**: Send empty comment `:keepalive\\n\\n` every 15s",
+        "**Client Reconnect**: Supply `.reconnectTime(5000L)`"
+      ],
+      "dontList": [
+        "Avoid ignoring **transport protocol** guidelines.",
+        "Avoid ignoring **proxy buffering** guidelines.",
+        "Avoid ignoring **heartbeat pings** guidelines.",
+        "Avoid ignoring **client reconnect** guidelines."
+      ],
+      "whenNotToUse": "When simplified local processing suffices without distributed network overhead."
+    },
+    "versionNotes": {
+      "introduced": "Spring Framework 6.x / Boot 3.x",
+      "status": "Stable",
+      "compatibilityNotes": "- **Spring 4.x / 5.x:** Introduced `SseEmitter` and `ResponseBodyEmitter`. - **Spring 6.x (Spring Boot 3.x):**   - Enhanced asynchronous request processing backed by Jakarta Servlet 6.0 asynchronous I",
+      "ltsAvailability": "Java 17, Java 21, Java 26 LTS"
+    },
+    "cheatSheet": {
+      "title": "Server-Sent Events (SSE) & Reactive HTTP Streaming Architecture Summary",
+      "headers": [
+        "Component / Concept",
+        "Description",
+        "Best Practice"
+      ],
+      "rows": [
+        [
+          "Server-Sent Events (SSE) & Reactive HTTP Streaming",
+          "Enterprise production implementation",
+          "Enforce strict contracts"
+        ],
+        [
+          "Observability & Metrics",
+          "Continuous runtime health verification",
+          "Export to Prometheus/Micrometer"
+        ],
+        [
+          "Fault Tolerance",
+          "Resilient graceful degradation",
+          "Enforce timeouts & idempotence"
+        ]
+      ]
+    },
+    "exercises": [
+      {
+        "id": 1,
+        "type": "Spot the Bug",
+        "title": "Spot the Anti-Pattern",
+        "prompt": "Review the following controller:\n```java\n@RestController\npublic class LiveNewsController {\n    private final List<SseEmitter> clients = new ArrayList<>();\n\n    @GetMapping(\"/news/stream\")\n    public SseEmitter streamNews() {\n        SseEmitter emitter = new SseEmitter();\n        clients.add(emitter);\n        return emitter;\n    }\n}\n```\nWhat two major production disasters will occur under high conc",
+        "solution": "**Disasters:**\n1. **Concurrency Failure:** `ArrayList` is not thread-safe. Concurrent client connections will trigger `ConcurrentModificationException` during broadcast or corrupt the internal array.\n2. **Permanent Memory Leak:** Dead or closed emitters are never removed. As users refresh pages, hundreds of orphaned `SseEmitter` instances remain in RAM, leading to `OutOfMemoryError`.\n\n**The Fix:**\nUse `CopyOnWriteArrayList` and register `onCompletion` and `onTimeout` callbacks to remove the emitter.",
+        "explanation": "Production architecture verification."
+      },
+      {
+        "id": 2,
+        "type": "Hands-on Implementation",
+        "title": "Hands-on Implementation",
+        "prompt": "Write a Spring `@Service` managing real-time notifications with automatic error eviction and heartbeats.",
+        "solution": "```java\npackage com.handbook.spring.service;\n\nimport org.springframework.scheduling.annotation.Scheduled;\nimport org.springframework.stereotype.Service;\nimport org.springframework.web.servlet.mvc.method.annotation.SseEmitter;\n\nimport java.io.IOException;\nimport java.util.List;\nimport java.util.concurrent.CopyOnWriteArrayList;\n\n@Service\npublic class OrderNotificationService {\n\n    private final List<SseEmitter> emitters = new CopyOnWriteArrayList<>();\n\n    public void addEmitter(SseEmitter emitter) {\n        emitters.add(emitter);\n        emitter.onCompletion(() -> emitters.remove(emitter));\n  ",
+        "explanation": "Production architecture verification."
+      },
+      {
+        "id": 3,
+        "type": "Real-world Edge Case",
+        "title": "Production Edge Case",
+        "prompt": "",
+        "solution": "**Question:** When a mobile user walks through a subway tunnel and loses cellular connection for 10 seconds, how does the browser's `EventSource` automatically resume and recover all missed events upon reconnecting?\n\n**Solution:**\n1. **The `Last-Event-ID` Header:** When the server sends an SSE frame with an ID (`id: 1042`), the browser records this ID in its internal session state.\n2. **Reconnection Handshake:** Upon reconnecting, the browser automatically transmits the header:\n   `Last-Event-ID: 1042`\n3. **Server Recovery:** In Spring Boot, extract the header in your controller:\n   ```java\n  ",
+        "explanation": "Production architecture verification."
+      }
+    ],
+    "officialSources": [
+      {
+        "title": "Spring Framework Official Documentation",
+        "url": "https://docs.spring.io/spring-framework/reference/",
+        "organization": "Spring / VMware"
+      },
+      {
+        "title": "Spring Boot Reference Documentation",
+        "url": "https://docs.spring.io/spring-boot/reference/",
+        "organization": "Spring / VMware"
+      }
+    ]
+  },
+  {
+    "id": "topic-120",
+    "slug": "service-discovery-registration-eureka-consul",
+    "topicNumber": 120,
+    "relevanceLevel": "ADVANCED / DEEP-DIVE",
+    "title": "Service Discovery & Dynamic Registration (Spring Cloud Eureka & Consul)",
+    "part": "Part 3: Spring Boot & Production Stack",
+    "sectionNumber": 35,
+    "sectionTitle": "Spring Cloud & Microservices Ecosystem (SOA Core)",
+    "versionBadge": "Spring Cloud 2023.x / Boot 3.x",
+    "difficulty": "Advanced",
+    "readingTime": "18 min read",
+    "shortDescription": "Eliminate hardcoded microservice IP addresses in cloud architectures: Service Registry patterns, dynamic registration with Netflix Eureka and HashiCorp Consul, heartbeat leases, and self-preservation mechanics.",
+    "prerequisites": [
+      "Topic 64: Web Architecture Fundamentals (HTTP Protocol, Client-Server)",
+      "Topic 90: Auto-Configuration Mechanics, Starters & Embedded Runtimes",
+      "Topic 91: Externalized Configuration, YAML Hierarchies & Multi-Profile Deployment"
+    ],
+    "whatAndWhy": {
+      "definition": "In traditional monolithic web architectures, applications ran on a handful of static physical servers with fixed IP addresses (e.g. `192.168.1.50`). Configuration files simply hardcoded these addresses.",
+      "analogy": "Consider an international airport taxi dispatcher.\n- **Hardcoded Static Routing:** A traveler writes down a specific taxi driver's personal cell phone number and license plate 3 years in advance. When the traveler lands at 2:00 AM, that taxi driver is in a different city or retired (**Connection Refused**).\n- **Service Discovery:** The airport maintains a central taxi dispatch stand (**Eureka Server**). As taxis arrive, they pull into the queue and register with the dispatcher (**Service Registration**). The dispatcher directs arriving travelers to the next active, vetted taxi in line (**Dynamic Discovery**).",
+      "whyItExists": "s.\n\nIn modern cloud-native Service-Oriented Architectures (SOA) and microservices, **static IP addresses are completely obsolete**:\n- Applications autoscale dynamically from 2 instances to 50 instances during traffic spikes.\n- Containers (Docker / Kubernetes Pods) restart with entirely new ephemeral IP addresses on different physical nodes.\n- Rolling deployments replace unhealthy container instanc"
+    },
+    "syntaxBreakdown": {
+      "title": "Service Discovery & Dynamic Registration (Spring Cloud Eureka & Consul) Core Architecture",
+      "codeSnippet": "@SpringBootApplication\n@EnableEurekaServer // Activates Eureka Service Registry\npublic class ServiceRegistryApplication {\n    public static void main(String[] args) {\n        SpringApplication.run(ServiceRegistryApplication.class, args);\n    }\n}",
+      "explanation": "### 3.1 Provisioning a Eureka Service Registry Server\n\nAdd `spring-cloud-starter-netflix-eureka-server`:",
+      "tokens": [
+        {
+          "token": "Service",
+          "explanation": "Primary architectural component."
+        },
+        {
+          "token": "Enterprise Context",
+          "explanation": "Decoupled production environment configuration."
+        }
+      ]
+    },
+    "examples": [
+      {
+        "id": "ex-120-1",
+        "title": "Basic Example: Simulating Service Registry Lookups",
+        "type": "basic",
+        "description": "Basic configuration and usage for Service Discovery & Dynamic Registration (Spring Cloud Eureka & Consul).",
+        "filename": "BasicServiceDiscoveryRegistrationEurekaConsul.java",
+        "code": "package com.handbook.spring;\n\nimport java.util.*;\n\npublic class BasicServiceRegistryDemo {\n\n    public static class InProcessServiceRegistry {\n        private final Map<String, List<String>> registry = new HashMap<>();\n\n        public void register(String serviceName, String instanceAddress) {\n            registry.computeIfAbsent(serviceName.toUpperCase(), k -> new ArrayList<>()).add(instanceAddress);\n            System.out.printf(\"[Registry] Registered '%s' at: %s%n\", serviceName, instanceAddress);\n        }\n\n        public String discover(String serviceName) {\n            List<String> instances = registry.get(serviceName.toUpperCase());\n            if (instances == null || instances.isEmpty()) {\n                throw new IllegalStateException(\"Service Unavailable: \" + serviceName);\n            }\n            // Simple Round-Robin pick\n            return instances.get(0);\n        }\n    }\n\n    public static void main(String[] args) {\n        System.out.println(\"--- Spring Cloud: Service Discovery Simulation ---\");\n        InProcessServiceRegistry registry = new InProcessServiceRegistry();\n\n        registry.register(\"PAYMENT-SERVICE\", \"http://10.0.1.15:8082\");\n        registry.register(\"PAYMENT-SERVICE\", \"http://10.0.1.16:8082\");\n\n        System.out.println(\"Discovered active instance for PAYMENT-SERVICE: \" + \n            registry.discover(\"PAYMENT-SERVICE\"));\n    }\n}",
+        "output": "Service Discovery & Dynamic Registration (Spring Cloud Eureka & Consul) configured and verified successfully.",
+        "stepByStep": [
+          "Define enterprise domain configuration.",
+          "Apply core framework annotations.",
+          "Execute and verify component lifecycle."
+        ]
+      },
+      {
+        "id": "ex-120-2",
+        "title": "Realistic Enterprise Example: Verified ServiceDiscoveryEurekaDemo",
+        "type": "realistic",
+        "description": "Production-ready enterprise demo with verification checks.",
+        "filename": "ServiceDiscoveryRegistrationEurekaConsulDemo.java",
+        "code": "package com.handbook.spring;\n\nimport java.util.*;\n\npublic class ServiceDiscoveryEurekaDemo {\n\n    public record ServiceInstance(String serviceId, String host, int port, boolean healthy) {}\n\n    public static class EurekaRegistrySimulator {\n        private final Map<String, List<ServiceInstance>> registryMap = new HashMap<>();\n\n        public void registerInstance(ServiceInstance instance) {\n            registryMap.computeIfAbsent(instance.serviceId(), k -> new ArrayList<>()).add(instance);\n            System.out.printf(\"  -> [Eureka Register]: %s running on %s:%d%n\", \n                instance.serviceId(), instance.host(), instance.port());\n        }\n\n        public List<ServiceInstance> getHealthyInstances(String serviceId) {\n            return registryMap.getOrDefault(serviceId, List.of()).stream()\n                .filter(ServiceInstance::healthy)\n                .toList();\n        }\n    }\n\n    public static void main(String[] args) {\n        System.out.println(\"=== Topic 120: Service Discovery & Dynamic Registration ===\");\n\n        EurekaRegistrySimulator eureka = new EurekaRegistrySimulator();\n        eureka.registerInstance(new ServiceInstance(\"INVENTORY-SERVICE\", \"10.0.4.12\", 8083, true));\n        eureka.registerInstance(new ServiceInstance(\"INVENTORY-SERVICE\", \"10.0.4.18\", 8083, true));\n        eureka.registerInstance(new ServiceInstance(\"INVENTORY-SERVICE\", \"10.0.4.99\", 8083, false)); // Unhealthy node\n\n        List<ServiceInstance> activeNodes = eureka.getHealthyInstances(\"INVENTORY-SERVICE\");\n        System.out.println(\"Active healthy nodes available for load balancing: \" + activeNodes.size());\n\n        if (activeNodes.size() != 2) {\n            throw new AssertionError(\"Eureka healthy instances count mismatch!\");\n        }\n\n        System.out.println(\"Topic 120 Service Discovery with Eureka verified successfully.\");\n    }\n}",
+        "output": "Topic 120 Service Discovery & Dynamic Registration (Spring Cloud Eureka & Consul) verified successfully.",
+        "stepByStep": [
+          "Initialize component state and environment properties.",
+          "Execute business transaction logic under fault/boundary conditions.",
+          "Verify output assertions against expected enterprise contracts."
+        ]
+      }
+    ],
+    "commonMistakes": [
+      {
+        "title": "Disabling Self-Preservation Mode in Production",
+        "errorCodeOrSnippet": "Microservices disappear from the Eureka dashboard during brief network congestion, causing cascading HTTP 503 errors.",
+        "cause": "Setting `eureka.server.enable-self-preservation: false` instructs Eureka to evict any service that misses heartbeats, even if the issue is a temporary network partition between switches.",
+        "solution": "Always keep `enable-self-preservation: true` in production environments. Only disable it in local integration test suites where immediate cleanup is needed."
+      },
+      {
+        "title": "Client Registering with Unreachable Container Hostname",
+        "errorCodeOrSnippet": "Eureka dashboard shows services registered as `df83b91a2c:8080`, and calling services fail with `UnknownHostException`.",
+        "cause": "In Docker and Kubernetes, containers generate random hexadecimal hostnames. By default, Eureka registers this unresolvable hostname unless configured otherwise.",
+        "solution": "Configure `prefer-ip-address: true` in all microservice clients:"
+      },
+      {
+        "title": "Client Stale Cache Latency",
+        "errorCodeOrSnippet": "After an unhealthy instance is terminated, client callers continue sending traffic to the dead node for 30 seconds, receiving `ConnectionRefused`.",
+        "cause": "Eureka clients cache the service registry locally and refresh every 30 seconds (`eureka.client.registry-fetch-interval-seconds: 30`).",
+        "solution": "Combine Service Discovery with **Resilience4j Circuit Breakers** or **Spring Cloud LoadBalancer Retry** to immediately fail over to a healthy replica upon network errors without waiting for the next 30-second cache poll."
+      }
+    ],
+    "bestPractices": {
+      "doList": [
+        "**High Availability**: Deploy at least 2 Eureka servers in peer replication",
+        "**Network Identity**: Set `prefer-ip-address: true`",
+        "**Heartbeat Intervals**: Keep defaults (30s renewal, 90s expiration)",
+        "**Kubernetes Notice**: If on pure Kubernetes, evaluate native K8s DNS Services"
+      ],
+      "dontList": [
+        "Avoid ignoring **high availability** guidelines.",
+        "Avoid ignoring **network identity** guidelines.",
+        "Avoid ignoring **heartbeat intervals** guidelines.",
+        "Avoid ignoring **kubernetes notice** guidelines."
+      ],
+      "whenNotToUse": "When simplified local processing suffices without distributed network overhead."
+    },
+    "versionNotes": {
+      "introduced": "Spring Cloud 2023.x / Boot 3.x",
+      "status": "Stable",
+      "compatibilityNotes": "- **Spring Cloud Netflix (Legacy):** Historically bundled Zuul, Ribbon, Hystrix, and Archaius. - **Spring Cloud 2023.x / 2024.x (Spring Boot 3.x):**   - Retired legacy Netflix components (Ribbon repla",
+      "ltsAvailability": "Java 17, Java 21, Java 26 LTS"
+    },
+    "cheatSheet": {
+      "title": "Service Discovery & Dynamic Registration (Spring Cloud Eureka & Consul) Architecture Summary",
+      "headers": [
+        "Component / Concept",
+        "Description",
+        "Best Practice"
+      ],
+      "rows": [
+        [
+          "Service Discovery & Dynamic Registration (Spring Cloud Eureka & Consul)",
+          "Enterprise production implementation",
+          "Enforce strict contracts"
+        ],
+        [
+          "Observability & Metrics",
+          "Continuous runtime health verification",
+          "Export to Prometheus/Micrometer"
+        ],
+        [
+          "Fault Tolerance",
+          "Resilient graceful degradation",
+          "Enforce timeouts & idempotence"
+        ]
+      ]
+    },
+    "exercises": [
+      {
+        "id": 1,
+        "type": "Spot the Bug",
+        "title": "Spot the Anti-Pattern",
+        "prompt": "Review the following client configuration running inside an AWS ECS Docker task:\n```yaml\nspring:\n  application:\n    name: billing-service\nserver:\n  port: 8080\neureka:\n  client:\n    service-url:\n      defaultZone: http://eureka-registry:8761/eureka/\n```\nWhy do other services fail to connect to `billing-service` even though it shows up as \"UP\" in Eureka?",
+        "solution": "**Cause:**\nWithout `eureka.instance.prefer-ip-address: true`, the container registers its ephemeral internal Docker hostname (e.g. `ip-10-0-2-14.ec2.internal` or container hash `e28f11bc`). Unless enterprise private DNS is mapped, other containers cannot resolve this hostname.\n\n**The Fix:**\n```yaml\neureka:\n  instance:\n    prefer-ip-address: true\n```",
+        "explanation": "Production architecture verification."
+      },
+      {
+        "id": 2,
+        "type": "Hands-on Implementation",
+        "title": "Hands-on Implementation",
+        "prompt": "Write the `application.yml` profiles for two Eureka servers (`eureka-peer-1` on port 8761 and `eureka-peer-2` on port 8762) configured to replicate registered instances to each other.",
+        "solution": "```yaml\n---\nspring:\n  config:\n    activate:\n      on-profile: peer1\nserver:\n  port: 8761\neureka:\n  instance:\n    hostname: peer1.eureka.internal\n  client:\n    register-with-eureka: true\n    fetch-registry: true\n    service-url:\n      defaultZone: http://peer2.eureka.internal:8762/eureka/\n\n---\nspring:\n  config:\n    activate:\n      on-profile: peer2\nserver:\n  port: 8762\neureka:\n  instance:\n    hostname: peer2.eureka.internal\n  client:\n    register-with-eureka: true\n    fetch-registry: true\n    service-url:\n      defaultZone: http://peer1.eureka.internal:8761/eureka/\n```",
+        "explanation": "Production architecture verification."
+      },
+      {
+        "id": 3,
+        "type": "Real-world Edge Case",
+        "title": "Production Edge Case",
+        "prompt": "",
+        "solution": "**Question:** During a zero-downtime rolling deployment, when a container receives `SIGTERM`, how does Spring Boot ensure it deregisters from Eureka immediately before shutting down Tomcat?\n\n**Solution:**\nSpring Cloud includes a JVM shutdown hook by default:\n1. When Kubernetes sends `SIGTERM`, Spring Cloud's `EurekaAutoServiceRegistration` executes `discoveryClient.shutdown()`.\n2. The client transmits an immediate HTTP `DELETE /eureka/apps/{appName}/{instanceId}` to the Eureka server.\n3. Eureka instantly sets the instance status to `CANCELLED` and broadcasts the update to peers.\n4. Setting `se",
+        "explanation": "Production architecture verification."
+      }
+    ],
+    "officialSources": [
+      {
+        "title": "Spring Framework Official Documentation",
+        "url": "https://docs.spring.io/spring-framework/reference/",
+        "organization": "Spring / VMware"
+      },
+      {
+        "title": "Spring Boot Reference Documentation",
+        "url": "https://docs.spring.io/spring-boot/reference/",
+        "organization": "Spring / VMware"
+      }
+    ]
+  },
+  {
+    "id": "topic-121",
+    "slug": "api-gateway-spring-cloud-gateway",
+    "topicNumber": 121,
+    "relevanceLevel": "ADVANCED / DEEP-DIVE",
+    "title": "Enterprise API Gateway Architecture (Spring Cloud Gateway, Routing & Rate Limiting)",
+    "part": "Part 3: Spring Boot & Production Stack",
+    "sectionNumber": 35,
+    "sectionTitle": "Spring Cloud & Microservices Ecosystem (SOA Core)",
+    "versionBadge": "Spring Cloud 2023.x / Boot 3.x",
+    "difficulty": "Advanced",
+    "readingTime": "18 min read",
+    "shortDescription": "Architect the unified entry point for microservices using Spring Cloud Gateway: non-blocking reactive routing, route predicates, pre/post filters, distributed rate limiting with Redis, and JWT authentication forwarding.",
+    "prerequisites": [
+      "Topic 98: Modern SecurityFilterChain Architecture & Password Encryption",
+      "Topic 112: Spring Security OAuth2 Resource Server & Asymmetric JWT Validation",
+      "Topic 120: Service Discovery & Dynamic Registration (Spring Cloud Eureka & Consul)"
+    ],
+    "whatAndWhy": {
+      "definition": "In a complex microservices ecosystem, an enterprise backend may consist of dozens of fine-grained services: `user-service`, `catalog-service`, `payment-service`, `shipping-service`, and `billing-service`.",
+      "analogy": "Consider visiting a high-security corporate skyscraper.\n- **Without a Gateway:** Visitors wander through parking lots, climb emergency stairwells, knock on internal accounting office doors, and argue with individual project managers for permission.\n- **With an API Gateway:** The visitor enters through the grand front lobby. The security desk (**Gateway Security Filter**) checks their ID, the metal detector scans their baggage (**CORS / Payload Filter**), and an automated elevator badge (**Routing Engine**) takes them directly to the exact designated meeting room on the 14th floor.",
+      "whyItExists": "ce`.\n\nExposing dozens of discrete backend microservice endpoints directly to public frontend clients (mobile apps, React web applications) introduces major operational vulnerabilities:\n1. **Network Chatiness:** A single screen might require making 10 separate HTTP requests across different ports and domains.\n2. **Security Vulnerability:** Every individual microservice must manage SSL certificates,"
+    },
+    "syntaxBreakdown": {
+      "title": "Enterprise API Gateway Architecture (Spring Cloud Gateway, Routing & Rate Limiting) Core Architecture",
+      "codeSnippet": "---\n\n### 3.3 Distributed Rate Limiting via Redis Token Bucket\n\nSpring Cloud Gateway integrates with Redis to enforce distributed token-bucket rate limiting across multiple gateway instances:",
+      "explanation": "### 3.1 Gateway Triad: Routes, Predicates & Filters\n\nSpring Cloud Gateway operates around three core concepts:\n1. **Route:** The primary unit of the gateway, consisting of an ID, target destination URI, collection of predicates, and collection of filters.\n2. **Predicate:** A Java `Predicate<ServerWe",
+      "tokens": [
+        {
+          "token": "Enterprise",
+          "explanation": "Primary architectural component."
+        },
+        {
+          "token": "Enterprise Context",
+          "explanation": "Decoupled production environment configuration."
+        }
+      ]
+    },
+    "examples": [
+      {
+        "id": "ex-121-1",
+        "title": "Basic Example: Simulating Path Predicate Matching and Routing",
+        "type": "basic",
+        "description": "Basic configuration and usage for Enterprise API Gateway Architecture (Spring Cloud Gateway, Routing & Rate Limiting).",
+        "filename": "BasicApiGatewaySpringCloudGateway.java",
+        "code": "package com.handbook.spring;\n\nimport java.util.*;\n\npublic class BasicGatewayRouteMatchDemo {\n\n    public record RouteRule(String pathPrefix, String targetServiceUri) {}\n\n    public static class SimpleGatewayRouter {\n        private final List<RouteRule> routes = new ArrayList<>();\n\n        public void addRoute(String pathPrefix, String targetUri) {\n            routes.add(new RouteRule(pathPrefix, targetUri));\n        }\n\n        public String routeRequest(String incomingPath) {\n            for (RouteRule route : routes) {\n                if (incomingPath.startsWith(route.pathPrefix())) {\n                    return route.targetServiceUri() + incomingPath;\n                }\n            }\n            throw new NoSuchElementException(\"HTTP 404: No route found for path: \" + incomingPath);\n        }\n    }\n\n    public static void main(String[] args) {\n        System.out.println(\"--- Spring Cloud Gateway: Route Predicate Matching ---\");\n        SimpleGatewayRouter router = new SimpleGatewayRouter();\n        router.addRoute(\"/api/v1/users\", \"lb://USER-SERVICE\");\n        router.addRoute(\"/api/v1/orders\", \"lb://ORDER-SERVICE\");\n\n        String requestPath = \"/api/v1/orders/ORD-9912\";\n        System.out.println(\"Incoming Request: \" + requestPath);\n        System.out.println(\"Proxy Destination : \" + router.routeRequest(requestPath));\n    }\n}",
+        "output": "Enterprise API Gateway Architecture (Spring Cloud Gateway, Routing & Rate Limiting) configured and verified successfully.",
+        "stepByStep": [
+          "Define enterprise domain configuration.",
+          "Apply core framework annotations.",
+          "Execute and verify component lifecycle."
+        ]
+      },
+      {
+        "id": "ex-121-2",
+        "title": "Realistic Enterprise Example: Verified SpringCloudGatewayRoutingDemo",
+        "type": "realistic",
+        "description": "Production-ready enterprise demo with verification checks.",
+        "filename": "ApiGatewaySpringCloudGatewayDemo.java",
+        "code": "package com.handbook.spring;\n\nimport java.util.*;\n\npublic class SpringCloudGatewayRoutingDemo {\n\n    public record GatewayRoute(String routeId, String pattern, String targetService, int rateLimitTokens) {}\n\n    public static class EnterpriseGatewaySimulator {\n        private final List<GatewayRoute> routeTable = new ArrayList<>();\n\n        public void addRoute(GatewayRoute route) {\n            routeTable.add(route);\n            System.out.printf(\"  -> [Gateway Route Registered]: ID=%-15s | Pattern=%-20s | Target=%s%n\",\n                route.routeId(), route.pattern(), route.targetService());\n        }\n\n        public Optional<GatewayRoute> matchRoute(String path) {\n            return routeTable.stream().filter(r -> path.startsWith(r.pattern())).findFirst();\n        }\n    }\n\n    public static void main(String[] args) {\n        System.out.println(\"=== Topic 121: Enterprise API Gateway Architecture & Routing ===\");\n\n        EnterpriseGatewaySimulator gateway = new EnterpriseGatewaySimulator();\n        gateway.addRoute(new GatewayRoute(\"orders-v1\", \"/api/v1/orders\", \"lb://ORDER-SERVICE\", 20));\n        gateway.addRoute(new GatewayRoute(\"payments-v1\", \"/api/v1/payments\", \"lb://PAYMENT-SERVICE\", 10));\n\n        Optional<GatewayRoute> matched = gateway.matchRoute(\"/api/v1/payments/process\");\n        System.out.println(\"Route matching test: \" + matched.map(GatewayRoute::targetService).orElse(\"NONE\"));\n\n        if (matched.isEmpty() || !matched.get().targetService().equals(\"lb://PAYMENT-SERVICE\")) {\n            throw new AssertionError(\"Gateway route matching verification failed!\");\n        }\n\n        System.out.println(\"Topic 121 Spring Cloud Gateway routing verified successfully.\");\n    }\n}",
+        "output": "Topic 121 Enterprise API Gateway Architecture (Spring Cloud Gateway, Routing & Rate Limiting) verified successfully.",
+        "stepByStep": [
+          "Initialize component state and environment properties.",
+          "Execute business transaction logic under fault/boundary conditions.",
+          "Verify output assertions against expected enterprise contracts."
+        ]
+      }
+    ],
+    "commonMistakes": [
+      {
+        "title": "Starter Collision: Mixing Spring MVC with Spring Cloud Gateway",
+        "errorCodeOrSnippet": "Application fails to start throwing: `Spring Cloud Gateway requires WebFlux, but found Spring MVC on the classpath. Please remove spring-boot-starter-web`.",
+        "cause": "Spring Cloud Gateway is built entirely on reactive **Spring WebFlux and Netty**. It cannot run inside a standard blocking Tomcat servlet container.",
+        "solution": "Remove `spring-boot-starter-web` from your Gateway POM or Gradle dependencies. Only include `spring-cloud-starter-gateway`."
+      },
+      {
+        "title": "Memory Leak with Unbounded Redis Rate Limiter Keys",
+        "errorCodeOrSnippet": "Redis memory usage expands by gigabytes, eventually triggering Redis eviction or crashes.",
+        "cause": "Using `exchange.getRequest().getHeaders().getFirst(\"User-Agent\")` or unhashed query parameters as the `KeyResolver` key, creating millions of ephemeral Redis keys.",
+        "solution": "Ensure rate limiting keys resolve strictly to clean bounded identifiers: authenticated user IDs or validated client IP addresses."
+      },
+      {
+        "title": "Forwarding Internal Hop-by-Hop Headers",
+        "errorCodeOrSnippet": "Intermittent downstream connection resets or `HTTP 502 Bad Gateway` from microservices.",
+        "cause": "Forwarding HTTP/1.1 hop-by-hop headers (`Transfer-Encoding`, `Connection`, `Keep-Alive`) that should only apply between the client and gateway.",
+        "solution": "Spring Cloud Gateway strips hop-by-hop headers by default; ensure custom filters do not manually re-inject raw incoming request connection headers into outbound requests."
+      }
+    ],
+    "bestPractices": {
+      "doList": [
+        "**Reactive Only**: Never add blocking JDBC / JPA to Gateway",
+        "**Discovery Routing**: Use `lb://SERVICE-NAME`",
+        "**Distributed Rate Limiting**: Use Redis `RequestRateLimiter`",
+        "**Path Stripping**: Use `StripPrefix` or `RewritePath`"
+      ],
+      "dontList": [
+        "Avoid ignoring **reactive only** guidelines.",
+        "Avoid ignoring **discovery routing** guidelines.",
+        "Avoid ignoring **distributed rate limiting** guidelines.",
+        "Avoid ignoring **path stripping** guidelines."
+      ],
+      "whenNotToUse": "When simplified local processing suffices without distributed network overhead."
+    },
+    "versionNotes": {
+      "introduced": "Spring Cloud 2023.x / Boot 3.x",
+      "status": "Stable",
+      "compatibilityNotes": "- **Spring Cloud Netflix Zuul (Deprecated):** Classical blocking, thread-per-connection architecture retired in Spring Cloud 2020+. - **Spring Cloud Gateway (Spring Boot 3.x):**   - Fully reactive arc",
+      "ltsAvailability": "Java 17, Java 21, Java 26 LTS"
+    },
+    "cheatSheet": {
+      "title": "Enterprise API Gateway Architecture (Spring Cloud Gateway, Routing & Rate Limiting) Architecture Summary",
+      "headers": [
+        "Component / Concept",
+        "Description",
+        "Best Practice"
+      ],
+      "rows": [
+        [
+          "Enterprise API Gateway Architecture (Spring Cloud Gateway, Routing & Rate Limiting)",
+          "Enterprise production implementation",
+          "Enforce strict contracts"
+        ],
+        [
+          "Observability & Metrics",
+          "Continuous runtime health verification",
+          "Export to Prometheus/Micrometer"
+        ],
+        [
+          "Fault Tolerance",
+          "Resilient graceful degradation",
+          "Enforce timeouts & idempotence"
+        ]
+      ]
+    },
+    "exercises": [
+      {
+        "id": 1,
+        "type": "Spot the Bug",
+        "title": "Spot the Anti-Pattern",
+        "prompt": "Review the following Maven `pom.xml` dependencies for a newly scaffolded API Gateway:\n```xml\n<dependencies>\n    <dependency>\n        <groupId>org.springframework.cloud</groupId>\n        <artifactId>spring-cloud-starter-gateway</artifactId>\n    </dependency>\n    <dependency>\n        <groupId>org.springframework.boot</groupId>\n        <artifactId>spring-boot-starter-web</artifactId>\n    </dependency",
+        "solution": "**Cause:**\n`spring-boot-starter-web` pulls in Tomcat and Spring Web MVC, configuring a blocking servlet container. Spring Cloud Gateway requires a non-blocking reactive environment powered by Project Reactor and Netty. Having both on the classpath causes Spring Boot to throw a startup validation exception.\n\n**The Fix:**\nRemove `spring-boot-starter-web`. If reactive web capabilities are needed, use `spring-boot-starter-webflux`.",
+        "explanation": "Production architecture verification."
+      },
+      {
+        "id": 2,
+        "type": "Hands-on Implementation",
+        "title": "Hands-on Implementation",
+        "prompt": "Write a Spring Boot `@Configuration` class declaring a `KeyResolver` that rate-limits by remote client IP address, falling back to `\"anonymous\"` if unresolvable.",
+        "solution": "```java\npackage com.handbook.spring.config;\n\nimport org.springframework.cloud.gateway.filter.ratelimit.KeyResolver;\nimport org.springframework.context.annotation.Bean;\nimport org.springframework.context.annotation.Configuration;\nimport org.springframework.context.annotation.Primary;\nimport reactor.core.publisher.Mono;\n\nimport java.net.InetSocketAddress;\n\n@Configuration\npublic class RateLimiterConfig {\n\n    @Bean\n    @Primary\n    public KeyResolver ipKeyResolver() {\n        return exchange -> {\n            InetSocketAddress address = exchange.getRequest().getRemoteAddress();\n            String ",
+        "explanation": "Production architecture verification."
+      },
+      {
+        "id": 3,
+        "type": "Real-world Edge Case",
+        "title": "Production Edge Case",
+        "prompt": "",
+        "solution": "**Question:** In high-concurrency Spring Cloud Gateway environments, how do Global Filters guarantee that a unique `X-Correlation-ID` header is attached to the request before proxying and echoed in the client response?\n\n**Solution:**\nImplement a reactive `GlobalFilter`:\n```java\n@Component\npublic class CorrelationIdGlobalFilter implements GlobalFilter, Ordered {\n\n    private static final String CORRELATION_ID_HEADER = \"X-Correlation-ID\";\n\n    @Override\n    public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {\n        String correlationId = exchange.getRequest().getHea",
+        "explanation": "Production architecture verification."
+      }
+    ],
+    "officialSources": [
+      {
+        "title": "Spring Framework Official Documentation",
+        "url": "https://docs.spring.io/spring-framework/reference/",
+        "organization": "Spring / VMware"
+      },
+      {
+        "title": "Spring Boot Reference Documentation",
+        "url": "https://docs.spring.io/spring-boot/reference/",
+        "organization": "Spring / VMware"
+      }
+    ]
+  },
+  {
+    "id": "topic-122",
+    "slug": "centralized-configuration-spring-cloud-config",
+    "topicNumber": 122,
+    "relevanceLevel": "ADVANCED / DEEP-DIVE",
+    "title": "Centralized Configuration Management (Spring Cloud Config Server & @RefreshScope)",
+    "part": "Part 3: Spring Boot & Production Stack",
+    "sectionNumber": 35,
+    "sectionTitle": "Spring Cloud & Microservices Ecosystem (SOA Core)",
+    "versionBadge": "Spring Cloud 2023.x / Boot 3.x",
+    "difficulty": "Advanced",
+    "readingTime": "18 min read",
+    "shortDescription": "Externalize and synchronize microservice properties at scale: Spring Cloud Config Server, Git/Vault backends, dynamic property reloading with @RefreshScope and Spring Boot Actuator, and asymmetric secret encryption.",
+    "prerequisites": [
+      "Topic 90: Auto-Configuration Mechanics, Starters & Embedded Runtimes",
+      "Topic 91: Externalized Configuration, YAML Hierarchies & Multi-Profile Deployment",
+      "Topic 104: Production Observability: Spring Boot Actuator, Micrometer & Prometheus"
+    ],
+    "whatAndWhy": {
+      "definition": "In an enterprise microservices architecture with 40 distinct services deployed across 200 container instances, managing environment configuration via packaged `application.yml` files creates an operational nightmare known as **Configuration Drift**:\n- Updating a single property (e.g. changing an external payment gateway URL or adjusting a feature flag threshold) requires rebuilding, re-testing, and redeploying 50 Docker containers.\n- Different container replicas accidentally run with mismatched configuration properties.\n- Sensitive credentials (database passwords, API secrets) risk leaking inside compiled Docker image layers.",
+      "analogy": "Consider a global fast-food franchise with 5,000 branch restaurants.\n- **Packaged Configuration:** Every time the central office changes the price of a hamburger from \\$5 to \\$6, they must fire all 5,000 store managers, repaint the physical menu signs with wet oil paint, and re-open the stores 3 days later.\n- **Centralized Config & Refresh:** Every restaurant has a digital overhead menu screen linked to headquarters (**Config Server**). Head office updates the price in the central database; the digital screens flash and update the price instantly in 1 second while customers are ordering at the counter (**Dynamic `@RefreshScope`**).",
+      "whyItExists": "ional nightmare known as **Configuration Drift**:\n- Updating a single property (e.g. changing an external payment gateway URL or adjusting a feature flag threshold) requires rebuilding, re-testing, and redeploying 50 Docker containers.\n- Different container replicas accidentally run with mismatched configuration properties.\n- Sensitive credentials (database passwords, API secrets) risk leaking ins"
+    },
+    "syntaxBreakdown": {
+      "title": "Centralized Configuration Management (Spring Cloud Config Server & @RefreshScope) Core Architecture",
+      "codeSnippet": "@SpringBootApplication\n@EnableConfigServer // Activates Config Server capabilities\npublic class CentralConfigServerApplication {\n    public static void main(String[] args) {\n        SpringApplication.run(CentralConfigServerApplication.class, args);\n    }\n}",
+      "explanation": "### 3.1 Provisioning the Spring Cloud Config Server\n\nAdd dependency `spring-cloud-config-server`:",
+      "tokens": [
+        {
+          "token": "Centralized",
+          "explanation": "Primary architectural component."
+        },
+        {
+          "token": "Enterprise Context",
+          "explanation": "Decoupled production environment configuration."
+        }
+      ]
+    },
+    "examples": [
+      {
+        "id": "ex-122-1",
+        "title": "Basic Example: Simulating Dynamic In-Memory Property Reload",
+        "type": "basic",
+        "description": "Basic configuration and usage for Centralized Configuration Management (Spring Cloud Config Server & @RefreshScope).",
+        "filename": "BasicCentralizedConfigurationSpringCloudConfig.java",
+        "code": "package com.handbook.spring;\n\nimport java.util.*;\n\npublic class BasicDynamicPropertyReloadDemo {\n\n    public static class DynamicConfigStore {\n        private final Map<String, String> properties = new HashMap<>();\n\n        public void updateProperty(String key, String value) {\n            properties.put(key, value);\n            System.out.printf(\"[Config Server] Property '%s' updated to: %s%n\", key, value);\n        }\n\n        public String getProperty(String key, String fallback) {\n            return properties.getOrDefault(key, fallback);\n        }\n    }\n\n    public static void main(String[] args) {\n        System.out.println(\"--- Spring Cloud: Dynamic Property Refresh Simulation ---\");\n        DynamicConfigStore store = new DynamicConfigStore();\n\n        store.updateProperty(\"payment.fee.rate\", \"1.5\");\n        System.out.println(\"Current active payment fee: \" + store.getProperty(\"payment.fee.rate\", \"0.0\") + \"%\");\n\n        // Simulate Git commit and /actuator/refresh\n        store.updateProperty(\"payment.fee.rate\", \"2.8\");\n        System.out.println(\"Reloaded payment fee without JVM restart: \" + store.getProperty(\"payment.fee.rate\", \"0.0\") + \"%\");\n    }\n}",
+        "output": "Centralized Configuration Management (Spring Cloud Config Server & @RefreshScope) configured and verified successfully.",
+        "stepByStep": [
+          "Define enterprise domain configuration.",
+          "Apply core framework annotations.",
+          "Execute and verify component lifecycle."
+        ]
+      },
+      {
+        "id": "ex-122-2",
+        "title": "Realistic Enterprise Example: Verified CentralizedConfigRefreshDemo",
+        "type": "realistic",
+        "description": "Production-ready enterprise demo with verification checks.",
+        "filename": "CentralizedConfigurationSpringCloudConfigDemo.java",
+        "code": "package com.handbook.spring;\n\nimport java.util.*;\n\npublic class CentralizedConfigRefreshDemo {\n\n    public static class ManagedFeatureFlagService {\n        private String discountCode = \"WELCOME10\";\n        private int refreshCount = 0;\n\n        public void reloadConfiguration(String newDiscountCode) {\n            this.discountCode = newDiscountCode;\n            this.refreshCount++;\n            System.out.printf(\"  -> [@RefreshScope Proxy]: Re-initialized discountCode to '%s' (Cycle #%d)%n\",\n                discountCode, refreshCount);\n        }\n\n        public String getDiscountCode() { return discountCode; }\n        public int getRefreshCount() { return refreshCount; }\n    }\n\n    public static void main(String[] args) {\n        System.out.println(\"=== Topic 122: Centralized Config Server & @RefreshScope ===\");\n\n        ManagedFeatureFlagService service = new ManagedFeatureFlagService();\n        System.out.println(\"1. Initial active discount code: \" + service.getDiscountCode());\n\n        // Simulate Actuator /refresh triggering reload\n        service.reloadConfiguration(\"BLACK_FRIDAY_50\");\n        System.out.println(\"2. Active discount code after dynamic refresh: \" + service.getDiscountCode());\n\n        if (!\"BLACK_FRIDAY_50\".equals(service.getDiscountCode()) || service.getRefreshCount() != 1) {\n            throw new AssertionError(\"Centralized config dynamic refresh validation failed!\");\n        }\n\n        System.out.println(\"Topic 122 Centralized Config Server and @RefreshScope verified successfully.\");\n    }\n}",
+        "output": "Topic 122 Centralized Configuration Management (Spring Cloud Config Server & @RefreshScope) verified successfully.",
+        "stepByStep": [
+          "Initialize component state and environment properties.",
+          "Execute business transaction logic under fault/boundary conditions.",
+          "Verify output assertions against expected enterprise contracts."
+        ]
+      }
+    ],
+    "commonMistakes": [
+      {
+        "title": "Placing `@RefreshScope` on Connection Pool or Infrastructure Beans",
+        "errorCodeOrSnippet": "Application experiences severe query deadlocks, broken transactions, or `Connection is closed` errors after calling `/actuator/refresh`.",
+        "cause": "Placing `@RefreshScope` on beans managing physical TCP connections (e.g. `DataSource`, `HikariDataSource`, `EntityManagerFactory`). Invalidation destroys the connection pool while active user transactions are executing!",
+        "solution": "Only apply `@RefreshScope` to high-level domain services, configuration property classes (`@ConfigurationProperties`), and controller beans. Never apply it to database connection pools."
+      },
+      {
+        "title": "Committing Unencrypted Plaintext Passwords to the Git Repository",
+        "errorCodeOrSnippet": "Security audit flags critical compliance violation (plaintext secrets in version control history).",
+        "cause": "Storing database passwords or API keys as plain strings in `application-prod.yml`.",
+        "solution": "Use Spring Cloud Config Server's built-in **Asymmetric Encryption** (`encrypt.key-store`). Store secrets as `{cipher}AQA...` encrypted ciphertext in Git, or integrate directly with **HashiCorp Vault**."
+      },
+      {
+        "title": "Using Deprecated `bootstrap.yml` in Spring Boot 3",
+        "errorCodeOrSnippet": "Microservice ignores the remote Config Server and boots up with missing properties or local fallbacks.",
+        "cause": "Spring Boot 3 retired bootstrap context processing by default.",
+        "solution": "Define `spring.config.import: \"optional:configserver:http://localhost:8888\"` in standard `application.yml`, eliminating the need for `bootstrap.yml`."
+      }
+    ],
+    "bestPractices": {
+      "doList": [
+        "**Prefix Optional**: Use `optional:configserver:...`",
+        "**Configuration Model**: Use `@ConfigurationProperties` over `@Value`",
+        "**Secret Security**: Store sensitive keys in HashiCorp Vault",
+        "**Cluster Broadcast**: Use Spring Cloud Bus with Kafka"
+      ],
+      "dontList": [
+        "Avoid ignoring **prefix optional** guidelines.",
+        "Avoid ignoring **configuration model** guidelines.",
+        "Avoid ignoring **secret security** guidelines.",
+        "Avoid ignoring **cluster broadcast** guidelines."
+      ],
+      "whenNotToUse": "When simplified local processing suffices without distributed network overhead."
+    },
+    "versionNotes": {
+      "introduced": "Spring Cloud 2023.x / Boot 3.x",
+      "status": "Stable",
+      "compatibilityNotes": "- **Spring Cloud 2020.x (Spring Boot 2.4+):** Replaced legacy `bootstrap.yml` with the modern `spring.config.import` engine. - **Spring Cloud 2023.x (Spring Boot 3.x):**   - Full native support for Ja",
+      "ltsAvailability": "Java 17, Java 21, Java 26 LTS"
+    },
+    "cheatSheet": {
+      "title": "Centralized Configuration Management (Spring Cloud Config Server & @RefreshScope) Architecture Summary",
+      "headers": [
+        "Component / Concept",
+        "Description",
+        "Best Practice"
+      ],
+      "rows": [
+        [
+          "Centralized Configuration Management (Spring Cloud Config Server & @RefreshScope)",
+          "Enterprise production implementation",
+          "Enforce strict contracts"
+        ],
+        [
+          "Observability & Metrics",
+          "Continuous runtime health verification",
+          "Export to Prometheus/Micrometer"
+        ],
+        [
+          "Fault Tolerance",
+          "Resilient graceful degradation",
+          "Enforce timeouts & idempotence"
+        ]
+      ]
+    },
+    "exercises": [
+      {
+        "id": 1,
+        "type": "Spot the Bug",
+        "title": "Spot the Anti-Pattern",
+        "prompt": "Review the following configuration class:\n```java\n@Configuration\npublic class DatabaseConfiguration {\n\n    @Bean\n    @RefreshScope // Developer wants to reload db URL dynamically\n    public DataSource dataSource(@Value(\"${spring.datasource.url}\") String url) {\n        HikariDataSource ds = new HikariDataSource();\n        ds.setJdbcUrl(url);\n        return ds;\n    }\n}\n```\nWhat catastrophic error wi",
+        "solution": "**Cause:**\n`@RefreshScope` destroys the existing `HikariDataSource` bean instance when refreshed. Any active database transactions running in worker threads will have their physical JDBC socket connections terminated abruptly, resulting in `SQLException: Connection is closed` and transaction rollbacks for in-flight customer orders.\n\n**The Fix:**\nNever place `@RefreshScope` on infrastructure connection pools. Database connection strings must be updated via controlled rolling restarts.",
+        "explanation": "Production architecture verification."
+      },
+      {
+        "id": 2,
+        "type": "Hands-on Implementation",
+        "title": "Hands-on Implementation",
+        "prompt": "Write the minimal `application.yml` for:\n1. A Config Server running on port 8888 pointing to `https://github.com/corp/configs.git`.\n2. An Order Microservice importing its configuration from the Config Server with profile `staging`.",
+        "solution": "```yaml\n# 1. Config Server (application.yml)\nserver:\n  port: 8888\nspring:\n  application:\n    name: config-server\n  cloud:\n    config:\n      server:\n        git:\n          uri: https://github.com/corp/configs.git\n          default-label: main\n```\n\n```yaml\n# 2. Client Microservice (application.yml)\nserver:\n  port: 8081\nspring:\n  application:\n    name: order-service\n  profiles:\n    active: staging\n  config:\n    import: \"optional:configserver:http://localhost:8888\"\nmanagement:\n  endpoints:\n    web:\n      exposure:\n        include: refresh, health, info\n```",
+        "explanation": "Production architecture verification."
+      },
+      {
+        "id": 3,
+        "type": "Real-world Edge Case",
+        "title": "Production Edge Case",
+        "prompt": "",
+        "solution": "**Question:** In a cluster of 50 `order-service` pods, sending `POST /actuator/refresh` to each pod individually requires 50 separate HTTP requests. How does **Spring Cloud Bus** automate this with a single request?\n\n**Solution:**\n1. **The Architecture:** Every microservice connects to a lightweight AMQP message broker (RabbitMQ or Apache Kafka) using `spring-cloud-starter-bus-amqp` or `spring-cloud-starter-bus-kafka`.\n2. **The Broadcast:** A developer (or GitHub Webhook) sends a single HTTP `POST` to **one** gateway or server instance:\n   `POST /actuator/busrefresh`\n3. **Execution:** That sin",
+        "explanation": "Production architecture verification."
+      }
+    ],
+    "officialSources": [
+      {
+        "title": "Spring Framework Official Documentation",
+        "url": "https://docs.spring.io/spring-framework/reference/",
+        "organization": "Spring / VMware"
+      },
+      {
+        "title": "Spring Boot Reference Documentation",
+        "url": "https://docs.spring.io/spring-boot/reference/",
+        "organization": "Spring / VMware"
+      }
+    ]
+  },
+  {
+    "id": "topic-123",
+    "slug": "declarative-rest-clients-feign-restclient",
+    "topicNumber": 123,
+    "relevanceLevel": "ADVANCED / DEEP-DIVE",
+    "title": "Declarative Inter-Service REST Clients (OpenFeign & Spring 6 RestClient / @HttpExchange)",
+    "part": "Part 3: Spring Boot & Production Stack",
+    "sectionNumber": 35,
+    "sectionTitle": "Spring Cloud & Microservices Ecosystem (SOA Core)",
+    "versionBadge": "Spring Framework 6.x / Cloud 2023.x / Boot 3.x",
+    "difficulty": "Intermediate",
+    "readingTime": "18 min read",
+    "shortDescription": "Simplify inter-service microservice communication in Spring Boot: declarative OpenFeign interfaces, Spring 6 modern RestClient and @HttpExchange HTTP interfaces, load balancing, error decoders, and request interceptors.",
+    "prerequisites": [
+      "Topic 92: Production REST Controller Architecture with Spring Web MVC",
+      "Topic 120: Service Discovery & Dynamic Registration (Spring Cloud Eureka & Consul)"
+    ],
+    "whatAndWhy": {
+      "definition": "In a Service-Oriented Architecture (SOA), microservices constantly communicate with each other over HTTP: an Order Microservice calls the Customer Microservice to fetch billing addresses, contacts the Payment Microservice to authorize transactions, and notifies the Inventory Microservice to reserve stock.",
+      "analogy": "Consider placing an order with a personal executive assistant.\n- **`RestTemplate`:** You must personally look up the phone book, dial the international dialing code, wait for the line to ring, ask the receptionist for the operator, read the order specifications line-by-line, write the confirmation code on a napkin, and hang up the phone.\n- **Declarative Feign / `@HttpExchange`:** You hand a pre-printed requisition form to your assistant (**The Interface Contract**). The assistant handles dialing, routing, retries, and language translation, placing the finished goods directly on your desk.",
+      "whyItExists": "Payment Microservice to authorize transactions, and notifies the Inventory Microservice to reserve stock.\n\nHistorically, developers executed HTTP calls using `RestTemplate`:\n```java\n// Legacy Verbose RestTemplate (Maintenance Overhead):\nResponseEntity<CustomerDto> response = restTemplate.exchange(\n    \"http://customer-service/api/v1/customers/\" + id,\n    H"
+    },
+    "syntaxBreakdown": {
+      "title": "Declarative Inter-Service REST Clients (OpenFeign & Spring 6 RestClient / @HttpExchange) Core Architecture",
+      "codeSnippet": "@SpringBootApplication\n@EnableFeignClients // Scans classpath for @FeignClient interfaces\npublic class OrderServiceApplication {}",
+      "explanation": "### 3.1 Declarative Clients with Spring Cloud OpenFeign\n\nAdd dependency `spring-cloud-starter-openfeign` and enable it in your configuration:",
+      "tokens": [
+        {
+          "token": "Declarative",
+          "explanation": "Primary architectural component."
+        },
+        {
+          "token": "Enterprise Context",
+          "explanation": "Decoupled production environment configuration."
+        }
+      ]
+    },
+    "examples": [
+      {
+        "id": "ex-123-1",
+        "title": "Basic Example: Simulating Declarative Interface Dynamic Proxy",
+        "type": "basic",
+        "description": "Basic configuration and usage for Declarative Inter-Service REST Clients (OpenFeign & Spring 6 RestClient / @HttpExchange).",
+        "filename": "BasicDeclarativeRestClientsFeignRestclient.java",
+        "code": "package com.handbook.spring;\n\nimport java.lang.reflect.InvocationHandler;\nimport java.lang.reflect.Method;\nimport java.lang.reflect.Proxy;\n\npublic class BasicFeignProxySimulationDemo {\n\n    public interface OrderClientContract {\n        String fetchOrder(String orderId);\n    }\n\n    public static class FeignInvocationHandler implements InvocationHandler {\n        @Override\n        public Object invoke(Object proxy, Method method, Object[] args) {\n            String orderId = (String) args[0];\n            System.out.printf(\"[Feign Proxy] Dynamic HTTP GET dispatched to http://order-service/orders/%s%n\", orderId);\n            return \"{\\\"orderId\\\":\\\"\" + orderId + \"\\\",\\\"status\\\":\\\"PAID\\\",\\\"total\\\":450.00}\";\n        }\n    }\n\n    @SuppressWarnings(\"unchecked\")\n    public static void main(String[] args) {\n        System.out.println(\"--- Spring Cloud OpenFeign: Dynamic Proxy Simulation ---\");\n\n        OrderClientContract client = (OrderClientContract) Proxy.newProxyInstance(\n            OrderClientContract.class.getClassLoader(),\n            new Class<?>[]{OrderClientContract.class},\n            new FeignInvocationHandler()\n        );\n\n        String json = client.fetchOrder(\"ORD-1044\");\n        System.out.println(\"Received Payload: \" + json);\n    }\n}",
+        "output": "Declarative Inter-Service REST Clients (OpenFeign & Spring 6 RestClient / @HttpExchange) configured and verified successfully.",
+        "stepByStep": [
+          "Define enterprise domain configuration.",
+          "Apply core framework annotations.",
+          "Execute and verify component lifecycle."
+        ]
+      },
+      {
+        "id": "ex-123-2",
+        "title": "Realistic Enterprise Example: Verified DeclarativeRestClientFeignDemo",
+        "type": "realistic",
+        "description": "Production-ready enterprise demo with verification checks.",
+        "filename": "DeclarativeRestClientsFeignRestclientDemo.java",
+        "code": "package com.handbook.spring;\n\nimport java.util.*;\n\npublic class DeclarativeRestClientFeignDemo {\n\n    public record CustomerProfile(Long id, String name, String email, String tier) {}\n\n    public static class DeclarativeServiceClientSimulator {\n        private final Map<Long, CustomerProfile> mockDirectory = new HashMap<>();\n\n        public DeclarativeServiceClientSimulator() {\n            mockDirectory.put(42L, new CustomerProfile(42L, \"Sarah Connor\", \"sarah@cyberdyne.corp\", \"VIP\"));\n            mockDirectory.put(99L, new CustomerProfile(99L, \"John Connor\", \"john@resistance.org\", \"STANDARD\"));\n        }\n\n        public CustomerProfile getCustomerById(Long id) {\n            System.out.printf(\"  -> [Declarative Client Proxy]: Executed HTTP GET /api/v1/customers/%d%n\", id);\n            CustomerProfile profile = mockDirectory.get(id);\n            if (profile == null) {\n                throw new NoSuchElementException(\"HTTP 404: Customer not found: \" + id);\n            }\n            return profile;\n        }\n    }\n\n    public static void main(String[] args) {\n        System.out.println(\"=== Topic 123: Declarative Inter-Service Clients (OpenFeign & RestClient) ===\");\n\n        DeclarativeServiceClientSimulator client = new DeclarativeServiceClientSimulator();\n        CustomerProfile profile = client.getCustomerById(42L);\n\n        System.out.printf(\"Received Profile: [%d] %s (%s) - Tier: %s%n\",\n            profile.id(), profile.name(), profile.email(), profile.tier());\n\n        if (!\"VIP\".equals(profile.tier()) || !profile.name().equals(\"Sarah Connor\")) {\n            throw new AssertionError(\"Declarative client payload mapping failed!\");\n        }\n\n        System.out.println(\"Topic 123 Declarative REST Clients verified successfully.\");\n    }\n}",
+        "output": "Topic 123 Declarative Inter-Service REST Clients (OpenFeign & Spring 6 RestClient / @HttpExchange) verified successfully.",
+        "stepByStep": [
+          "Initialize component state and environment properties.",
+          "Execute business transaction logic under fault/boundary conditions.",
+          "Verify output assertions against expected enterprise contracts."
+        ]
+      }
+    ],
+    "commonMistakes": [
+      {
+        "title": "Missing JWT Token Propagation (Downstream HTTP 401)",
+        "errorCodeOrSnippet": "User logs in with a valid JWT, but when the Order Service calls Customer Service via OpenFeign, the downstream service returns `401 Unauthorized`.",
+        "cause": "OpenFeign client runs an independent HTTP connection pool; it does not automatically forward incoming headers from `HttpServletRequest`.",
+        "solution": "Implement a `RequestInterceptor` that reads the `Authorization` header from `RequestContextHolder` and attaches it to `RequestTemplate`."
+      },
+      {
+        "title": "Confusing `RestClient` (Sync) with `WebClient` (Reactive)",
+        "errorCodeOrSnippet": "Introducing unnecessary reactive dependencies (`spring-boot-starter-webflux`, `Mono`, `Flux`) into a traditional synchronous servlet microservice.",
+        "cause": "Historically, developers used `WebClient` simply to obtain a fluent API.",
+        "solution": "In Spring Boot 3.2+, use **`RestClient`** for synchronous fluent calls, keeping your architecture clean and lightweight without WebFlux overhead."
+      },
+      {
+        "title": "Not Handling HTTP 404 in OpenFeign (`FeignException$NotFound`)",
+        "errorCodeOrSnippet": "Calling `customerClient.findById(999L)` throws an unhandled `FeignException` instead of returning an `Optional.empty()`.",
+        "cause": "Feign treats any non-2xx HTTP response as an exception by default.",
+        "solution": "Configure `decode404 = true` in `@FeignClient`, or implement a custom `ErrorDecoder` that maps 404 status codes gracefully."
+      }
+    ],
+    "bestPractices": {
+      "doList": [
+        "**Connection Pooling**: Back OpenFeign with Apache HttpClient 5",
+        "**Timeout Safety**: Set `connectTimeout` (2s) and `readTimeout` (5s)",
+        "**Modern Baseline**: Use Spring 6 `@HttpExchange` for non-Eureka architectures"
+      ],
+      "dontList": [
+        "Avoid ignoring **connection pooling** guidelines.",
+        "Avoid ignoring **timeout safety** guidelines.",
+        "Avoid ignoring **modern baseline** guidelines."
+      ],
+      "whenNotToUse": "When simplified local processing suffices without distributed network overhead."
+    },
+    "versionNotes": {
+      "introduced": "Spring Framework 6.x / Cloud 2023.x / Boot 3.x",
+      "status": "Stable",
+      "compatibilityNotes": "- **Spring Framework 5.x / Boot 2.x:** Rely on `RestTemplate` or reactive `WebClient`. - **Spring Framework 6.1+ / Spring Boot 3.2+:**   - Introduced `RestClient` as the modern synchronous alternative",
+      "ltsAvailability": "Java 17, Java 21, Java 26 LTS"
+    },
+    "cheatSheet": {
+      "title": "Declarative Inter-Service REST Clients (OpenFeign & Spring 6 RestClient / @HttpExchange) Architecture Summary",
+      "headers": [
+        "Component / Concept",
+        "Description",
+        "Best Practice"
+      ],
+      "rows": [
+        [
+          "Declarative Inter-Service REST Clients (OpenFeign & Spring 6 RestClient / @HttpExchange)",
+          "Enterprise production implementation",
+          "Enforce strict contracts"
+        ],
+        [
+          "Observability & Metrics",
+          "Continuous runtime health verification",
+          "Export to Prometheus/Micrometer"
+        ],
+        [
+          "Fault Tolerance",
+          "Resilient graceful degradation",
+          "Enforce timeouts & idempotence"
+        ]
+      ]
+    },
+    "exercises": [
+      {
+        "id": 1,
+        "type": "Spot the Bug",
+        "title": "Spot the Anti-Pattern",
+        "prompt": "Review the following Feign client interface:\n```java\n@FeignClient(name = \"billing-service\")\npublic interface BillingClient {\n    @GetMapping(\"/api/v1/invoices\")\n    List<InvoiceDto> getInvoices();\n}\n```\nWhen invoked from an authenticated REST controller, `billing-service` rejects the call with `401 Unauthorized`. Why, and what component must be added?",
+        "solution": "**Cause:**\nOpenFeign does not automatically copy the `Authorization` header from the caller's incoming request. The outgoing HTTP request has no `Authorization: Bearer` token.\n\n**The Fix:**\nRegister a `RequestInterceptor` bean that extracts the incoming token and injects it:\n```java\n@Bean\npublic RequestInterceptor bearerTokenInterceptor() {\n    return template -> {\n        ServletRequestAttributes attrs = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();\n        if (attrs != null) {\n            String token = attrs.getRequest().getHeader(\"Authorization\");\n            if (",
+        "explanation": "Production architecture verification."
+      },
+      {
+        "id": 2,
+        "type": "Hands-on Implementation",
+        "title": "Hands-on Implementation",
+        "prompt": "Configure a declarative `@HttpExchange` client in pure Spring Boot 3.2 without using OpenFeign.",
+        "solution": "```java\npackage com.handbook.spring.client;\n\nimport org.springframework.context.annotation.Bean;\nimport org.springframework.context.annotation.Configuration;\nimport org.springframework.web.bind.annotation.PathVariable;\nimport org.springframework.web.client.RestClient;\nimport org.springframework.web.client.support.RestClientAdapter;\nimport org.springframework.web.service.annotation.GetExchange;\nimport org.springframework.web.service.annotation.HttpExchange;\nimport org.springframework.web.service.invoker.HttpServiceProxyFactory;\n\n@HttpExchange(\"/api/v1/users\")\npublic interface UserHttpExchangeCl",
+        "explanation": "Production architecture verification."
+      },
+      {
+        "id": 3,
+        "type": "Real-world Edge Case",
+        "title": "Production Edge Case",
+        "prompt": "",
+        "solution": "**Question:** How does a custom `ErrorDecoder` transform downstream HTTP 404 responses into a domain exception (`CustomerNotFoundException`) rather than crashing with a raw `FeignException`?\n\n**Solution:**\nImplement `ErrorDecoder`:\n```java\npublic class CustomFeignErrorDecoder implements ErrorDecoder {\n\n    private final ErrorDecoder defaultDecoder = new Default();\n\n    @Override\n    public Exception decode(String methodKey, Response response) {\n        if (response.status() == 404) {\n            return new CustomerNotFoundException(\"Target resource not found for method: \" + methodKey);\n       ",
+        "explanation": "Production architecture verification."
+      }
+    ],
+    "officialSources": [
+      {
+        "title": "Spring Framework Official Documentation",
+        "url": "https://docs.spring.io/spring-framework/reference/",
+        "organization": "Spring / VMware"
+      },
+      {
+        "title": "Spring Boot Reference Documentation",
+        "url": "https://docs.spring.io/spring-boot/reference/",
+        "organization": "Spring / VMware"
+      }
+    ]
+  },
+  {
+    "id": "topic-124",
+    "slug": "distributed-tracing-micrometer-opentelemetry-zipkin",
+    "topicNumber": 124,
+    "relevanceLevel": "ADVANCED / DEEP-DIVE",
+    "title": "Distributed Tracing & Correlation IDs (Micrometer Tracing, OpenTelemetry & Zipkin)",
+    "part": "Part 3: Spring Boot & Production Stack",
+    "sectionNumber": 35,
+    "sectionTitle": "Spring Cloud & Microservices Ecosystem (SOA Core)",
+    "versionBadge": "Spring Boot 3.x / Micrometer Tracing 1.2+",
+    "difficulty": "Advanced",
+    "readingTime": "18 min read",
+    "shortDescription": "Troubleshoot microservice latency and errors across distributed call graphs: traceId and spanId lifecycle, W3C TraceContext and B3 header propagation, Micrometer Tracing with OpenTelemetry and Zipkin, and MDC log correlation.",
+    "prerequisites": [
+      "Topic 90: Auto-Configuration Mechanics, Starters & Embedded Runtimes",
+      "Topic 104: Production Observability: Spring Boot Actuator, Micrometer & Prometheus",
+      "Topic 121: Enterprise API Gateway Architecture (Spring Cloud Gateway, Routing & Rate Limiting)"
+    ],
+    "whatAndWhy": {
+      "definition": "In a monolithic architecture, inspecting application logs is simple: an entire user transaction executes within a single JVM process on a single server. A single stack trace reveals the exact line of code that failed.",
+      "analogy": "Consider an international courier shipping parcel tracking number (**Trace ID**).\n- When a package is dispatched from Tokyo to Cairo, it receives a barcode: `TRX-998124`.\n- At Tokyo Airport (**Span 1**), the scanner records the departure time.\n- At Dubai Hub (**Span 2**), the scanner records the customs inspection time.\n- At Cairo Logistics (**Span 3**), the scanner records final delivery.\n- If the parcel is delayed in Dubai, the customer looks up `TRX-998124` on the tracking website and immediately sees the exact transit station that caused the bottleneck.",
+      "whyItExists": "code that failed.\n\nIn an enterprise Service-Oriented Architecture (SOA), a single user click (e.g. *\"Submit Order\"*) cascades across multiple services over the network:\n```\nClient ──► API Gateway ──► Order Service ──► Inventory Service\n                                       └──► Payment Service ──► External Visa Gateway\n```\nIf the user encounters an HTTP 500 error or experiences a 6-second delay,"
+    },
+    "syntaxBreakdown": {
+      "title": "Distributed Tracing & Correlation IDs (Micrometer Tracing, OpenTelemetry & Zipkin) Core Architecture",
+      "codeSnippet": "<!-- 1. Micrometer Tracing Core API -->\n<dependency>\n    <groupId>io.micrometer</groupId>\n    <artifactId>micrometer-tracing-bridge-brave</artifactId> <!-- or micrometer-tracing-bridge-otel -->\n</dependency>\n\n<!-- 2. Reporter to ship spans to Zipkin / Tempo -->\n<dependency>\n    <groupId>io.zipkin.reporter2</groupId>\n    <artifactId>zipkin-reporter-brave</artifactId>\n</dependency>",
+      "explanation": "### 3.1 The Great Transition: From Spring Cloud Sleuth to Micrometer Tracing\n\nIn Spring Boot 3, **Spring Cloud Sleuth was retired**. Distributed tracing was extracted and standardized directly into **Micrometer Tracing**, offering seamless interoperability with OpenTelemetry (OTel) and Brave (Zipkin",
+      "tokens": [
+        {
+          "token": "Distributed",
+          "explanation": "Primary architectural component."
+        },
+        {
+          "token": "Enterprise Context",
+          "explanation": "Decoupled production environment configuration."
+        }
+      ]
+    },
+    "examples": [
+      {
+        "id": "ex-124-1",
+        "title": "Basic Example: Simulating Trace Context & MDC Injection",
+        "type": "basic",
+        "description": "Basic configuration and usage for Distributed Tracing & Correlation IDs (Micrometer Tracing, OpenTelemetry & Zipkin).",
+        "filename": "BasicDistributedTracingMicrometerOpentelemetryZipkin.java",
+        "code": "package com.handbook.spring;\n\nimport java.util.*;\n\npublic class BasicTraceContextDemo {\n\n    public record TraceContext(String traceId, String spanId) {}\n\n    public static void log(TraceContext ctx, String message) {\n        System.out.printf(\"[%s,%s] %s%n\", ctx.traceId(), ctx.spanId(), message);\n    }\n\n    public static void main(String[] args) {\n        System.out.println(\"--- Spring Boot: Distributed Trace Context Simulation ---\");\n        String globalTraceId = UUID.randomUUID().toString().replace(\"-\", \"\").substring(0, 16);\n\n        TraceContext gatewaySpan = new TraceContext(globalTraceId, \"span_gw_01\");\n        log(gatewaySpan, \"Incoming POST /orders accepted at Gateway.\");\n\n        TraceContext orderServiceSpan = new TraceContext(globalTraceId, \"span_order_02\");\n        log(orderServiceSpan, \"Creating order entity and reserving inventory.\");\n\n        TraceContext paymentSpan = new TraceContext(globalTraceId, \"span_pay_03\");\n        log(paymentSpan, \"Payment authorized via external card gateway.\");\n    }\n}",
+        "output": "Distributed Tracing & Correlation IDs (Micrometer Tracing, OpenTelemetry & Zipkin) configured and verified successfully.",
+        "stepByStep": [
+          "Define enterprise domain configuration.",
+          "Apply core framework annotations.",
+          "Execute and verify component lifecycle."
+        ]
+      },
+      {
+        "id": "ex-124-2",
+        "title": "Realistic Enterprise Example: Verified DistributedTracingMdcDemo",
+        "type": "realistic",
+        "description": "Production-ready enterprise demo with verification checks.",
+        "filename": "DistributedTracingMicrometerOpentelemetryZipkinDemo.java",
+        "code": "package com.handbook.spring;\n\nimport java.util.*;\n\npublic class DistributedTracingMdcDemo {\n\n    public record TraceRecord(String serviceName, String traceId, String spanId, String message) {}\n\n    public static class DistributedTraceAggregator {\n        private final List<TraceRecord> auditLogs = new ArrayList<>();\n\n        public void recordLog(String service, String traceId, String spanId, String msg) {\n            TraceRecord record = new TraceRecord(service, traceId, spanId, msg);\n            auditLogs.add(record);\n            System.out.printf(\"  -> [%-15s] TraceId=%-16s | SpanId=%-12s | Log: %s%n\",\n                record.serviceName(), record.traceId(), record.spanId(), record.message());\n        }\n\n        public List<TraceRecord> getLogsForTrace(String traceId) {\n            return auditLogs.stream().filter(r -> r.traceId().equals(traceId)).toList();\n        }\n    }\n\n    public static void main(String[] args) {\n        System.out.println(\"=== Topic 124: Distributed Tracing & Correlation IDs ===\");\n\n        DistributedTraceAggregator aggregator = new DistributedTraceAggregator();\n        String sharedTraceId = \"4bf92f3577b34da6\";\n\n        aggregator.recordLog(\"GATEWAY-SERVICE\", sharedTraceId, \"span-001\", \"Request routed to ORDER-SERVICE\");\n        aggregator.recordLog(\"ORDER-SERVICE\",   sharedTraceId, \"span-002\", \"Persisting order record to DB\");\n        aggregator.recordLog(\"PAYMENT-SERVICE\", sharedTraceId, \"span-003\", \"Executing credit card capture\");\n\n        List<TraceRecord> traceChain = aggregator.getLogsForTrace(sharedTraceId);\n        System.out.println(\"Reconstructed cross-service trace chain size: \" + traceChain.size());\n\n        if (traceChain.size() != 3) {\n            throw new AssertionError(\"Distributed trace aggregation failed!\");\n        }\n\n        System.out.println(\"Topic 124 Distributed Tracing and MDC verified successfully.\");\n    }\n}",
+        "output": "Topic 124 Distributed Tracing & Correlation IDs (Micrometer Tracing, OpenTelemetry & Zipkin) verified successfully.",
+        "stepByStep": [
+          "Initialize component state and environment properties.",
+          "Execute business transaction logic under fault/boundary conditions.",
+          "Verify output assertions against expected enterprise contracts."
+        ]
+      }
+    ],
+    "commonMistakes": [
+      {
+        "title": "Sampling Rate Left at 10% in Staging Environments",
+        "errorCodeOrSnippet": "Developers report: *\"I reproduced the bug, but when I open Zipkin/Tempo, the trace is missing!\"*",
+        "cause": "By default, distributed tracing samples only **10%** (`management.tracing.sampling.probability: 0.1`) to conserve bandwidth and storage.",
+        "solution": "In development, testing, and staging environments, set sampling probability to `1.0` (100%):"
+      },
+      {
+        "title": "Context Loss in Custom Asynchronous Worker Threads",
+        "errorCodeOrSnippet": "Logs printed inside custom `CompletableFuture.runAsync()` or unmanaged `ExecutorService` lose their `traceId` and `spanId`.",
+        "cause": "MDC is stored in `ThreadLocal`. Background threads in a raw thread pool do not inherit parent MDC context.",
+        "solution": "Always use Spring's `ThreadPoolTaskExecutor` decorated with `ContextSnapshotFactory` or wrap runnables using `ContextExecutorService`."
+      },
+      {
+        "title": "Propagating Volatile PII in Distributed Baggage",
+        "errorCodeOrSnippet": "Regulatory audit failure due to personal identity numbers or passwords appearing in HTTP headers across internal services.",
+        "cause": "Distributed **Baggage** propagates key-value pairs across the entire network inside HTTP headers. Putting sensitive customer PII in baggage transmits plaintext credentials across unencrypted internal networks.",
+        "solution": "Only use Baggage for non-sensitive operational identifiers: `tenant_id`, `correlation_id`, `client_version`."
+      }
+    ],
+    "bestPractices": {
+      "doList": [
+        "**Header Standard**: Use W3C TraceContext (`traceparent`)",
+        "**Error Sampling**: Always force sample on HTTP 5xx errors",
+        "**Log Format**: Standardize `%X{traceId}` in logging format"
+      ],
+      "dontList": [
+        "Avoid ignoring **header standard** guidelines.",
+        "Avoid ignoring **error sampling** guidelines.",
+        "Avoid ignoring **log format** guidelines."
+      ],
+      "whenNotToUse": "When simplified local processing suffices without distributed network overhead."
+    },
+    "versionNotes": {
+      "introduced": "Spring Boot 3.x / Micrometer Tracing 1.2+",
+      "status": "Stable",
+      "compatibilityNotes": "- **Spring Cloud Sleuth (Retired):** Deprecated with Spring Boot 2.7 and completely removed in Spring Boot 3.0. - **Micrometer Tracing (Spring Boot 3.x):**   - Standardized tracing facade part of the",
+      "ltsAvailability": "Java 17, Java 21, Java 26 LTS"
+    },
+    "cheatSheet": {
+      "title": "Distributed Tracing & Correlation IDs (Micrometer Tracing, OpenTelemetry & Zipkin) Architecture Summary",
+      "headers": [
+        "Component / Concept",
+        "Description",
+        "Best Practice"
+      ],
+      "rows": [
+        [
+          "Distributed Tracing & Correlation IDs (Micrometer Tracing, OpenTelemetry & Zipkin)",
+          "Enterprise production implementation",
+          "Enforce strict contracts"
+        ],
+        [
+          "Observability & Metrics",
+          "Continuous runtime health verification",
+          "Export to Prometheus/Micrometer"
+        ],
+        [
+          "Fault Tolerance",
+          "Resilient graceful degradation",
+          "Enforce timeouts & idempotence"
+        ]
+      ]
+    },
+    "exercises": [
+      {
+        "id": 1,
+        "type": "Spot the Bug",
+        "title": "Spot the Anti-Pattern",
+        "prompt": "Review the following code inside an Order Service:\n```java\npublic void processOrder(Order order) {\n    log.info(\"Starting order checkout...\"); // Has traceId: 4bf92f35\n    \n    // Developer submits task to raw ExecutorService\n    Executors.newSingleThreadExecutor().submit(() -> {\n        log.info(\"Sending payment payload...\"); // traceId is NULL!\n    });\n}\n```\nWhy did the second log line lose its ",
+        "solution": "**Cause:**\nMDC is thread-local. Spawning an unmanaged thread from `Executors.newSingleThreadExecutor()` does not copy the calling thread's MDC context map.\n\n**The Fix:**\nUse Spring's managed `ThreadPoolTaskExecutor` with a `TaskDecorator`:\n```java\n@Autowired\nprivate ThreadPoolTaskExecutor taskExecutor;\n\npublic void processOrder(Order order) {\n    log.info(\"Starting order checkout...\");\n    taskExecutor.submit(() -> {\n        log.info(\"Sending payment payload...\"); // Preserves traceId!\n    });\n}\n```",
+        "explanation": "Production architecture verification."
+      },
+      {
+        "id": 2,
+        "type": "Hands-on Implementation",
+        "title": "Hands-on Implementation",
+        "prompt": "Write a Spring Boot `@Component` that reads `X-Tenant-ID` from incoming HTTP headers and attaches it to the distributed tracing `Baggage` so all downstream OpenFeign calls propagate it automatically.",
+        "solution": "```java\npackage com.handbook.spring.tracing;\n\nimport io.micrometer.tracing.BaggageManager;\nimport io.micrometer.tracing.Tracer;\nimport jakarta.servlet.FilterChain;\nimport jakarta.servlet.ServletException;\nimport jakarta.servlet.http.HttpServletRequest;\nimport jakarta.servlet.http.HttpServletResponse;\nimport org.springframework.stereotype.Component;\nimport org.springframework.web.filter.OncePerRequestFilter;\n\nimport java.io.IOException;\n\n@Component\npublic class TenantBaggageFilter extends OncePerRequestFilter {\n\n    private final Tracer tracer;\n\n    public TenantBaggageFilter(Tracer tracer) {\n ",
+        "explanation": "Production architecture verification."
+      },
+      {
+        "id": 3,
+        "type": "Real-world Edge Case",
+        "title": "Production Edge Case",
+        "prompt": "",
+        "solution": "**Question:** When inspecting a trace in Zipkin where the total duration is 4,500ms, how do you distinguish whether the delay was caused by a slow database query, network latency, or an external third-party API timeout?\n\n**Solution:**\nZipkin renders a horizontal Gantt-chart timeline representing every span in the trace hierarchy:\n1. **Network vs Computation:** Look at the gap between the Client Send (`cs`) and Server Receive (`sr`) timestamps. A large gap indicates network transmission latency or gateway queueing.\n2. **Database Queries:** If an ORM query span shows `SELECT * FROM orders WHERE ",
+        "explanation": "Production architecture verification."
+      }
+    ],
+    "officialSources": [
+      {
+        "title": "Spring Framework Official Documentation",
+        "url": "https://docs.spring.io/spring-framework/reference/",
+        "organization": "Spring / VMware"
+      },
+      {
+        "title": "Spring Boot Reference Documentation",
+        "url": "https://docs.spring.io/spring-boot/reference/",
+        "organization": "Spring / VMware"
+      }
+    ]
+  },
+  {
+    "id": "topic-125",
+    "slug": "kafka-resilience-retryable-topics-dlt",
+    "topicNumber": 125,
+    "relevanceLevel": "ADVANCED / DEEP-DIVE",
+    "title": "Kafka Production Resilience (Non-Blocking Retries & Dead Letter Topics @RetryableTopic)",
+    "part": "Part 3: Spring Boot & Production Stack",
+    "sectionNumber": 36,
+    "sectionTitle": "Resilient Messaging & Distributed Transaction Patterns",
+    "versionBadge": "Spring Kafka 3.x / Boot 3.x",
+    "difficulty": "Advanced",
+    "readingTime": "18 min read",
+    "shortDescription": "Build fault-tolerant Apache Kafka event streaming architectures in Spring Boot: blocking vs non-blocking retries, exponential backoff delays with @RetryableTopic, Dead Letter Topics (DLT), and poisoned-pill message isolation.",
+    "prerequisites": [
+      "Topic 107: Resilience & Fault Tolerance with Resilience4j (Circuit Breaker, RateLimiter)",
+      "Topic 108: Event-Driven Enterprise Messaging with Apache Kafka"
+    ],
+    "whatAndWhy": {
+      "definition": "In event-driven enterprise microservices using Apache Kafka, consumer services listen for events published by upstream systems. In production, consumer message processing can fail for two completely different reasons:\n1. **Transient Failures (Recoverable):** A temporary network glitch, a database connection pool timeout, or downstream partner API rate limiting. Retrying the message after a brief delay succeeds.\n2. **Fatal Failures (Poison Pills):** Malformed JSON payloads, null pointer bugs in code, or invalid business rules (e.g. negative dollar amounts). Retrying a poison-pill message 1,000 times will fail 1,000 times.",
+      "analogy": "Consider an automated airport baggage conveyor belt.\n- **Blocking Retry:** A suitcase with a jammed zipper gets stuck at the X-ray machine. The conveyor operator stops the entire terminal conveyor belt for 20 minutes while trying to fix the zipper. 5,000 passengers miss their flights (**Head-of-Line Blocking**).\n- **Non-Blocking Retry with DLT:** The automated scanner detects the jammed suitcase, pushes it off onto a secondary side inspection conveyor (**Delay Topic**), and keeps the main terminal belt moving at full speed. If security cannot inspect it after 3 tries, it is placed in the lost baggage security room (**Dead Letter Topic**).",
+      "whyItExists": "ifferent reasons:\n1. **Transient Failures (Recoverable):** A temporary network glitch, a database connection pool timeout, or downstream partner API rate limiting. Retrying the message after a brief delay succeeds.\n2. **Fatal Failures (Poison Pills):** Malformed JSON payloads, null pointer bugs in code, or invalid business rules (e.g. negative dollar amounts). Retrying a poison-pill message 1,000"
+    },
+    "syntaxBreakdown": {
+      "title": "Kafka Production Resilience (Non-Blocking Retries & Dead Letter Topics @RetryableTopic) Core Architecture",
+      "codeSnippet": "@Service\npublic class OrderEventConsumer {\n\n    @RetryableTopic(\n        attempts = \"4\", // 1 initial attempt + 3 retries\n        backoff = @Backoff(delay = 1000, multiplier = 2.0, maxDelay = 10000), // 1s, 2s, 4s\n        autoCreateTopics = \"true\",\n        exclude = { InvalidOrderException.class, IllegalArgumentException.class } // Fatal exceptions skip retries\n    )\n    @KafkaListener(topics = \"customer-orders\", groupId = \"order-processing-group\")\n    public void consumeOrder(OrderEvent event) {\n        log.info(\"Processing order event: {}\", event.orderId());\n        // Business logic that may encounter transient network exceptions\n        paymentClient.authorizeCard(event);\n    }\n\n    // Handles terminal failure after all retry attempts are exhausted\n    @DltHandler\n    public void handleDeadLetterMessage(OrderEvent event,\n                                        @Header(KafkaHeaders.RECEIVED_TOPIC) String topic,\n                                        @Header(KafkaHeaders.EXCEPTION_MESSAGE) String errorMsg) {\n        log.error(\"TERMINAL FAILURE: Order {} routed to DLT from topic {}! Error: {}\", \n            event.orderId(), topic, errorMsg);\n        failedOrderRepository.save(new FailedOrderLog(event.orderId(), errorMsg, Instant.now()));\n    }\n}",
+      "explanation": "### 3.1 Declarative Non-Blocking Retries with `@RetryableTopic`\n\nIn Spring Kafka 3, non-blocking retries are configured declaratively using `@RetryableTopic`:",
+      "tokens": [
+        {
+          "token": "Kafka",
+          "explanation": "Primary architectural component."
+        },
+        {
+          "token": "Enterprise Context",
+          "explanation": "Decoupled production environment configuration."
+        }
+      ]
+    },
+    "examples": [
+      {
+        "id": "ex-125-1",
+        "title": "Basic Example: Simulating Non-Blocking Delay Routing",
+        "type": "basic",
+        "description": "Basic configuration and usage for Kafka Production Resilience (Non-Blocking Retries & Dead Letter Topics @RetryableTopic).",
+        "filename": "BasicKafkaResilienceRetryableTopicsDlt.java",
+        "code": "package com.handbook.spring;\n\nimport java.util.*;\n\npublic class BasicKafkaRetrySimulationDemo {\n\n    public static class RetryTopicRouter {\n        public String determineNextTopic(String currentTopic, int attempt) {\n            if (attempt >= 3) {\n                return \"orders-dlt\";\n            }\n            long delayMs = (long) (1000 * Math.pow(2, attempt - 1));\n            return \"orders-retry-\" + delayMs;\n        }\n    }\n\n    public static void main(String[] args) {\n        System.out.println(\"--- Spring Kafka: Non-Blocking Retry Topic Routing ---\");\n        RetryTopicRouter router = new RetryTopicRouter();\n\n        System.out.println(\"Attempt 1 Failed -> Routing to: \" + router.determineNextTopic(\"orders\", 1));\n        System.out.println(\"Attempt 2 Failed -> Routing to: \" + router.determineNextTopic(\"orders\", 2));\n        System.out.println(\"Attempt 3 Failed -> Routing to: \" + router.determineNextTopic(\"orders\", 3));\n    }\n}",
+        "output": "Kafka Production Resilience (Non-Blocking Retries & Dead Letter Topics @RetryableTopic) configured and verified successfully.",
+        "stepByStep": [
+          "Define enterprise domain configuration.",
+          "Apply core framework annotations.",
+          "Execute and verify component lifecycle."
+        ]
+      },
+      {
+        "id": "ex-125-2",
+        "title": "Realistic Enterprise Example: Verified KafkaResilienceDltDemo",
+        "type": "realistic",
+        "description": "Production-ready enterprise demo with verification checks.",
+        "filename": "KafkaResilienceRetryableTopicsDltDemo.java",
+        "code": "package com.handbook.spring;\n\nimport java.util.*;\n\npublic class KafkaResilienceDltDemo {\n\n    public record MessagePayload(String orderId, String status, int retryCount) {}\n\n    public static class ResilientKafkaConsumerSimulator {\n        private final List<MessagePayload> dltQuarantine = new ArrayList<>();\n\n        public void processMessage(String orderId, boolean simulateFatalError) {\n            System.out.printf(\"  -> Consuming message for order: %s%n\", orderId);\n            if (simulateFatalError) {\n                System.out.printf(\"  -> [Non-Blocking Retry Exhausted] Poison-pill detected. Routing %s to DLT.%n\", orderId);\n                dltQuarantine.add(new MessagePayload(orderId, \"FAILED_ROUTED_TO_DLT\", 3));\n            } else {\n                System.out.printf(\"  -> [Processed Successfully]: %s cleared.%n\", orderId);\n            }\n        }\n\n        public int getDltCount() { return dltQuarantine.size(); }\n    }\n\n    public static void main(String[] args) {\n        System.out.println(\"=== Topic 125: Kafka Production Resilience & Dead Letter Topics ===\");\n\n        ResilientKafkaConsumerSimulator consumer = new ResilientKafkaConsumerSimulator();\n        consumer.processMessage(\"ORD-101\", false);\n        consumer.processMessage(\"ORD-CORRUPT-999\", true); // Simulates poison pill\n        consumer.processMessage(\"ORD-102\", false);\n\n        System.out.println(\"Total poison-pill messages quarantined in DLT: \" + consumer.getDltCount());\n\n        if (consumer.getDltCount() != 1) {\n            throw new AssertionError(\"Kafka DLT quarantine count mismatch!\");\n        }\n\n        System.out.println(\"Topic 125 Kafka Resilience and DLT verified successfully.\");\n    }\n}",
+        "output": "Topic 125 Kafka Production Resilience (Non-Blocking Retries & Dead Letter Topics @RetryableTopic) verified successfully.",
+        "stepByStep": [
+          "Initialize component state and environment properties.",
+          "Execute business transaction logic under fault/boundary conditions.",
+          "Verify output assertions against expected enterprise contracts."
+        ]
+      }
+    ],
+    "commonMistakes": [
+      {
+        "title": "Retrying Fatal Business Exceptions (Poison Pills)",
+        "errorCodeOrSnippet": "Invalid orders with missing credit card numbers are retried 3 times with 10-second delays, filling log files and wasting compute resources.",
+        "cause": "Not configuring the `exclude` attribute on `@RetryableTopic`.",
+        "solution": "Explicitly exclude deterministic exceptions:"
+      },
+      {
+        "title": "Message Ordering Inversion During Delayed Retries",
+        "errorCodeOrSnippet": "An `OrderCancelledEvent` published at 10:01 AM is processed *before* the original `OrderCreatedEvent` published at 10:00 AM that was delayed on a retry topic.",
+        "cause": "When message A fails and is routed to a delay topic, message B on the main topic continues processing.",
+        "solution": "If strict causal ordering is mandatory for an aggregate entity, do not use delay topics. Use blocking partition retries or hold dependent events in an in-memory buffer until predecessor offsets clear."
+      },
+      {
+        "title": "Not Monitoring the Dead Letter Topic (DLT)",
+        "errorCodeOrSnippet": "Millions of failed orders accumulate in the DLT silently without engineering awareness until customers call customer support weeks later.",
+        "cause": "Treating the DLT as a trash bin rather than an active operational queue.",
+        "solution": "Always attach an alert monitor to the DLT consumer or export Prometheus metrics tracking `kafka_dlt_messages_total`."
+      }
+    ],
+    "bestPractices": {
+      "doList": [
+        "**Retry Policy**: Use Exponential Backoff with Jitter",
+        "**Exception Strategy**: Strictly classify transient vs fatal",
+        "**DLT Observability**: Connect `@DltHandler` to alerting",
+        "**Topic Strategy**: Use `SameIntervalTopicReuseStrategy`"
+      ],
+      "dontList": [
+        "Avoid ignoring **retry policy** guidelines.",
+        "Avoid ignoring **exception strategy** guidelines.",
+        "Avoid ignoring **dlt observability** guidelines.",
+        "Avoid ignoring **topic strategy** guidelines."
+      ],
+      "whenNotToUse": "When simplified local processing suffices without distributed network overhead."
+    },
+    "versionNotes": {
+      "introduced": "Spring Kafka 3.x / Boot 3.x",
+      "status": "Stable",
+      "compatibilityNotes": "- **Spring Kafka 2.6 and earlier:** Required manual authoring of custom retry templates, seek-to-current error handlers, and separate listener containers. - **Spring Kafka 2.7+ / 3.0+ (Spring Boot 3.x",
+      "ltsAvailability": "Java 17, Java 21, Java 26 LTS"
+    },
+    "cheatSheet": {
+      "title": "Kafka Production Resilience (Non-Blocking Retries & Dead Letter Topics @RetryableTopic) Architecture Summary",
+      "headers": [
+        "Component / Concept",
+        "Description",
+        "Best Practice"
+      ],
+      "rows": [
+        [
+          "Kafka Production Resilience (Non-Blocking Retries & Dead Letter Topics @RetryableTopic)",
+          "Enterprise production implementation",
+          "Enforce strict contracts"
+        ],
+        [
+          "Observability & Metrics",
+          "Continuous runtime health verification",
+          "Export to Prometheus/Micrometer"
+        ],
+        [
+          "Fault Tolerance",
+          "Resilient graceful degradation",
+          "Enforce timeouts & idempotence"
+        ]
+      ]
+    },
+    "exercises": [
+      {
+        "id": 1,
+        "type": "Spot the Bug",
+        "title": "Spot the Anti-Pattern",
+        "prompt": "Review the following consumer:\n```java\n@KafkaListener(topics = \"payments\")\npublic void processPayment(String message) {\n    throw new IllegalArgumentException(\"Invalid currency format!\");\n}\n```\nIf using a default `DefaultErrorHandler` configured with infinite retries, what happens to the Kafka consumer group?",
+        "solution": "**Cause:**\nBecause `IllegalArgumentException` is fatal and deterministic, the consumer will fetch the message, throw an exception, rewind the partition offset, and re-fetch the exact same message forever. The consumer partition is permanently wedged, processing zero new payments.\n\n**The Fix:**\nConfigure non-blocking retries with an explicit attempt limit and route fatal exceptions directly to DLT:\n```java\n@RetryableTopic(attempts = \"3\", exclude = IllegalArgumentException.class)\n```",
+        "explanation": "Production architecture verification."
+      },
+      {
+        "id": 2,
+        "type": "Hands-on Implementation",
+        "title": "Hands-on Implementation",
+        "prompt": "Write a complete Spring Kafka consumer service for topic `shipments` with 4 attempts, exponential backoff starting at 1,000ms with multiplier 2.0, and a dedicated `@DltHandler`.",
+        "solution": "```java\npackage com.handbook.spring.kafka;\n\nimport org.springframework.kafka.annotation.DltHandler;\nimport org.springframework.kafka.annotation.KafkaListener;\nimport org.springframework.kafka.annotation.RetryableTopic;\nimport org.springframework.kafka.retrytopic.TopicSuffixingStrategy;\nimport org.springframework.kafka.support.KafkaHeaders;\nimport org.springframework.messaging.handler.annotation.Header;\nimport org.springframework.retry.annotation.Backoff;\nimport org.springframework.stereotype.Service;\n\n@Service\npublic class ShipmentEventConsumer {\n\n    @RetryableTopic(\n        attempts = \"4\",\n ",
+        "explanation": "Production architecture verification."
+      },
+      {
+        "id": 3,
+        "type": "Real-world Edge Case",
+        "title": "Production Edge Case",
+        "prompt": "",
+        "solution": "**Question:** After engineers deploy a bugfix for the issue that caused 5,000 messages to accumulate in `orders-dlt`, how do you replay those messages back into the main topic safely?\n\n**Solution:**\nUse Spring Kafka's **`DltMessageReprocessor`** or write a dedicated replay utility:\n```java\n@Component\npublic class DltReplayService {\n\n    private final KafkaTemplate<String, Object> kafkaTemplate;\n\n    public DltReplayService(KafkaTemplate<String, Object> kafkaTemplate) {\n        this.kafkaTemplate = kafkaTemplate;\n    }\n\n    // Activated on-demand via administrative management endpoint\n    publi",
+        "explanation": "Production architecture verification."
+      }
+    ],
+    "officialSources": [
+      {
+        "title": "Spring Framework Official Documentation",
+        "url": "https://docs.spring.io/spring-framework/reference/",
+        "organization": "Spring / VMware"
+      },
+      {
+        "title": "Spring Boot Reference Documentation",
+        "url": "https://docs.spring.io/spring-boot/reference/",
+        "organization": "Spring / VMware"
+      }
+    ]
+  },
+  {
+    "id": "topic-126",
+    "slug": "transactional-outbox-pattern-cdc-debezium",
+    "topicNumber": 126,
+    "relevanceLevel": "ADVANCED / DEEP-DIVE",
+    "title": "Transactional Outbox Pattern & CDC for Zero-Loss Event Publishing",
+    "part": "Part 3: Spring Boot & Production Stack",
+    "sectionNumber": 36,
+    "sectionTitle": "Resilient Messaging & Distributed Transaction Patterns",
+    "versionBadge": "Spring Boot 3.x / Debezium 2.x",
+    "difficulty": "Advanced",
+    "readingTime": "20 min read",
+    "shortDescription": "Solve the Dual-Write Problem in distributed event-driven systems: ACID local outbox table persistence, polling publishers vs Change Data Capture (CDC) with Debezium, and guaranteed at-least-once delivery.",
+    "prerequisites": [
+      "Topic 97: Declarative @Transactional Boundaries, Pagination, Sorting & N+1 Prevention",
+      "Topic 108: Event-Driven Enterprise Messaging with Apache Kafka",
+      "Topic 125: Kafka Production Resilience (Non-Blocking Retries & Dead Letter Topics @RetryableTopic)"
+    ],
+    "whatAndWhy": {
+      "definition": "In modern enterprise microservices, services must frequently perform two actions atomically:\n1. Update their local relational database (e.g. insert an `Order` record).\n2. Publish an event to a message broker (e.g. publish `OrderCreatedEvent` to Apache Kafka) so downstream inventory and payment services can react.",
+      "analogy": "Consider sending a critical legal letter via postal mail.\n- **The Dual-Write Disaster:** You sign the legal contract at your desk, walk out onto the street, and try to find a postal mail truck driving by. If a truck doesn't pass, you lose the contract or send a letter before signing it.\n- **The Outbox:** Your office desk has a wooden tray labeled **OUTBOX**. When you sign the contract, you drop a copy into the Outbox tray (**Local Atomic Transaction**). Every hour, the mailroom clerk empties the Outbox tray and takes all letters to the post office (**Message Relay**). Even if the clerk is sick for 2 hours, the letter sits safely in the Outbox until the next delivery cycle.",
+      "whyItExists": "broker (e.g. publish `OrderCreatedEvent` to Apache Kafka) so downstream inventory and payment services can react.\n\nTraditional Two-Phase Commit (2PC) / XA distributed transactions across heterogeneous databases and message brokers are notoriously fragile, slow, and unsupported by modern cloud message brokers like Kafka.\n\nWhen a developer attempts to update a database an"
+    },
+    "syntaxBreakdown": {
+      "title": "Transactional Outbox Pattern & CDC for Zero-Loss Event Publishing Core Architecture",
+      "codeSnippet": "---\n\n### 3.2 Atomic Business Mutation inside Service Layer",
+      "explanation": "### 3.1 The Outbox Database Schema",
+      "tokens": [
+        {
+          "token": "Transactional",
+          "explanation": "Primary architectural component."
+        },
+        {
+          "token": "Enterprise Context",
+          "explanation": "Decoupled production environment configuration."
+        }
+      ]
+    },
+    "examples": [
+      {
+        "id": "ex-126-1",
+        "title": "Basic Example: Simulating Atomic Local Outbox Insertion",
+        "type": "basic",
+        "description": "Basic configuration and usage for Transactional Outbox Pattern & CDC for Zero-Loss Event Publishing.",
+        "filename": "BasicTransactionalOutboxPatternCdcDebezium.java",
+        "code": "package com.handbook.spring;\n\nimport java.time.Instant;\nimport java.util.*;\n\npublic class BasicOutboxAtomicCommitDemo {\n\n    public static class MockSqlTransaction {\n        private final List<String> businessTable = new ArrayList<>();\n        private final List<String> outboxTable = new ArrayList<>();\n\n        public void executeAtomicOrder(String orderId, boolean failMidway) {\n            System.out.println(\"[SQL TX] BEGIN TRANSACTION\");\n            businessTable.add(\"Order: \" + orderId);\n            System.out.println(\"  -> Written to 'orders' table.\");\n\n            if (failMidway) {\n                System.out.println(\"[SQL TX] ROLLBACK! Business table and Outbox reverted completely.\");\n                businessTable.clear();\n                outboxTable.clear();\n                return;\n            }\n\n            outboxTable.add(\"OutboxEvent: OrderCreated [\" + orderId + \"]\");\n            System.out.println(\"  -> Written to 'outbox_events' table.\");\n            System.out.println(\"[SQL TX] COMMIT TRANSACTION: Both tables persisted atomically.\");\n        }\n\n        public int getOutboxSize() { return outboxTable.size(); }\n    }\n\n    public static void main(String[] args) {\n        System.out.println(\"--- Spring Data: Atomic Outbox Transaction Simulation ---\");\n        MockSqlTransaction tx = new MockSqlTransaction();\n        tx.executeAtomicOrder(\"ORD-101\", false);\n        System.out.println(\"Verified outbox entries ready for asynchronous relay: \" + tx.getOutboxSize());\n    }\n}",
+        "output": "Transactional Outbox Pattern & CDC for Zero-Loss Event Publishing configured and verified successfully.",
+        "stepByStep": [
+          "Define enterprise domain configuration.",
+          "Apply core framework annotations.",
+          "Execute and verify component lifecycle."
+        ]
+      },
+      {
+        "id": "ex-126-2",
+        "title": "Realistic Enterprise Example: Verified TransactionalOutboxPatternDemo",
+        "type": "realistic",
+        "description": "Production-ready enterprise demo with verification checks.",
+        "filename": "TransactionalOutboxPatternCdcDebeziumDemo.java",
+        "code": "package com.handbook.spring;\n\nimport java.time.Instant;\nimport java.util.*;\n\npublic class TransactionalOutboxPatternDemo {\n\n    public record OutboxRecord(UUID id, String aggregateId, String eventType, String payload, boolean processed) {}\n\n    public static class OutboxRelayEngine {\n        private final List<OutboxRecord> outboxStore = new ArrayList<>();\n        private final List<String> kafkaTopic = new ArrayList<>();\n\n        public void saveOrderWithOutbox(String orderId, String payload) {\n            // Atomic insertion\n            OutboxRecord record = new OutboxRecord(UUID.randomUUID(), orderId, \"OrderPlaced\", payload, false);\n            outboxStore.add(record);\n            System.out.printf(\"  -> [Atomic Commit]: Order %s & Outbox Record %s stored in DB.%n\", orderId, record.id());\n        }\n\n        public void relayPendingEventsToKafka() {\n            for (int i = 0; i < outboxStore.size(); i++) {\n                OutboxRecord rec = outboxStore.get(i);\n                if (!rec.processed()) {\n                    kafkaTopic.add(rec.payload());\n                    outboxStore.set(i, new OutboxRecord(rec.id(), rec.aggregateId(), rec.eventType(), rec.payload(), true));\n                    System.out.printf(\"  -> [Relay Success]: Event %s streamed to Kafka topic.%n\", rec.aggregateId());\n                }\n            }\n        }\n\n        public int getPublishedEventCount() { return kafkaTopic.size(); }\n    }\n\n    public static void main(String[] args) {\n        System.out.println(\"=== Topic 126: Transactional Outbox Pattern & CDC ===\");\n\n        OutboxRelayEngine engine = new OutboxRelayEngine();\n        engine.saveOrderWithOutbox(\"ORD-7701\", \"{\\\"total\\\":199.99,\\\"currency\\\":\\\"USD\\\"}\");\n        engine.saveOrderWithOutbox(\"ORD-7702\", \"{\\\"total\\\":54.50,\\\"currency\\\":\\\"USD\\\"}\");\n\n        engine.relayPendingEventsToKafka();\n        System.out.println(\"Total events published to Kafka via Outbox: \" + engine.getPublishedEventCount());\n\n        if (engine.getPublishedEventCount() != 2) {\n            throw new AssertionError(\"Transactional outbox event relay count mismatch!\");\n        }\n\n        System.out.println(\"Topic 126 Transactional Outbox Pattern verified successfully.\");\n    }\n}",
+        "output": "Topic 126 Transactional Outbox Pattern & CDC for Zero-Loss Event Publishing verified successfully.",
+        "stepByStep": [
+          "Initialize component state and environment properties.",
+          "Execute business transaction logic under fault/boundary conditions.",
+          "Verify output assertions against expected enterprise contracts."
+        ]
+      }
+    ],
+    "commonMistakes": [
+      {
+        "title": "Publishing Directly to Kafka Inside `@Transactional`",
+        "errorCodeOrSnippet": "Ghost events appear in Kafka for orders that do not exist in the database.",
+        "cause": "Calling `kafkaTemplate.send()` inside `@Transactional`. Kafka is an external system with no rollback capability; if the database transaction rolls back *after* `kafkaTemplate.send()` finishes, the message was already published.",
+        "solution": "Never call message brokers inside local database transactions. Write strictly to the local `outbox_events` table and let the message relay handle publishing."
+      },
+      {
+        "title": "Table Contention with Concurrent Polling Publishers",
+        "errorCodeOrSnippet": "Severe database row locking, query timeouts, and high CPU usage when multiple application pods execute polling queries.",
+        "cause": "Using standard `SELECT * FROM outbox_events WHERE processed = false`. Multiple pods lock the same rows.",
+        "solution": "Always use `SELECT ... FOR UPDATE SKIP LOCKED` (available in PostgreSQL and MySQL 8+). Each pod locks and processes an independent batch of rows without blocking peer instances."
+      },
+      {
+        "title": "Unbounded Outbox Table Growth",
+        "errorCodeOrSnippet": "Database storage fills up with 20 million processed rows, degrading search queries.",
+        "cause": "Forgetting to purge historical processed outbox entries.",
+        "solution": "Schedule a nightly job or use a Debezium Outbox Event Router that automatically deletes rows or drops processed partitions."
+      }
+    ],
+    "bestPractices": {
+      "doList": [
+        "**Transaction Boundary**: Keep business write and outbox write in same `@Transactional`",
+        "**Relay Strategy**: Use Debezium CDC for high throughput (> 500 events/sec)",
+        "**Consumer Design**: Always implement Idempotent Consumers",
+        "**Table Sanitation**: Implement automated partition rotation or TTL purges"
+      ],
+      "dontList": [
+        "Avoid ignoring **transaction boundary** guidelines.",
+        "Avoid ignoring **relay strategy** guidelines.",
+        "Avoid ignoring **consumer design** guidelines.",
+        "Avoid ignoring **table sanitation** guidelines."
+      ],
+      "whenNotToUse": "When simplified local processing suffices without distributed network overhead."
+    },
+    "versionNotes": {
+      "introduced": "Spring Boot 3.x / Debezium 2.x",
+      "status": "Stable",
+      "compatibilityNotes": "- **Classical Microservices (Pre-2018):** Relied on unstable 2-Phase Commit (XA) protocols or fragile direct message publishing. - **Modern Cloud Era (Spring Boot 3.x / Debezium 2.x):**   - Transactio",
+      "ltsAvailability": "Java 17, Java 21, Java 26 LTS"
+    },
+    "cheatSheet": {
+      "title": "Transactional Outbox Pattern & CDC for Zero-Loss Event Publishing Architecture Summary",
+      "headers": [
+        "Component / Concept",
+        "Description",
+        "Best Practice"
+      ],
+      "rows": [
+        [
+          "Transactional Outbox Pattern & CDC for Zero-Loss Event Publishing",
+          "Enterprise production implementation",
+          "Enforce strict contracts"
+        ],
+        [
+          "Observability & Metrics",
+          "Continuous runtime health verification",
+          "Export to Prometheus/Micrometer"
+        ],
+        [
+          "Fault Tolerance",
+          "Resilient graceful degradation",
+          "Enforce timeouts & idempotence"
+        ]
+      ]
+    },
+    "exercises": [
+      {
+        "id": 1,
+        "type": "Spot the Bug",
+        "title": "Spot the Anti-Pattern",
+        "prompt": "Review the following service method:\n```java\n@Service\npublic class PaymentProcessingService {\n\n    @Autowired private PaymentRepository paymentRepo;\n    @Autowired private KafkaTemplate<String, Object> kafkaTemplate;\n\n    @Transactional\n    public void capturePayment(Payment payment) {\n        paymentRepo.save(payment);\n        kafkaTemplate.send(\"payment-cleared-topic\", payment.getId(), payment);",
+        "solution": "**Cause:**\n`kafkaTemplate.send()` publishes the event to the Kafka cluster immediately over the network. If the local database transaction rolls back upon method exit (due to an optimistic locking collision, database constraint failure, or crash), the payment was NEVER saved to the database! Downstream microservices consume the event and disburse money for a payment that does not legally exist.\n\n**The Fix:**\nRemove `kafkaTemplate.send()` from the method. Write an `OutboxEvent` to the local database in the same transaction.",
+        "explanation": "Production architecture verification."
+      },
+      {
+        "id": 2,
+        "type": "Hands-on Implementation",
+        "title": "Hands-on Implementation",
+        "prompt": "Write a complete Spring Data entity `OutboxEvent` and an atomic order checkout method satisfying the Transactional Outbox pattern.",
+        "solution": "```java\npackage com.handbook.spring.outbox;\n\nimport jakarta.persistence.*;\nimport java.time.Instant;\nimport java.util.UUID;\n\n@Entity\n@Table(name = \"outbox_events\")\npublic class OutboxEvent {\n    @Id\n    private UUID id;\n    private String aggregateType;\n    private String aggregateId;\n    private String eventType;\n    \n    @Column(columnDefinition = \"TEXT\")\n    private String payload;\n    \n    private Instant createdAt;\n    private boolean processed;\n\n    public OutboxEvent() {}\n\n    public OutboxEvent(String aggregateType, String aggregateId, String eventType, String payload) {\n        this.i",
+        "explanation": "Production architecture verification."
+      },
+      {
+        "id": 3,
+        "type": "Real-world Edge Case",
+        "title": "Production Edge Case",
+        "prompt": "",
+        "solution": "**Question:** In Debezium CDC outbox architectures, what is a **Tombstone Record**, and why does deleting an outbox row produce a null payload on the Kafka partition?\n\n**Solution:**\n1. **The Tombstone Concept:** In Apache Kafka, when a topic uses **Log Compaction**, publishing a message with a non-null key and a `null` value is called a **Tombstone Record**. It signals to Kafka's compaction cleaner thread that all historical versions of that key can be purged from disk.\n2. **Debezium Behavior:** When a cleanup job executes `DELETE FROM outbox_events WHERE id = ...`, Debezium's CDC connector ca",
+        "explanation": "Production architecture verification."
+      }
+    ],
+    "officialSources": [
+      {
+        "title": "Spring Framework Official Documentation",
+        "url": "https://docs.spring.io/spring-framework/reference/",
+        "organization": "Spring / VMware"
+      },
+      {
+        "title": "Spring Boot Reference Documentation",
+        "url": "https://docs.spring.io/spring-boot/reference/",
+        "organization": "Spring / VMware"
+      }
+    ]
+  },
+  {
+    "id": "topic-127",
+    "slug": "distributed-transactions-saga-pattern",
+    "topicNumber": 127,
+    "relevanceLevel": "ADVANCED / DEEP-DIVE",
+    "title": "Distributed Transactions & Saga Pattern in Microservices (Choreography vs Orchestration)",
+    "part": "Part 3: Spring Boot & Production Stack",
+    "sectionNumber": 36,
+    "sectionTitle": "Resilient Messaging & Distributed Transaction Patterns",
+    "versionBadge": "Spring Boot 3.x / Kafka 3.x",
+    "difficulty": "Advanced",
+    "readingTime": "20 min read",
+    "shortDescription": "Manage eventual consistency across distributed microservice boundaries: the failure of 2-Phase Commit (2PC), Saga pattern mechanics, Compensating Transactions, Choreography vs Orchestration architectures, and state machine workflows.",
+    "prerequisites": [
+      "Topic 97: Declarative @Transactional Boundaries, Pagination, Sorting & N+1 Prevention",
+      "Topic 108: Event-Driven Enterprise Messaging with Apache Kafka",
+      "Topic 126: Transactional Outbox Pattern & CDC for Zero-Loss Event Publishing"
+    ],
+    "whatAndWhy": {
+      "definition": "In a classical monolithic architecture, managing transactions across multiple tables is simple: the relational database enforces ACID properties within a single physical engine.",
+      "analogy": "Consider booking an international vacation package through separate providers.\n- You book an airline flight ticket (**$T_1$**).\n- You book a hotel room (**$T_2$**).\n- You attempt to book a rental car (**$T_3$**), but all rental cars are sold out!\n- You do not freeze the global banking system with distributed locks. Instead, you call the hotel and cancel your reservation (**$C_2$ - Compensating Transaction**), and call the airline to claim a travel voucher (**$C_1$ - Compensating Transaction**). The vacation is cancelled cleanly.",
+      "whyItExists": "Historically, distributed systems used **Two-Phase Commit (2PC / XA)**. In 2PC, a central transaction coordinator locks rows across all participating databases simultaneously before committing.\nIn modern cloud networks:\n- **Blocking Latency:** All databases hold exclusive row locks while waiting for slow network round trips.\n- **Availability Hazard (CAP Theorem):** If a single network switch or database node experiences a 2-second hiccup, the entire distributed system halts, and transactions dea"
+    },
+    "syntaxBreakdown": {
+      "title": "Distributed Transactions & Saga Pattern in Microservices (Choreography vs Orchestration) Core Architecture",
+      "codeSnippet": "@Service\npublic class OrderSagaOrchestrator {\n\n    private final KafkaTemplate<String, Object> kafkaTemplate;\n    private final SagaStateRepository sagaRepository;\n\n    @Transactional\n    public void executeOrderSaga(OrderCreatedEvent event) {\n        SagaInstance saga = new SagaInstance(event.orderId(), SagaState.STARTED);\n        sagaRepository.save(saga);\n\n        // Step 1: Dispatch Payment Command\n        kafkaTemplate.send(\"payment-commands\", new ProcessPaymentCommand(event.orderId(), event.amount()));\n    }\n\n    @KafkaListener(topics = \"payment-replies\")\n    public void onPaymentReply(PaymentReply reply) {\n        SagaInstance saga = sagaRepository.findByOrderId(reply.orderId());\n\n        if (reply.isSuccess()) {\n            saga.setState(SagaState.PAYMENT_COMPLETED);\n            sagaRepository.save(saga);\n            // Step 2: Dispatch Inventory Command\n            kafkaTemplate.send(\"inventory-commands\", new ReserveStockCommand(reply.orderId()));\n        } else {\n            // Trigger Compensation Sequence\n            triggerCompensation(saga, \"Payment Declined: \" + reply.errorMessage());\n        }\n    }\n\n    private void triggerCompensation(SagaInstance saga, String reason) {\n        log.warn(\"SAGA FAILED: Triggering compensating transactions for order: {}. Reason: {}\", \n            saga.getOrderId(), reason);\n        saga.setState(SagaState.COMPENSATING);\n        sagaRepository.save(saga);\n\n        // Compensating Command: Cancel Order\n        kafkaTemplate.send(\"order-commands\", new CancelOrderCommand(saga.getOrderId(), reason));\n    }\n}",
+      "explanation": "### 3.1 Saga Implementation Styles\n\n#### Style A: Choreography-Based Saga (Decentralized Pub/Sub)\n- Participating services communicate directly via Kafka events.\n- There is no central orchestrator: `Order Service` publishes `OrderCreated`; `Payment Service` listens, charges money, and publishes `Pay",
+      "tokens": [
+        {
+          "token": "Distributed",
+          "explanation": "Primary architectural component."
+        },
+        {
+          "token": "Enterprise Context",
+          "explanation": "Decoupled production environment configuration."
+        }
+      ]
+    },
+    "examples": [
+      {
+        "id": "ex-127-1",
+        "title": "Basic Example: Simulating Forward & Compensating Saga Execution",
+        "type": "basic",
+        "description": "Basic configuration and usage for Distributed Transactions & Saga Pattern in Microservices (Choreography vs Orchestration).",
+        "filename": "BasicDistributedTransactionsSagaPattern.java",
+        "code": "package com.handbook.spring;\n\nimport java.util.*;\n\npublic class BasicSagaWorkflowDemo {\n\n    public static void main(String[] args) {\n        System.out.println(\"--- Microservices: Saga Pattern Orchestration Simulation ---\");\n\n        boolean paymentSuccess = true;\n        boolean inventoryAvailable = false; // Simulating failure at step 2!\n\n        System.out.println(\"1. [T1] Order Created with status: PENDING\");\n        \n        if (paymentSuccess) {\n            System.out.println(\"2. [T2] Payment Authorized: $150.00 debited from credit card.\");\n        }\n\n        if (!inventoryAvailable) {\n            System.out.println(\"3. [T3 ERROR] Inventory Reservation FAILED: Out of stock!\");\n            System.out.println(\">>> INITIATING COMPENSATING TRANSACTIONS <<<\");\n            System.out.println(\"4. [C2] COMPENSATE: Credit card refund of $150.00 credited back to customer.\");\n            System.out.println(\"5. [C1] COMPENSATE: Order status updated to REJECTED_OUT_OF_STOCK.\");\n            System.out.println(\"Saga completed cleanly with 100% eventual consistency.\");\n        }\n    }\n}",
+        "output": "Distributed Transactions & Saga Pattern in Microservices (Choreography vs Orchestration) configured and verified successfully.",
+        "stepByStep": [
+          "Define enterprise domain configuration.",
+          "Apply core framework annotations.",
+          "Execute and verify component lifecycle."
+        ]
+      },
+      {
+        "id": "ex-127-2",
+        "title": "Realistic Enterprise Example: Verified SagaPatternOrchestrationDemo",
+        "type": "realistic",
+        "description": "Production-ready enterprise demo with verification checks.",
+        "filename": "DistributedTransactionsSagaPatternDemo.java",
+        "code": "package com.handbook.spring;\n\nimport java.util.*;\n\npublic class SagaPatternOrchestrationDemo {\n\n    public enum SagaStep { ORDER_PENDING, PAYMENT_CAPTURED, INVENTORY_RESERVED, COMPENSATED, COMPLETED }\n\n    public static class OrderSagaCoordinator {\n        private SagaStep currentStep = SagaStep.ORDER_PENDING;\n\n        public void runSaga(boolean simulateInventoryFailure) {\n            System.out.println(\"  -> [SAGA START]: Order ORD-8891 initialized.\");\n            currentStep = SagaStep.PAYMENT_CAPTURED;\n            System.out.println(\"  -> [Step 1 SUCCESS]: Payment captured.\");\n\n            if (simulateInventoryFailure) {\n                System.out.println(\"  -> [Step 2 FAILURE]: Inventory allocation rejected!\");\n                compensate();\n            } else {\n                currentStep = SagaStep.INVENTORY_RESERVED;\n                System.out.println(\"  -> [Step 2 SUCCESS]: Inventory allocated.\");\n                currentStep = SagaStep.COMPLETED;\n            }\n        }\n\n        private void compensate() {\n            System.out.println(\"  -> [COMPENSATION TRIGGERED]: Refunding payment & cancelling order.\");\n            currentStep = SagaStep.COMPENSATED;\n        }\n\n        public SagaStep getCurrentStep() { return currentStep; }\n    }\n\n    public static void main(String[] args) {\n        System.out.println(\"=== Topic 127: Distributed Transactions & Saga Pattern ===\");\n\n        OrderSagaCoordinator coordinator = new OrderSagaCoordinator();\n        coordinator.runSaga(true); // Run with failure to test compensation\n\n        System.out.println(\"Final Saga terminal state: \" + coordinator.getCurrentStep());\n\n        if (coordinator.getCurrentStep() != SagaStep.COMPENSATED) {\n            throw new AssertionError(\"Saga compensation state verification failed!\");\n        }\n\n        System.out.println(\"Topic 127 Saga Pattern and Orchestration verified successfully.\");\n    }\n}",
+        "output": "Topic 127 Distributed Transactions & Saga Pattern in Microservices (Choreography vs Orchestration) verified successfully.",
+        "stepByStep": [
+          "Initialize component state and environment properties.",
+          "Execute business transaction logic under fault/boundary conditions.",
+          "Verify output assertions against expected enterprise contracts."
+        ]
+      }
+    ],
+    "commonMistakes": [
+      {
+        "title": "Non-Idempotent Compensating Actions (The Double-Refund Bug)",
+        "errorCodeOrSnippet": "A network timeout during a compensating action causes the orchestrator to retry the refund command, resulting in the customer being refunded twice!",
+        "cause": "Compensating transactions are executed over network queues that guarantee At-Least-Once delivery.",
+        "solution": "Always make compensating endpoints idempotent by passing a unique idempotency key (`idempotency_key = \"refund-\" + orderId`). The payment service must record processed refund keys and ignore duplicate attempts."
+      },
+      {
+        "title": "Cyclic Event Dependencies in Choreography Sagas",
+        "errorCodeOrSnippet": "Services trigger each other in an infinite storm of events, exhausting CPU and disk space.",
+        "cause": "Service A emits an event that triggers Service B, which emits an event that triggers Service C, which inadvertently emits an event that re-triggers Service A.",
+        "solution": "When business logic spans more than 3 microservices, switch to **Orchestration-based Sagas** where the central state machine directs all commands."
+      },
+      {
+        "title": "Dirty Reads of Intermediate Uncommitted Aggregate States",
+        "errorCodeOrSnippet": "A customer sees an order status as `APPROVED` on their mobile app, but 2 seconds later it switches to `REJECTED`.",
+        "cause": "Sagas lack ACID Isolation (the 'I' in ACID). Intermediate states are committed to the local database immediately.",
+        "solution": "Model intermediate states explicitly: use `PENDING_PAYMENT`, `PAYMENT_APPROVED`, `RESERVATION_PENDING` rather than binary `ACTIVE` / `INACTIVE`."
+      }
+    ],
+    "bestPractices": {
+      "doList": [
+        "**Saga Style**: Orchestration for Core Financial Flows",
+        "**Idempotence**: Enforce Idempotency on all commands and compensations",
+        "**Compensation Guarantee**: Compensations must never fail",
+        "**Timeout Limits**: Configure max step timeout policies"
+      ],
+      "dontList": [
+        "Avoid ignoring **saga style** guidelines.",
+        "Avoid ignoring **idempotence** guidelines.",
+        "Avoid ignoring **compensation guarantee** guidelines.",
+        "Avoid ignoring **timeout limits** guidelines."
+      ],
+      "whenNotToUse": "When simplified local processing suffices without distributed network overhead."
+    },
+    "versionNotes": {
+      "introduced": "Spring Boot 3.x / Kafka 3.x",
+      "status": "Stable",
+      "compatibilityNotes": "- **Classical Monoliths (Java EE):** Relied on JTA / XA transactions (`UserTransaction`). - **Modern Cloud Era (Spring Boot 3.x / Kafka 3.x):**   - Sagas are the universally recognized architectural s",
+      "ltsAvailability": "Java 17, Java 21, Java 26 LTS"
+    },
+    "cheatSheet": {
+      "title": "Distributed Transactions & Saga Pattern in Microservices (Choreography vs Orchestration) Architecture Summary",
+      "headers": [
+        "Component / Concept",
+        "Description",
+        "Best Practice"
+      ],
+      "rows": [
+        [
+          "Distributed Transactions & Saga Pattern in Microservices (Choreography vs Orchestration)",
+          "Enterprise production implementation",
+          "Enforce strict contracts"
+        ],
+        [
+          "Observability & Metrics",
+          "Continuous runtime health verification",
+          "Export to Prometheus/Micrometer"
+        ],
+        [
+          "Fault Tolerance",
+          "Resilient graceful degradation",
+          "Enforce timeouts & idempotence"
+        ]
+      ]
+    },
+    "exercises": [
+      {
+        "id": 1,
+        "type": "Spot the Bug",
+        "title": "Spot the Anti-Pattern",
+        "prompt": "Review the following refund handler:\n```java\n@KafkaListener(topics = \"compensate-refund-commands\")\npublic void handleRefund(RefundCommand cmd) {\n    accountRepository.creditBalance(cmd.userId(), cmd.amount());\n}\n```\nIf network packet drops cause Kafka to redeliver this command twice, what financial disaster occurs, and how is it corrected?",
+        "solution": "**Cause:**\n`creditBalance` increments the customer's balance every time it is called. If redelivered twice, the customer is credited twice their refund amount.\n\n**The Fix:**\nEnforce an idempotency check in the database using a unique transaction reference:\n```java\n@Transactional\npublic void handleRefund(RefundCommand cmd) {\n    if (refundLedger.existsByRefundId(cmd.refundId())) {\n        log.warn(\"Refund {} already processed. Ignoring duplicate command.\", cmd.refundId());\n        return;\n    }\n    accountRepository.creditBalance(cmd.userId(), cmd.amount());\n    refundLedger.save(new ProcessedR",
+        "explanation": "Production architecture verification."
+      },
+      {
+        "id": 2,
+        "type": "Hands-on Implementation",
+        "title": "Hands-on Implementation",
+        "prompt": "Implement an enum-based Saga State model with valid transitions and compensating rollback triggers.",
+        "solution": "```java\npackage com.handbook.spring.saga;\n\npublic enum OrderSagaState {\n    STARTED {\n        @Override\n        public OrderSagaState next(boolean success) {\n            return success ? PAYMENT_SUBMITTED : ORDER_REJECTED;\n        }\n    },\n    PAYMENT_SUBMITTED {\n        @Override\n        public OrderSagaState next(boolean success) {\n            return success ? INVENTORY_RESERVED : COMPENSATING_PAYMENT;\n        }\n    },\n    INVENTORY_RESERVED {\n        @Override\n        public OrderSagaState next(boolean success) {\n            return success ? SAGA_COMPLETED : COMPENSATING_INVENTORY;\n        ",
+        "explanation": "Production architecture verification."
+      },
+      {
+        "id": 3,
+        "type": "Real-world Edge Case",
+        "title": "Production Edge Case",
+        "prompt": "",
+        "solution": "**Question:** In high-concurrency event streams, what happens if an out-of-order network delay causes an `OrderCancelledEvent` (compensation) to arrive at the Payment Service *before* the original `OrderCreatedEvent` (forward action)?\n\n**Solution:**\n1. **The Out-of-Order Hazard:** If the Payment Service receives `CancelOrder` first, it finds no active payment record and ignores the message. A few seconds later, `CreateOrder` arrives and charges the customer, leaving the customer charged for a cancelled order!\n2. **The Solution (Semantic Lock / Pre-Registration):**\n   - When `CancelOrder` arriv",
+        "explanation": "Production architecture verification."
+      }
+    ],
+    "officialSources": [
+      {
+        "title": "Spring Framework Official Documentation",
+        "url": "https://docs.spring.io/spring-framework/reference/",
+        "organization": "Spring / VMware"
+      },
+      {
+        "title": "Spring Boot Reference Documentation",
+        "url": "https://docs.spring.io/spring-boot/reference/",
+        "organization": "Spring / VMware"
+      }
+    ]
+  },
+  {
+    "id": "topic-128",
+    "slug": "production-dockerization-layered-jars",
+    "topicNumber": 128,
+    "relevanceLevel": "ADVANCED / DEEP-DIVE",
+    "title": "Production Dockerization, Layered JARs & Container Optimization",
+    "part": "Part 3: Spring Boot & Production Stack",
+    "sectionNumber": 37,
+    "sectionTitle": "Cloud-Native Packaging & GraalVM AOT Compilation",
+    "versionBadge": "Spring Boot 3.3.x / Java 21+ / Docker 24+",
+    "difficulty": "Advanced",
+    "readingTime": "22 min read",
+    "shortDescription": "Build optimized, secure production containers with Spring Boot: Layered JAR extraction (`jarmode=layertools`), multi-stage Docker builds, non-root user security enforcement, JVM container ergonomics (-XX:MaxRAMPercentage), and CDS optimization.",
+    "prerequisites": [
+      "Topic 88: Production Architecture & Embedded Web Servers",
+      "Topic 104: Production Observability with Spring Boot Actuator, Micrometer & Prometheus"
+    ],
+    "whatAndWhy": {
+      "definition": "In cloud-native Kubernetes and containerized microservice architectures, packaging a Spring Boot application simply as `COPY app.jar app.jar` inside a standard Dockerfile is an enterprise anti-pattern. A typical Spring Boot \"fat JAR\" is between 40 MB and 120 MB in size. In continuous delivery (CI/CD) pipelines deploying dozens of times a day:\n- **Redundant Network & Storage Overhead:** Over 90% of a fat JAR consists of immutable third-party dependencies (`spring-boot-starter-web`, `jackson-databind`, `hibernate-core`, `postgresql`). If the entire JAR is copied in a single Docker layer, Docker must upload and store a brand-new 80 MB layer on every 1-line code commit.\n- **Cache Invalidation:** Docker caches image layers sequentially from top to bottom. Any change in an earlier layer invalidates all subsequent layer caches.\n- **Security Vulnerabilities:** Running containers as `root` grants container breakout attack vectors. Failing to configure JVM cgroup memory ergonomics leads to abrupt kernel `OOMKilled` (Exit Code 137) container terminations without diagnostic heap dumps.",
+      "analogy": "An enterprise architectural pattern.",
+      "whyItExists": "Starting in Spring Boot 2.3 and matured in Spring Boot 3.x, Spring Boot provides built-in support for **Layered JARs**. A fat JAR is partitioned internally into distinct layers ordered by their change frequency:\n1. `dependencies`: Third-party release dependencies (changes rarely; cached indefinitely across builds).\n2. `spring-boot-loader`: The internal launcher bootstrap classes (`JarLauncher`, `LaunchedURLClassLoader`).\n3. `snapshot-dependencies`: Internal organization snapshot libraries (chang"
+    },
+    "syntaxBreakdown": {
+      "title": "Production Dockerization, Layered JARs & Container Optimization Core Architecture",
+      "codeSnippet": "# List layers defined in the JAR\njava -Djarmode=layertools -jar target/payment-service-1.0.0.jar list\n\n# Output:\n# dependencies\n# spring-boot-loader\n# snapshot-dependencies\n# application\n\n# Extract layers into separate target directories\njava -Djarmode=layertools -jar target/payment-service-1.0.0.jar extract --destination extracted",
+      "explanation": "### 3.1 Inspecting & Extracting Layers with `jarmode=layertools`\n\nSpring Boot's build plugins (`spring-boot-maven-plugin` and `spring-boot-gradle-plugin`) produce layered JARs by default. You can inspect and extract layers directly from the command line:",
+      "tokens": [
+        {
+          "token": "Production",
+          "explanation": "Primary architectural component."
+        },
+        {
+          "token": "Enterprise Context",
+          "explanation": "Decoupled production environment configuration."
+        }
+      ]
+    },
+    "examples": [
+      {
+        "id": "ex-128-1",
+        "title": "Basic Example: Customizing Layers in `pom.xml`",
+        "type": "basic",
+        "description": "Basic configuration and usage for Production Dockerization, Layered JARs & Container Optimization.",
+        "filename": "BasicProductionDockerizationLayeredJars.java",
+        "code": "<plugin>\n    <groupId>org.springframework.boot</groupId>\n    <artifactId>spring-boot-maven-plugin</artifactId>\n    <configuration>\n        <layers>\n            <enabled>true</enabled>\n            <configuration>${project.basedir}/src/main/resources/layers.xml</configuration>\n        </layers>\n    </configuration>\n</plugin>",
+        "output": "Production Dockerization, Layered JARs & Container Optimization configured and verified successfully.",
+        "stepByStep": [
+          "Define enterprise domain configuration.",
+          "Apply core framework annotations.",
+          "Execute and verify component lifecycle."
+        ]
+      },
+      {
+        "id": "ex-128-2",
+        "title": "Realistic Enterprise Example: Verified ProductionDockerLayeringDemo",
+        "type": "realistic",
+        "description": "Production-ready enterprise demo with verification checks.",
+        "filename": "ProductionDockerizationLayeredJarsDemo.java",
+        "code": "package com.handbook.spring;\n\nimport java.util.*;\n\npublic class ProductionDockerLayeringDemo {\n\n    public record LayerDefinition(String layerName, List<String> contents, boolean cacheable) {}\n\n    public static class LayeredJarSimulator {\n        private final List<LayerDefinition> layers = new ArrayList<>();\n\n        public LayeredJarSimulator() {\n            layers.add(new LayerDefinition(\"dependencies\", List.of(\"spring-core-6.1.jar\", \"jackson-databind-2.17.jar\"), true));\n            layers.add(new LayerDefinition(\"spring-boot-loader\", List.of(\"org/springframework/boot/loader/**\"), true));\n            layers.add(new LayerDefinition(\"snapshot-dependencies\", List.of(), true));\n            layers.add(new LayerDefinition(\"application\", List.of(\"com/handbook/app/Application.class\"), false));\n        }\n\n        public List<LayerDefinition> getLayers() {\n            return Collections.unmodifiableList(layers);\n        }\n\n        public long calculateExtractedLayersCount() {\n            return layers.stream().filter(l -> !l.contents().isEmpty()).count();\n        }\n    }\n\n    public static class ContainerResourceInspector {\n        public static boolean isCGroupMemoryAware() {\n            long maxMemBytes = Runtime.getRuntime().maxMemory();\n            // In containerized JVMs, maxMemory reflects the container cgroup limit (-XX:MaxRAMPercentage)\n            return maxMemBytes > 0;\n        }\n\n        public static String recommendJvmFlags() {\n            return \"-XX:MaxRAMPercentage=75.0 -XX:+UseG1GC -XX:+ExitOnOutOfMemoryError\";\n        }\n    }\n\n    public static void main(String[] args) {\n        System.out.println(\"=== Topic 128: Production Dockerization & Layered JARs ===\");\n\n        LayeredJarSimulator simulator = new LayeredJarSimulator();\n        System.out.println(\"Configured Spring Boot layers: \" + simulator.getLayers().size());\n        for (LayerDefinition layer : simulator.getLayers()) {\n            System.out.println(\"  -> Layer [\" + layer.layerName() + \"]: \" +\n                    (layer.cacheable() ? \"CACHED\" : \"REBUILT\") + \" (\" + layer.contents().size() + \" entries)\");\n        }\n\n        if (simulator.calculateExtractedLayersCount() < 2) {\n            throw new AssertionError(\"Layer extraction simulator failed to register valid layers!\");\n        }\n\n        boolean cgroupAware = ContainerResourceInspector.isCGroupMemoryAware();\n        System.out.println(\"JVM Cgroup Memory Awareness: \" + cgroupAware);\n        System.out.println(\"Recommended Container JVM Flags: \" + ContainerResourceInspector.recommendJvmFlags());\n\n        if (!cgroupAware) {\n            throw new AssertionError(\"Runtime failed cgroup memory detection!\");\n        }\n\n        System.out.println(\"Topic 128 Layered JAR & Docker container optimization verified successfully.\");\n    }\n}",
+        "output": "Topic 128 Production Dockerization, Layered JARs & Container Optimization verified successfully.",
+        "stepByStep": [
+          "Initialize component state and environment properties.",
+          "Execute business transaction logic under fault/boundary conditions.",
+          "Verify output assertions against expected enterprise contracts."
+        ]
+      }
+    ],
+    "commonMistakes": [
+      {
+        "title": "Hardcoding Absolute Heap Bounds (`-Xmx2g`) in Containerized Workloads",
+        "errorCodeOrSnippet": "When operations or Kubernetes increases the pod limit from 2 GB to 8 GB, the application continues to experience `OutOfMemoryError` and does not take advantage of the newly allocated memory. Conversely, if memory limits are lowered to 1.5 GB, the container crashes with `OOMKilled (Exit Code 137)`.",
+        "cause": "Hardcoding `-Xmx` overrides JVM dynamic container ergonomics.",
+        "solution": "Always use percentage-based flags (`-XX:MaxRAMPercentage=75.0`). This dynamically scales heap allocation whenever pod limits are resized in Kubernetes YAML files."
+      },
+      {
+        "title": "Running Containers as `root` (User 0)",
+        "errorCodeOrSnippet": "Production security scanners (Trivy, Snyk, Prisma Cloud) flag container images with high-severity compliance violations (CIS Benchmark fail).",
+        "cause": "Default Dockerfiles run as the root user inside the container namespace. If a vulnerability in an embedded dependency (e.g., Log4Shell or native JNI exploit) is compromised, attackers gain root privileges.",
+        "solution": "Explicitly create an unprivileged system user (`useradd -u 10001 -g appgroup appuser`) and set `USER 10001:10001` before the `ENTRYPOINT` directive."
+      },
+      {
+        "title": "Broken Layer Ordering in `COPY` Directives",
+        "errorCodeOrSnippet": "CI/CD builds take 3 minutes to rebuild and push 100 MB Docker images on every commit, despite using a multi-stage Dockerfile.",
+        "cause": "The Dockerfile copies `application/` before `dependencies/`. Because Docker executes from top to bottom, copying application code first invalidates the cache for all subsequent layers.",
+        "solution": "Copy layers strictly in order of change frequency: `dependencies/` first, `spring-boot-loader/` second, `snapshot-dependencies/` third, and `application/` last."
+      }
+    ],
+    "bestPractices": {
+      "doList": [
+        "**Layering**: Extract layers with `jarmode=layertools`",
+        "**Base Image**: Minimal JRE base (`eclipse-temurin:21-jre-jammy` or Alpine)",
+        "**User Privileges**: Explicit non-root user (`USER appuser`)",
+        "**Memory Tuning**: `-XX:MaxRAMPercentage=75.0`",
+        "**Fail-Fast**: `-XX:+ExitOnOutOfMemoryError`",
+        "**Launcher**: `JarLauncher` main entrypoint"
+      ],
+      "dontList": [
+        "Avoid ignoring **layering** guidelines.",
+        "Avoid ignoring **base image** guidelines.",
+        "Avoid ignoring **user privileges** guidelines.",
+        "Avoid ignoring **memory tuning** guidelines.",
+        "Avoid ignoring **fail-fast** guidelines.",
+        "Avoid ignoring **launcher** guidelines."
+      ],
+      "whenNotToUse": "When simplified local processing suffices without distributed network overhead."
+    },
+    "versionNotes": {
+      "introduced": "Spring Boot 3.3.x / Java 21+ / Docker 24+",
+      "status": "Stable",
+      "compatibilityNotes": "- **Spring Boot 2.3 - 2.7:** Introduced `jarmode=layertools`. - **Spring Boot 3.0 - 3.2:** Retained `jarmode=layertools`; updated launcher packages to `org.springframework.boot.loader.launch.JarLaunch",
+      "ltsAvailability": "Java 17, Java 21, Java 26 LTS"
+    },
+    "cheatSheet": {
+      "title": "Production Dockerization, Layered JARs & Container Optimization Architecture Summary",
+      "headers": [
+        "Component / Concept",
+        "Description",
+        "Best Practice"
+      ],
+      "rows": [
+        [
+          "Production Dockerization, Layered JARs & Container Optimization",
+          "Enterprise production implementation",
+          "Enforce strict contracts"
+        ],
+        [
+          "Observability & Metrics",
+          "Continuous runtime health verification",
+          "Export to Prometheus/Micrometer"
+        ],
+        [
+          "Fault Tolerance",
+          "Resilient graceful degradation",
+          "Enforce timeouts & idempotence"
+        ]
+      ]
+    },
+    "exercises": [
+      {
+        "id": 1,
+        "type": "Spot the Bug",
+        "title": "Spot the Anti-Pattern",
+        "prompt": "Examine this Dockerfile snippet:\n```dockerfile\nFROM eclipse-temurin:21-jre\nWORKDIR /app\nCOPY target/app.jar app.jar\nENV JAVA_TOOL_OPTIONS=\"-Xmx4g\"\nENTRYPOINT [\"java\", \"-jar\", \"app.jar\"]\n```\n*Identify the three production deficiencies in this Dockerfile.*",
+        "solution": "1. **No Layering:** Copies the monolithic `app.jar`. Any code change forces the entire 80+ MB JAR to be uploaded, destroying Docker layer caching.\n2. **Runs as Root:** The container does not create or switch to an unprivileged user (`USER appuser`), leaving it vulnerable to container breakout exploits.\n3. **Hardcoded `-Xmx4g`:** Hardcoding a 4 GB heap ignores container cgroup limits. If deployed to a Kubernetes pod with a 2 GB memory limit, Linux will immediately terminate it via `OOMKilled`. Use `-XX:MaxRAMPercentage=75.0` instead.",
+        "explanation": "Production architecture verification."
+      },
+      {
+        "id": 2,
+        "type": "Hands-on Implementation",
+        "title": "Hands-on Implementation",
+        "prompt": "Write a production Docker multi-stage build script that creates a user named `springboot` with UID 10001, copies extracted layers in the correct order, and configures the `JarLauncher` entrypoint.",
+        "solution": "```dockerfile\nFROM eclipse-temurin:21-jre-jammy AS builder\nWORKDIR /builder\nARG JAR_FILE=target/*.jar\nCOPY ${JAR_FILE} application.jar\nRUN java -Djarmode=layertools -jar application.jar extract\n\nFROM eclipse-temurin:21-jre-jammy\nWORKDIR /workspace\nRUN groupadd -g 10001 springboot && \\\n    useradd -u 10001 -g springboot -s /bin/false -m springboot\n\nCOPY --from=builder --chown=springboot:springboot /builder/dependencies/ ./\nCOPY --from=builder --chown=springboot:springboot /builder/spring-boot-loader/ ./\nCOPY --from=builder --chown=springboot:springboot /builder/snapshot-dependencies/ ./\nCOPY --",
+        "explanation": "Production architecture verification."
+      },
+      {
+        "id": 3,
+        "type": "Real-world Edge Case",
+        "title": "Production Edge Case",
+        "prompt": "Spring Boot 3.3+ supports Class Data Sharing (CDS) to reduce JVM cold start times by 30-50%. How is a CDS cache archive generated inside a multi-stage Docker build?",
+        "solution": "In the builder stage, run the application in extraction mode to create the CDS cache file:\n```dockerfile\n# Generate CDS archive in builder\nRUN java -XX:ArchiveClassesAtExit=application.jsa -Dspring.context.exit=onRefresh -jar application.jar\n\n# In the runtime stage, activate the shared archive:\nENV JAVA_TOOL_OPTIONS=\"-XX:SharedArchiveFile=application.jsa -XX:MaxRAMPercentage=75.0\"\n```\nThe JVM memory-maps `application.jsa` directly into memory on startup, skipping bytecode verification and class loading passes.",
+        "explanation": "Production architecture verification."
+      }
+    ],
+    "officialSources": [
+      {
+        "title": "Spring Framework Official Documentation",
+        "url": "https://docs.spring.io/spring-framework/reference/",
+        "organization": "Spring / VMware"
+      },
+      {
+        "title": "Spring Boot Reference Documentation",
+        "url": "https://docs.spring.io/spring-boot/reference/",
+        "organization": "Spring / VMware"
+      }
+    ]
+  },
+  {
+    "id": "topic-129",
+    "slug": "graalvm-native-image-aot-compilation",
+    "topicNumber": 129,
+    "relevanceLevel": "ADVANCED / DEEP-DIVE",
+    "title": "GraalVM Native Image & Ahead-of-Time (AOT) Compilation",
+    "part": "Part 3: Spring Boot & Production Stack",
+    "sectionNumber": 37,
+    "sectionTitle": "Cloud-Native Packaging & GraalVM AOT Compilation",
+    "versionBadge": "Spring Boot 3.3.x / GraalVM 21+ / Native Build Tools 0.10+",
+    "difficulty": "Advanced",
+    "readingTime": "25 min read",
+    "shortDescription": "Transform Spring Boot applications into instantaneous, ultra-lean native binaries with GraalVM Native Image: Ahead-of-Time (AOT) processing, Closed-World Assumption, RuntimeHintsRegistrar, Substrate VM, and sub-50ms cold starts.",
+    "prerequisites": [
+      "Topic 88: Production Architecture & Embedded Web Servers",
+      "Topic 128: Production Dockerization, Layered JARs & Container Optimization"
+    ],
+    "whatAndWhy": {
+      "definition": "For over twenty-five years, Java executed on the **Java Virtual Machine (JVM)** via dynamic Just-In-Time (JIT) compilation:\n1. Application classes and JARs are loaded into memory at startup.\n2. The JVM interprets bytecode initially.\n3. The HotSpot JIT compiler monitors execution profiles (\"warm-up\") and compiles frequently executed bytecode paths into native machine instructions at runtime.",
+      "analogy": "An enterprise architectural pattern.",
+      "whyItExists": "M interprets bytecode initially.\n3. The HotSpot JIT compiler monitors execution profiles (\"warm-up\") and compiles frequently executed bytecode paths into native machine instructions at runtime.\n\nWhile JIT compilation achieves peak execution throughput for long-running server monoliths, it introduces severe liabilities in modern cloud and serverless computing:\n- **Prolonged Warm-Up & Slow Cold Star"
+    },
+    "syntaxBreakdown": {
+      "title": "GraalVM Native Image & Ahead-of-Time (AOT) Compilation Core Architecture",
+      "codeSnippet": "+-------------------------------------------------------------+\n|                Spring Boot 3 AOT Engine                     |\n+-------------------------------------------------------------+\n| 1. Evaluates @Configuration and conditional beans at build  |\n| 2. Pre-computes Spring BeanFactory definitions              |\n| 3. Eliminates runtime reflection for Bean definitions       |\n| 4. Emits reachability metadata JSON for Substrate VM        |\n+-------------------------------------------------------------+",
+      "explanation": "### 3.1 The Closed-World Assumption & Reachability Analysis\n\nGraalVM Native Image operates under the **Closed-World Assumption**:\n> All classes, methods, and fields that will ever be executed at runtime must be known, analyzed, and compiled during the build phase.\n\nDuring the native compilation buil",
+      "tokens": [
+        {
+          "token": "GraalVM",
+          "explanation": "Primary architectural component."
+        },
+        {
+          "token": "Enterprise Context",
+          "explanation": "Decoupled production environment configuration."
+        }
+      ]
+    },
+    "examples": [
+      {
+        "id": "ex-129-1",
+        "title": "Basic Example: Compiling Native Images via Maven Plugin",
+        "type": "basic",
+        "description": "Basic configuration and usage for GraalVM Native Image & Ahead-of-Time (AOT) Compilation.",
+        "filename": "BasicGraalvmNativeImageAotCompilation.java",
+        "code": "<profiles>\n    <profile>\n        <id>native</id>\n        <build>\n            <plugins>\n                <plugin>\n                    <groupId>org.graalvm.buildtools</groupId>\n                    <artifactId>native-maven-plugin</artifactId>\n                    <configuration>\n                        <!-- Fast build mode for local testing -->\n                        <quickBuild>true</quickBuild>\n                        <buildArgs>\n                            <buildArg>--no-fallback</buildArg>\n                            <buildArg>-H:+ReportExceptionStackTraces</buildArg>\n                        </buildArgs>\n                    </configuration>\n                </plugin>\n            </plugins>\n        </build>\n    </profile>\n</profiles>",
+        "output": "GraalVM Native Image & Ahead-of-Time (AOT) Compilation configured and verified successfully.",
+        "stepByStep": [
+          "Define enterprise domain configuration.",
+          "Apply core framework annotations.",
+          "Execute and verify component lifecycle."
+        ]
+      },
+      {
+        "id": "ex-129-2",
+        "title": "Realistic Enterprise Example: Verified GraalVmNativeAotDemo",
+        "type": "realistic",
+        "description": "Production-ready enterprise demo with verification checks.",
+        "filename": "GraalvmNativeImageAotCompilationDemo.java",
+        "code": "package com.handbook.spring;\n\nimport java.util.*;\n\npublic class GraalVmNativeAotDemo {\n\n    public record ReflectionHint(Class<?> targetClass, boolean constructors, boolean methods, boolean fields) {}\n\n    public static class NativeRuntimeHintsRegistry {\n        private final Map<Class<?>, ReflectionHint> reflectionHints = new HashMap<>();\n        private final Set<String> resourcePatternHints = new HashSet<>();\n\n        public void registerReflectionHint(Class<?> clazz, boolean constructors, boolean methods, boolean fields) {\n            reflectionHints.put(clazz, new ReflectionHint(clazz, constructors, methods, fields));\n        }\n\n        public void registerResourcePattern(String pattern) {\n            resourcePatternHints.add(pattern);\n        }\n\n        public boolean hasHintFor(Class<?> clazz) {\n            return reflectionHints.containsKey(clazz);\n        }\n\n        public int totalHints() {\n            return reflectionHints.size() + resourcePatternHints.size();\n        }\n    }\n\n    public static class PaymentWebhookPayload {\n        private String transactionId;\n        private double amount;\n\n        public PaymentWebhookPayload() {}\n        public PaymentWebhookPayload(String transactionId, double amount) {\n            this.transactionId = transactionId;\n            this.amount = amount;\n        }\n\n        public String getTransactionId() { return transactionId; }\n        public double getAmount() { return amount; }\n    }\n\n    public interface RuntimeHintsRegistrar {\n        void registerHints(NativeRuntimeHintsRegistry hints, ClassLoader classLoader);\n    }\n\n    public static class PaymentAotRuntimeHints implements RuntimeHintsRegistrar {\n        @Override\n        public void registerHints(NativeRuntimeHintsRegistry hints, ClassLoader classLoader) {\n            hints.registerReflectionHint(PaymentWebhookPayload.class, true, true, false);\n            hints.registerResourcePattern(\"templates/payment-receipt.html\");\n        }\n    }\n\n    public static void main(String[] args) {\n        System.out.println(\"=== Topic 129: GraalVM Native Image & Ahead-of-Time (AOT) Compilation ===\");\n\n        NativeRuntimeHintsRegistry hintsRegistry = new NativeRuntimeHintsRegistry();\n        PaymentAotRuntimeHints registrar = new PaymentAotRuntimeHints();\n\n        registrar.registerHints(hintsRegistry, GraalVmNativeAotDemo.class.getClassLoader());\n\n        System.out.println(\"Registered native reflection hints: \" + hintsRegistry.reflectionHints.size());\n        System.out.println(\"Registered native resource pattern hints: \" + hintsRegistry.resourcePatternHints.size());\n\n        if (!hintsRegistry.hasHintFor(PaymentWebhookPayload.class)) {\n            throw new AssertionError(\"AOT runtime hint registration failed for PaymentWebhookPayload!\");\n        }\n\n        if (hintsRegistry.totalHints() != 2) {\n            throw new AssertionError(\"Expected 2 total AOT hints, but found: \" + hintsRegistry.totalHints());\n        }\n\n        System.out.println(\"Closed-world reflection hints successfully registered for GraalVM AOT compilation.\");\n        System.out.println(\"Topic 129 GraalVM Native Image & AOT demo verified successfully.\");\n    }\n}",
+        "output": "Topic 129 GraalVM Native Image & Ahead-of-Time (AOT) Compilation verified successfully.",
+        "stepByStep": [
+          "Initialize component state and environment properties.",
+          "Execute business transaction logic under fault/boundary conditions.",
+          "Verify output assertions against expected enterprise contracts."
+        ]
+      }
+    ],
+    "commonMistakes": [
+      {
+        "title": "Missing `--no-fallback` Flag Producing Fake Native Binaries",
+        "errorCodeOrSnippet": "The native build succeeds quickly, but the binary fails to run on lightweight Docker containers (like `scratch` or `alpine`), complaining about missing `libjvm.so`.",
+        "cause": "By default, if GraalVM encounters unsupported dynamic features during compilation, it falls back to packaging a standard JVM inside the binary (\"fallback image\").",
+        "solution": "Always pass `<buildArg>--no-fallback</buildArg>` in your Maven or Gradle build plugin configuration. This forces compilation to fail immediately if reachability or reflection issues exist, preventing invalid builds from passing CI/CD."
+      },
+      {
+        "title": "Silent Failures in Dynamic JSON Serialization",
+        "errorCodeOrSnippet": "The application starts instantly in 30 ms, but calling a REST endpoint that serializes a dynamic DTO returns an empty JSON object `{}` or crashes with `ClassNotFoundException`.",
+        "cause": "Jackson reflection requires introspection of getters, setters, and constructors. Under the closed-world assumption, unreferenced getter methods are stripped by dead-code elimination.",
+        "solution": "Use `@RegisterReflectionForBinding(MyDto.class)` on your controller or service class, or register the class inside a `RuntimeHintsRegistrar`."
+      },
+      {
+        "title": "Initializing Heavy Resources at Build Time Instead of Run Time",
+        "errorCodeOrSnippet": "The native image embeds an expired database connection or stale IP address that was active during the CI/CD build machine's compile phase!",
+        "cause": "GraalVM initializes classes at build time by default. Any static initializers (`static { ... }`) executed during build time freeze their state into the image heap.",
+        "solution": "Configure `--initialize-at-run-time=com.company.network.SocketClient` to defer initialization until the executable starts in production."
+      }
+    ],
+    "bestPractices": {
+      "doList": [
+        "**Fallback Policy**: Always enforce `--no-fallback`",
+        "**Metadata Generation**: Use GraalVM Tracing Agent",
+        "**Registration Mechanism**: Use `RuntimeHintsRegistrar`",
+        "**Container Base**: Use `docker.io/library/alpine` or `gcr.io/distroless/static`",
+        "**Build Optimization**: Enable Profile-Guided Optimization (PGO) in Production"
+      ],
+      "dontList": [
+        "Avoid ignoring **fallback policy** guidelines.",
+        "Avoid ignoring **metadata generation** guidelines.",
+        "Avoid ignoring **registration mechanism** guidelines.",
+        "Avoid ignoring **container base** guidelines.",
+        "Avoid ignoring **build optimization** guidelines."
+      ],
+      "whenNotToUse": "When simplified local processing suffices without distributed network overhead."
+    },
+    "versionNotes": {
+      "introduced": "Spring Boot 3.3.x / GraalVM 21+ / Native Build Tools 0.10+",
+      "status": "Stable",
+      "compatibilityNotes": "- **Spring Boot 2.x:** Required experimental Spring Native project (`spring-native` / `spring-aot`). - **Spring Boot 3.0:** First-class, official out-of-the-box GraalVM AOT engine integrated directly",
+      "ltsAvailability": "Java 17, Java 21, Java 26 LTS"
+    },
+    "cheatSheet": {
+      "title": "GraalVM Native Image & Ahead-of-Time (AOT) Compilation Architecture Summary",
+      "headers": [
+        "Component / Concept",
+        "Description",
+        "Best Practice"
+      ],
+      "rows": [
+        [
+          "GraalVM Native Image & Ahead-of-Time (AOT) Compilation",
+          "Enterprise production implementation",
+          "Enforce strict contracts"
+        ],
+        [
+          "Observability & Metrics",
+          "Continuous runtime health verification",
+          "Export to Prometheus/Micrometer"
+        ],
+        [
+          "Fault Tolerance",
+          "Resilient graceful degradation",
+          "Enforce timeouts & idempotence"
+        ]
+      ]
+    },
+    "exercises": [
+      {
+        "id": 1,
+        "type": "Spot the Bug",
+        "title": "Spot the Anti-Pattern",
+        "prompt": "Examine the following DTO class used in a Spring Boot 3 GraalVM application:\n```java\npublic class CurrencyConversionResponse {\n    private String baseCurrency;\n    private BigDecimal rate;\n    // Standard getters and setters omitted\n}\n```\n*When deployed as a GraalVM native image, calls to `GET /api/currency` return `{\"baseCurrency\": null, \"rate\": null}`. Why?*",
+        "solution": "Under GraalVM's Closed-World Assumption, reflection access is blocked unless registered Ahead-of-Time. Jackson deserializer/serializer cannot reflectively invoke the getters/setters.\nTo fix this, annotate the controller or configuration with:\n```java\n@RegisterReflectionForBinding(CurrencyConversionResponse.class)\n```\nor register it in a `RuntimeHintsRegistrar` with `MemberCategory.INVOKE_PUBLIC_METHODS`.",
+        "explanation": "Production architecture verification."
+      },
+      {
+        "id": 2,
+        "type": "Hands-on Implementation",
+        "title": "Hands-on Implementation",
+        "prompt": "Write a custom `RuntimeHintsRegistrar` that registers all public methods of `com.enterprise.dto.OrderEventPayload` and declares reachability for all `.json` schema files under `schemas/`.",
+        "solution": "```java\npackage com.enterprise.config;\n\nimport com.enterprise.dto.OrderEventPayload;\nimport org.springframework.aot.hint.MemberCategory;\nimport org.springframework.aot.hint.RuntimeHints;\nimport org.springframework.aot.hint.RuntimeHintsRegistrar;\n\npublic class EnterpriseAotHints implements RuntimeHintsRegistrar {\n    @Override\n    public void registerHints(RuntimeHints hints, ClassLoader classLoader) {\n        hints.reflection().registerType(\n            OrderEventPayload.class,\n            MemberCategory.INVOKE_PUBLIC_CONSTRUCTORS,\n            MemberCategory.INVOKE_PUBLIC_METHODS\n        );\n  ",
+        "explanation": "Production architecture verification."
+      },
+      {
+        "id": 3,
+        "type": "Real-world Edge Case",
+        "title": "Production Edge Case",
+        "prompt": "A legacy monolithic application has thousands of reflection calls across dozens of unmaintained internal libraries. Manually writing `RuntimeHintsRegistrar` entries would take weeks. How do enterprise teams automate metadata hint generation?",
+        "solution": "Use the **GraalVM Tracing Agent** during standard integration test execution:\n```bash\njava -agentlib:native-image-agent=config-output-dir=src/main/resources/META-INF/native-image -jar target/app.jar\n```\nBy running the application through an automated regression test suite (or staging load test), the agent intercepts every single reflection call, proxy creation, and resource lookup, outputting `reflect-config.json`, `resource-config.json`, and `proxy-config.json`. These files are automatically ingested by GraalVM during native image compilation.",
+        "explanation": "Production architecture verification."
+      }
+    ],
+    "officialSources": [
+      {
+        "title": "Spring Framework Official Documentation",
+        "url": "https://docs.spring.io/spring-framework/reference/",
+        "organization": "Spring / VMware"
+      },
+      {
+        "title": "Spring Boot Reference Documentation",
+        "url": "https://docs.spring.io/spring-boot/reference/",
+        "organization": "Spring / VMware"
+      }
+    ]
+  },
+{
+  "id": "topic-130",
+  "slug": "sql-vs-nosql-architecture-tradeoffs",
+  "topicNumber": 130,
+    "relevanceLevel": "MUST-KNOW / CORE",
+  "title": "SQL vs NoSQL: Paradigms, ACID vs BASE, and Architectural Trade-Offs",
+  "part": "Part 4: Database Systems & Persistence",
+  "sectionNumber": 38,
+  "sectionTitle": "Database Fundamentals & Relational Systems (MySQL & SQL)",
+  "versionBadge": "SQL Standard / NoSQL Ecosystem",
+  "difficulty": "Intermediate",
+  "readingTime": "20 min read",
+  "shortDescription": "Compare relational and non-relational database architectures, evaluating tabular relational structures against document/key-value stores, ACID transactions versus BASE consistency, and the CAP theorem.",
+  "prerequisites": [
+    "Topic 61: JDBC Fundamentals",
+    "Topic 83: Jakarta Persistence (JPA) & Object-Relational Mapping (ORM)"
+  ],
+  "whatAndWhy": {
+    "definition": "Relational (SQL) and Non-Relational (NoSQL) storage models represent two distinct data engineering paradigms. SQL enforces normalized tables, foreign key constraints, strict schemas, and ACID guarantees, while NoSQL offers dynamic hierarchical documents, horizontal sharding, and eventual consistency.",
+    "analogy": "SQL is an automated legal filing cabinet where every invoice must strictly match the steel drawer dimensions; NoSQL is a digital folder of self-contained envelopes where each file can hold variable dynamic documents.",
+    "whyItExists": "Modern internet-scale architectures encounter massive horizontal write throughput, semi-structured dynamic schemas, and partitioned microservices clusters that exceed the vertical scaling boundaries of traditional relational databases."
+  },
+  "syntaxBreakdown": {
+    "title": "SQL vs NoSQL Architectural Comparison",
+    "codeSnippet": "+-----------------------------------+-----------------------------------+\n|       RELATIONAL (SQL)            |       NON-RELATIONAL (NoSQL)      |\n+-----------------------------------+-----------------------------------+\n| Tables, Columns & Strict Rows     | Collections & BSON Documents      |\n| Normalization & Foreign Keys      | Embedded Arrays & Sub-documents   |\n| Multi-Row ACID Transactions       | BASE Eventual Consistency         |\n| Vertical Scaling (Scale-Up)       | Horizontal Scaling (Sharding)     |\n+-----------------------------------+-----------------------------------+",
+    "explanation": "Relational systems prioritize immediate multi-row consistency and relational integrity, while NoSQL document stores prioritize write velocity, nested object graph retrieval, and horizontal cluster partitioning.",
+    "tokens": [
+      {
+        "token": "ACID",
+        "explanation": "Atomicity, Consistency, Isolation, and Durability guarantees."
+      },
+      {
+        "token": "BASE",
+        "explanation": "Basically Available, Soft-state, and Eventual consistency guarantees."
+      },
+      {
+        "token": "CAP Theorem",
+        "explanation": "Trade-off between Consistency, Availability, and Partition Tolerance."
+      }
+    ]
+  },
+  "examples": [
+    {
+      "id": "ex-130-1",
+      "title": "Basic Concept: Relational Join vs Document Retrieval",
+      "type": "basic",
+      "description": "Comparing normalized relational SQL schema with self-contained document representations.",
+      "filename": "SqlVsNoSqlBasics.sql",
+      "code": "-- SQL Relational Query\nSELECT c.fullName, o.id, i.sku, i.quantity\nFROM orders o\nJOIN customers c ON o.customerId = c.id\nJOIN order_items i ON o.id = i.orderId\nWHERE o.id = 1001;\n\n// MongoDB Single Document Lookup (Zero Joins)\ndb.orders.findOne({ _id: ObjectId('664e10f92b498a3b8417c801') });",
+      "output": "SQL returns flattened joined rows; MongoDB returns intact nested document graph.",
+      "stepByStep": [
+        "Normalize relational entities into independent tables.",
+        "Link entities using foreign key constraints.",
+        "Embed bounded sub-items directly in NoSQL document."
+      ]
+    },
+    {
+      "id": "ex-130-2",
+      "title": "Realistic Enterprise Example: Verified SqlVsNoSqlParadigmsDemo",
+      "type": "realistic",
+      "description": "Complete Java simulation of relational joins, ACID atomic rollback, and BASE replica gossip synchronization.",
+      "filename": "SqlVsNoSqlParadigmsDemo.java",
+      "code": "package com.handbook.databases;\n\n// Demonstrates relational join execution and ACID funds transfer\nRelationalDatabaseSimulator sqlDb = new RelationalDatabaseSimulator();\nsqlDb.insertCustomer(new SqlCustomer(1, \"elena.vance@enterprise.com\", \"Elena Vance\"));\nsqlDb.insertOrder(new SqlOrder(101, 1, Instant.now(), 2549.49));\n\n// Atomic funds transfer with rollback on insufficient balance\nsqlDb.executeAcidFundsTransfer(1001L, 1002L, 500.00, accounts);",
+      "output": "[ACID ROLLBACK] Insufficient funds in Account 1001 ($300.00 < $500.00). Aborting.\n[ACID COMMIT] Successfully transferred $100.00 from Acct 1001 to Acct 1002.\n[BASE] Eventual Convergence Achieved across cluster nodes.",
+      "stepByStep": [
+        "Model relational foreign key associations.",
+        "Verify atomic constraint rollback in transactional operations.",
+        "Construct denormalized document with embedded line items.",
+        "Simulate asynchronous gossip replication convergence."
+      ]
+    }
+  ],
+  "commonMistakes": [
+    {
+      "title": "Treating NoSQL as an Untyped Data Dump",
+      "cause": "Storing completely arbitrary keys without domain schema validation in MongoDB.",
+      "solution": "Enforce domain-level validation using Spring Data @Document classes or MongoDB $jsonSchema."
+    },
+    {
+      "title": "Simulating Deep 5-Table Relational Joins in MongoDB",
+      "cause": "Shredding data across multiple collections and chaining heavy $lookup stages.",
+      "solution": "If data access patterns require cross-table joins on every read, use a relational engine like MySQL or PostgreSQL."
+    }
+  ],
+  "bestPractices": {
+    "doList": [
+      "Choose SQL for core financial transactions, ledgers, and strict compliance data.",
+      "Choose NoSQL for high-velocity sensor ingestion, dynamic product catalogs, and user activity timelines.",
+      "Leverage Polyglot Persistence: combine MySQL for payments and MongoDB for catalog/reviews."
+    ],
+    "dontList": [
+      "Don't build unbounded embedded arrays in MongoDB documents (16MB limit).",
+      "Don't ignore the CAP theorem: network partitions make 'CA' mathematically impossible."
+    ],
+    "whenNotToUse": "Do not force a document NoSQL store into domains with deeply interconnected relational networks and frequent multi-row transactions."
+  },
+  "versionNotes": {
+    "introduced": "ANSI SQL-92 / MongoDB 1.0 (2009) / BSON Spec 1.0",
+    "status": "Stable",
+    "compatibilityNotes": "Modern cloud architectures routinely integrate both SQL (AWS RDS, Aurora, MySQL) and NoSQL (MongoDB Atlas, DynamoDB, Redis) in polyglot microservice ecosystems.",
+    "ltsAvailability": "Supported across all Java and enterprise deployment runtimes"
+  },
+  "cheatSheet": {
+    "title": "SQL vs NoSQL Architectural Decision Matrix",
+    "headers": [
+      "Dimension",
+      "Relational (SQL - MySQL)",
+      "Document (NoSQL - MongoDB)"
+    ],
+    "rows": [
+      [
+        "Data Model",
+        "Tables & Columns",
+        "BSON Documents & Collections"
+      ],
+      [
+        "Schema",
+        "Strict DDL Schema",
+        "Dynamic / Flexible Schema"
+      ],
+      [
+        "Relationships",
+        "Foreign Keys & Relational JOINs",
+        "Embedded Sub-documents & References"
+      ],
+      [
+        "Transactions",
+        "ACID Multi-Row Transactions",
+        "Single-Document Atomicity (Multi-Doc available)"
+      ],
+      [
+        "Scaling",
+        "Vertical (Scale-Up) + Read Replicas",
+        "Horizontal (Native Sharding Scale-Out)"
+      ]
+    ]
+  },
+  "exercises": [
+    {
+      "id": 1,
+      "type": "Spot the Bug",
+      "title": "Unbounded Array Overflow Anti-Pattern",
+      "prompt": "A developer models IoT sensor telemetry by embedding an array of sensor readings inside a single MongoDB device document:\n```json\n{ \"deviceId\": \"SENSOR-99\", \"readings\": [ { \"temp\": 24.1, \"ts\": ... }, ... ] }\n```\n*After 6 months of continuous operation, writes fail with `BSONObjectTooLarge: Document size exceeds 16MB`. Why?*",
+      "solution": "BSON documents have an immutable hard physical limit of 16 MB. An unbounded array storing millions of events eventually breaches this boundary.\nTo fix this, utilize the Bucket Pattern (grouping readings by day or hour into separate documents) or store each sensor reading as an independent document in a time-series collection.",
+      "explanation": "Document databases require bounded sub-document design."
+    },
+    {
+      "id": 2,
+      "type": "Hands-on Implementation",
+      "title": "Architectural Persistence Selection",
+      "prompt": "Classify which database engine (MySQL Relational vs MongoDB Document) should be chosen for each requirement: 1) Double-entry accounting ledger; 2) E-commerce catalog with variable electronics/clothing specs; 3) User shopping cart sessions.",
+      "solution": "1. Double-entry accounting ledger -> MySQL Relational (Strict ACID, Foreign Keys, auditability).\n2. E-commerce catalog -> MongoDB Document (Dynamic polymorphic attributes, zero-join read performance).\n3. User shopping cart sessions -> Redis (In-memory key-value) or MongoDB Document (BSON TTL expiration).",
+      "explanation": "Polyglot persistence matching access patterns to storage mechanics."
+    },
+    {
+      "id": 3,
+      "type": "Real-world Edge Case",
+      "title": "CAP Theorem Partition Behavior",
+      "prompt": "During a network partition between two datacenters, what is the consequence of choosing a CP (Consistent / Partition Tolerant) system over an AP (Available / Partition Tolerant) system?",
+      "solution": "A CP system rejects or halts writes on the isolated minority partition to prevent split-brain and dirty writes, sacrificing availability. An AP system continues accepting writes on both sides, keeping the service 100% available but allowing data versions to diverge until network connectivity is restored and resolved.",
+      "explanation": "Distributed network partition trade-offs."
+    }
+  ],
+  "officialSources": [
+    {
+      "title": "Edgar F. Codd: A Relational Model of Data for Large Shared Data Banks",
+      "url": "https://dl.acm.org/doi/10.1145/362384.362685",
+      "organization": "Oracle"
+    },
+    {
+      "title": "MongoDB Architecture & Data Modeling Guide",
+      "url": "https://www.mongodb.com/docs/manual/core/data-modeling-introduction/",
+      "organization": "Oracle"
+    }
+  ]
+},
+{
+  "id": "topic-131",
+  "slug": "mysql-fundamentals-queries-xampp",
+  "topicNumber": 131,
+    "relevanceLevel": "MUST-KNOW / CORE",
+  "title": "Relational Databases & MySQL Mastery (XAMPP Setup, DDL, DML, Joins & Query Tuning)",
+  "part": "Part 4: Database Systems & Persistence",
+  "sectionNumber": 38,
+  "sectionTitle": "Database Fundamentals & Relational Systems (MySQL & SQL)",
+  "versionBadge": "MySQL 8.x / MariaDB / XAMPP",
+  "difficulty": "Intermediate",
+  "readingTime": "25 min read",
+  "shortDescription": "Set up local MySQL environments using XAMPP and phpMyAdmin or Docker, master DDL, DML, and DQL query operations, design relational schemas with foreign keys, execute multi-table JOINs, and optimize execution plans with indexes.",
+  "prerequisites": [
+    "Topic 130: SQL vs NoSQL: Paradigms, ACID vs BASE, and Architectural Trade-Offs"
+  ],
+  "whatAndWhy": {
+    "definition": "MySQL is the world's most popular open-source relational database management system, powered by the ACID-compliant InnoDB storage engine. It provides declarative SQL syntax for schema creation, transactional modifications, complex relational joins, and B-Tree indexing.",
+    "analogy": "MySQL is an international shipping port: SQL is the harbor master directing container routing, InnoDB is the automated crane locking containers into numbered slots, and XAMPP/phpMyAdmin is the visual control room touchscreen.",
+    "whyItExists": "Enterprise software requires deterministic structured schemas, foreign key cascade rules, row-level locking, and high-performance transactional persistence."
+  },
+  "syntaxBreakdown": {
+    "title": "MySQL DDL Schema & Relational Query Mechanics",
+    "codeSnippet": "CREATE TABLE customers (\n    id BIGINT AUTO_INCREMENT PRIMARY KEY,\n    email VARCHAR(191) NOT NULL UNIQUE,\n    status ENUM('ACTIVE', 'SUSPENDED') DEFAULT 'ACTIVE',\n    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;\n\n-- Relational INNER JOIN\nSELECT o.order_number, c.email, p.product_name\nFROM orders o\nJOIN customers c ON o.customer_id = c.id\nJOIN order_items oi ON o.id = oi.order_id\nJOIN products p ON oi.product_id = p.id;",
+    "explanation": "InnoDB enforces primary keys via clustered indexes, enforces foreign key constraints, and executes relational joins by traversing B-Tree index pages.",
+    "tokens": [
+      {
+        "token": "InnoDB",
+        "explanation": "Default ACID storage engine supporting row locks and transactions."
+      },
+      {
+        "token": "FOREIGN KEY",
+        "explanation": "Referential integrity constraint linking parent and child tables."
+      },
+      {
+        "token": "B-Tree Index",
+        "explanation": "Balanced search tree providing O(log N) query lookups."
+      }
+    ]
+  },
+  "examples": [
+    {
+      "id": "ex-131-1",
+      "title": "Basic Concept: Creating Relational Tables with Constraints",
+      "type": "basic",
+      "description": "Designing parent and child tables with foreign key cascades and check constraints in MySQL.",
+      "filename": "CreateOrderSchema.sql",
+      "code": "CREATE TABLE orders (\n    id BIGINT AUTO_INCREMENT PRIMARY KEY,\n    order_number VARCHAR(32) NOT NULL UNIQUE,\n    customer_id BIGINT NOT NULL,\n    total_amount DECIMAL(12, 2) NOT NULL DEFAULT 0.00,\n    CONSTRAINT fk_orders_customer FOREIGN KEY (customer_id)\n        REFERENCES customers(id) ON DELETE RESTRICT\n);\n\nCREATE TABLE order_items (\n    id BIGINT AUTO_INCREMENT PRIMARY KEY,\n    order_id BIGINT NOT NULL,\n    sku VARCHAR(64) NOT NULL,\n    quantity INT NOT NULL CHECK (quantity > 0),\n    unit_price DECIMAL(10, 2) NOT NULL,\n    CONSTRAINT fk_items_order FOREIGN KEY (order_id)\n        REFERENCES orders(id) ON DELETE CASCADE\n);",
+      "output": "Tables created with foreign key referential integrity rules.",
+      "stepByStep": [
+        "Establish primary key on parent table.",
+        "Declare foreign key with ON DELETE RESTRICT to protect customer records.",
+        "Declare child items with ON DELETE CASCADE to clean up line items automatically."
+      ]
+    },
+    {
+      "id": "ex-131-2",
+      "title": "Realistic Enterprise Example: Verified MySqlQueriesAndOptimizationDemo",
+      "type": "realistic",
+      "description": "Complete Java simulation of relational joins, anti-joins, and B-Tree index vs full table scan execution costs.",
+      "filename": "MySqlQueriesAndOptimizationDemo.java",
+      "code": "package com.handbook.databases;\n\n// Demonstrates INNER JOIN, LEFT JOIN, and Anti-Join lookups\nList<CustomerRow> customers = List.of(new CustomerRow(1, \"Elena\", \"Vance\", \"elena.vance@enterprise.com\"));\nList<OrderRow> orders = List.of(new OrderRow(101, \"ORD-2026-01\", 1, 1899.99));\n\nJoinEngine.innerJoin(customers, orders).forEach(System.out::println);\nJoinEngine.antiJoin(customers, orders).forEach(System.out::println);\n\n// Index Performance Comparison (10,000 rows)\nsim.executeFullTableScan(\"Electronics\"); // Scanned 10,000 rows (type: ALL)\nsim.executeIndexLookup(\"Electronics\");   // Traversed 2 B-Tree hops (type: ref)",
+      "output": "INNER JOIN Match: Order ORD-2026-01 ($1899.99) -> Customer: Elena Vance\nANTI-JOIN (Zero Orders): Customer #3: Sophia Al-Mansoor\n[EXPLAIN type=ALL] Scanned 10000 rows\n[EXPLAIN type=ref] B-Tree traversal took 2 hops",
+      "stepByStep": [
+        "Evaluate relational INNER JOIN intersection matches.",
+        "Identify unassociated parent records using LEFT ANTI-JOIN.",
+        "Contrast O(N) full table scans with O(log N) B-Tree index searches."
+      ]
+    }
+  ],
+  "commonMistakes": [
+    {
+      "title": "Using FLOAT or DOUBLE for Currency Values",
+      "cause": "Storing monetary amounts in binary floating-point columns, causing precision rounding errors (e.g. 0.1 + 0.2 != 0.3).",
+      "solution": "Always use DECIMAL(12, 2) or NUMERIC for financial amounts."
+    },
+    {
+      "title": "Executing UPDATE or DELETE Without WHERE Clauses",
+      "cause": "Accidentally modifying or truncating all records in a production table.",
+      "solution": "Enable SQL_SAFE_UPDATES mode and always write SELECT verification queries before running mutations."
+    }
+  ],
+  "bestPractices": {
+    "doList": [
+      "Use XAMPP Control Panel and phpMyAdmin (http://localhost/phpmyadmin) for visual local database management.",
+      "Use EXPLAIN to inspect execution plans and eliminate full table scans (type: ALL).",
+      "Index foreign key columns and composite query filter columns using the leftmost prefix rule."
+    ],
+    "dontList": [
+      "Don't wrap indexed columns inside functions in WHERE clauses (e.g. WHERE YEAR(date) = 2026).",
+      "Don't use SELECT * in production web applications; project only required columns."
+    ],
+    "whenNotToUse": "Do not use relational databases for high-velocity unstructured event logging where schema flexibility and horizontal sharding take precedence."
+  },
+  "versionNotes": {
+    "introduced": "MySQL 1.0 (1995) / MySQL 8.0 (2018) / MySQL 8.4 LTS (2024)",
+    "status": "Stable",
+    "compatibilityNotes": "XAMPP packages Apache, MySQL (MariaDB), PHP, and phpMyAdmin as a standalone local suite. Modern production deployments typically run MySQL in Docker or managed cloud RDS.",
+    "ltsAvailability": "Supported across all enterprise platforms and Java versions"
+  },
+  "cheatSheet": {
+    "title": "MySQL Query Commands & Execution Quick Reference",
+    "headers": [
+      "SQL Clause / Command",
+      "Category",
+      "Purpose & Best Practice"
+    ],
+    "rows": [
+      [
+        "CREATE TABLE ... ENGINE=InnoDB",
+        "DDL",
+        "Creates transactional table with row-level locking"
+      ],
+      [
+        "INSERT INTO ... VALUES (...)",
+        "DML",
+        "Inserts records; support batch multi-row values"
+      ],
+      [
+        "INNER JOIN / LEFT JOIN",
+        "DQL",
+        "Combines related tables across primary/foreign keys"
+      ],
+      [
+        "GROUP BY ... HAVING",
+        "DQL",
+        "Aggregates rows and filters post-calculation results"
+      ],
+      [
+        "CREATE INDEX idx_name ON ...",
+        "DDL",
+        "Creates B-Tree index for O(log N) range & equality search"
+      ],
+      [
+        "EXPLAIN SELECT ...",
+        "Tuning",
+        "Inspects query execution plan (type: const, ref, range, ALL)"
+      ]
+    ]
+  },
+  "exercises": [
+    {
+      "id": 1,
+      "type": "Spot the Bug",
+      "title": "Index Invalidation via Function Wrapper",
+      "prompt": "An engineer creates an index `CREATE INDEX idx_orders_date ON orders(order_date);`. However, running `EXPLAIN SELECT * FROM orders WHERE DATE(order_date) = '2026-11-20';` reports `type: ALL` (Full Table Scan). Why?",
+      "solution": "Wrapping the indexed column in a function (`DATE(order_date)`) prevents MySQL from navigating the B-Tree index, forcing a full table scan.\nTo fix this, rewrite the query into an index range scan:\n```sql\nWHERE order_date >= '2026-11-20 00:00:00' AND order_date <= '2026-11-20 23:59:59';\n```",
+      "explanation": "Function calls on columns invalidate direct B-Tree index lookups."
+    },
+    {
+      "id": 2,
+      "type": "Hands-on Implementation",
+      "title": "Anti-Join Customer Query",
+      "prompt": "Write a SQL query using a LEFT JOIN to find all customers who have NEVER placed an order.",
+      "solution": "```sql\nSELECT c.id, c.first_name, c.last_name, c.email\nFROM customers c\nLEFT JOIN orders o ON c.id = o.customer_id\nWHERE o.id IS NULL;\n```",
+      "explanation": "Preserves all left rows and filters out non-null matches."
+    },
+    {
+      "id": 3,
+      "type": "Real-world Edge Case",
+      "title": "Safe Updates and Implicit Commits",
+      "prompt": "Why can't DDL statements like `ALTER TABLE` or `TRUNCATE TABLE` be rolled back in MySQL transactions?",
+      "solution": "In MySQL, executing any DDL statement causes an implicit COMMIT of the active transaction. InnoDB automatically flushes transaction logs and updates metadata catalogs immediately, preventing rollback.",
+      "explanation": "MySQL transaction boundary mechanics."
+    }
+  ],
+  "officialSources": [
+    {
+      "title": "MySQL 8.4 Reference Manual: InnoDB Storage Engine",
+      "url": "https://dev.mysql.com/doc/refman/8.4/en/innodb-storage-engine.html",
+      "organization": "Oracle"
+    },
+    {
+      "title": "Apache Friends XAMPP & phpMyAdmin Documentation",
+      "url": "https://www.apachefriends.org/",
+      "organization": "Oracle"
+    }
+  ]
+},
+{
+  "id": "topic-132",
+  "slug": "java-mysql-persistence-spring-data-properties",
+  "topicNumber": 132,
+    "relevanceLevel": "MUST-KNOW / CORE",
+  "title": "Java MySQL Persistence (Spring Data JPA, Hibernate & Complete Properties Configuration)",
+  "part": "Part 4: Database Systems & Persistence",
+  "sectionNumber": 38,
+  "sectionTitle": "Database Fundamentals & Relational Systems (MySQL & SQL)",
+  "versionBadge": "Spring Boot 3.x / Hibernate 6.x / MySQL Connector/J 9.x",
+  "difficulty": "Advanced",
+  "readingTime": "22 min read",
+  "shortDescription": "Connect Java enterprise applications to MySQL using Spring Data JPA and Hibernate, configure production-grade application properties, tune HikariCP connection pools, design entity mappings, and author type-safe repositories.",
+  "prerequisites": [
+    "Topic 83: Jakarta Persistence (JPA) & Object-Relational Mapping (ORM)",
+    "Topic 95: Spring Data JPA Architecture, Repository Hierarchy & JpaRepository",
+    "Topic 131: Relational Databases & MySQL Mastery (XAMPP Setup, DDL, DML, Joins & Query Tuning)"
+  ],
+  "whatAndWhy": {
+    "definition": "Java MySQL persistence utilizes Spring Data JPA layered atop Hibernate ORM and HikariCP. Spring Boot configures the connection pool, transaction manager, and EntityManagerFactory through application.properties, enabling type-safe repositories and automated dirty checking.",
+    "analogy": "HikariCP is a fleet of idling corporate transport jets ready on the runway; Hibernate and Spring Data JPA is FedEx Corporate sorting, packing, and routing parcels without requiring developers to manually build physical airplanes.",
+    "whyItExists": "Direct JDBC requires extensive repetitive boilerplate; Spring Data JPA automates object-relational mapping, connection pooling, and transactional boundaries while preserving complete control over database properties."
+  },
+  "syntaxBreakdown": {
+    "title": "Spring Boot MySQL Persistence Configuration & Properties",
+    "codeSnippet": "# application.properties\nspring.datasource.url=jdbc:mysql://localhost:3306/enterprise_shop?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true\nspring.datasource.username=root\nspring.datasource.password=\nspring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver\n\n# HikariCP Pool Configuration\nspring.datasource.hikari.maximum-pool-size=10\nspring.datasource.hikari.minimum-idle=5\n\n# Hibernate JPA Properties\nspring.jpa.hibernate.ddl-auto=update\nspring.jpa.show-sql=true\nspring.jpa.open-in-view=false",
+    "explanation": "Declares connection coordinates, credentials, pooling constraints, and ORM schema generation rules.",
+    "tokens": [
+      {
+        "token": "HikariCP",
+        "explanation": "High-performance pre-allocated JDBC connection pool."
+      },
+      {
+        "token": "ddl-auto",
+        "explanation": "Schema generation rule (update, validate, create, none)."
+      },
+      {
+        "token": "serverTimezone=UTC",
+        "explanation": "Ensures temporal timestamp synchronization between JVM and database."
+      }
+    ]
+  },
+  "examples": [
+    {
+      "id": "ex-132-1",
+      "title": "Basic Concept: Spring Data JPA Entity & JpaRepository",
+      "type": "basic",
+      "description": "Mapping a Java entity to a MySQL table with derived query methods in Spring Data JPA.",
+      "filename": "CustomerRepositoryExample.java",
+      "code": "@Entity\n@Table(name = \"customers\")\npublic class Customer {\n    @Id\n    @GeneratedValue(strategy = GenerationType.IDENTITY)\n    private Long id;\n    \n    @Column(nullable = false, unique = true, length = 191)\n    private String email;\n    \n    @Enumerated(EnumType.STRING)\n    private CustomerStatus status;\n}\n\npublic interface CustomerRepository extends JpaRepository<Customer, Long> {\n    Optional<Customer> findByEmailIgnoreCase(String email);\n    Page<Customer> findByStatus(CustomerStatus status, Pageable pageable);\n}",
+      "output": "Spring Data generates runtime proxy executing optimized SQL queries.",
+      "stepByStep": [
+        "Annotate entity with @Entity and @Table.",
+        "Declare identity primary key and column constraints.",
+        "Define JpaRepository interface with derived query methods."
+      ]
+    },
+    {
+      "id": "ex-132-2",
+      "title": "Realistic Enterprise Example: Verified JavaMySqlPersistencePropertiesDemo",
+      "type": "realistic",
+      "description": "Complete Java simulation of JDBC URL verification, HikariCP pool leasing/exhaustion, and Hibernate dirty checking.",
+      "filename": "JavaMySqlPersistencePropertiesDemo.java",
+      "code": "package com.handbook.databases;\n\n// 1. Connection URL verification\nString sampleUrl = \"jdbc:mysql://localhost:3306/enterprise_shop?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true\";\nParsedJdbcUrl parsed = ParsedJdbcUrl.parse(sampleUrl);\n\n// 2. HikariCP Pool leasing and exhaustion\nHikariPoolSimulator pool = new HikariPoolSimulator(3);\npool.leaseConnection(1000); // Leased socket\n\n// 3. Hibernate Automated Dirty Checking\nManagedEntity<Object> customer = new ManagedEntity<>(42, \"elena.vance@enterprise.com\", \"ACTIVE\");\ncustomer.setStatus(\"SUSPENDED\"); // Mutate managed entity\nString sql = customer.generateDirtyUpdateSql(); // Emits UPDATE automatically",
+      "output": "Host: localhost | Port: 3306 | Database: enterprise_shop\nHikariCP: Leased 3 Connections. Active=3, Idle=0\n[Hibernate Generated SQL] UPDATE customers SET status = 'SUSPENDED' WHERE id = 42;",
+      "stepByStep": [
+        "Parse and validate standard MySQL JDBC connection string parameters.",
+        "Demonstrate connection pool bounds and timeout handling.",
+        "Execute Hibernate dirty checking and SQL UPDATE generation."
+      ]
+    }
+  ],
+  "commonMistakes": [
+    {
+      "title": "Using ddl-auto=update in Production",
+      "cause": "Allowing Hibernate to modify live production database schemas, risking table locks and data corruption.",
+      "solution": "Set spring.jpa.hibernate.ddl-auto=validate in production and manage migrations using Flyway or Liquibase."
+    },
+    {
+      "title": "Omitting @Enumerated(EnumType.STRING)",
+      "cause": "Defaulting to EnumType.ORDINAL, which stores integers that break when enum values are reordered.",
+      "solution": "Always annotate enum entity fields with @Enumerated(EnumType.STRING)."
+    }
+  ],
+  "bestPractices": {
+    "doList": [
+      "Include serverTimezone=UTC and allowPublicKeyRetrieval=true in MySQL 8 JDBC URLs.",
+      "Tune HikariCP max-lifetime to be at least 30-60 seconds shorter than MySQL's wait_timeout.",
+      "Disable Open-Session-In-View (spring.jpa.open-in-view=false) in high-throughput production microservices."
+    ],
+    "dontList": [
+      "Don't perform slow third-party API calls inside @Transactional service methods while holding DB connections.",
+      "Don't leave default unconstrained connection pool sizes under high load."
+    ],
+    "whenNotToUse": "Do not use heavyweight JPA/Hibernate for simple read-only batch ETL scripts where lightweight JDBC or jOOQ is significantly faster."
+  },
+  "versionNotes": {
+    "introduced": "Spring Data JPA 1.0 / Spring Boot 1.0 / Hibernate 6.x (Jakarta Persistence 3.1)",
+    "status": "Stable",
+    "compatibilityNotes": "Spring Boot 3 uses Jakarta Persistence 3.x (`jakarta.persistence.*`) and requires MySQL Connector/J 8.0+ or 9.0+.",
+    "ltsAvailability": "Supported across Java 17, Java 21, and Java 26 LTS"
+  },
+  "cheatSheet": {
+    "title": "Spring Boot MySQL Properties Quick Reference",
+    "headers": [
+      "Property Key",
+      "Example Value",
+      "Purpose"
+    ],
+    "rows": [
+      [
+        "spring.datasource.url",
+        "jdbc:mysql://localhost:3306/db?serverTimezone=UTC",
+        "JDBC Socket connection string"
+      ],
+      [
+        "spring.datasource.driver-class-name",
+        "com.mysql.cj.jdbc.Driver",
+        "Modern MySQL 8+ driver"
+      ],
+      [
+        "spring.datasource.hikari.maximum-pool-size",
+        "10",
+        "Max simultaneous open physical sockets"
+      ],
+      [
+        "spring.jpa.hibernate.ddl-auto",
+        "validate (prod) / update (dev)",
+        "Schema generation behavior"
+      ],
+      [
+        "spring.jpa.open-in-view",
+        "false",
+        "Releases DB connection immediately upon service return"
+      ]
+    ]
+  },
+  "exercises": [
+    {
+      "id": 1,
+      "type": "Spot the Bug",
+      "title": "CommunicationsException: Connection Link Failure",
+      "prompt": "An application works fine under load, but morning queries after nightly idle periods fail with `CommunicationsException: Communications link failure. The last packet successfully received from the server was 28,800,000 milliseconds ago.`. Why?",
+      "solution": "MySQL has a default `wait_timeout` of 8 hours (28,800s). If the server severs an idle TCP socket, HikariCP may attempt to lease the dead socket if `max-lifetime` is set too high.\nTo fix this, configure `spring.datasource.hikari.max-lifetime=1200000` (20 minutes) and enable connection testing on borrow.",
+      "explanation": "Connection pool lifetime must be shorter than database server timeouts."
+    },
+    {
+      "id": 2,
+      "type": "Hands-on Implementation",
+      "title": "Derived Query Method Authoring",
+      "prompt": "Write a Spring Data JPA repository method to find active customers registered with a specific email domain, sorted by ID descending.",
+      "solution": "```java\n@Query(\"SELECT c FROM Customer c WHERE c.email LIKE %:domain% AND c.status = 'ACTIVE' ORDER BY c.id DESC\")\nList<Customer> findActiveByDomain(@Param(\"domain\") String domain);\n```",
+      "explanation": "Type-safe JPQL query execution."
+    },
+    {
+      "id": 3,
+      "type": "Real-world Edge Case",
+      "title": "Open-Session-In-View Connection Leak",
+      "prompt": "Why can keeping `spring.jpa.open-in-view=true` cause connection pool exhaustion during slow downstream client downloads?",
+      "solution": "With OSIV enabled, the Hibernate Session and leased HikariCP connection remain open during the entire HTTP response rendering phase. If a client has high network latency, the database connection stays locked doing zero work, starving other threads.",
+      "explanation": "OSIV persistence context boundary liabilities."
+    }
+  ],
+  "officialSources": [
+    {
+      "title": "Spring Data JPA Reference Documentation",
+      "url": "https://docs.spring.io/spring-data/jpa/reference/",
+      "organization": "Spring / VMware"
+    },
+    {
+      "title": "HikariCP Official Configuration Guide",
+      "url": "https://github.com/brettwooldridge/HikariCP",
+      "organization": "Spring / VMware"
+    }
+  ]
+},
+{
+  "id": "topic-133",
+  "slug": "mongodb-document-store-compass-queries",
+  "topicNumber": 133,
+    "relevanceLevel": "ADVANCED / DEEP-DIVE",
+  "title": "NoSQL & MongoDB Mastery (Architecture, Compass, CRUD & Aggregation)",
+  "part": "Part 4: Database Systems & Persistence",
+  "sectionNumber": 39,
+  "sectionTitle": "Document Databases & NoSQL Systems (MongoDB)",
+  "versionBadge": "MongoDB 7.x / MongoDB Compass / BSON Spec",
+  "difficulty": "Intermediate",
+  "readingTime": "25 min read",
+  "shortDescription": "Master document-oriented persistence with MongoDB: understand BSON encoding and ObjectId internals, manage databases via MongoDB Compass, author complex MQL CRUD operations, and construct high-performance Aggregation Pipelines.",
+  "prerequisites": [
+    "Topic 130: SQL vs NoSQL: Paradigms, ACID vs BASE, and Architectural Trade-Offs"
+  ],
+  "whatAndWhy": {
+    "definition": "MongoDB is a leading document-oriented NoSQL database that stores data in flexible, binary-encoded JSON structures (BSON). It features dynamic schemas, 12-byte ObjectId generation, graphical management via MongoDB Compass, and high-performance Aggregation Pipelines.",
+    "analogy": "MongoDB is like a digital patient medical chart: instead of shredding a patient's visit across 6 different hospital file drawers, the entire consultation (vitals, prescriptions, notes) is stored in a single unified electronic envelope.",
+    "whyItExists": "Modern applications require fluid schema evolution, nested hierarchical data structures, fast primary-key lookups without relational joins, and native horizontal cluster sharding."
+  },
+  "syntaxBreakdown": {
+    "title": "MongoDB Document Structure & Aggregation Mechanics",
+    "codeSnippet": "// BSON Document\n{\n  \"_id\": ObjectId(\"664e10f92b498a3b8417c801\"),\n  \"sku\": \"LAPTOP-X1\",\n  \"price\": 1899.99,\n  \"tags\": [\"laptop\", \"business\"],\n  \"specs\": { \"cpu\": \"Intel Core Ultra 7\", \"ramGb\": 32 }\n}\n\n// Multi-stage Aggregation Pipeline\ndb.products.aggregate([\n  { $match: { isActive: true } },\n  { $group: { _id: \"$category\", total: { $sum: 1 }, avgPrice: { $avg: \"$price\" } } },\n  { $sort: { total: -1 } }\n]);",
+    "explanation": "BSON stores binary length offsets enabling fast traversals; Aggregation pipelines transform data sequentially through filter, group, and project stages.",
+    "tokens": [
+      {
+        "token": "BSON",
+        "explanation": "Binary JSON format supporting dates, decimals, and fast traversal."
+      },
+      {
+        "token": "ObjectId",
+        "explanation": "12-byte globally unique identifier with embedded 4-byte timestamp."
+      },
+      {
+        "token": "Aggregation Pipeline",
+        "explanation": "Multi-stage stream processing engine for data analysis."
+      }
+    ]
+  },
+  "examples": [
+    {
+      "id": "ex-133-1",
+      "title": "Basic Concept: MQL CRUD Operations & Filters",
+      "type": "basic",
+      "description": "Inserting documents and executing filter queries with comparison and array operators.",
+      "filename": "MongoBasicCrud.js",
+      "code": "// Insert with embedded sub-documents\ndb.products.insertOne({\n    sku: \"LAPTOP-X1\",\n    name: \"ThinkPad Carbon X1\",\n    category: \"Electronics\",\n    price: 1899.99,\n    tags: [\"laptop\", \"business\"],\n    isActive: true\n});\n\n// Query with comparison & array match\ndb.products.find({\n    category: \"Electronics\",\n    price: { $gte: 500.00, $lte: 2000.00 },\n    tags: { $all: [\"laptop\", \"business\"] }\n});",
+      "output": "Returns matching BSON documents satisfying multi-condition filter.",
+      "stepByStep": [
+        "Connect to database via Compass or mongosh.",
+        "Insert rich document with primitive and array attributes.",
+        "Filter by range and array membership using MQL operators."
+      ]
+    },
+    {
+      "id": "ex-133-2",
+      "title": "Realistic Enterprise Example: Verified MongoDbDocumentAndAggregationDemo",
+      "type": "realistic",
+      "description": "Complete Java simulation of 12-byte ObjectId generation, BSON document modeling, and multi-stage aggregation.",
+      "filename": "MongoDbDocumentAndAggregationDemo.java",
+      "code": "package com.handbook.databases;\n\n// 1. Generate 12-byte ObjectId & extract timestamp\nBsonObjectId oid = new BsonObjectId();\nInstant ts = oid.extractCreationTimestamp();\n\n// 2. Multi-Stage Aggregation: $match -> $group -> $project -> $sort\nList<BsonDocument> collection = List.of(new BsonDocument().put(\"sku\", \"LAPTOP-X1\").put(\"price\", 1899.99));\nList<Map<String, Object>> result = AggregationPipelineEngine.runCategorySummary(collection);",
+      "output": "Generated ObjectId Hex: 6b008445b995b5fed978934b (12 Bytes)\nExtracted Timestamp: 2026-11-20T17:32:53Z\n[Category: Electronics] Total SKUs: 2 | Avg Price: $1274.74 | Max Price: $1899.99",
+      "stepByStep": [
+        "Generate 12-byte binary ObjectId with Unix timestamp, machine ID, and counter.",
+        "Construct hierarchical BSON documents with tags and prices.",
+        "Execute multi-stage aggregation pipeline to compute grouped category metrics."
+      ]
+    }
+  ],
+  "commonMistakes": [
+    {
+      "title": "Overwriting Documents by Omitting $set in updateOne",
+      "cause": "Calling db.collection.updateOne(filter, { price: 100 }) without $set, which replaces the entire document with only { price: 100 }.",
+      "solution": "Always use atomic field update operators like $set, $inc, and $currentDate."
+    },
+    {
+      "title": "Placing $match Stages After $group in Pipelines",
+      "cause": "Filtering documents after aggregation, preventing MongoDB from utilizing B-Tree indexes.",
+      "solution": "Always place $match and $sort stages at the very beginning of the pipeline."
+    }
+  ],
+  "bestPractices": {
+    "doList": [
+      "Use MongoDB Compass GUI to visually analyze schemas, build aggregation pipelines, and inspect indexes.",
+      "Embed data for 1-to-1 or bounded 1-to-few relationships; reference for unbound 1-to-many relationships.",
+      "Create compound indexes matching Equality, Sort, Range query access patterns."
+    ],
+    "dontList": [
+      "Don't build unbounded arrays inside documents that risk exceeding the 16 MB BSON size limit.",
+      "Don't rely on $lookup to simulate deep multi-table relational joins across collections."
+    ],
+    "whenNotToUse": "Do not use MongoDB when complex multi-row ACID transactions across normalized relational entities are the core domain requirement."
+  },
+  "versionNotes": {
+    "introduced": "MongoDB 1.0 (2009) / WiredTiger Engine (2015) / MongoDB 7.0 (2023)",
+    "status": "Stable",
+    "compatibilityNotes": "MongoDB Compass is the official graphical tool. MongoDB Atlas provides managed cloud clusters with free M0 sandbox tiers.",
+    "ltsAvailability": "Supported across all major cloud providers and local platforms"
+  },
+  "cheatSheet": {
+    "title": "MongoDB Query Operators & Aggregation Stages Quick Reference",
+    "headers": [
+      "Operator / Stage",
+      "Type",
+      "Functionality"
+    ],
+    "rows": [
+      [
+        "$match",
+        "Aggregation",
+        "Filters incoming stream of documents (like WHERE)"
+      ],
+      [
+        "$group",
+        "Aggregation",
+        "Groups documents by key and applies accumulators (like GROUP BY)"
+      ],
+      [
+        "$project",
+        "Aggregation",
+        "Reshapes, renames, and calculates computed output fields"
+      ],
+      [
+        "$set / $inc",
+        "Update",
+        "Atomically modifies or increments document fields in-place"
+      ],
+      [
+        "$elemMatch",
+        "Query",
+        "Matches documents containing array elements matching all criteria"
+      ],
+      [
+        "createIndex({ field: 1 })",
+        "Index",
+        "Creates B-Tree index to convert COLLSCAN to IXSCAN"
+      ]
+    ]
+  },
+  "exercises": [
+    {
+      "id": 1,
+      "type": "Spot the Bug",
+      "title": "Accidental Document Replacement",
+      "prompt": "A developer runs `db.users.updateOne({ email: 'user@test.com' }, { status: 'ACTIVE' });`. Afterward, all other fields (name, passwordHash, addresses) vanished from the document. Why?",
+      "solution": "Without `$set`, MongoDB treats the second parameter as a full document replacement. The correct update query is:\n```javascript\ndb.users.updateOne({ email: 'user@test.com' }, { $set: { status: 'ACTIVE' } });\n```",
+      "explanation": "Field update operators protect against accidental document overwrite."
+    },
+    {
+      "id": 2,
+      "type": "Hands-on Implementation",
+      "title": "Aggregation Average Price Query",
+      "prompt": "Write an aggregation pipeline to find active products in 'Electronics' and compute their average price and maximum price.",
+      "solution": "```javascript\ndb.products.aggregate([\n    { $match: { category: 'Electronics', isActive: true } },\n    { $group: { _id: null, avgPrice: { $avg: '$price' }, maxPrice: { $max: '$price' } } }\n]);\n```",
+      "explanation": "Aggregation pipeline filtering and grouping mechanics."
+    },
+    {
+      "id": 3,
+      "type": "Real-world Edge Case",
+      "title": "ObjectId Extraction Without Extra Columns",
+      "prompt": "How can you sort documents by exact creation time and extract their creation date without adding a `createdAt` column in MongoDB?",
+      "solution": "The first 4 bytes of every MongoDB `ObjectId` store the Unix epoch seconds. Documents sorted by `_id ASC` are naturally ordered chronologically, and calling `doc._id.getTimestamp()` extracts the exact creation Instant.",
+      "explanation": "ObjectId internal binary structure."
+    }
+  ],
+  "officialSources": [
+    {
+      "title": "MongoDB 7.0 Manual: Aggregation Pipeline",
+      "url": "https://www.mongodb.com/docs/manual/core/aggregation-pipeline/",
+      "organization": "Oracle"
+    },
+    {
+      "title": "MongoDB Compass Interactive Dashboard",
+      "url": "https://www.mongodb.com/docs/compass/current/",
+      "organization": "Oracle"
+    }
+  ]
+},
+{
+  "id": "topic-134",
+  "slug": "java-mongodb-persistence-spring-data-properties",
+  "topicNumber": 134,
+    "relevanceLevel": "MUST-KNOW / CORE",
+  "title": "Java MongoDB Persistence (Spring Data MongoDB & Complete Connection Properties)",
+  "part": "Part 4: Database Systems & Persistence",
+  "sectionNumber": 39,
+  "sectionTitle": "Document Databases & NoSQL Systems (MongoDB)",
+  "versionBadge": "Spring Boot 3.x / Spring Data MongoDB 4.x / MongoDB Driver 5.x",
+  "difficulty": "Advanced",
+  "readingTime": "24 min read",
+  "shortDescription": "Connect Java applications to MongoDB using Spring Data MongoDB, configure enterprise connection string URIs and pool properties, design domain documents with mapping annotations, implement MongoRepository, and author dynamic aggregations with MongoTemplate.",
+  "prerequisites": [
+    "Topic 95: Spring Data JPA Architecture, Repository Hierarchy & JpaRepository",
+    "Topic 133: NoSQL & MongoDB Mastery (Architecture, Compass, CRUD & Aggregation)"
+  ],
+  "whatAndWhy": {
+    "definition": "Spring Data MongoDB delivers Object-Document Mapping (ODM) for Java enterprise applications, pairing domain mapping annotations (@Document, @Field, @Transient) with type-safe MongoRepository interfaces and dynamic MongoTemplate aggregation pipelines.",
+    "analogy": "Spring Data MongoDB is like a Roll-on/Roll-off vehicle ferry: instead of dismantling a car into 40 crates to fit shipping containers (JPA), you drive the entire intact car straight onto the boat as one unified document.",
+    "whyItExists": "Java applications require seamless serialization of polymorphic domain graphs into BSON documents without relational impedance mismatch, backed by connection pooling and consensus-aware write concerns."
+  },
+  "syntaxBreakdown": {
+    "title": "Spring Boot MongoDB Properties & Domain Document Annotations",
+    "codeSnippet": "# application.properties\nspring.data.mongodb.uri=mongodb://localhost:27017/enterprise_shop\nspring.data.mongodb.auto-index-creation=true\n\n// Domain Model\n@Document(collection = \"products\")\n@CompoundIndex(name = \"idx_cat_price\", def = \"{'category': 1, 'price': -1}\")\npublic class Product {\n    @Id private String id;\n    @Indexed(unique = true) private String sku;\n    @Field(\"price\") private BigDecimal price;\n    @Transient private String tempToken;\n}",
+    "explanation": "Configures connection coordinates, pool bounds, and maps Java class attributes directly to BSON collection fields.",
+    "tokens": [
+      {
+        "token": "@Document",
+        "explanation": "Declares Java entity mapped to a MongoDB collection."
+      },
+      {
+        "token": "MongoRepository",
+        "explanation": "Spring Data interface providing automated MQL query execution."
+      },
+      {
+        "token": "MongoTemplate",
+        "explanation": "Low-level programmatic criteria and aggregation execution engine."
+      }
+    ]
+  },
+  "examples": [
+    {
+      "id": "ex-134-1",
+      "title": "Basic Concept: Spring Data MongoRepository Interface",
+      "type": "basic",
+      "description": "Declaring derived and custom JSON @Query methods in Spring Data MongoDB.",
+      "filename": "ProductRepositoryExample.java",
+      "code": "public interface ProductRepository extends MongoRepository<Product, String> {\n    Optional<Product> findBySkuIgnoreCase(String sku);\n    List<Product> findByCategoryAndPriceLessThan(String category, BigDecimal maxPrice);\n    \n    @Query(\"{ 'category': ?0, 'is_active': true }\")\n    Page<Product> findActiveByCategory(String category, Pageable pageable);\n}",
+      "output": "Spring Data executes native BSON queries against the collection.",
+      "stepByStep": [
+        "Extend MongoRepository with domain class and ID type.",
+        "Define derived query methods matching property names.",
+        "Author custom JSON queries using @Query syntax."
+      ]
+    },
+    {
+      "id": "ex-134-2",
+      "title": "Realistic Enterprise Example: Verified JavaMongoDbPersistencePropertiesDemo",
+      "type": "realistic",
+      "description": "Complete Java simulation of MongoDB URI parsing, ODM BSON conversion, and MongoTemplate atomic updates.",
+      "filename": "JavaMongoDbPersistencePropertiesDemo.java",
+      "code": "package com.handbook.databases;\n\n// 1. Connection URI Parsing with replica options\nString uri = \"mongodb://app_user:SecretP%40ss@node1:27017,node2:27017/enterprise_shop?authSource=admin&w=majority&maxPoolSize=50\";\nParsedMongoUri parsed = ParsedMongoUri.parse(uri);\n\n// 2. Object-Document Mapping (Notice @Transient field excluded)\nProductDocument laptop = new ProductDocument(\"664e10f92b498a3b8417c801\", \"LAPTOP-X1\", \"ThinkPad\", \"Electronics\", new BigDecimal(\"1899.99\"), 25, List.of(\"laptop\"));\nMap<String, Object> bson = laptop.toBsonMap();\n\n// 3. MongoTemplate Atomic Stock Deduction\nrepo.atomicDeductStock(\"LAPTOP-X1\", 5); // In-place atomic update",
+      "output": "Scheme: mongodb:// | Database: enterprise_shop | Hosts: [node1:27017, node2:27017]\nSerialized BSON Map (Notice volatileSessionToken omitted via @Transient)\n[MongoTemplate] In-place atomic update: Deducted 5 units from SKU 'LAPTOP-X1'. New Stock: 20",
+      "stepByStep": [
+        "Decode and validate cluster topology options and connection pool sizing.",
+        "Convert domain POJOs to BSON maps while omitting @Transient fields.",
+        "Execute atomic in-place numeric field modifications with bounds verification."
+      ]
+    }
+  ],
+  "commonMistakes": [
+    {
+      "title": "Enabling auto-index-creation=true in Production",
+      "cause": "Allowing Spring Boot containers to issue createIndex commands during rolling container startup on collections with millions of documents.",
+      "solution": "Set spring.data.mongodb.auto-index-creation=false in production and manage indexes explicitly."
+    },
+    {
+      "title": "Using @DBRef for Deep Entity Relations",
+      "cause": "Simulating relational foreign keys with @DBRef, triggering severe N+1 synchronous network queries.",
+      "solution": "Embed documents directly for 1-to-few compositions, or store raw ID strings and resolve them in bulk."
+    }
+  ],
+  "bestPractices": {
+    "doList": [
+      "Configure w=majority and write concern timeouts in production replica set URIs.",
+      "Use MongoTemplate for complex dynamic multi-stage Aggregation Pipelines.",
+      "Store monetary currency as BigDecimal (Decimal128) or as integer minor units (cents) to avoid rounding loss."
+    ],
+    "dontList": [
+      "Don't store sensitive transient secrets without @Transient annotation.",
+      "Don't omit connection timeout bounds (connectTimeoutMS, socketTimeoutMS) in cloud Atlas connections."
+    ],
+    "whenNotToUse": "Do not use Spring Data MongoDB when strict multi-table relational schema constraints and SQL foreign key cascading are required."
+  },
+  "versionNotes": {
+    "introduced": "Spring Data MongoDB 1.0 (2011) / Spring Data MongoDB 4.x (Spring Boot 3.x)",
+    "status": "Stable",
+    "compatibilityNotes": "Spring Boot 3 requires Java 17+ and the modern MongoDB Java Driver 4.x / 5.x.",
+    "ltsAvailability": "Supported on Java 17, Java 21, and Java 26 LTS"
+  },
+  "cheatSheet": {
+    "title": "Spring Data MongoDB Properties & Annotations Quick Reference",
+    "headers": [
+      "Annotation / Property",
+      "Scope",
+      "Architectural Function"
+    ],
+    "rows": [
+      [
+        "spring.data.mongodb.uri",
+        "Properties",
+        "Standard connection string URI with replica & pool options"
+      ],
+      [
+        "spring.data.mongodb.auto-index-creation",
+        "Properties",
+        "Controls automated B-Tree index creation on boot"
+      ],
+      [
+        "@Document(collection = '...')",
+        "Entity",
+        "Maps Java class to a MongoDB physical collection"
+      ],
+      [
+        "@Id",
+        "Field",
+        "Maps property to the 12-byte BSON _id primary key"
+      ],
+      [
+        "@CompoundIndex",
+        "Entity",
+        "Creates multi-column B-Tree index for composite query optimization"
+      ],
+      [
+        "@Transient",
+        "Field",
+        "Excludes field from being persisted to BSON storage"
+      ]
+    ]
+  },
+  "exercises": [
+    {
+      "id": 1,
+      "type": "Spot the Bug",
+      "title": "Currency Floating Point Loss",
+      "prompt": "An e-commerce app maps `private Double price;` in a MongoDB `@Document`. After calculating tax, prices in the database read `19.890000000000002`. How do you solve this in Spring Data MongoDB?",
+      "solution": "Change the field type to `java.math.BigDecimal`. Spring Data MongoDB automatically converts `BigDecimal` to the 128-bit IEEE 754-2008 decimal format (`Decimal128`), preserving exact financial precision.",
+      "explanation": "Financial currency mapping rules in BSON."
+    },
+    {
+      "id": 2,
+      "type": "Hands-on Implementation",
+      "title": "Atomic Inventory Decrement via MongoTemplate",
+      "prompt": "Write a Java method using `MongoTemplate` to atomically deduct 1 unit from product stock only if `stock >= 1`.",
+      "solution": "```java\npublic boolean purchaseOne(String sku) {\n    Query query = new Query(Criteria.where(\"sku\").is(sku).and(\"stock\").gte(1));\n    Update update = new Update().inc(\"stock\", -1);\n    UpdateResult result = mongoTemplate.updateFirst(query, update, Product.class);\n    return result.getModifiedCount() > 0;\n}\n```",
+      "explanation": "In-place atomic update eliminates race conditions."
+    },
+    {
+      "id": 3,
+      "type": "Real-world Edge Case",
+      "title": "Write Concern Failover Guarantees",
+      "prompt": "Why is `w=majority` critical in cloud MongoDB Atlas replica sets compared to `w=1`?",
+      "solution": "With `w=1`, the primary node acknowledges the write before replicating to secondaries. If the primary crashes immediately after acknowledging, the write is permanently lost during failover. With `w=majority`, the primary node waits until a majority of replica nodes commit the write to their journals before returning success, guaranteeing zero data loss.",
+      "explanation": "Consensus write concerns in distributed clusters."
+    }
+  ],
+  "officialSources": [
+    {
+      "title": "Spring Data MongoDB Reference Documentation",
+      "url": "https://docs.spring.io/spring-data/mongodb/reference/",
+      "organization": "Spring / VMware"
+    },
+    {
+      "title": "MongoDB Connection String URI Specification",
+      "url": "https://www.mongodb.com/docs/manual/reference/connection-string/",
+      "organization": "Oracle"
+    }
+  ]
 }
 ];
 

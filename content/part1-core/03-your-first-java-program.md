@@ -15,7 +15,10 @@ shortDescription: >-
 prerequisites:
   - 'Topic 01: What is Programming & How Code Runs'
   - 'Topic 02: JDK vs JRE vs JVM & Setup'
+relevanceLevel: MUST-KNOW / CORE
 ---
+> 🎯 **Roadmap Seal:** **`[MUST-KNOW / CORE]`** — *Essential modern foundation required for backend roles. Master this thoroughly.*
+
 ## 1. What It Is and Why It Exists
 
 A Java program is a collection of instructions written inside a class definition. The source file (`.java`) is compiled by the Java Compiler (`javac`) into portable bytecode (`.class`), which is subsequently executed by the Java Virtual Machine (`java`).

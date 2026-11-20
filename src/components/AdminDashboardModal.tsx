@@ -102,50 +102,6 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
   const [siteAccessSuccess, setSiteAccessSuccess] = useState<string | null>(null);
   const [siteAccessError, setSiteAccessError] = useState<string | null>(null);
 
-  // Load data once authenticated
-  useEffect(() => {
-    if (isAuthenticated) {
-      loadAllData();
-      loadSiteAccess();
-    }
-  }, [isAuthenticated]);
-
-  if (!isOpen) return null;
-
-  const loadAllData = async () => {
-    fetchStudents();
-    fetchBroadcasts();
-  };
-
-  const loadSiteAccess = async () => {
-    try {
-      const cfg = await getSiteAccessConfig();
-      setSiteProtected(cfg.isProtected);
-      setSitePasscode(cfg.sitePasscode);
-    } catch (err) {
-      console.warn('Could not load site access configuration:', err);
-    }
-  };
-
-  const handleSaveSiteAccess = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSavingSiteAccess(true);
-    setSiteAccessSuccess(null);
-    setSiteAccessError(null);
-    try {
-      await updateSiteAccessConfig({
-        isProtected: siteProtected,
-        sitePasscode: sitePasscode.trim()
-      });
-      setSiteAccessSuccess('Course Access Passcode settings saved to cloud successfully!');
-      setTimeout(() => setSiteAccessSuccess(null), 3500);
-    } catch (err: any) {
-      setSiteAccessError(err.message || 'Failed to update site access settings.');
-    } finally {
-      setIsSavingSiteAccess(false);
-    }
-  };
-
   const fetchStudents = async () => {
     setLoadingStudents(true);
     try {
@@ -168,6 +124,48 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
       console.error(err);
     } finally {
       setLoadingBroadcasts(false);
+    }
+  };
+
+  const loadAllData = async () => {
+    fetchStudents();
+    fetchBroadcasts();
+  };
+
+  const loadSiteAccess = async () => {
+    try {
+      const cfg = await getSiteAccessConfig();
+      setSiteProtected(cfg.isProtected);
+      setSitePasscode(cfg.sitePasscode);
+    } catch (err) {
+      console.warn('Could not load site access configuration:', err);
+    }
+  };
+
+  // Load data once authenticated
+  useEffect(() => {
+    if (isAuthenticated) {
+      loadAllData();
+      loadSiteAccess();
+    }
+  }, [isAuthenticated]);
+
+  const handleSaveSiteAccess = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSavingSiteAccess(true);
+    setSiteAccessSuccess(null);
+    setSiteAccessError(null);
+    try {
+      await updateSiteAccessConfig({
+        isProtected: siteProtected,
+        sitePasscode: sitePasscode.trim()
+      });
+      setSiteAccessSuccess('Course Access Passcode settings saved to cloud successfully!');
+      setTimeout(() => setSiteAccessSuccess(null), 3500);
+    } catch (err: any) {
+      setSiteAccessError(err.message || 'Failed to update site access settings.');
+    } finally {
+      setIsSavingSiteAccess(false);
     }
   };
 
@@ -208,6 +206,7 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
         setAuthError('Incorrect Admin Passcode. Access denied.');
       }
     } catch (err) {
+      console.error('Admin authentication error:', err);
       setAuthError('Authentication service failed. Please check internet connection.');
     } finally {
       setIsVerifying(false);
@@ -219,6 +218,7 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
       await setStudentCertificateStatus(code, !currentStatus);
       setStudents(prev => prev.map(s => s.code === code ? { ...s, certificateUnlocked: !currentStatus } : s));
     } catch (err) {
+      console.error('Failed to update certificate status:', err);
       alert('Failed to update certificate status.');
     }
   };
@@ -229,6 +229,7 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
         await deleteStudentRecord(code);
         setStudents(prev => prev.filter(s => s.code !== code));
       } catch (err) {
+        console.error('Failed to delete student:', err);
         alert('Failed to delete student.');
       }
     }
@@ -277,6 +278,7 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
         setBroadcasts(prev => prev.filter(b => b.id !== id));
         if (onBroadcastsUpdated) onBroadcastsUpdated();
       } catch (err) {
+        console.error('Failed to delete broadcast:', err);
         alert('Failed to delete broadcast.');
       }
     }
@@ -365,6 +367,8 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
   const totalStudents = students.length;
   const certifiedStudents = students.filter(s => s.certificateUnlocked || s.completedCount >= totalHandbookTopics).length;
   const totalTopicsCompletedAll = students.reduce((acc, s) => acc + s.completedCount, 0);
+
+  if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fadeIn">
@@ -1006,14 +1010,14 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
                 </div>
 
                 {/* Change Password Form */}
-                <div className="p-5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#1c1c1f] space-y-4">
-                  <div className="flex items-center justify-between border-b border-zinc-200 dark:border-zinc-800 pb-3">
-                    <div>
+                <div className="p-4 sm:p-5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#1c1c1f] space-y-4">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-zinc-200 dark:border-zinc-800 pb-3">
+                    <div className="space-y-0.5">
                       <h3 className="text-sm font-bold text-zinc-900 dark:text-zinc-100 flex items-center gap-2">
-                        <KeyRound className="w-4 h-4 text-orange-500" />
+                        <KeyRound className="w-4 h-4 text-orange-500 shrink-0" />
                         <span>Change Master Admin Password</span>
                       </h3>
-                      <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">
+                      <p className="text-xs text-zinc-500 dark:text-zinc-400">
                         Updating your password saves it to Firestore and protects your dashboard across all devices.
                       </p>
                     </div>
@@ -1021,10 +1025,10 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
                     <button
                       type="button"
                       onClick={generateComplexPassword}
-                      className="px-2.5 py-1.5 rounded-lg bg-orange-500/10 hover:bg-orange-500/20 text-orange-600 dark:text-orange-400 border border-orange-500/30 text-xs font-semibold flex items-center gap-1.5 transition-colors cursor-pointer"
+                      className="shrink-0 px-3 py-1.5 rounded-lg bg-orange-500/10 hover:bg-orange-500/20 text-orange-600 dark:text-orange-400 border border-orange-500/30 text-xs font-semibold flex items-center gap-2 transition-colors cursor-pointer whitespace-nowrap self-start sm:self-center"
                       title="Generate a 16-character high-entropy secure passcode"
                     >
-                      <Sparkles className="w-3.5 h-3.5" />
+                      <Sparkles className="w-4 h-4 text-orange-500 shrink-0" />
                       <span>Generate Ultra-Secure</span>
                     </button>
                   </div>
@@ -1053,9 +1057,9 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
                           <button
                             type="button"
                             onClick={() => setShowPassword(p => !p)}
-                            className="text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 flex items-center gap-1 text-[11px]"
+                            className="text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 flex items-center gap-1.5 text-[11px] cursor-pointer"
                           >
-                            {showPassword ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
+                            {showPassword ? <EyeOff className="w-3.5 h-3.5 shrink-0" /> : <Eye className="w-3.5 h-3.5 shrink-0" />}
                             <span>{showPassword ? 'Hide' : 'Show'}</span>
                           </button>
                         </div>
@@ -1123,7 +1127,7 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
                       disabled={isSavingPass}
                       className="w-full py-2.5 px-4 rounded-xl bg-orange-500 hover:bg-orange-600 active:scale-[0.98] text-white font-bold text-xs flex items-center justify-center gap-2 shadow-md shadow-orange-500/20 transition-all cursor-pointer disabled:opacity-50"
                     >
-                      <KeyRound className="w-4 h-4" />
+                      <KeyRound className="w-4 h-4 shrink-0" />
                       <span>{isSavingPass ? 'Updating Password...' : 'Save & Protect New Password'}</span>
                     </button>
                   </form>

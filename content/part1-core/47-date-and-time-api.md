@@ -15,8 +15,11 @@ shortDescription: >-
 prerequisites:
   - 'Topic 04: Variables, Identifiers & Primitive Data Types'
   - 'Topic 16: Classes, Objects & Memory Layout'
+relevanceLevel: ADVANCED / DEEP-DIVE
 ---
 # Date and Time API (java.time)
+
+> 🚀 **Roadmap Seal:** **`[ADVANCED / DEEP-DIVE]`** — *Advanced enterprise specialization & architecture. Study once core fundamentals are solid.*
 
 ### 1. What It Is and Why It Exists
 Before Java 8, handling dates and times relied on `java.util.Date`, `java.util.Calendar`, and `java.text.SimpleDateFormat`. These legacy classes had notorious design flaws:

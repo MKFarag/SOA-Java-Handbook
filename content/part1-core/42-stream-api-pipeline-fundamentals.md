@@ -15,8 +15,11 @@ shortDescription: >-
 prerequisites:
   - 'Topic 40: Lambdas & Functional Interfaces'
   - 'Topic 35: The List Hierarchy'
+relevanceLevel: MUST-KNOW / CORE
 ---
 # Stream API: Pipeline Fundamentals
+
+> 🎯 **Roadmap Seal:** **`[MUST-KNOW / CORE]`** — *Essential modern foundation required for backend roles. Master this thoroughly.*
 
 ### 1. What It Is and Why It Exists
 Before Java 8, manipulating collections required writing imperative `for` or `while` loops. If you needed to filter users by age, convert their names to uppercase, sort them alphabetically, and take the top 5, you had to maintain temporary accumulator lists, nested if-statements, and loop counters. This style is called **external iteration**: your code micromanages *how* the collection is traversed.

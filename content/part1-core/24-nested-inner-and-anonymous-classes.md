@@ -16,7 +16,10 @@ shortDescription: >-
 prerequisites:
   - 'Topic 16: Classes, Objects & Memory Layout'
   - 'Topic 23: Interfaces & Modern Interface Evolution'
+relevanceLevel: ADVANCED / DEEP-DIVE
 ---
+> 🚀 **Roadmap Seal:** **`[ADVANCED / DEEP-DIVE]`** — *Advanced enterprise specialization & architecture. Study once core fundamentals are solid.*
+
 ## 1. What It Is and Why It Exists
 
 Java allows you to define a class **inside another class**. These are called **nested classes**, and they fall into four distinct categories:

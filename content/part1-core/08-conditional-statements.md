@@ -15,7 +15,10 @@ shortDescription: >-
 prerequisites:
   - 'Topic 04: Variables, Identifiers & Primitive Data Types'
   - 'Topic 05: Operators & Expressions'
+relevanceLevel: MUST-KNOW / CORE
 ---
+> 🎯 **Roadmap Seal:** **`[MUST-KNOW / CORE]`** — *Essential modern foundation required for backend roles. Master this thoroughly.*
+
 ## 1. What It Is and Why It Exists
 
 A **conditional statement** is a control flow mechanism that allows a program to make decisions at runtime. By default, computer programs execute sequentially from top to bottom. Conditional statements introduce branching paths: code blocks that execute **only if** a specific boolean expression evaluates to `true`.

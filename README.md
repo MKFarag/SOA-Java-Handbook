@@ -15,7 +15,7 @@
 
 - **100% Offline-First:** Zero runtime CDN dependencies, zero external font fetches. Everything runs directly on your local machine or container.
 - **Cross-Device Cloud Progress Sync:** Seamlessly save and resume your progress across PC, laptop, and mobile using a lightweight unique student code without passwords or emails (Firebase Firestore).
-- **Official Completion Certificate & Security Gate:** Interactive, print-ready, and exportable verified Certificate of Technical Mastery issued exclusively upon completing all 108 modules or instructor verification.
+- **Official Completion Certificate & Security Gate:** Interactive, print-ready, and exportable verified Certificate of Technical Mastery issued exclusively upon completing all 134 modules or instructor verification.
 - **Confidential Instructor & Admin Portal:** Secret command center (`Ctrl + Shift + A` or `#admin`) protected by complex master authentication, featuring real-time student roster, progress metrics, CSV export, and security audit logs.
 - **Live Broadcasts & Shared Resources:** Instructor broadcast system for pushing Google Drive folders, project assignments, tasks, and notices to all learners with interactive notification badges.
 - **VS Code Dark+ & Light Paper Themes:** Built to match developer ergonomics with a deep `#18181b` slate theme, warm Java amber/orange accents, and crisp light paper mode.
@@ -26,31 +26,31 @@
 
 ---
 
-## 🚀 Quick Start (أسهل طريقتين لتشغيل المشروع)
+## 🚀 Quick Start (Two Ways to Run the Project)
 
-### 1. تشغيل فوري عبر Docker (بدون كود وبدون تسطيب Node.js)
-لو عندك Docker، انسخ الأمر ده وشغله في التيرمينال فوراً:
+### 1. Instant Run via Docker (Zero Configuration & No Node.js Required)
+If you have Docker installed, run the following command directly in your terminal:
 ```bash
 docker run -d -p 3000:80 --name mkf_soa_java_handbook mkfarag/mkf-soa-java-handbook:latest
 ```
-وافتح المتصفح على: **[http://localhost:3000](http://localhost:3000)**.
+Then open your browser at: **[http://localhost:3000](http://localhost:3000)**.
 
 ---
 
-### 2. تشغيل عبر كود المشروع (Git Clone)
-لو حابب تسحب الكود وتشغله على جهازك:
+### 2. Run from Source Code (Git Clone)
+To run and develop locally from source:
 ```bash
-# 1. اسحب المشروع
+# 1. Clone the repository
 git clone https://github.com/MKFarag/SOA-Java-Handbook.git
 cd SOA-Java-Handbook
 
-# 2. سطب وشغل
+# 2. Install dependencies and start development server
 npm install
 npm run dev
 ```
-وافتح المتصفح على: **[http://localhost:5173](http://localhost:5173)**.
+Then open your browser at: **[http://localhost:5173](http://localhost:5173)**.
 
-> **ملاحظة:** يمكن أيضاً تحميل المشروع كملف مضغوط **ZIP** مباشرة بالضغط على زر **Code** ثم **Download ZIP** من صفحة GitHub، وفك الضغط وتشغيل `npm install` ثم `npm run dev`.
+> **Note:** You can also download the project as a **ZIP** archive directly by clicking **Code** > **Download ZIP** on GitHub, extracting the archive, and running `npm install && npm run dev`.
 
 ---
 
@@ -83,7 +83,7 @@ npm run dev
   - The Web MVC Pattern, Form Handling, Multipart Uploads, Error Pages, JNDI Connection Pooling
   - Jakarta EE Enterprise Stack: JPA, CDI, JAX-RS, Bean Validation, JSF, EJB
 
-- **Part 3: Spring Boot & The Modern Production Ecosystem (Sections 24–30, Topics 88–108):**
+- **Part 3: Spring Boot & The Modern Production Ecosystem (Sections 24–37, Topics 88–129):**
   - Spring Framework Core: Inversion of Control, `BeanFactory` vs `ApplicationContext`
   - Component Scanning, Injection Strategies, Bean Lifecycle Callbacks (`@PostConstruct`, `@PreDestroy`)
   - Spring Boot Architecture: Auto-Configuration mechanics, Starters, Embedded Runtimes (Tomcat/Netty)
@@ -103,7 +103,16 @@ npm run dev
   - Automated Interactive API Documentation: OpenAPI 3 and Swagger UI specification generation
   - High-Performance Multi-Tier Caching: Local Caffeine L1 cache and Distributed Redis L2 cache
   - Resilience & Fault Tolerance: Resilience4j Circuit Breakers, Rate Limiters, Retry, and Fallback handlers
-  - Event-Driven Enterprise Messaging: Apache Kafka producers, consumers, partition keys, and consumer groups
+  - Event-Driven Enterprise Messaging: Apache Kafka producers, consumers, partition keys, consumer groups, retryable topics, and DLT
+  - Distributed Systems Patterns: Transactional Outbox Pattern, CDC with Debezium, Saga Distributed Transactions (Choreography vs Orchestration)
+  - Production Deployment & Native Images: Layered Docker JAR packaging, CDS archive optimization, GraalVM AOT Compilation
+
+- **Part 4: Database Systems & Persistence (Sections 38–39, Topics 130–134):**
+  - SQL vs NoSQL: Relational vs Document paradigms, ACID vs BASE, CAP Theorem
+  - MySQL Relational Mastery: XAMPP environment, DDL, DML, DQL, Relational JOINs, B-Tree Indexes & Query Tuning
+  - Java MySQL Persistence: Spring Data JPA integration, HikariCP pool tuning, Complete `application.properties`
+  - Document Databases & MongoDB: Architecture, BSON encoding, 12-byte `ObjectId` mechanics, Compass GUI, MQL CRUD & Aggregation Pipelines
+  - Java MongoDB Persistence: Spring Data MongoDB, `MongoTemplate`, derived queries, and Connection URI tuning
 
 ---
 

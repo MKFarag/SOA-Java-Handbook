@@ -15,8 +15,11 @@ shortDescription: >-
 prerequisites:
   - 'Topic 64: Web Architecture Fundamentals (HTTP Protocol)'
   - 'Topic 66: Servlet Lifecycle & Architecture'
+relevanceLevel: MUST-KNOW / CORE
 ---
 # Request and Response Processing in Servlets
+
+> 🎯 **Roadmap Seal:** **`[MUST-KNOW / CORE]`** — *Essential modern foundation required for backend roles. Master this thoroughly.*
 
 ### 1. What It Is and Why It Exists
 Every dynamic web interaction consists of a **Request** arriving from an HTTP client (browser, mobile app, API caller) and a **Response** returned by the server. In the Jakarta Servlet specification, the container abstracts these wire protocols into two primary object contracts:

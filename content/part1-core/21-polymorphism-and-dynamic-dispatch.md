@@ -16,7 +16,10 @@ shortDescription: >-
 prerequisites:
   - 'Topic 16: Classes, Objects & Memory Layout'
   - 'Topic 20: Inheritance & Method Overriding'
+relevanceLevel: MUST-KNOW / CORE
 ---
+> 🎯 **Roadmap Seal:** **`[MUST-KNOW / CORE]`** — *Essential modern foundation required for backend roles. Master this thoroughly.*
+
 ## 1. What It Is and Why It Exists
 
 **Polymorphism** (from Greek *poly* "many" and *morph* "forms") allows objects of different classes to be treated uniformly through a shared superclass or interface reference.

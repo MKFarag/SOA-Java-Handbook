@@ -26,6 +26,9 @@ To eliminate confusion between vanilla Java standards and higher-level framework
 ├────────────────────────────────────────────────────────────────────────┤
 │ Part 3: Spring Boot & The Modern Production Ecosystem                  │
 │ (Spring Core, Auto-Config, REST MVC, Spring Data, Security 6, Kafka)   │
+├────────────────────────────────────────────────────────────────────────┤
+│ Part 4: Database Systems & Persistence (SQL & NoSQL)                   │
+│ (SQL vs NoSQL, MySQL & XAMPP, Spring Data JPA, MongoDB, MQL Pipelines) │
 └────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -36,6 +39,8 @@ To eliminate confusion between vanilla Java standards and higher-level framework
    Covers standard enterprise specifications running on vanilla servlet containers (Tomcat 10.1). Shows how the web protocol works natively using `HttpServlet`, standard `HttpSession`, and specification JPA (`EntityManager`).
 3. **Part 3 - Spring Boot (Enterprise Framework & Production):**
    Covers Spring's inversion-of-control abstractions (`JpaRepository`, `@RestControllerAdvice`, `@Autowired`, Spring Security 6) and the modern production ecosystem.
+4. **Part 4 - Database Systems & Persistence (SQL & NoSQL):**
+   Covers relational vs non-relational persistence architectures, local environment setups (XAMPP / phpMyAdmin / MongoDB Compass), SQL/MQL queries, connection pooling properties, and Spring Data integration.
 
 ---
 
@@ -60,6 +65,10 @@ Sidebar Navigation Hierarchy
 ├── 📂 [Part 3] Spring Boot & Production Stack  [▼ / ▶ Toggle All Sections]
 │   ├── 📁 Section 24: Spring Core & IoC Container (Topics 88-89)
 │   └── ...
+│
+├── 📂 [Part 4] Database Systems & Persistence   [▼ / ▶ Toggle All Sections]
+│   ├── 📁 Section 38: Database Fundamentals & Relational Systems (Topics 130-132)
+│   └── 📁 Section 39: Document Databases & NoSQL Systems (Topics 133-134)
 │
 └── 📊 Global Quick Actions: [Progress Matrix] | [Saved Bookmarks] | [Certificate]
 ```
@@ -162,7 +171,7 @@ Derived from the verified `VSCode_Dark_Brighter.icls` IntelliJ / VS Code theme, 
 - **Section 22: Production Web Development** (Topics 79–82) + *Challenge 22: Full MVC Application with Connection Pooling*
 - **Section 23: Jakarta EE Enterprise Stack** (Topics 83–87) + *Challenge 23: Multi-Layer Enterprise Backend (JPA, CDI, JAX-RS)*
 
-### 🟣 Part 3: Spring Boot & The Modern Production Ecosystem (Topics 88–108) [Planned & Specified]
+### 🟣 Part 3: Spring Boot & The Modern Production Ecosystem (Topics 88–129) [100% Complete & Verified]
 - **Section 24: Spring Core & Inversion of Control (Topics 88–89)**
   - *Topic 88: Spring Framework Core, BeanFactory vs ApplicationContext*
   - *Topic 89: Component Scanning, Injection Strategies & Bean Lifecycle Callbacks*
@@ -198,6 +207,41 @@ Derived from the verified `VSCode_Dark_Brighter.icls` IntelliJ / VS Code theme, 
   - *Topic 107: Resilience & Fault Tolerance with Resilience4j (Circuit Breaker, RateLimiter)*
   - *Topic 108: Event-Driven Enterprise Messaging with Apache Kafka*
   - *Challenge 30: End-to-End Enterprise Microservice with Caching, Resiliency & Event Streaming*
+- **Section 31: Advanced Persistence, Dynamic Queries & Auditing (Topics 109–111)**
+  - *Topic 109: Dynamic Queries via JPA Criteria API & Spring Data Specifications*
+  - *Topic 110: Automated Entity Auditing & Temporal History with Hibernate Envers*
+  - *Topic 111: Multi-Tenancy Architecture & Dynamic RoutingDataSource*
+  - *Challenge 31: Dynamic Multi-Tenant Search Filter Engine with Audit History Ledger*
+- **Section 32: Enterprise Identity & OAuth2 / OIDC Architecture (Topics 112–114)**
+  - *Topic 112: Spring Security OAuth2 Resource Server & JWT Verification*
+  - *Topic 113: OpenID Connect (OIDC) & Keycloak Identity Provider Integration*
+  - *Topic 114: Production CORS, CSRF Defense & Security Response Headers*
+  - *Challenge 32: Zero-Trust OAuth2 Resource Server with Multi-Role Keycloak Guard*
+- **Section 33: Asynchronous, Distributed Scheduling & Batch Processing (Topics 115–117)**
+  - *Topic 115: Asynchronous Task Execution & Custom ThreadPoolTaskExecutors*
+  - *Topic 116: Distributed Scheduling & Cluster Synchronization with ShedLock*
+  - *Topic 117: Spring Batch Architecture & Chunk-Oriented Processing*
+  - *Challenge 33: High-Throughput Async Batch Pipeline & Distributed Scheduled Job*
+- **Section 34: Real-Time Web & Asynchronous Streaming (Topics 118–119)**
+  - *Topic 118: Real-Time WebSockets & STOMP Protocol Messaging*
+  - *Topic 119: Server-Sent Events (SSE) & Reactive HTTP Streaming*
+  - *Challenge 34: Real-Time Financial Ticker & Live Notification Hub*
+- **Section 35: Spring Cloud & Microservices Ecosystem - SOA Core (Topics 120–124)**
+  - *Topic 120: Service Discovery & Dynamic Registration with Netflix Eureka*
+  - *Topic 121: Enterprise API Gateway Architecture & Spring Cloud Gateway*
+  - *Topic 122: Centralized Configuration Management with Spring Cloud Config & `@RefreshScope`*
+  - *Topic 123: Declarative Inter-Service HTTP Clients with OpenFeign & Spring 6 RestClient*
+  - *Topic 124: Distributed Tracing & Correlation IDs with Micrometer Tracing & Zipkin*
+  - *Challenge 35: Distributed Microservices Cluster with API Gateway, Eureka & Tracing*
+- **Section 36: Resilient Messaging & Distributed Transaction Patterns (Topics 125–127)**
+  - *Topic 125: Kafka Production Resilience: Non-Blocking Retries & Dead Letter Topics (DLT)*
+  - *Topic 126: Transactional Outbox Pattern & CDC for Zero-Loss Event Publishing*
+  - *Topic 127: Distributed Transactions & Saga Pattern in Microservices*
+  - *Challenge 36: Resilient Order Checkout Engine with Outbox & Kafka DLQ*
+- **Section 37: Cloud-Native Packaging & GraalVM AOT Compilation (Topics 128–129)**
+  - *Topic 128: Production Dockerization, Layered JARs & Container Optimization*
+  - *Topic 129: GraalVM Native Image & Ahead-of-Time (AOT) Compilation*
+  - *Challenge 37: Sub-Second Startup Containerized Microservice via GraalVM Native Image*
 
 ---
 

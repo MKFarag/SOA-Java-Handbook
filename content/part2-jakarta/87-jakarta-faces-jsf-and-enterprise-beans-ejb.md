@@ -16,8 +16,11 @@ prerequisites:
   - 'Topic 74: JSP Architecture & Translation Lifecycle'
   - 'Topic 82: JDBC Connection Pooling in Web Applications'
   - 'Topic 84: Contexts & Dependency Injection (CDI)'
+relevanceLevel: OPTIONAL / LEGACY
 ---
 # Topic 87: Jakarta Faces (JSF) & Enterprise Beans (EJB)
+
+> 🏛️ **Roadmap Seal:** **`[OPTIONAL / LEGACY]`** — *Historical / legacy enterprise tech. Safely skip unless maintaining legacy enterprise systems.*
 
 ## 1. What It Is and Why It Exists
 The Jakarta EE platform features two historical pillars that shaped enterprise enterprise systems:
@@ -338,6 +341,17 @@ public class AuditService {
     }
 }
 ```
+</details>
+
+### Exercise 3: Real-World Edge Case (@Stateless vs @Stateful EJB in Cloud Clustering)
+<details>
+<summary>View Solution</summary>
+**Question:** An enterprise application historically used `@Stateful` session beans to maintain shopping cart items in application server memory across HTTP requests. When migrating to a multi-instance containerized cloud environment (Kubernetes), performance degraded significantly and memory exhaustion errors occurred. Why are `@Stateful` EJBs problematic in distributed cloud architectures?
+
+**Solution:**
+1. **Cluster State Replication:** Unlike `@Stateless` EJBs which are interchangeable pooled instances that handle any request from any client, a `@Stateful` bean is pinned to a single client identity. In a clustered environment, high availability requires the application server (e.g. WildFly, Payara) to continuously serialize the bean's memory state and replicate it across all nodes over the cluster network on every request.
+2. **Memory Leaks & Zombie Instances:** If a user closes their browser without checking out, the stateful bean remains in server memory until container session timeout expires, unless explicitly purged with an `@Remove` annotated method.
+3. **Modern Architectural Migration:** Cloud-native architectures replace `@Stateful` EJBs with `@Stateless` service components, externalizing conversation state into lightweight distributed stores (such as Redis) or database tables, ensuring individual app server containers remain completely stateless and horizontally scalable.
 </details>
 
 ---

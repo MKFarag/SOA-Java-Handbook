@@ -16,7 +16,10 @@ shortDescription: >-
 prerequisites:
   - 'Topic 10: Loops & Iteration'
   - 'Topic 14: One-Dimensional Arrays'
+relevanceLevel: MUST-KNOW / CORE
 ---
+> 🎯 **Roadmap Seal:** **`[MUST-KNOW / CORE]`** — *Essential modern foundation required for backend roles. Master this thoroughly.*
+
 ## 1. What It Is and Why It Exists
 
 In Java, **multi-dimensional arrays are arrays of arrays**. Unlike languages like C or Fortran that allocate multi-dimensional matrices as single continuous linear blocks of memory, a 2D Java array (`int[][]`) is an outer array holding object references to separate, independent 1D array objects scattered across the JVM Heap.

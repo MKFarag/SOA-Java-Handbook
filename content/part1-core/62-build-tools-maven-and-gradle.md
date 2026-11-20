@@ -15,8 +15,11 @@ shortDescription: >-
 prerequisites:
   - 'Topic 02: JDK vs JRE vs JVM & Setup'
   - 'Topic 18: Packages and Access Modifiers'
+relevanceLevel: MUST-KNOW / CORE
 ---
 # Build Automation with Maven and Gradle
+
+> 🎯 **Roadmap Seal:** **`[MUST-KNOW / CORE]`** — *Essential modern foundation required for backend roles. Master this thoroughly.*
 
 ### 1. What It Is and Why It Exists
 In early Java programming, compiling an application meant executing `javac` manually in the terminal, managing long `-classpath` strings of third-party `.jar` files downloaded from various websites, manually copying resources, running test suites, and archiving output with `jar cf app.jar`.

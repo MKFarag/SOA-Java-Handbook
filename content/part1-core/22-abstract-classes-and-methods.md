@@ -16,7 +16,10 @@ shortDescription: >-
 prerequisites:
   - 'Topic 20: Inheritance & Method Overriding'
   - 'Topic 21: Polymorphism & Dynamic Method Dispatch'
+relevanceLevel: MUST-KNOW / CORE
 ---
+> 🎯 **Roadmap Seal:** **`[MUST-KNOW / CORE]`** — *Essential modern foundation required for backend roles. Master this thoroughly.*
+
 ## 1. What It Is and Why It Exists
 
 An **abstract class** is a class declared with the `abstract` keyword that serves as an incomplete base template for other classes. **An abstract class cannot be instantiated directly with `new`**.

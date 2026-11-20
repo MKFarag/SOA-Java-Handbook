@@ -3,6 +3,7 @@ import {
   Layers, 
   Server, 
   Leaf,
+  Database,
   ArrowRight,
   Award,
   Trophy,
@@ -40,6 +41,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
   const part1Sections = SECTIONS.filter(s => s.part === 'Part 1: Java Core');
   const part2Sections = SECTIONS.filter(s => s.part === 'Part 2: Java EE & Jakarta EE');
   const part3Sections = SECTIONS.filter(s => s.part === 'Part 3: Spring Boot & Production Stack');
+  const part4Sections = SECTIONS.filter(s => s.part === 'Part 4: Database Systems & Persistence');
 
   return (
     <div className="max-w-5xl mx-auto py-10 px-4 sm:px-6 lg:px-8 space-y-12 text-left">
@@ -52,7 +54,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
         </div>
 
         <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-zinc-900 dark:text-zinc-100">
-          The Definitive Java &amp; Jakarta EE Handbook
+          The Definitive SOA &amp; Java Handbook
         </h1>
 
         <p className="text-base sm:text-lg text-zinc-600 dark:text-zinc-300 leading-relaxed font-sans">
@@ -404,6 +406,68 @@ export const HomeView: React.FC<HomeViewProps> = ({
         )}
       </div>
 
+      {/* Part 4: Database Systems & Persistence Section Cards */}
+      <div className="space-y-6 pt-6">
+        <div className="flex items-center gap-2.5 pb-2 border-b border-zinc-200 dark:border-zinc-800">
+          <Database className="w-5 h-5 text-amber-500" />
+          <div>
+            <h2 className="text-xl font-bold text-zinc-900 dark:text-zinc-100">
+              Part 4: Database Systems &amp; Persistence (SQL &amp; NoSQL)
+            </h2>
+            <p className="text-xs text-zinc-500 dark:text-zinc-400">
+              Relational vs Document Paradigms, MySQL with XAMPP/phpMyAdmin, DDL/DML, Joins, Spring Data JPA Properties, MongoDB Compass, MQL, Aggregations, and Spring Data MongoDB.
+            </p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {part4Sections.map(section => {
+            const sectionTopics = ALL_TOPICS.filter(t => t.sectionNumber === section.sectionNumber);
+            const completedCount = sectionTopics.filter(t => completedTopicIds.has(t.id)).length;
+
+            return (
+              <div
+                key={section.sectionNumber}
+                className="p-5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#1e1e1e] hover:border-amber-500/50 transition-all flex flex-col justify-between group shadow-xs"
+              >
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[11px] font-mono font-bold text-amber-600 dark:text-amber-400">
+                      Section {section.sectionNumber}
+                    </span>
+                    <span className="text-xs text-zinc-400 font-mono">
+                      {completedCount}/{sectionTopics.length} done
+                    </span>
+                  </div>
+
+                  <h3 className="text-base font-bold text-zinc-900 dark:text-zinc-100 group-hover:text-amber-500 transition-colors">
+                    {section.title}
+                  </h3>
+
+                  <p className="text-xs text-zinc-500 dark:text-zinc-400 line-clamp-2 leading-relaxed">
+                    {section.description}
+                  </p>
+                </div>
+
+                <div className="mt-4 pt-3 border-t border-zinc-100 dark:border-zinc-800/80 space-y-1.5">
+                  {sectionTopics.map(topic => (
+                    <button
+                      key={topic.id}
+                      type="button"
+                      onClick={() => onSelectTopic(topic.id)}
+                      className="w-full flex items-center justify-between text-xs py-1 text-zinc-600 dark:text-zinc-300 hover:text-amber-500 dark:hover:text-amber-400 transition-colors text-left cursor-pointer"
+                    >
+                      <span className="truncate pr-2 font-medium">{topic.title}</span>
+                      <ArrowRight className="w-3 h-3 shrink-0 opacity-40 group-hover:opacity-100" />
+                    </button>
+                  ))}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
       {/* Official Completion Certificate Banner */}
       {onOpenCertificate && (
         <div className="p-6 sm:p-8 rounded-2xl bg-gradient-to-r from-amber-500/10 via-orange-500/10 to-amber-500/5 border border-amber-500/30 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-sm">
@@ -475,7 +539,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
         </div>
 
         <div className="text-[11px] text-zinc-400 text-center sm:text-left pt-2 font-sans flex flex-wrap items-center justify-between gap-2">
-          <span>The Definitive Java &amp; Jakarta EE Handbook · Zero to Production Reference Standard</span>
+          <span>The Definitive SOA &amp; Java Handbook · Zero to Production Reference Standard</span>
           <span className="font-mono">JDK 26 LTS · Tomcat 10.1+ · 160 Automated Tests Passed</span>
         </div>
       </footer>

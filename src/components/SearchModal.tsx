@@ -90,7 +90,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({
       role="dialog"
       aria-modal="true"
       aria-labelledby="search-modal-title"
-      className="fixed inset-0 z-50 flex items-start justify-center pt-20 px-4 bg-black/60 backdrop-blur-sm animate-fadeIn"
+      className="fixed inset-0 z-50 flex items-start justify-center pt-8 sm:pt-20 px-3 sm:px-4 bg-black/60 backdrop-blur-sm animate-fadeIn"
       onClick={onClose}
     >
       <div
@@ -170,13 +170,14 @@ export const SearchModal: React.FC<SearchModalProps> = ({
         </div>
 
         {/* Footer shortcuts */}
-        <div className="px-4 py-2.5 bg-zinc-50 dark:bg-[#18181b] border-t border-zinc-200 dark:border-zinc-800 text-[11px] text-zinc-500 dark:text-zinc-400 flex items-center justify-between">
-          <div className="flex items-center gap-3">
+        <div className="px-3 sm:px-4 py-2 sm:py-2.5 bg-zinc-50 dark:bg-[#18181b] border-t border-zinc-200 dark:border-zinc-800 text-[10px] sm:text-[11px] text-zinc-500 dark:text-zinc-400 flex items-center justify-between">
+          <div className="hidden sm:flex items-center gap-3">
             <span><kbd className="px-1 py-0.5 rounded bg-zinc-200 dark:bg-zinc-700 font-mono">↑↓</kbd> Navigate</span>
             <span><kbd className="px-1 py-0.5 rounded bg-zinc-200 dark:bg-zinc-700 font-mono">Enter</kbd> Select</span>
             <span><kbd className="px-1 py-0.5 rounded bg-zinc-200 dark:bg-zinc-700 font-mono">Esc</kbd> Close</span>
           </div>
-          <span className="text-orange-600 dark:text-orange-400 font-medium">100% Offline Search Engine</span>
+          <span className="sm:hidden text-zinc-400">Tap topic to open</span>
+          <span className="text-orange-600 dark:text-orange-400 font-medium">100% Offline Search</span>
         </div>
       </div>
     </div>

@@ -16,8 +16,11 @@ prerequisites:
   - 'Topic 11: Methods, Parameters & Return Values'
   - 'Topic 16: Classes, Objects & Memory Layout'
   - 'Topic 23: Interfaces & Modern Interface Evolution'
+relevanceLevel: ADVANCED / DEEP-DIVE
 ---
 # Threads and Thread Lifecycle
+
+> 🚀 **Roadmap Seal:** **`[ADVANCED / DEEP-DIVE]`** — *Advanced enterprise specialization & architecture. Study once core fundamentals are solid.*
 
 ### 1. What It Is and Why It Exists
 In computer systems, a **process** is an executing program with its own dedicated memory space, while a **thread** is the smallest unit of execution dispatched by the operating system kernel within a process. A single Java application can launch multiple threads that run concurrently on modern multi-core processors, sharing the process's heap memory while maintaining their own private execution stacks and program counters.

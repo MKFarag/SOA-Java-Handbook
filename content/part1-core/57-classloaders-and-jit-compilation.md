@@ -15,8 +15,11 @@ shortDescription: >-
 prerequisites:
   - 'Topic 02: JDK vs JRE vs JVM & Setup'
   - 'Topic 16: Classes, Objects & Memory Layout'
+relevanceLevel: ADVANCED / DEEP-DIVE
 ---
 # ClassLoaders and JIT Compilation
+
+> 🚀 **Roadmap Seal:** **`[ADVANCED / DEEP-DIVE]`** — *Advanced enterprise specialization & architecture. Study once core fundamentals are solid.*
 
 ### 1. What It Is and Why It Exists
 Java source code is compiled by `javac` into platform-independent `.class` bytecode. But bytecode cannot execute by itself; two fundamental JVM subsystems turn bytecode into blazing-fast machine code:

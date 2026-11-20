@@ -15,8 +15,11 @@ shortDescription: >-
 prerequisites:
   - 'Topic 45: Classic I/O Streams'
   - 'Topic 42: Stream API: Pipeline Fundamentals'
+relevanceLevel: ADVANCED / DEEP-DIVE
 ---
 # Modern NIO.2 File Operations
+
+> 🚀 **Roadmap Seal:** **`[ADVANCED / DEEP-DIVE]`** — *Advanced enterprise specialization & architecture. Study once core fundamentals are solid.*
 
 ### 1. What It Is and Why It Exists
 The classic `java.io.File` API (dating back to Java 1.0) had serious architectural flaws:

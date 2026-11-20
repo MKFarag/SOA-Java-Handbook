@@ -15,8 +15,11 @@ shortDescription: >-
 prerequisites:
   - 'Topic 33: Generics Fundamentals'
   - 'Topic 20: Inheritance & Method Overriding'
+relevanceLevel: MUST-KNOW / CORE
 ---
 # Generic Wildcards & PECS Principle
+
+> 🎯 **Roadmap Seal:** **`[MUST-KNOW / CORE]`** — *Essential modern foundation required for backend roles. Master this thoroughly.*
 
 ### 1. What It Is and Why It Exists
 In standard Java inheritance, an `Integer` is a subtype of `Number`. However, in Java generics, `List<Integer>` is **not** a subtype of `List<Number>`. This property is called **invariance**. Invariance prevents dangerous type corruptions (for instance, if `List<Integer>` were treated as `List<Number>`, code could add a `Double` into a list of integers, causing runtime crashes).

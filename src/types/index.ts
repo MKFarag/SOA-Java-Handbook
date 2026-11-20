@@ -1,7 +1,8 @@
 export type PartType = 
   | 'Part 1: Java Core' 
   | 'Part 2: Java EE & Jakarta EE' 
-  | 'Part 3: Spring Boot & Production Stack';
+  | 'Part 3: Spring Boot & Production Stack'
+  | 'Part 4: Database Systems & Persistence';
 
 export type DifficultyLevel = 'Beginner' | 'Intermediate' | 'Advanced';
 
@@ -125,6 +126,7 @@ export interface TopicDetail {
   sectionTitle: string;
   versionBadge: string;
   difficulty: DifficultyLevel;
+  relevanceLevel?: 'MUST-KNOW / CORE' | 'ADVANCED / DEEP-DIVE' | 'OPTIONAL / LEGACY';
   readingTime: string;
   shortDescription: string;
   prerequisites: string[];

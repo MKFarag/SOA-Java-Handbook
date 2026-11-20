@@ -15,8 +15,11 @@ shortDescription: >-
 prerequisites:
   - 'Topic 48: Threads and Thread Lifecycle'
   - 'Topic 51: Executor Framework and Thread Pools'
+relevanceLevel: ADVANCED / DEEP-DIVE
 ---
 # Virtual Threads (Project Loom)
+
+> 🚀 **Roadmap Seal:** **`[ADVANCED / DEEP-DIVE]`** — *Advanced enterprise specialization & architecture. Study once core fundamentals are solid.*
 
 ### 1. What It Is and Why It Exists
 Historically, every `java.lang.Thread` instance was a **platform thread**—a thin Java wrapper around an underlying operating system (OS) kernel thread. While platform threads provide true hardware parallelism, they carry substantial overhead:

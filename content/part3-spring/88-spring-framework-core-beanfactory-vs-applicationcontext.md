@@ -12,14 +12,18 @@ readingTime: 14 min read
 shortDescription: >-
   Explore the architectural foundation of the Spring Inversion of Control (IoC)
   container, comparing the lightweight BeanFactory with the enterprise-ready
-  ApplicationContext, lazy vs eager instantiation, and contextual infrastructure.
+  ApplicationContext, lazy vs eager instantiation, and contextual
+  infrastructure.
 prerequisites:
   - 'Topic 16: Classes, Objects & Memory Layout'
   - 'Topic 23: Interfaces & Modern Interface Evolution'
   - 'Topic 59: Reflection API & Dynamic Invocation'
   - 'Topic 84: Contexts and Dependency Injection (CDI)'
+relevanceLevel: MUST-KNOW / CORE
 ---
 # Topic 88: Spring Framework Core: BeanFactory vs ApplicationContext
+
+> 🎯 **Roadmap Seal:** **`[MUST-KNOW / CORE]`** — *Essential modern foundation required for backend roles. Master this thoroughly.*
 
 ## 1. What It Is and Why It Exists
 

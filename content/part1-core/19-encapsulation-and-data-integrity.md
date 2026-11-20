@@ -16,7 +16,10 @@ shortDescription: >-
 prerequisites:
   - 'Topic 16: Classes, Objects & Memory Layout'
   - 'Topic 18: Packages & Access Modifiers'
+relevanceLevel: MUST-KNOW / CORE
 ---
+> 🎯 **Roadmap Seal:** **`[MUST-KNOW / CORE]`** — *Essential modern foundation required for backend roles. Master this thoroughly.*
+
 ## 1. What It Is and Why It Exists
 
 **Encapsulation** is the fundamental OOP principle of bundling data (fields) and the methods that manipulate that data into a unified class unit, while strictly restricting direct external access to internal implementation details (**data hiding**).

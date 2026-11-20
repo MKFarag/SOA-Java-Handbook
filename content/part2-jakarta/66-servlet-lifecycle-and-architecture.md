@@ -17,7 +17,10 @@ prerequisites:
   - 'Topic 63: The Great Transition: Java EE to Jakarta EE'
   - 'Topic 64: Web Architecture Fundamentals (HTTP Protocol)'
   - 'Topic 65: Apache Tomcat & The WAR Structure'
+relevanceLevel: MUST-KNOW / CORE
 ---
+> 🎯 **Roadmap Seal:** **`[MUST-KNOW / CORE]`** — *Essential modern foundation required for backend roles. Master this thoroughly.*
+
 ## 1. What It Is and Why It Exists
 
 A **Servlet** is a server-side Java component managed by a web container (such as Apache Tomcat) that receives HTTP client requests, executes business logic, and dynamically generates HTTP responses.

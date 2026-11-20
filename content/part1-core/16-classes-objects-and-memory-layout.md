@@ -16,7 +16,10 @@ shortDescription: >-
 prerequisites:
   - 'Topic 04: Variables, Identifiers & Primitive Data Types'
   - 'Topic 11: Methods, Parameters & Return Values'
+relevanceLevel: MUST-KNOW / CORE
 ---
+> 🎯 **Roadmap Seal:** **`[MUST-KNOW / CORE]`** — *Essential modern foundation required for backend roles. Master this thoroughly.*
+
 ## 1. What It Is and Why It Exists
 
 A **class** is a blueprint, template, or schema that defines the state (fields) and behaviors (methods) that objects created from it will possess. An **object** is a concrete runtime instance of a class, allocated in dynamically managed memory on the JVM Heap.

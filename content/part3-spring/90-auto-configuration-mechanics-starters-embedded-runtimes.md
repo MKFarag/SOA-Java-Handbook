@@ -10,15 +10,21 @@ versionBadge: Spring Boot 3.x / Java 21+
 difficulty: Intermediate
 readingTime: 16 min read
 shortDescription: >-
-  Deconstruct Spring Boot's opinionated architecture: condition evaluation algorithms,
-  starter dependencies, META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports,
+  Deconstruct Spring Boot's opinionated architecture: condition evaluation
+  algorithms, starter dependencies,
+  META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports,
   and embedded web servers (Tomcat/Jetty/Undertow).
 prerequisites:
   - 'Topic 65: Apache Tomcat & The WAR Structure'
   - 'Topic 88: Spring Framework Core: BeanFactory vs ApplicationContext'
-  - 'Topic 89: Component Scanning, Injection Strategies & Bean Lifecycle Callbacks'
+  - >-
+    Topic 89: Component Scanning, Injection Strategies & Bean Lifecycle
+    Callbacks
+relevanceLevel: MUST-KNOW / CORE
 ---
 # Topic 90: Auto-Configuration Mechanics, Starters & Embedded Runtimes
+
+> 🎯 **Roadmap Seal:** **`[MUST-KNOW / CORE]`** — *Essential modern foundation required for backend roles. Master this thoroughly.*
 
 ## 1. What It Is and Why It Exists
 

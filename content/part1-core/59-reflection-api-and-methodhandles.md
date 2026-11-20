@@ -16,8 +16,11 @@ prerequisites:
   - 'Topic 16: Classes, Objects & Memory Layout'
   - 'Topic 23: Interfaces & Modern Interface Evolution'
   - 'Topic 58: Annotations & Metadata'
+relevanceLevel: ADVANCED / DEEP-DIVE
 ---
 # Reflection API and MethodHandles
+
+> 🚀 **Roadmap Seal:** **`[ADVANCED / DEEP-DIVE]`** — *Advanced enterprise specialization & architecture. Study once core fundamentals are solid.*
 
 ### 1. What It Is and Why It Exists
 In standard Java code, type binding is static: you refer to classes, instantiate them with `new`, and invoke methods known at compile time. However, frameworks, libraries, and tools often need to inspect and interact with classes that were not known when the framework was compiled:

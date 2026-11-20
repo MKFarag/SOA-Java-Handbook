@@ -15,8 +15,11 @@ shortDescription: >-
 prerequisites:
   - 'Topic 67: Request & Response Processing'
   - 'Topic 79: The Web MVC Pattern'
+relevanceLevel: MUST-KNOW / CORE
 ---
 # Topic 80: Form Handling, Validation & Multipart File Uploads
+
+> 🎯 **Roadmap Seal:** **`[MUST-KNOW / CORE]`** — *Essential modern foundation required for backend roles. Master this thoroughly.*
 
 ## 1. What It Is and Why It Exists
 Web applications receive user-submitted input through two primary encoding mechanisms:
@@ -334,6 +337,27 @@ p.write("/var/www/html/" + p.getSubmittedFileName());
     maxRequestSize = 5 * 1024 * 1024
 )
 ```
+</details>
+
+### Exercise 3: Real-World Edge Case (Large Payload Denial of Service & Temporary File Cleanup)
+<details>
+<summary>View Solution</summary>
+**Question:** What happens at the servlet container level when an attacker uploads a 500 MB file to a servlet protected by `@MultipartConfig(maxFileSize = 10_485_760)` (10 MB)? How should production code handle the resulting container exception and clean up disk artifacts?
+
+**Solution:**
+1. **Container Exception:** When the uploaded part exceeds `maxFileSize` or the entire request exceeds `maxRequestSize`, Tomcat immediately terminates multipart parsing and throws an `IllegalStateException` (or `jakarta.servlet.ServletException` wrapping an `org.apache.tomcat.util.http.fileupload.impl.FileSizeLimitExceededException`) as soon as `req.getPart()` or `req.getParts()` is called.
+2. **Graceful Handling:** Wrap the parsing call in a `try-catch` block inside the servlet or configure a servlet filter / global container error-page for HTTP 500 / 413:
+```java
+try {
+    Part filePart = req.getPart("document");
+    // process file
+} catch (IllegalStateException | ServletException e) {
+    resp.setStatus(HttpServletResponse.SC_REQUEST_ENTITY_TOO_LARGE); // 413
+    resp.getWriter().write("Uploaded file exceeds the maximum allowed size of 10 MB.");
+    return;
+}
+```
+3. **Disk Cleanup:** For files exceeding `fileSizeThreshold`, Tomcat writes temporary files to `location` (or the JVM `java.io.tmpdir`). At the end of request processing, call `part.delete()` to immediately purge the temporary file from disk rather than waiting for OS garbage collection.
 </details>
 
 ---

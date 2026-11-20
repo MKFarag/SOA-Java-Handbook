@@ -10,15 +10,19 @@ versionBadge: Spring Boot 3.x / Java 21+
 difficulty: Intermediate
 readingTime: 16 min read
 shortDescription: >-
-  Master Spring Boot externalized configuration architectures, the 17-level property
-  source precedence hierarchy, type-safe @ConfigurationProperties with immutable records,
-  relaxed binding, Bean Validation (@Validated), and multi-profile deployment strategies.
+  Master Spring Boot externalized configuration architectures, the 17-level
+  property source precedence hierarchy, type-safe @ConfigurationProperties with
+  immutable records, relaxed binding, Bean Validation (@Validated), and
+  multi-profile deployment strategies.
 prerequisites:
   - 'Topic 26: Records (Java 16+)'
   - 'Topic 86: Jakarta Bean Validation'
   - 'Topic 90: Auto-Configuration Mechanics, Starters & Embedded Runtimes'
+relevanceLevel: MUST-KNOW / CORE
 ---
 # Topic 91: Externalized Configuration, YAML Hierarchies & Multi-Profile Deployment
+
+> 🎯 **Roadmap Seal:** **`[MUST-KNOW / CORE]`** — *Essential modern foundation required for backend roles. Master this thoroughly.*
 
 ## 1. What It Is and Why It Exists
 

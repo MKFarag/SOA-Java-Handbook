@@ -16,8 +16,11 @@ shortDescription: >-
 prerequisites:
   - 'Topic 74: JSP Architecture & Translation Lifecycle'
   - 'Topic 77: Expression Language (EL) & JSTL Core Tags'
+relevanceLevel: OPTIONAL / LEGACY
 ---
 # Custom JSP Tag Libraries
+
+> 🏛️ **Roadmap Seal:** **`[OPTIONAL / LEGACY]`** — *Historical / legacy enterprise tech. Safely skip unless maintaining legacy enterprise systems.*
 
 ### 1. What It Is and Why It Exists
 While the Jakarta Standard Tag Library (JSTL) covers universal programming operations (loops, conditionals, URL formatting), real-world enterprise applications have specialized domain requirements:

@@ -17,7 +17,10 @@ prerequisites:
   - 'Topic 09: Switch Statements & Switch Expressions'
   - 'Topic 26: Records'
   - 'Topic 27: Sealed Classes & Interfaces'
+relevanceLevel: ADVANCED / DEEP-DIVE
 ---
+> 🚀 **Roadmap Seal:** **`[ADVANCED / DEEP-DIVE]`** — *Advanced enterprise specialization & architecture. Study once core fundamentals are solid.*
+
 ## 1. What It Is and Why It Exists
 
 **Pattern Matching for `switch`** (finalized in **Java 21 LTS via JEP 441**) and **Record Patterns** (finalized in **Java 21 LTS via JEP 440**) fundamentally modernize Java's control flow.

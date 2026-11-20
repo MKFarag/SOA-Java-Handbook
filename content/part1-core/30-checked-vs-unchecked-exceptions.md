@@ -16,7 +16,10 @@ shortDescription: >-
 prerequisites:
   - 'Topic 11: Methods, Parameters & Return Values'
   - 'Topic 29: The Java Exception Hierarchy'
+relevanceLevel: MUST-KNOW / CORE
 ---
+> 🎯 **Roadmap Seal:** **`[MUST-KNOW / CORE]`** — *Essential modern foundation required for backend roles. Master this thoroughly.*
+
 ## 1. What It Is and Why It Exists
 
 In Java, all subclasses of `java.lang.Exception` are divided into two distinct camps:
