@@ -10,10 +10,11 @@ import {
   serverTimestamp 
 } from "firebase/firestore";
 import { db } from "../lib/firebase";
-import type { StudentProfile, BroadcastItem, ChallengeStatus } from "../types";
+import type { StudentProfile, BroadcastItem, ChallengeStatus, SiteAccessConfig } from "../types";
 
 // Master admin passcodes (Default fallback passwords)
 export const DEFAULT_MASTER_PASSWORD = "MKF#SOA2026!SecOps$99";
+export const DEFAULT_SITE_ACCESS_PASSCODE = "SOA-2026";
 
 export const MASTER_ADMIN_PASSWORDS = [
   DEFAULT_MASTER_PASSWORD,
@@ -362,3 +363,116 @@ export async function recordAdminLogin(deviceInfo: string): Promise<string> {
 
   return nowIso;
 }
+
+/**
+ * Get Global Site Access Protection Config from Firestore or LocalStorage
+ */
+export async function getSiteAccessConfig(): Promise<SiteAccessConfig> {
+  try {
+    const accessRef = doc(db, "admin_config", "site_access");
+    const snap = await getDoc(accessRef);
+    if (snap.exists()) {
+      const data = snap.data() as SiteAccessConfig;
+      if (typeof data.isProtected === "boolean") {
+        localStorage.setItem("soa_site_protected", String(data.isProtected));
+      }
+      if (data.sitePasscode) {
+        localStorage.setItem("soa_site_passcode", data.sitePasscode);
+      }
+      return data;
+    }
+  } catch (err) {
+    console.warn("Could not fetch remote site access config:", err);
+  }
+
+  // Fallback to local storage or defaults
+  const localProtected = localStorage.getItem("soa_site_protected");
+  const localPasscode = localStorage.getItem("soa_site_passcode");
+
+  return {
+    isProtected: localProtected !== null ? localProtected === "true" : true,
+    sitePasscode: localPasscode || DEFAULT_SITE_ACCESS_PASSCODE
+  };
+}
+
+/**
+ * Update Global Site Access Protection Config (Admin Control)
+ */
+export async function updateSiteAccessConfig(config: {
+  isProtected: boolean;
+  sitePasscode: string;
+}): Promise<void> {
+  const cleanPass = config.sitePasscode.trim();
+  if (!cleanPass) {
+    throw new Error("Site passcode cannot be empty.");
+  }
+
+  const nowIso = new Date().toISOString();
+  localStorage.setItem("soa_site_protected", String(config.isProtected));
+  localStorage.setItem("soa_site_passcode", cleanPass);
+
+  try {
+    const accessRef = doc(db, "admin_config", "site_access");
+    await setDoc(accessRef, {
+      isProtected: config.isProtected,
+      sitePasscode: cleanPass,
+      updatedAt: nowIso
+    }, { merge: true });
+  } catch (err) {
+    console.error("Failed to update site access config in Firestore:", err);
+  }
+}
+
+/**
+ * Verify whether an entered passcode unlocks the entire site
+ * Checks:
+ * 1. Matches site passcode (cloud or local or default)
+ * 2. Matches master instructor passcode
+ * 3. Matches any valid registered student code
+ */
+export async function verifySiteAccessPasscode(input: string): Promise<{
+  valid: boolean;
+  role: 'student' | 'admin' | 'passcode';
+  name?: string;
+}> {
+  if (!input) return { valid: false, role: 'passcode' };
+  const clean = input.trim();
+
+  // 1. Check if it's the Master Admin Passcode
+  const isAdmin = await verifyAdminPassword(clean);
+  if (isAdmin) {
+    return { valid: true, role: 'admin', name: 'Lead Architect / Instructor' };
+  }
+
+  // 2. Check site passcode (from cloud or fallback)
+  try {
+    const config = await getSiteAccessConfig();
+    if (config.sitePasscode && clean.toUpperCase() === config.sitePasscode.trim().toUpperCase()) {
+      return { valid: true, role: 'passcode' };
+    }
+  } catch {
+    // ignore
+  }
+
+  const localSaved = localStorage.getItem("soa_site_passcode");
+  if (localSaved && clean.toUpperCase() === localSaved.trim().toUpperCase()) {
+    return { valid: true, role: 'passcode' };
+  }
+
+  if (clean.toUpperCase() === DEFAULT_SITE_ACCESS_PASSCODE.toUpperCase()) {
+    return { valid: true, role: 'passcode' };
+  }
+
+  // 3. Check if it matches an existing registered student code (e.g. SOA-XXXX)
+  try {
+    const student = await loadStudentProfile(clean);
+    if (student) {
+      return { valid: true, role: 'student', name: student.name };
+    }
+  } catch {
+    // ignore
+  }
+
+  return { valid: false, role: 'passcode' };
+}
+

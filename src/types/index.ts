@@ -180,3 +180,9 @@ export interface BroadcastItem {
   author?: string;
 }
 
+export interface SiteAccessConfig {
+  isProtected: boolean;
+  sitePasscode: string;
+  updatedAt?: string;
+}
+

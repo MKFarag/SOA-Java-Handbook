@@ -32,7 +32,10 @@ import {
   verifyAdminPassword,
   getAdminSecurityConfig,
   recordAdminLogin,
-  updateAdminPassword
+  updateAdminPassword,
+  getSiteAccessConfig,
+  updateSiteAccessConfig,
+  DEFAULT_SITE_ACCESS_PASSCODE
 } from '../services/firebaseService';
 
 interface AdminDashboardModalProps {
@@ -92,10 +95,18 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
   const [passChangeError, setPassChangeError] = useState<string | null>(null);
   const [copiedPass, setCopiedPass] = useState(false);
 
+  // Global Site Access Passcode Form State
+  const [sitePasscode, setSitePasscode] = useState(DEFAULT_SITE_ACCESS_PASSCODE);
+  const [siteProtected, setSiteProtected] = useState(true);
+  const [isSavingSiteAccess, setIsSavingSiteAccess] = useState(false);
+  const [siteAccessSuccess, setSiteAccessSuccess] = useState<string | null>(null);
+  const [siteAccessError, setSiteAccessError] = useState<string | null>(null);
+
   // Load data once authenticated
   useEffect(() => {
     if (isAuthenticated) {
       loadAllData();
+      loadSiteAccess();
     }
   }, [isAuthenticated]);
 
@@ -104,6 +115,35 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
   const loadAllData = async () => {
     fetchStudents();
     fetchBroadcasts();
+  };
+
+  const loadSiteAccess = async () => {
+    try {
+      const cfg = await getSiteAccessConfig();
+      setSiteProtected(cfg.isProtected);
+      setSitePasscode(cfg.sitePasscode);
+    } catch (err) {
+      console.warn('Could not load site access configuration:', err);
+    }
+  };
+
+  const handleSaveSiteAccess = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSavingSiteAccess(true);
+    setSiteAccessSuccess(null);
+    setSiteAccessError(null);
+    try {
+      await updateSiteAccessConfig({
+        isProtected: siteProtected,
+        sitePasscode: sitePasscode.trim()
+      });
+      setSiteAccessSuccess('Course Access Passcode settings saved to cloud successfully!');
+      setTimeout(() => setSiteAccessSuccess(null), 3500);
+    } catch (err: any) {
+      setSiteAccessError(err.message || 'Failed to update site access settings.');
+    } finally {
+      setIsSavingSiteAccess(false);
+    }
   };
 
   const fetchStudents = async () => {
@@ -686,9 +726,9 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
                           className="w-full px-3 py-2 text-xs rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-orange-500/40"
                         >
                           <option value="link">Link (Google Drive / GitHub / URL)</option>
-                          <option value="task">Task / Assignment (واجب)</option>
-                          <option value="announcement">Announcement (إعلان عام)</option>
-                          <option value="file">File / Download (ملف)</option>
+                          <option value="task">Task / Assignment</option>
+                          <option value="announcement">Announcement / Notice</option>
+                          <option value="file">File / Download Resource</option>
                         </select>
                       </div>
 
@@ -879,6 +919,90 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
                   <p className="text-[11px] text-zinc-500 dark:text-zinc-400">
                     Use these timestamps to verify that no unauthorized person has accessed the Admin Console.
                   </p>
+                </div>
+
+                {/* Course Access Passcode & Gate Control */}
+                <div className="p-5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#1c1c1f] space-y-4">
+                  <div className="flex items-center justify-between border-b border-zinc-200 dark:border-zinc-800 pb-3">
+                    <div>
+                      <h3 className="text-sm font-bold text-zinc-900 dark:text-zinc-100 flex items-center gap-2">
+                        <Lock className="w-4 h-4 text-orange-500" />
+                        <span>Course Access Passcode (Site-Wide Lock)</span>
+                      </h3>
+                      <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">
+                        Restrict the entire handbook behind a course passcode or registered student codes.
+                      </p>
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                      <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${
+                        siteProtected 
+                          ? 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20' 
+                          : 'bg-zinc-500/10 text-zinc-500 border border-zinc-500/20'
+                      }`}>
+                        {siteProtected ? 'Gate Enabled' : 'Open Access'}
+                      </span>
+                    </div>
+                  </div>
+
+                  <form onSubmit={handleSaveSiteAccess} className="space-y-4 text-xs">
+                    <label className="flex items-center gap-3 p-3 rounded-xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200/60 dark:border-zinc-800 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={siteProtected}
+                        onChange={(e) => setSiteProtected(e.target.checked)}
+                        className="w-4 h-4 text-orange-500 rounded border-zinc-300 dark:border-zinc-700 focus:ring-orange-500"
+                      />
+                      <div>
+                        <span className="font-semibold text-zinc-900 dark:text-zinc-100 block">
+                          Enable Course Passcode Gate
+                        </span>
+                        <span className="text-[11px] text-zinc-500 dark:text-zinc-400 block">
+                          When checked, any visitor must enter the Course Passcode or their Student Code to see the handbook.
+                        </span>
+                      </div>
+                    </label>
+
+                    <div>
+                      <label className="block font-semibold text-zinc-700 dark:text-zinc-300 mb-1">
+                        Course Access Passcode
+                      </label>
+                      <input
+                        type="text"
+                        value={sitePasscode}
+                        onChange={(e) => setSitePasscode(e.target.value)}
+                        placeholder="e.g. SOA-2026"
+                        className="w-full px-3 py-2 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 font-mono text-sm tracking-wider uppercase focus:outline-none focus:ring-2 focus:ring-orange-500/40"
+                        required
+                      />
+                      <p className="text-[11px] text-zinc-400 mt-1">
+                        Students can enter this passcode, or alternatively use their unique student code (e.g. SOA-XXXX).
+                      </p>
+                    </div>
+
+                    {siteAccessError && (
+                      <div className="p-2.5 rounded-lg bg-red-500/10 border border-red-500/20 text-xs text-red-600 dark:text-red-400 flex items-center gap-2">
+                        <AlertCircle className="w-4 h-4 shrink-0" />
+                        <span>{siteAccessError}</span>
+                      </div>
+                    )}
+
+                    {siteAccessSuccess && (
+                      <div className="p-2.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-xs text-emerald-600 dark:text-emerald-400 flex items-center gap-2">
+                        <Check className="w-4 h-4 shrink-0" />
+                        <span>{siteAccessSuccess}</span>
+                      </div>
+                    )}
+
+                    <button
+                      type="submit"
+                      disabled={isSavingSiteAccess}
+                      className="w-full py-2.5 px-4 rounded-xl bg-orange-500 hover:bg-orange-600 active:scale-[0.98] text-white font-bold text-xs flex items-center justify-center gap-2 shadow-md shadow-orange-500/20 transition-all cursor-pointer disabled:opacity-50"
+                    >
+                      <Lock className="w-4 h-4" />
+                      <span>{isSavingSiteAccess ? 'Saving Settings...' : 'Save Site Gate Settings'}</span>
+                    </button>
+                  </form>
                 </div>
 
                 {/* Change Password Form */}

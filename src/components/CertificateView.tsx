@@ -198,7 +198,7 @@ Issue Date: ${issueDate}`;
             <User className="w-5 h-5 text-orange-500 shrink-0" />
             <div className="w-full">
               <label htmlFor="recipient-name" className="block text-[11px] font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 mb-1">
-                Recipient Full Name (اكتب اسمك هنا):
+                Recipient Full Name:
               </label>
               <input
                 id="recipient-name"

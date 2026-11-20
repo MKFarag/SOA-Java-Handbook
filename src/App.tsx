@@ -12,9 +12,10 @@ import { StudentSyncModal } from './components/StudentSyncModal';
 import { CertificateGateModal } from './components/CertificateGateModal';
 import { AdminDashboardModal } from './components/AdminDashboardModal';
 import { BroadcastsModal } from './components/BroadcastsModal';
+import { SiteAccessGateModal } from './components/SiteAccessGateModal';
 import { ALL_TOPICS, getTopicById } from './data/topics';
 import type { ChallengeStatus, PartType, StudentProfile, BroadcastItem } from './types';
-import { saveStudentProfile, getBroadcasts } from './services/firebaseService';
+import { saveStudentProfile, getBroadcasts, getSiteAccessConfig, loadStudentProfile } from './services/firebaseService';
 
 export function App() {
   // Theme state: respects saved choice or system preference
@@ -101,6 +102,34 @@ export function App() {
   const [isCertGateOpen, setIsCertGateOpen] = useState(false);
   const [isAdminModalOpen, setIsAdminModalOpen] = useState(false);
   const [isBroadcastsModalOpen, setIsBroadcastsModalOpen] = useState(false);
+
+  // --- Site-Wide Access Passcode Gate ---
+  const [isSiteUnlocked, setIsSiteUnlocked] = useState<boolean>(() => {
+    return localStorage.getItem('soa_site_unlocked') === 'true';
+  });
+
+  useEffect(() => {
+    // Check if site protection is disabled on the cloud
+    getSiteAccessConfig().then((cfg) => {
+      if (!cfg.isProtected) {
+        setIsSiteUnlocked(true);
+      }
+    }).catch(console.warn);
+  }, []);
+
+  const handleSiteUnlocked = async (info?: { role: string; name?: string; code?: string }) => {
+    setIsSiteUnlocked(true);
+    if (info?.role === 'admin') {
+      setIsAdminModalOpen(true);
+    } else if (info?.role === 'student' && info.code) {
+      try {
+        const profile = await loadStudentProfile(info.code);
+        if (profile) handleStudentLogin(profile);
+      } catch (err) {
+        console.warn('Could not auto-login student:', err);
+      }
+    }
+  };
 
   // Syncing state
   const [isSyncing, setIsSyncing] = useState(false);
@@ -557,6 +586,13 @@ export function App() {
         onClose={() => setIsAdminModalOpen(false)}
         totalHandbookTopics={ALL_TOPICS.length}
         onBroadcastsUpdated={refreshBroadcasts}
+      />
+
+      {/* Site-Wide Access Passcode Gate Modal */}
+      <SiteAccessGateModal
+        isOpen={!isSiteUnlocked}
+        onUnlocked={handleSiteUnlocked}
+        onOpenAdmin={() => setIsAdminModalOpen(true)}
       />
     </div>
   );
