@@ -6,8 +6,8 @@
 > **Architect & Author:** **Mohamed Khaled Farag**  
 > 🔗 **LinkedIn:** [linkedin.com/in/mk-farag](https://www.linkedin.com/in/mk-farag/)  
 > ✉️ **Email:** [mohammedkhaled.fa@gmail.com](mailto:mohammedkhaled.fa@gmail.com)  
-> 🐙 **GitHub:** [github.com/mkfarag/java-handbook](https://github.com/mkfarag/java-handbook)  
-> 🐳 **Docker Hub:** [hub.docker.com/r/mkfarag/nti-java-soa-handbook](https://hub.docker.com/r/mkfarag/nti-java-soa-handbook)
+> 🐙 **GitHub:** [github.com/MKFarag/SOA-Java-Handbook](https://github.com/MKFarag/SOA-Java-Handbook)  
+> 🐳 **Docker Hub:** [hub.docker.com/r/mkfarag/mkf-soa-java-handbook](https://hub.docker.com/r/mkfarag/mkf-soa-java-handbook)
 
 ---
 
@@ -31,7 +31,7 @@
 ### 1. تشغيل فوري عبر Docker (بدون كود وبدون تسطيب Node.js)
 لو عندك Docker، انسخ الأمر ده وشغله في التيرمينال فوراً:
 ```bash
-docker run -d -p 3000:80 --name nti_java_soa_handbook mkfarag/nti-java-soa-handbook:latest
+docker run -d -p 3000:80 --name mkf_soa_java_handbook mkfarag/mkf-soa-java-handbook:latest
 ```
 وافتح المتصفح على: **[http://localhost:3000](http://localhost:3000)**.
 
@@ -41,8 +41,8 @@ docker run -d -p 3000:80 --name nti_java_soa_handbook mkfarag/nti-java-soa-handb
 لو حابب تسحب الكود وتشغله على جهازك:
 ```bash
 # 1. اسحب المشروع
-git clone https://github.com/MKFarag/java-handbook.git
-cd java-handbook
+git clone https://github.com/MKFarag/SOA-Java-Handbook.git
+cd SOA-Java-Handbook
 
 # 2. سطب وشغل
 npm install

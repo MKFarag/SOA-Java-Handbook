@@ -3,8 +3,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: mkfarag/nti-java-soa-handbook:latest
-    container_name: nti_java_soa_handbook
+    image: mkfarag/mkf-soa-java-handbook:latest
+    container_name: mkf_soa_java_handbook
     ports:
       - "3000:80"
     restart: unless-stopped

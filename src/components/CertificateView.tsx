@@ -90,8 +90,8 @@ Issue Date: ${issueDate}`;
         name: "Mohamed Khaled Farag",
         username: "mkfarag",
         title: "Curriculum Author & Lead Architect",
-        github: "https://github.com/MKFarag/java-handbook",
-        dockerHub: "https://hub.docker.com/r/mkfarag/java-handbook"
+        github: "https://github.com/MKFarag/SOA-Java-Handbook",
+        dockerHub: "https://hub.docker.com/r/mkfarag/mkf-soa-java-handbook"
       },
       issuanceDate: new Date().toISOString()
     };
