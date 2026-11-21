@@ -37,8 +37,8 @@ Imagine drinking water. An unbuffered byte stream is like receiving water with a
 
 ### 2. Prerequisites
 Before studying Classic I/O Streams, you should understand:
-- [Topic 31: Try-With-Resources & AutoCloseable](file:///c:/Users/modym/OneDrive/Desktop/Java-Doc/content/part1-core/31-try-with-resources-and-autocloseable.md) — How deterministic resource closing prevents OS file handle leaks.
-- [Topic 07: Strings & Text Blocks](file:///c:/Users/modym/OneDrive/Desktop/Java-Doc/content/part1-core/07-strings-and-text-blocks.md) — Character strings and immutability.
+- [Topic 31: Try-With-Resources & AutoCloseable](#topic-31) — How deterministic resource closing prevents OS file handle leaks.
+- [Topic 07: Strings & Text Blocks](#topic-07) — Character strings and immutability.
 
 ---
 

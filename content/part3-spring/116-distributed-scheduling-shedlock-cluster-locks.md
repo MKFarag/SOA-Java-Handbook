@@ -69,9 +69,9 @@ Consider a conference room with a single whiteboard marker (**The Distributed Lo
 
 ## 2. Prerequisites
 Before studying distributed scheduling, ensure you have mastered:
-- [Topic 51: Executor Framework & Thread Pools](file:///c:/Users/modym/OneDrive/Desktop/Java-Doc/content/part1-core/51-executor-framework-and-thread-pools.md) — Timers, delays, and task queues.
-- [Topic 90: Auto-Configuration Mechanics, Starters & Embedded Runtimes](file:///c:/Users/modym/OneDrive/Desktop/Java-Doc/content/part3-spring/90-auto-configuration-mechanics-starters-embedded-runtimes.md) — Spring Boot auto-configuration.
-- [Topic 115: Asynchronous Task Execution (@Async, ThreadPoolTaskExecutor & CompletableFuture)](file:///c:/Users/modym/OneDrive/Desktop/Java-Doc/content/part3-spring/115-asynchronous-task-execution-threadpool-executors.md) — Asynchronous background processing.
+- [Topic 51: Executor Framework & Thread Pools](#topic-51) — Timers, delays, and task queues.
+- [Topic 90: Auto-Configuration Mechanics, Starters & Embedded Runtimes](#topic-90) — Spring Boot auto-configuration.
+- [Topic 115: Asynchronous Task Execution (@Async, ThreadPoolTaskExecutor & CompletableFuture)](#topic-115) — Asynchronous background processing.
 
 ---
 

@@ -244,8 +244,8 @@ public class JavaCoreCapstoneLedger {
     title: 'Part 2 Capstone: Enterprise Multi-Tier E-Commerce Core & Banking Gateway',
     subtitle: 'Front Controller Dispatching, Security Filters, Connection Pools, JPA ORM & JAX-RS Services',
     difficulty: 'Enterprise Solutions Engineer (Advanced)',
-    prerequisitesCount: 25,
-    prerequisiteTopicIds: ['topic-63', 'topic-66', 'topic-68', 'topic-70', 'topic-76', 'topic-81', 'topic-84'],
+    prerequisitesCount: 21,
+    prerequisiteTopicIds: ['topic-63', 'topic-66', 'topic-68', 'topic-70', 'topic-84'],
     estimatedDuration: '10 - 14 Hours',
     scenario: `You are tasked with engineering a production-grade enterprise web portal from scratch using pure Jakarta EE 10 standards deployed on Apache Tomcat 10.1. 
 The portal serves as a multi-tier e-commerce checkout and merchant settlement engine. It requires implementing a robust Front Controller Servlet dispatching to modular action handlers, an enterprise Security Filter chain defending against CSRF double-submit tokens and session hijacking, JNDI database connection pooling with health monitoring and leak detection, Jakarta Persistence (JPA) object-relational mapping with optimistic locking and Criteria queries, and JAX-RS REST endpoints delivering JSON payloads with custom exception mappers.`,

@@ -91,6 +91,88 @@ String jsonPayload = """
 - **Incidental White Space Stripping:** Java automatically detects common leading indentation and strips it, preserving only relative indentation.
 - **`.formatted(...)` Method:** Easily inject parameters using `%s`, `%d`, `%f`.
 
+### 4. String Formatting & Modern API Reference
+
+When assembling strings containing variable values, numbers, and dates, string formatting provides clean, readable code instead of messy `+` string concatenations.
+
+#### Modern Formatting Methods: `String.format()` vs `System.out.printf()` vs `.formatted()`
+
+| Feature / Method | `String.format(...)` | `System.out.printf(...)` | `pattern.formatted(...)` |
+| :--- | :--- | :--- | :--- |
+| **Introduced In** | Java 5 | Java 5 | **Java 15** (Standard with Text Blocks) |
+| **Method Type** | Static utility method on `String` | Instance method on `System.out` (`PrintStream`) | **Instance method on any `String` object** |
+| **Return Type** | `String` (New object in heap) | `PrintStream` (Returns `this` for chaining) | `String` (New object in heap) |
+| **Prints to Console?** | **No** (pure memory transformation) | **Yes** (writes directly to stdout) | **No** (pure memory transformation) |
+| **Method Chaining** | Standalone call | `System.out.printf(...).flush();` | Fluent call: `"""...""".formatted(...)` |
+| **Locale Control** | Supported via `String.format(locale, ...)` | Supported via `printf(locale, ...)` | Uses default JVM locale |
+| **Primary Use Case** | Loggers (SLF4J), Exception messages, SQL queries, DTO construction | Direct CLI output, terminal status displays | **Text Blocks (`"""`), multi-line templates, fluent pipelines** |
+
+#### Format Specifiers & Conversion Characters Cheat-Sheet
+
+General specifier syntax: `%[argument_index$][flags][width][.precision]conversion-character`
+
+| Specifier | Data Type | Behavior & Formatting Notes | Example Invocation | Formatted Output |
+| :--- | :--- | :--- | :--- | :--- |
+| **`%s`** | General / Object | Invokes `String.valueOf(arg)`. Handles strings, primitives, objects, and `null`. | `"%s".formatted("Java")` | `"Java"` |
+| **`%S`** | General / Object | Uppercase string conversion. | `"%S".formatted("active")` | `"ACTIVE"` |
+| **`%d`** | Integer | Formats decimal integers (`byte`, `short`, `int`, `long`, `BigInteger`). | `"%d".formatted(42)` | `"42"` |
+| **`%f`** | Floating-Point | Decimal floating-point (`float`, `double`, `BigDecimal`). Defaults to 6 decimals if precision is omitted. | `"%.2f".formatted(19.954)` | `"19.95"` |
+| **`%e` / `%E`** | Floating-Point | Computer scientific notation (exponential). | `"%.2e".formatted(12500.0)` | `"1.25e+04"` |
+| **`%g` / `%G`** | Floating-Point | General scientific or decimal depending on magnitude and precision. | `"%g".formatted(0.00001)` | `"1.00000e-05"` |
+| **`%b` / `%B`** | Boolean | Boolean conversion (`true` / `false` or `TRUE` / `FALSE`). Any non-null object evaluates to `true`! | `"%b".formatted(null)` | `"false"` |
+| **`%c` / `%C`** | Character | Unicode character (`char` or `Character`). | `"%c".formatted('A')` | `"A"` |
+| **`%x` / `%X`** | Integer | Hexadecimal integer representation (lowercase / uppercase). | `"0x%X".formatted(255)` | `"0xFF"` |
+| **`%o`** | Integer | Octal integer representation. | `"%o".formatted(8)` | `"10"` |
+| **`%h` / `%H`** | Object | Hexadecimal representation of `arg.hashCode()`. | `"%h".formatted("key")` | `"19e59"` |
+| **`%n`** | None | **Platform-neutral line break** (`\r\n` on Windows, `\n` on Unix). | `"A%nB".formatted()` | `"A\nB"` (OS-compliant) |
+| **`%%`** | None | Escapes literal `%` character. | `"%d%%".formatted(99)` | `"99%"` |
+
+#### Alignment, Padding, Zero-Fill & Formatting Flags Table
+
+| Flag | Name | Function | Example Format | Argument | Result Output |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **`-`** | Left-Justify | Left-aligns output within the designated minimum width (default is right-aligned). | `"\|%-10s\|"` | `"Java"` | `"\|Java      \|"` |
+| *(default)* | Right-Justify | Right-aligns output within the designated minimum width. | `"\|%10s\|"` | `"Java"` | `"\|      Java\|"` |
+| **`0`** | Zero-Padding | Pads numeric values with leading zeros instead of spaces. | `"%06d"` | `42` | `"000042"` |
+| **`,`** | Grouping Separator | Inserts locale-specific thousands grouping characters. | `"%,d"` | `1250000` | `"1,250,000"` |
+| **`+`** | Always Show Sign | Includes a sign (`+` or `-`) for numeric conversions. | `"%+d"` | `42` | `"+42"` |
+| **` ` (space)** | Space for Positive | Prepends a space for positive numbers, aligning columns with negative numbers. | `"% d"` | `42` | `" 42"` |
+| **`(`** | Negative Parentheses | Wraps negative numbers in parentheses instead of printing a minus sign (accounting format). | `" %(d "` | `-150` | `"(150)"` |
+| **`1$`, `2$`** | Explicit Indexing | Refers to arguments by 1-based index, allowing reordering and multiple uses of a single argument. | `"%2$s %1$s %2$s"` | `"A"`, `"B"` | `"B A B"` |
+| **`<`** | Relative Indexing | Reuses the argument from the immediately preceding format specifier. | `"%d in hex is %<X"` | `255` | `"255 in hex is FF"` |
+
+#### Text Blocks (`"""`) Formatting with `.formatted()`
+
+Java 15 introduced `.formatted()` specifically to make multi-line Text Block templates elegant, readable, and fluent:
+
+```java
+// 1. Enterprise SQL Query Template with Dynamic Limits and Filters
+String sql = """
+    SELECT order_id, customer_name, total_amount, order_status
+    FROM customer_orders
+    WHERE order_status = '%s'
+      AND total_amount >= %.2f
+    ORDER BY order_date DESC
+    LIMIT %d OFFSET %d;
+    """.formatted("SHIPPED", 100.00, 25, 0);
+
+// 2. Structured JSON REST API Payload Generation
+String jsonPayload = """
+    {
+        "transactionId": "%08d",
+        "account": {
+            "holder": "%s",
+            "balance": %,.2f
+        },
+        "status": "%s"
+    }
+    """.formatted(10452, "Alex Morgan", 14520.50, "ACTIVE");
+
+// 3. Formatted Console Table Report Using Alignment Flags
+String tableRow = "| %-10s | %04d | $%,10.2f | %-8s |%n"
+    .formatted("Widget Pro", 42, 1299.95, "IN_STOCK");
+```
+
 ---
 
 ## 4. Fully Runnable Code Examples

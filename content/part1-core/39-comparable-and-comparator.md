@@ -35,8 +35,8 @@ Consider an athlete running in an Olympic marathon. Every runner has an innate, 
 
 ### 2. Prerequisites
 Before studying Comparable & Comparator, you should understand:
-- [Topic 33: Generics Fundamentals](file:///c:/Users/modym/OneDrive/Desktop/Java-Doc/content/part1-core/33-generics-fundamentals.md) — Bounded type parameters and type safety.
-- [Topic 23: Interfaces & Modern Interface Evolution](file:///c:/Users/modym/OneDrive/Desktop/Java-Doc/content/part1-core/23-interfaces-and-default-methods.md) — Implementing interface contracts.
+- [Topic 33: Generics Fundamentals](#topic-33) — Bounded type parameters and type safety.
+- [Topic 23: Interfaces & Modern Interface Evolution](#topic-23) — Implementing interface contracts.
 
 ---
 

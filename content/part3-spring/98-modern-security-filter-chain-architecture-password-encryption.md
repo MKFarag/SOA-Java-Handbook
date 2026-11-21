@@ -63,9 +63,9 @@ Consider airport security checkpoints.
 
 ## 2. Prerequisites
 Before studying Spring Security architecture, ensure you have mastered:
-- [Topic 71: Servlet Filters & Filter Chains](file:///c:/Users/modym/OneDrive/Desktop/Java-Doc/content/part2-jakarta/71-servlet-filters.md) — Standard servlet request interception and filter pipelines.
-- [Topic 73: Web Security Essentials (XSS, CSRF Sanitization)](file:///c:/Users/modym/OneDrive/Desktop/Java-Doc/content/part2-jakarta/73-web-security-essentials.md) — Cross-site scripting and request forgery defense.
-- [Topic 90: Auto-Configuration Mechanics, Starters & Embedded Runtimes](file:///c:/Users/modym/OneDrive/Desktop/Java-Doc/content/part3-spring/90-auto-configuration-mechanics-starters-embedded-runtimes.md) — Spring Boot auto-configuration order and conditional beans.
+- [Topic 71: Servlet Filters & Filter Chains](#topic-71) — Standard servlet request interception and filter pipelines.
+- [Topic 73: Web Security Essentials (XSS, CSRF Sanitization)](#topic-73) — Cross-site scripting and request forgery defense.
+- [Topic 90: Auto-Configuration Mechanics, Starters & Embedded Runtimes](#topic-90) — Spring Boot auto-configuration order and conditional beans.
 
 ---
 

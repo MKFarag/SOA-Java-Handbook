@@ -32,7 +32,7 @@ At the core of the Spring Framework sits the **Inversion of Control (IoC) Contai
 ```java
 // Traditional Tight Coupling (Anti-Pattern in Enterprise Backends):
 public class OrderService {
-    private final PaymentGateway gateway = new StripePaymentGateway("sk_live_9921");
+    private final PaymentGateway gateway = new RestPaymentGateway("https://payment.provider.com/v1");
     private final AuditLogger logger = new FileAuditLogger("/var/log/audit.log");
 }
 ```
@@ -70,7 +70,7 @@ Spring expresses its container abstraction through two primary interfaces in pac
 2. **`ApplicationContext` (`org.springframework.context.ApplicationContext`):**
    A complete superset of `BeanFactory`. It inherits all bean factory capabilities while integrating enterprise services:
    - **Eager Pre-instantiation:** Creates all singleton beans immediately upon container startup, ensuring configuration errors and missing dependencies are caught at boot time rather than during runtime traffic.
-   - **Event Publishing:** Implements `ApplicationEventPublisher` for asynchronous decoupled publish-subscribe messaging.
+   - **Event Publishing:** Implements `ApplicationEventPublisher` for decoupled publish-subscribe messaging (synchronous by default on the invoking thread; asynchronous when listeners are marked with `@Async` and `@EnableAsync` is active).
    - **Internationalization (i18n):** Resolves localized messages through `MessageSource`.
    - **Environment Abstraction:** Profiles (`@Profile`) and property sources via `EnvironmentCapable`.
    - **AOP Proxy Integration:** Automatically registers `BeanPostProcessor` instances for declarative security, transactions (`@Transactional`), and caching (`@Cacheable`).

@@ -48,9 +48,9 @@ Think of vehicle manufacturing:
 
 ## 2. Prerequisites
 Before studying automated testing, you should understand:
-- [Topic 11: Methods & Modular Code](file:///c:/Users/modym\OneDrive\Desktop\Java-Doc\content\part1-core\11-methods-parameters-and-return-values.md) — Method boundaries and parameter passing.
-- [Topic 29: The Java Exception Hierarchy](file:///c:/Users/modym\OneDrive\Desktop\Java-Doc\content\part1-core\29-the-java-exception-hierarchy.md) — Asserting runtime exceptions.
-- [Topic 89: Component Scanning & Injection Strategies](file:///c:/Users/modym\OneDrive\Desktop\Java-Doc\content\part3-spring\89-component-scanning-injection-strategies-bean-lifecycle.md) — Spring dependency injection and IoC container lifecycles.
+- [Topic 11: Methods & Modular Code](#topic-11) — Method boundaries and parameter passing.
+- [Topic 29: The Java Exception Hierarchy](#topic-29) — Asserting runtime exceptions.
+- [Topic 89: Component Scanning & Injection Strategies](#topic-89) — Spring dependency injection and IoC container lifecycles.
 
 ---
 

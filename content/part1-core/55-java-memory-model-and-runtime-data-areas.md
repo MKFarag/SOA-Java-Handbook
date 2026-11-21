@@ -6,7 +6,7 @@ title: Java Memory Model & Runtime Data Areas
 part: 'Part 1: Java Core'
 sectionNumber: 14
 sectionTitle: JVM Internals & Memory Architecture
-versionBadge: Java 1.0+ / Formalized JSR-133
+versionBadge: Java 21 LTS Baseline (JMM Formalized JSR-133)
 difficulty: Intermediate
 readingTime: 13 min read
 shortDescription: >-
@@ -213,7 +213,7 @@ public void infinite() {
 ### 7. Best Practices & When NOT to Use
 - **Do**: Tune heap flags according to workload constraints:
   - `-Xms4g -Xmx4g`: Set initial and maximum heap identical in production servers to prevent dynamic heap resizing pause penalties.
-  - `-XX:+UseG1GC` or `-XX:+UseZGC`: Pick the garbage collector that matches your SLA (throughput vs low latency).
+  - `-XX:+UseG1GC` (Default since Java 9) or `-XX:+UseZGC -XX:+ZGenerational` (Java 21 LTS low latency): Pick the garbage collector matching your SLA (throughput vs sub-millisecond latency).
 - **Do**: Rely on Escape Analysis. HotSpot JIT compiler detects if an object does not escape a method, optimizing it by scalar replacement (allocating fields directly in CPU registers instead of heap).
 - **Don't**: Do not assume Java handles native memory automatically. Off-heap allocations (Direct ByteBuffers, JNI) reside outside the Java heap and must be closed or freed explicitly.
 

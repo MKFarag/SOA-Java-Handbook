@@ -64,9 +64,9 @@ Consider a busy postal parcel office.
 
 ## 2. Prerequisites
 Before studying asynchronous task execution, ensure you have mastered:
-- [Topic 51: Executor Framework & Thread Pools](file:///c:/Users/modym/OneDrive/Desktop/Java-Doc/content/part1-core/51-executor-framework-and-thread-pools.md) — Thread pools, queues, and executors.
-- [Topic 52: Asynchronous Pipelines with CompletableFuture](file:///c:/Users/modym/OneDrive/Desktop/Java-Doc/content/part1-core/52-completablefuture-and-async.md) — Non-blocking futures and composition.
-- [Topic 89: Component Scanning, Injection Strategies & Bean Lifecycle Callbacks](file:///c:/Users/modym/OneDrive/Desktop/Java-Doc/content/part3-spring/89-component-scanning-injection-strategies-bean-lifecycle.md) — Spring AOP proxies and bean wiring.
+- [Topic 51: Executor Framework & Thread Pools](#topic-51) — Thread pools, queues, and executors.
+- [Topic 52: Asynchronous Pipelines with CompletableFuture](#topic-52) — Non-blocking futures and composition.
+- [Topic 89: Component Scanning, Injection Strategies & Bean Lifecycle Callbacks](#topic-89) — Spring AOP proxies and bean wiring.
 
 ---
 

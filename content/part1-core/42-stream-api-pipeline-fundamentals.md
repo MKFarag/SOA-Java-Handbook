@@ -35,8 +35,8 @@ Think of an industrial conveyor belt in a smart bottling plant. Empty bottles fl
 
 ### 2. Prerequisites
 Before studying Stream Pipeline Fundamentals, you should understand:
-- [Topic 40: Lambdas & Functional Interfaces](file:///c:/Users/modym/OneDrive/Desktop/Java-Doc/content/part1-core/40-lambdas-and-functional-interfaces.md) — How lambdas pass filtering predicates and mapping functions.
-- [Topic 35: The List Hierarchy](file:///c:/Users/modym/OneDrive/Desktop/Java-Doc/content/part1-core/35-the-list-hierarchy.md) — Collection fundamentals.
+- [Topic 40: Lambdas & Functional Interfaces](#topic-40) — How lambdas pass filtering predicates and mapping functions.
+- [Topic 35: The List Hierarchy](#topic-35) — Collection fundamentals.
 
 ---
 

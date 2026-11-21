@@ -67,9 +67,13 @@ public class HTTPServerConfig {
 
 ### The Strict Initialization Sequence in Java
 Whenever a class is instantiated for the first time, the JVM executes steps in an immutable, deterministic order:
-1. **Static Initializer Blocks & Static Field Initializers:** Execute exactly once when the class is first loaded into memory.
+1. **Static Initializer Blocks & Static Field Initializers (`<clinit>`):** Execute exactly once when the class is first **initialized** (triggered when the class is actively referenced, such as instantiating it with `new`, calling a static method, or accessing a non-constant static field — note that class loading alone does not execute `<clinit>`).
 2. **Instance Initializer Blocks & Inline Field Initializers:** Execute every time `new` is invoked, immediately before the constructor body.
 3. **Constructor Body:** Executes its remaining statements.
+
+> [!NOTE] Class Loading vs Class Initialization (JLS §12.4.1 & JVMS §5.5)
+> - **Class Loading (`ClassLoader.loadClass`):** Finds and loads the class bytecode into Metaspace and creates the `Class<?>` mirror instance. **Static initializers DO NOT run during loading.**
+> - **Class Initialization (`<clinit>`):** Executes static blocks and static field initializers in textual order. This occurs lazily on **first active use** (instantiation with `new`, invoking a static method, accessing a non-constant static field, or calling `Class.forName(..., true, ...)`).
 
 ---
 
@@ -300,7 +304,7 @@ public class User {
 | :--- | :--- | :--- |
 | **Default Constructor** | `public ClassName() {}` | Compiler-generated only if zero explicit constructors exist. |
 | **Chaining Call** | `this(arg1, arg2);` | Delegates to another constructor in the same class; must be first statement. |
-| **Static Block** | `static { ... }` | Runs once when class is loaded into Metaspace. |
+| **Static Block** | `static { ... }` | Runs once during class initialization (<clinit>) upon first active use, NOT during class loading. |
 | **Instance Block** | `{ ... }` | Runs on every `new` instantiation before constructor body. |
 | **Private Constructor** | `private ClassName() {}` | Enforces non-instantiability (Singleton or Utility class pattern). |
 

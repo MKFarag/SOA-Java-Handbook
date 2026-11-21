@@ -34,7 +34,7 @@ public class SealedClassMechanics {
     }
 
     public static void main(String[] args) {
-        System.out.println("=== Java 17+ Sealed Hierarchy Evaluation ===");
+        System.out.println("=== Java 21 LTS Sealed Hierarchy Evaluation ===");
 
         ServiceResult s1 = new SuccessResult("Payload 0xFA31");
         ServiceResult s2 = new TimeoutFailure();

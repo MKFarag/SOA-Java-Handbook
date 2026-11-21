@@ -65,9 +65,9 @@ Consider a legal deed or land title registry.
 
 ## 2. Prerequisites
 Before studying entity auditing and versioning, ensure you understand:
-- [Topic 83: Jakarta Persistence (JPA) & Hibernate ORM](file:///c:/Users/modym/OneDrive/Desktop/Java-Doc/content/part2-jakarta/83-jakarta-persistence-jpa-hibernate.md) — Entity lifecycles and `@MappedSuperclass`.
-- [Topic 95: Spring Data JPA Architecture: Repository Hierarchy & JpaRepository](file:///c:/Users/modym/OneDrive/Desktop/Java-Doc/content/part3-spring/95-spring-data-jpa-architecture-repository-hierarchy-jparepository.md) — Entity state transitions and dirty checking.
-- [Topic 99: Stateless REST Security with JWT & Method-Level Role Authorization](file:///c:/Users/modym/OneDrive/Desktop/Java-Doc/content/part3-spring/99-stateless-rest-security-jwt-method-level-role-authorization.md) — Extracting authenticated principal from `SecurityContextHolder`.
+- [Topic 83: Jakarta Persistence (JPA) & Hibernate ORM](#topic-83) — Entity lifecycles and `@MappedSuperclass`.
+- [Topic 95: Spring Data JPA Architecture: Repository Hierarchy & JpaRepository](#topic-95) — Entity state transitions and dirty checking.
+- [Topic 99: Stateless REST Security with JWT & Method-Level Role Authorization](#topic-99) — Extracting authenticated principal from `SecurityContextHolder`.
 
 ---
 

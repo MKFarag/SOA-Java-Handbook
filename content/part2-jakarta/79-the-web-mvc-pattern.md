@@ -15,7 +15,7 @@ shortDescription: >-
 prerequisites:
   - 'Topic 66: Servlet Lifecycle & Architecture'
   - 'Topic 69: Request Dispatching: Forward, Include & Redirect'
-  - 'Topic 77: Expression Language (EL) & JSTL'
+  - 'Topic 75: JSTL Core Tags & Expression Language (EL)'
 relevanceLevel: MUST-KNOW / CORE
 ---
 # Topic 79: The Web MVC Pattern (Model-View-Controller)
@@ -42,7 +42,7 @@ In early web architectures (often referred to as MVC Model 1), JSP pages contain
 ## 2. Prerequisites
 - **Topic 66: Servlet Lifecycle & Architecture:** Understanding how HTTP requests map to `doGet()` and `doPost()`.
 - **Topic 69: Request Dispatching:** Understanding `req.getRequestDispatcher().forward(req, resp)`.
-- **Topic 77: Expression Language (EL) & JSTL:** Rendering scoped attributes via `${model.property}`.
+- **Topic 75: JSTL Core Tags & Expression Language (EL):** Rendering scoped attributes via `${model.property}`.
 
 ---
 

@@ -47,9 +47,9 @@ OpenAPI 3 is an architectural **CAD blueprint** for a newly designed office buil
 
 ## 2. Prerequisites
 Before studying OpenAPI and Swagger, you should understand:
-- [Topic 07: Strings & Text Formatting](file:///c:/Users/modym\OneDrive\Desktop\Java-Doc\content\part1-core\07-strings-and-text-blocks.md) — Text representations and JSON syntax.
-- [Topic 92: Production REST Controller Architecture](file:///c:/Users/modym\OneDrive\Desktop\Java-Doc\content\part3-spring\92-production-rest-controller-architecture-spring-web-mvc.md) — HTTP verbs, URI path routing, and `ResponseEntity`.
-- [Topic 93: Request Validation with Bean Validation](file:///c:/Users/modym\OneDrive\Desktop\Java-Doc\content\part3-spring\93-request-validation-bean-validation-custom-constraints.md) — How `@NotNull`, `@Size`, and `@Pattern` map to schema validation rules.
+- [Topic 07: Strings & Text Formatting](#topic-07) — Text representations and JSON syntax.
+- [Topic 92: Production REST Controller Architecture](#topic-92) — HTTP verbs, URI path routing, and `ResponseEntity`.
+- [Topic 93: Request Validation with Bean Validation](#topic-93) — How `@NotNull`, `@Size`, and `@Pattern` map to schema validation rules.
 
 ---
 

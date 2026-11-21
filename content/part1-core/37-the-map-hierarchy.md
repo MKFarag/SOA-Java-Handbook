@@ -33,8 +33,8 @@ Think of a post office with private mailboxes. Each mailbox has a unique brass k
 
 ### 2. Prerequisites
 Before studying the Map Hierarchy, you should understand:
-- [Topic 33: Generics Fundamentals](file:///c:/Users/modym/OneDrive/Desktop/Java-Doc/content/part1-core/33-generics-fundamentals.md) — How type parameters `<K, V>` enforce key-value type safety.
-- [Topic 36: The Set Hierarchy](file:///c:/Users/modym/OneDrive/Desktop/Java-Doc/content/part1-core/36-the-set-hierarchy.md) — How hashing and bucket indexing operate.
+- [Topic 33: Generics Fundamentals](#topic-33) — How type parameters `<K, V>` enforce key-value type safety.
+- [Topic 36: The Set Hierarchy](#topic-36) — How hashing and bucket indexing operate.
 
 ---
 

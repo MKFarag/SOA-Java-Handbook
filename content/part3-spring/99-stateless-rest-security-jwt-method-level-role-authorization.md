@@ -65,8 +65,8 @@ Consider airport security and concert tickets.
 
 ## 2. Prerequisites
 Before studying JWT and method security, ensure you have mastered:
-- [Topic 92: Production REST Controller Architecture with Spring Web MVC](file:///c:/Users/modym/OneDrive/Desktop/Java-Doc/content/part3-spring/92-production-rest-controller-architecture-spring-web-mvc.md) — HTTP controllers and request processing.
-- [Topic 98: Modern SecurityFilterChain Architecture & Password Encryption](file:///c:/Users/modym/OneDrive/Desktop/Java-Doc/content/part3-spring/98-modern-security-filter-chain-architecture-password-encryption.md) — Servlet filter chains and HttpSecurity DSL.
+- [Topic 92: Production REST Controller Architecture with Spring Web MVC](#topic-92) — HTTP controllers and request processing.
+- [Topic 98: Modern SecurityFilterChain Architecture & Password Encryption](#topic-98) — Servlet filter chains and HttpSecurity DSL.
 
 ---
 
@@ -278,7 +278,7 @@ public class JwtRbacSecurityDemo {
 ### Pitfall 3: Failing to Clear `SecurityContextHolder` in Async / ThreadPool Tasks
 - **Symptom:** A background worker thread executes actions under the identity of a previously authenticated user from a completely different HTTP request.
 - **Cause:** Thread pools reuse threads. `SecurityContextHolder` uses `ThreadLocal` storage. If a request finishes without explicitly clearing the security context or if threads are dispatched without context propagation, stale credentials leak across concurrent requests.
-- **Diagnosis & Fix:** Rely on `OncePerRequestFilter`, which cleans up `SecurityContextHolder.clearContext()` in its `finally` block, and use `DelegatingSecurityContextAsyncTaskExecutor` for asynchronous tasks.
+- **Diagnosis & Fix:** In Spring Security, `SecurityContextHolderFilter` wraps the filter chain and cleans up `SecurityContextHolder.clearContext()` in its `finally` block when an HTTP request finishes. For asynchronous tasks dispatched across custom thread pools, wrap your executor with `DelegatingSecurityContextAsyncTaskExecutor` to safely propagate and clean up context across worker threads.
 
 ---
 

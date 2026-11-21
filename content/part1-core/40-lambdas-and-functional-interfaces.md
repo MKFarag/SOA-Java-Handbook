@@ -33,8 +33,8 @@ Think of a drone delivery dispatch center. In traditional Java, sending a delive
 
 ### 2. Prerequisites
 Before studying Lambdas and Functional Interfaces, you should understand:
-- [Topic 23: Interfaces & Modern Interface Evolution](file:///c:/Users/modym/OneDrive/Desktop/Java-Doc/content/part1-core/23-interfaces-and-default-methods.md) — How interface contracts and default methods function.
-- [Topic 24: Nested, Inner, Local & Anonymous Classes](file:///c:/Users/modym/OneDrive/Desktop/Java-Doc/content/part1-core/24-nested-inner-and-anonymous-classes.md) — How anonymous classes pass ad-hoc behavior.
+- [Topic 23: Interfaces & Modern Interface Evolution](#topic-23) — How interface contracts and default methods function.
+- [Topic 24: Nested, Inner, Local & Anonymous Classes](#topic-24) — How anonymous classes pass ad-hoc behavior.
 
 ---
 

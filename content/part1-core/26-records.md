@@ -334,12 +334,23 @@ public record Money(BigDecimal amount, Currency currency) {
 ---
 
 ### Exercise 3: Real-World Edge Case
-Can records be serialized and deserialized using standard Java serialization?
+Can records be serialized and deserialized using standard Java serialization? Does canonical constructor deserialization completely prevent malicious byte-stream deserialization attacks?
 <details>
 <summary>View Solution</summary>
 
-**Answer:** Yes, and records are **vastly safer** to serialize than regular classes!
-**Explanation:** The Java serialization mechanism handles records specially: deserialization **always invokes the canonical constructor**. This guarantees that all validation checks inside compact constructors are enforced even during deserialization, completely preventing malicious byte-stream deserialization attacks.
+**Answer:** Yes, records can be serialized, and their deserialization mechanism enforces class invariants—however, it **does NOT make Java serialization immune to malicious byte-stream deserialization attacks**.
+
+**Technical Explanation:**
+1. **Invariant Enforcement via Canonical Constructor:**
+   - In traditional classes implementing `Serializable`, deserialization bypasses constructors entirely (allocating an uninitialized object via JVM internal reflection and reflecting field values directly from the byte stream). Attackers can craft malicious byte streams that populate private fields with illegal, corrupt, or inconsistent states (e.g., negative balances or null security identifiers).
+   - In **Java Records (JEP 395)**, deserialization reads component values from the stream and explicitly passes them into the **canonical constructor**. Any validation checks defined in your compact or canonical constructor are guaranteed to execute during deserialization, preventing corrupted internal states from being instantiated.
+
+2. **Persistent Deserialization Vulnerabilities (Gadget Chains & DoS):**
+   - **Gadget Chains:** Invariant enforcement only validates the record's immediate components. If any component type is polymorphic (e.g., `Object`, `java.io.Serializable`, `Map`), an attacker can supply a serialized malicious "gadget" object (such as well-known gadget chains in Commons Collections or Spring). The gadget's own deserialization or subsequent lifecycle execution (e.g., when the record's `equals()`, `hashCode()`, or business methods are invoked on the gadget component) can trigger Remote Code Execution (RCE).
+   - **Deserialization Denial of Service (DoS):** Attackers can stream deeply nested graphs, circular reference payloads, or hash collision bombs ("deserialization bombs") that exhaust CPU or heap memory during stream parsing *before* the canonical constructor completes.
+
+**Security Best Practice:**
+Never trust raw Java native deserialization of untrusted input. Canonical constructor invocation provides data integrity, not complete protection against malicious byte streams. Always deploy JVM **Serialization Filtering** (`java.io.ObjectInputFilter`, JEP 290 / JEP 415) to allowlist permitted classes and limit payload depth, or preferably migrate to safe data interchange formats such as JSON or Protocol Buffers.
 </details>
 
 ---

@@ -2,7 +2,7 @@ public class ConstructorChainingDemo {
 
     private static String initializationLog = "";
 
-    // 1. Static Initializer Block: Runs once when class is first loaded by JVM
+    // 1. Static Initializer Block: Runs once during class initialization (<clinit>), before any instance is created
     static {
         initializationLog += "[1. Static Block] ";
     }

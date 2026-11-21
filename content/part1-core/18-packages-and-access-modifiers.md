@@ -53,14 +53,28 @@ In software engineering, if all classes and fields were public, any developer ac
 | *(default / package-private)* | Yes | **Yes** | No | No |
 | **`private`** | **Yes** | No | No | No |
 
-### Package Statements & Imports
+### Package Statements & Directory Structure
 ```java
-package com.handbook.security; // Must be the very first non-comment line
+package com.handbook.security; // Must be the very first non-comment line in the source file
 
 import java.util.List;          // Single-type import
 import java.util.*;             // On-demand package import
-import static java.lang.Math.*; // Static import for methods and constants
+import static java.lang.Math.*; // Static import for static methods and constants
 ```
+
+> [!NOTE] Standard Directory Layout (Maven / Gradle Conventions)
+> In modern enterprise Java projects, directory structures strictly mirror package declarations under the standard Maven/Gradle convention:
+> ```text
+> my-project/
+> └── src/
+>     ├── main/java/com/company/security/
+>     │   ├── SecurityBoundary.java    // package com.company.security;
+>     │   └── InternalAuditor.java     // Same package: can access package-private members
+>     └── test/java/com/company/security/
+>         └── SecurityBoundaryTest.java // Test in same package: cleanly tests package-private methods!
+> ```
+> - **Flat Packaging:** Subpackages (e.g., `com.company.security.internal`) are treated by the JVM as completely distinct packages; they do NOT inherit package-private access from parent namespaces.
+> - **Testing Advantage:** Placing unit tests in `src/test/java/` under the identical package allows testing package-private classes directly without exposing them as `public`.
 
 ---
 
@@ -69,33 +83,37 @@ import static java.lang.Math.*; // Static import for methods and constants
 ### Example 1: Access Boundaries Demonstration
 ```java
 // File: examples/core/AccessModifierDemo.java
-public class AccessModifierDemo {
 
-    public static class SecurityBoundary {
-        public String publicName = "PUBLIC: Accessible everywhere";
-        protected String protectedRole = "PROTECTED: Accessible in same package or subclasses";
-        String packageDefaultToken = "DEFAULT: Accessible only in same package";
-        private String privateSecret = "PRIVATE: Accessible only inside SecurityBoundary class";
+// Sibling class in same package (package-private top-level class, NOT a nested class)
+// Note: Declared outside AccessModifierDemo to prevent Java 11 nestmate private-access sharing!
+class SecurityBoundary {
+    public String publicName = "PUBLIC: Accessible everywhere";
+    protected String protectedRole = "PROTECTED: Accessible in same package or subclasses";
+    String packageDefaultToken = "DEFAULT: Accessible only in same package";
+    private String privateSecret = "PRIVATE: Accessible only inside SecurityBoundary class";
 
-        public String readPrivateSecretFromInside() {
-            return "Inside Class Access -> " + privateSecret;
-        }
+    public String readPrivateSecretFromInside() {
+        return "Inside Class Access -> " + privateSecret;
     }
+}
 
+public class AccessModifierDemo {
     public static void main(String[] args) {
         System.out.println("=== Java Access Modifier Boundaries ===");
         SecurityBoundary boundary = new SecurityBoundary();
 
-        // 1. Public: Direct access
+        // 1. Public: Direct access from any class in any package
         System.out.println(boundary.publicName);
 
         // 2. Protected: Accessible because AccessModifierDemo is in the same package
         System.out.println(boundary.protectedRole);
 
-        // 3. Package-private / default: Accessible in same package
+        // 3. Package-private / default: Accessible to sibling classes in the same package
         System.out.println(boundary.packageDefaultToken);
 
-        // 4. Private: Inaccessible directly (boundary.privateSecret would cause compile error)
+        // 4. Private: Inaccessible outside SecurityBoundary!
+        // boundary.privateSecret causes COMPILE ERROR: privateSecret has private access in SecurityBoundary
+        // Accessible only via public/package-private accessor method:
         System.out.println(boundary.readPrivateSecretFromInside());
     }
 }
@@ -206,13 +224,13 @@ private class BadClass { } // COMPILE ERROR: modifier private not allowed here
 **Why it fails:** Top-level classes in a Java file can only be declared `public` or package-private (no modifier). Only nested/inner classes can be `private` or `protected`.
 **How to fix:** Declare top-level classes `public` or omit the modifier for package-private.
 
-### Mistake 2: Missing Package Directory Alignment
+### Mistake 2: Missing Package Directory Alignment in Build Trees
 ```text
-File header: package com.myapp.services;
-Actual disk location: src/com/myapp/BadPath/User.java
+File package header: package com.myapp.services;
+Actual disk location: src/main/java/com/myapp/BadPath/UserService.java
 ```
-**Why it fails:** The Java compiler (`javac`) and JVM mandate that a class's declared package must match its physical directory path on disk.
-**How to fix:** Ensure `com.myapp.services` lives in `src/com/myapp/services/User.java`.
+**Why it fails:** While `javac` can compile loose standalone files passed directly on the command line, modern build tools (Maven, Gradle) and standard ClassLoaders mandate that declared packages strictly match disk directories relative to source roots.
+**How to fix:** Ensure `com.myapp.services.UserService` resides at `src/main/java/com/myapp/services/UserService.java`.
 
 ---
 

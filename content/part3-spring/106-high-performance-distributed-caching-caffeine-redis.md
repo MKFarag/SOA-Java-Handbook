@@ -49,9 +49,9 @@ Imagine a master chef running a busy restaurant kitchen:
 
 ## 2. Prerequisites
 Before studying caching architectures, you should understand:
-- [Topic 16: Classes, Objects & Memory Layout](file:///c:/Users/modym\OneDrive\Desktop\Java-Doc\content\part1-core\16-classes-objects-and-memory-layout.md) — Heap allocation and GC impact.
-- [Topic 49: Synchronization & Memory Visibility](file:///c:/Users/modym\OneDrive\Desktop\Java-Doc\content\part1-core\49-synchronization-and-memory-visibility.md) — Concurrent access and thread safety.
-- [Topic 89: Component Scanning & Injection Strategies](file:///c:/Users/modym\OneDrive\Desktop\Java-Doc\content\part3-spring\89-component-scanning-injection-strategies-bean-lifecycle.md) — Spring AOP proxy interception mechanics.
+- [Topic 16: Classes, Objects & Memory Layout](#topic-16) — Heap allocation and GC impact.
+- [Topic 49: Synchronization & Memory Visibility](#topic-49) — Concurrent access and thread safety.
+- [Topic 89: Component Scanning & Injection Strategies](#topic-89) — Spring AOP proxy interception mechanics.
 
 ---
 

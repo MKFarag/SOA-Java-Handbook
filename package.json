@@ -5,8 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "predev": "node scripts/compile-content.mjs",
+    "compile-content": "node scripts/compile-content.mjs",
+    "typecheck": "tsc -b",
     "prebuild": "node scripts/compile-content.mjs",
     "build": "tsc -b && vite build",
+    "test:verify": "node scripts/verify-examples.mjs",
     "lint": "oxlint",
     "preview": "vite preview"
   },

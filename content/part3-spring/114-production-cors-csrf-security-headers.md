@@ -57,8 +57,8 @@ Consider an international embassy checkpoint.
 
 ## 2. Prerequisites
 Before studying production web security, ensure you have mastered:
-- [Topic 73: Web Security Essentials (XSS, CSRF Sanitization)](file:///c:/Users/modym/OneDrive/Desktop/Java-Doc/content/part2-jakarta/73-web-security-essentials.md) — Web vulnerabilities and browser sandbox policies.
-- [Topic 98: Modern SecurityFilterChain Architecture & Password Encryption](file:///c:/Users/modym/OneDrive/Desktop/Java-Doc/content/part3-spring/98-modern-security-filter-chain-architecture-password-encryption.md) — Spring Security filter chain configuration.
+- [Topic 73: Web Security Essentials (XSS, CSRF Sanitization)](#topic-73) — Web vulnerabilities and browser sandbox policies.
+- [Topic 98: Modern SecurityFilterChain Architecture & Password Encryption](#topic-98) — Spring Security filter chain configuration.
 
 ---
 

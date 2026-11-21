@@ -1,6 +1,6 @@
 public class ClassMemoryLayout {
 
-    // Static / Class variable: shared across all instances in Metaspace / Static Heap
+    // Static / Class variable: stored on the Java Heap attached to ClassMemoryLayout.class
     private static int totalInstancesCreated = 0;
 
     // Instance variables: unique to each object allocated on the Heap
@@ -31,7 +31,7 @@ public class ClassMemoryLayout {
 
         System.out.println("\n=== 2. Reference Assignment & Aliasing ===");
         ClassMemoryLayout alias = obj1; // 'alias' and 'obj1' point to the identical heap object
-        System.out.println("obj1 == alias: " + (obj1 == alias) + " (Identical heap memory address)");
+        System.out.println("obj1 == alias: " + (obj1 == alias) + " (Same object instance identity)");
         System.out.println("obj1 == obj2: " + (obj1 == obj2) + " (Distinct heap objects)");
 
         alias.setLabel("Alpha-Modified");

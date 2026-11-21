@@ -33,8 +33,8 @@ Imagine pointing someone to a recipe. A lambda expression is like copying down t
 
 ### 2. Prerequisites
 Before studying Method References, you should understand:
-- [Topic 40: Lambdas & Functional Interfaces](file:///c:/Users/modym/OneDrive/Desktop/Java-Doc/content/part1-core/40-lambdas-and-functional-interfaces.md) — How SAM interfaces and lambda typing work.
-- [Topic 11: Methods, Parameters & Return Values](file:///c:/Users/modym/OneDrive/Desktop/Java-Doc/content/part1-core/11-methods-parameters-and-return-values.md) — Method signatures and invocation mechanics.
+- [Topic 40: Lambdas & Functional Interfaces](#topic-40) — How SAM interfaces and lambda typing work.
+- [Topic 11: Methods, Parameters & Return Values](#topic-11) — Method signatures and invocation mechanics.
 
 ---
 

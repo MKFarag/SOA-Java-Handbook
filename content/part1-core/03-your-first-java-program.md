@@ -63,6 +63,56 @@ public class HelloWorld {
 - `println(...)`: Method that prints the given argument followed by a platform-specific newline character.
 - `;`: Statement terminator. Every complete operational statement in Java must end with a semicolon.
 
+### Console Output Quick Reference: `print()` vs `println()` vs `printf()` vs `format()`
+
+When emitting text to the terminal or standard output stream, Java provides four primary methods on `System.out` (`java.io.PrintStream`):
+
+| Method | Signature | Return Type | Appends Newline? | Formatting Support | Primary Use Case & Behavior |
+| :--- | :--- | :---: | :---: | :---: | :--- |
+| **`print()`** | `print(boolean/char/int/long/float/double/char[]/String/Object)` | `void` | **No** | No | Continuous inline output. Subsequent calls print on the exact same terminal line. |
+| **`println()`** | `println(...)` (Overloaded for all primitives + no-arg `println()`) | `void` | **Yes** | No | Standard line-by-line output. Flushes line buffer and terminates the current line using the platform-specific line separator (`\r\n` on Windows, `\n` on Linux/macOS). |
+| **`printf()`** | `printf(String format, Object... args)`<br>`printf(Locale l, String format, Object... args)` | `PrintStream` | Only if `%n` is in pattern | **Yes** | Formatted string output using format specifiers. Returns `this` (`PrintStream`), enabling fluent method chaining (e.g., `System.out.printf(...).flush();`). |
+| **`format()`** | `format(String format, Object... args)`<br>`format(Locale l, String format, Object... args)` | `PrintStream` | Only if `%n` is in pattern | **Yes** | Identical alias to `printf()`. Provided for structural parity with `java.util.Formatter` and `String.format()`. |
+
+#### Comprehensive Format Specifiers Table
+
+A format specifier begins with `%` and maps to arguments passed to `printf()`, `format()`, or `String.format()`:
+
+| Specifier | Data Type | Description | Example Invocation | Output |
+| :--- | :--- | :--- | :--- | :--- |
+| **`%s`** | String / Object | General string conversion via `String.valueOf(arg)` | `System.out.printf("%s", "Java")` | `Java` |
+| **`%S`** | String / Object | Uppercase string conversion | `System.out.printf("%S", "active")` | `ACTIVE` |
+| **`%d`** | Integer | Formats decimal integers (`byte`, `short`, `int`, `long`, `BigInteger`) | `System.out.printf("%d", 42)` | `42` |
+| **`%f`** | Floating-point | Formats decimal floating-point (`float`, `double`, `BigDecimal`) | `System.out.printf("%.2f", 3.14159)` | `3.14` |
+| **`%e` / `%E`** | Floating-point | Scientific notation (lowercase or uppercase exponent) | `System.out.printf("%.2e", 12500.0)` | `1.25e+04` |
+| **`%b` / `%B`** | Boolean | Boolean conversion (`true` / `false` or `TRUE` / `FALSE`). Any non-null object returns `true`! | `System.out.printf("%b", true)` | `true` |
+| **`%c` / `%C`** | Character | Unicode character conversion (`char` or `Character`) | `System.out.printf("%c", 'A')` | `A` |
+| **`%x` / `%X`** | Integer | Hexadecimal integer representation (lowercase / uppercase) | `System.out.printf("0x%X", 255)` | `0xFF` |
+| **`%o`** | Integer | Octal representation of an integer | `System.out.printf("%o", 8)` | `10` |
+| **`%h` / `%H`** | Object | Hexadecimal representation of `arg.hashCode()` | `System.out.printf("%h", "hello")` | `5e918d2` |
+| **`%n`** | None | **Platform-independent line separator** (`\r\n` on Windows, `\n` on Unix) | `System.out.printf("Line1%nLine2")` | Line1<br>Line2 |
+| **`%%`** | None | Escapes a literal percent character (`%`) | `System.out.printf("%d%%", 95)` | `95%` |
+
+#### Format Specifier Anatomy: Width, Precision, and Flags Cheat-Sheet
+
+General syntax: `%[argument_index$][flags][width][.precision]conversion-character`
+
+| Modifier / Flag | Meaning | Example Format | Argument | Result Output | Notes |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **Width** | Minimum characters to write | `"%10s"` | `"Java"` | `"      Java"` | Right-aligned by default, padded with leading spaces. |
+| **`-` (Minus)** | Left-justify within width | `"%-10s"` | `"Java"` | `"Java      "` | Trailing spaces added up to specified width. |
+| **`0` (Zero)** | Zero-pad numeric values | `"%05d"` | `42` | `"00042"` | Pads with zeros instead of spaces (numbers only). |
+| **`.precision` (Float)** | Exact decimal places | `"%.2f"` | `19.954` | `"19.95"` | Automatically rounds using standard IEEE half-up rounding. |
+| **`.precision` (String)**| Maximum character length | `"%.4s"` | `"Engineering"` | `"Engi"` | Truncates strings exceeding the specified precision limit. |
+| **`,` (Comma)** | Thousands grouping separator | `"%,d"` | `1000000` | `"1,000,000"` | Formatted according to host system locale. |
+| **`+` (Plus)** | Explicit sign display | `"%+d"` | `42` | `"+42"` | Always prints `+` for positive and `-` for negative. |
+| **` ` (Space)** | Leading space for positive | `"% d"` | `42` | `" 42"` | Aligns positive numbers with negative numbers in columns. |
+| **`(` (Paren)** | Enclose negatives in parens | `" %(d "` | `-50` | `"(50)"` | Standard format for financial and accounting reports. |
+| **`1$`, `2$`** | Argument indexing | `"%2$s %1$s"` | `"World"`, `"Hello"` | `"Hello World"` | Explicitly maps argument positions, reordering them cleanly. |
+
+> [!TIP]
+> **Always use `%n` instead of `\n` in format strings.** `%n` queries the JVM system property `line.separator` and emits the true OS-compliant line break (`\r\n` on Windows, `\n` on Linux/macOS). Using hardcoded `\n` in format strings causes subtle corruption in Windows terminal output and cross-platform log files.
+
 ---
 
 ## 4. Fully Runnable Code Examples

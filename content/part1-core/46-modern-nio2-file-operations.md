@@ -36,8 +36,8 @@ Think of moving physical office documents. The old `java.io.File` API was like a
 
 ### 2. Prerequisites
 Before studying Modern NIO.2 File Operations, you should understand:
-- [Topic 45: Classic I/O Streams](file:///c:/Users/modym/OneDrive/Desktop/Java-Doc/content/part1-core/45-classic-io-streams.md) — Fundamental understanding of byte and character persistence.
-- [Topic 42: Stream API: Pipeline Fundamentals](file:///c:/Users/modym/OneDrive/Desktop/Java-Doc/content/part1-core/42-stream-api-pipeline-fundamentals.md) — Navigating and filtering streams lazily.
+- [Topic 45: Classic I/O Streams](#topic-45) — Fundamental understanding of byte and character persistence.
+- [Topic 42: Stream API: Pipeline Fundamentals](#topic-42) — Navigating and filtering streams lazily.
 
 ---
 

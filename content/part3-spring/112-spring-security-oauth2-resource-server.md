@@ -60,8 +60,8 @@ Consider a passport control checkpoint at an international airport.
 
 ## 2. Prerequisites
 Before studying OAuth2 Resource Servers, ensure you have mastered:
-- [Topic 98: Modern SecurityFilterChain Architecture & Password Encryption](file:///c:/Users/modym/OneDrive/Desktop/Java-Doc/content/part3-spring/98-modern-security-filter-chain-architecture-password-encryption.md) — Security filter chain architecture.
-- [Topic 99: Stateless REST Security with JWT & Method-Level Role Authorization](file:///c:/Users/modym/OneDrive/Desktop/Java-Doc/content/part3-spring/99-stateless-rest-security-jwt-method-level-role-authorization.md) — JWT token fundamentals and method security.
+- [Topic 98: Modern SecurityFilterChain Architecture & Password Encryption](#topic-98) — Security filter chain architecture.
+- [Topic 99: Stateless REST Security with JWT & Method-Level Role Authorization](#topic-99) — JWT token fundamentals and method security.
 
 ---
 

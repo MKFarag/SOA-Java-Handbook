@@ -65,8 +65,8 @@ Consider checking into a high-security international conference center.
 
 ## 2. Prerequisites
 Before studying OIDC integration, ensure you have mastered:
-- [Topic 98: Modern SecurityFilterChain Architecture & Password Encryption](file:///c:/Users/modym/OneDrive/Desktop/Java-Doc/content/part3-spring/98-modern-security-filter-chain-architecture-password-encryption.md) — Security filter chain architecture.
-- [Topic 112: Spring Security OAuth2 Resource Server & Asymmetric JWT Validation](file:///c:/Users/modym/OneDrive/Desktop/Java-Doc/content/part3-spring/112-spring-security-oauth2-resource-server.md) — Asymmetric cryptography and token verification.
+- [Topic 98: Modern SecurityFilterChain Architecture & Password Encryption](#topic-98) — Security filter chain architecture.
+- [Topic 112: Spring Security OAuth2 Resource Server & Asymmetric JWT Validation](#topic-112) — Asymmetric cryptography and token verification.
 
 ---
 

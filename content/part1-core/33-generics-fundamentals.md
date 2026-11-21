@@ -33,8 +33,8 @@ Imagine shipping containers. Without labeling or compartmentalization, workers t
 
 ### 2. Prerequisites
 Before studying Generics Fundamentals, you should understand:
-- [Topic 16: Classes, Objects & Memory Layout](file:///c:/Users/modym/OneDrive/Desktop/Java-Doc/content/part1-core/16-classes-objects-and-memory-layout.md) — How classes define reference types and object blueprints.
-- [Topic 23: Interfaces & Modern Interface Evolution](file:///c:/Users/modym/OneDrive/Desktop/Java-Doc/content/part1-core/23-interfaces-and-default-methods.md) — How interface contracts define polymorphic capabilities.
+- [Topic 16: Classes, Objects & Memory Layout](#topic-16) — How classes define reference types and object blueprints.
+- [Topic 23: Interfaces & Modern Interface Evolution](#topic-23) — How interface contracts define polymorphic capabilities.
 
 ---
 

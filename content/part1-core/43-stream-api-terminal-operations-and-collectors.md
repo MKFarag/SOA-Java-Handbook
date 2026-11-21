@@ -33,8 +33,8 @@ Think of an agricultural harvest. The stream pipeline transports harvested wheat
 
 ### 2. Prerequisites
 Before studying Stream Terminal Operations & Collectors, you should understand:
-- [Topic 42: Stream API: Pipeline Fundamentals](file:///c:/Users/modym/OneDrive/Desktop/Java-Doc/content/part1-core/42-stream-api-pipeline-fundamentals.md) — How stream pipelines and lazy evaluation function.
-- [Topic 37: The Map Hierarchy](file:///c:/Users/modym/OneDrive/Desktop/Java-Doc/content/part1-core/37-the-map-hierarchy.md) — How maps store key-value groupings.
+- [Topic 42: Stream API: Pipeline Fundamentals](#topic-42) — How stream pipelines and lazy evaluation function.
+- [Topic 37: The Map Hierarchy](#topic-37) — How maps store key-value groupings.
 
 ---
 

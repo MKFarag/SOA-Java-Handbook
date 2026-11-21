@@ -130,19 +130,22 @@ export interface TopicDetail {
   readingTime: string;
   shortDescription: string;
   prerequisites: string[];
-  whatAndWhy: {
+  markdownContent?: string;
+  searchableTerms?: string[];
+  cheatSheetText?: string;
+  whatAndWhy?: {
     definition: string;
     analogy: string;
     whyItExists: string;
   };
-  syntaxBreakdown: SyntaxSection;
-  examples: CodeExample[];
-  commonMistakes: CommonMistake[];
-  bestPractices: BestPracticeGuide;
-  versionNotes: VersionInfo;
-  cheatSheet: SummaryCheatSheet;
-  exercises: TopicExercise[];
-  officialSources: OfficialSource[];
+  syntaxBreakdown?: SyntaxSection;
+  examples?: CodeExample[];
+  commonMistakes?: CommonMistake[];
+  bestPractices?: BestPracticeGuide;
+  versionNotes?: VersionInfo;
+  cheatSheet?: SummaryCheatSheet;
+  exercises?: TopicExercise[];
+  officialSources?: OfficialSource[];
 }
 
 export interface SectionMeta {

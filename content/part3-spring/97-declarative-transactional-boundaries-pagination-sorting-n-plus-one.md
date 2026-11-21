@@ -71,9 +71,9 @@ Consider a bank courier transporting gold bars between bank vaults.
 
 ## 2. Prerequisites
 Before studying transactional boundaries and pagination, ensure you understand:
-- [Topic 61: JDBC Fundamentals & Architecture](file:///c:/Users/modym/OneDrive/Desktop/Java-Doc/content/part1-core/61-jdbc-fundamentals.md) — Raw database transactions and commit/rollback operations.
-- [Topic 95: Spring Data JPA Architecture: Repository Hierarchy & JpaRepository](file:///c:/Users/modym/OneDrive/Desktop/Java-Doc/content/part3-spring/95-spring-data-jpa-architecture-repository-hierarchy-jparepository.md) — Entity lifecycle states and dirty checking.
-- [Topic 96: Automated Derived Query Methods, Dynamic Projections & JPQL @Query](file:///c:/Users/modym/OneDrive/Desktop/Java-Doc/content/part3-spring/96-automated-derived-query-methods-dynamic-projections-jpql-query.md) — Query formulation and projections.
+- [Topic 61: JDBC Fundamentals & Architecture](#topic-61) — Raw database transactions and commit/rollback operations.
+- [Topic 95: Spring Data JPA Architecture: Repository Hierarchy & JpaRepository](#topic-95) — Entity lifecycle states and dirty checking.
+- [Topic 96: Automated Derived Query Methods, Dynamic Projections & JPQL @Query](#topic-96) — Query formulation and projections.
 
 ---
 

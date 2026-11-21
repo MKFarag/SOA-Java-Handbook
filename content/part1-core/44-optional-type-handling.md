@@ -33,8 +33,8 @@ Think of opening a parcel locker at the post office. When you open locker #42, i
 
 ### 2. Prerequisites
 Before studying Optional Type Handling, you should understand:
-- [Topic 40: Lambdas & Functional Interfaces](file:///c:/Users/modym/OneDrive/Desktop/Java-Doc/content/part1-core/40-lambdas-and-functional-interfaces.md) — Passing suppliers and consumers to `Optional` methods.
-- [Topic 16: Classes, Objects & Memory Layout](file:///c:/Users/modym/OneDrive/Desktop/Java-Doc/content/part1-core/16-classes-objects-and-memory-layout.md) — Reference types and null pointers.
+- [Topic 40: Lambdas & Functional Interfaces](#topic-40) — Passing suppliers and consumers to `Optional` methods.
+- [Topic 16: Classes, Objects & Memory Layout](#topic-16) — Reference types and null pointers.
 
 ---
 

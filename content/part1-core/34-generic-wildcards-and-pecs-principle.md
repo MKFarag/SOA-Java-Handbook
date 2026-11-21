@@ -33,8 +33,8 @@ Consider an electrical power strip designed for appliances. If an outlet only ac
 
 ### 2. Prerequisites
 Before studying Wildcards and the PECS Principle, you should understand:
-- [Topic 33: Generics Fundamentals](file:///c:/Users/modym/OneDrive/Desktop/Java-Doc/content/part1-core/33-generics-fundamentals.md) — How type parameters `<T>` provide compile-time safety.
-- [Topic 20: Inheritance & Method Overriding](file:///c:/Users/modym/OneDrive/Desktop/Java-Doc/content/part1-core/20-inheritance-and-method-overriding.md) — How subclassing and subtype polymorphism operate in Java.
+- [Topic 33: Generics Fundamentals](#topic-33) — How type parameters `<T>` provide compile-time safety.
+- [Topic 20: Inheritance & Method Overriding](#topic-20) — How subclassing and subtype polymorphism operate in Java.
 
 ---
 

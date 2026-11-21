@@ -6,7 +6,7 @@ title: JDK vs JRE vs JVM & Setup
 part: 'Part 1: Java Core'
 sectionNumber: 1
 sectionTitle: Foundations & Architecture
-versionBadge: Java 8+
+versionBadge: Java 21 LTS (Baseline) / Java 25 LTS
 difficulty: Beginner
 readingTime: 9 min read
 shortDescription: >-
@@ -69,7 +69,7 @@ To allow your operating system terminal (PowerShell, Command Prompt, bash, or zs
 
 ### 1. `JAVA_HOME`
 An environment variable that points to the root directory where your JDK is installed.
-- **Windows Example:** `C:\Program Files\Java\jdk-26.0.1`
+- **Windows Example:** `C:\Program Files\Java\jdk-21` (or `jdk-25` / `jdk-26`)
 - **Linux/macOS Example:** `/usr/lib/jvm/java-21-openjdk` or `/Library/Java/JavaVirtualMachines/jdk-21.jdk/Contents/Home`
 
 ### 2. `PATH`
@@ -220,10 +220,10 @@ STATUS: [READY] System meets enterprise Java development standards.
 
 - **Java 8 (LTS):** The last major release where standalone JRE downloads were the primary distribution format for end-users.
 - **Java 9:** Introduced the Java Platform Module System (JPMS). Standalone JRE distribution was discontinued; the JDK became the universal developer package, and `jlink` was introduced.
-- **Java 17 (LTS):** Modern LTS standard widely adopted in enterprise systems.
-- **Java 21 (LTS):** Introduced Virtual Threads and modern language syntax.
-- **Java 25 (LTS):** Current major enterprise Long-Term Support baseline.
-- **Java 26:** Current feature release.
+- **Java 17 (LTS):** Previous enterprise LTS standard (Spring Boot 3 minimum baseline).
+- **Java 21 (LTS):** Modern enterprise Long-Term Support baseline (standardized Virtual Threads, Pattern Matching for switch, Record Patterns, Sequenced Collections). Minimum standard for this handbook.
+- **Java 25 (LTS):** Late-2025 enterprise Long-Term Support release with finalized Project Loom, Project Leyden startup, and Project Panama features.
+- **Java 26:** Modern feature release.
 
 | JDK Component | Java 8 | Java 11 | Java 17 | Java 21 | Java 25 / 26 |
 | :--- | :--- | :--- | :--- | :--- | :--- |

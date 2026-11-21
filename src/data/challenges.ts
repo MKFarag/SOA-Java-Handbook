@@ -563,7 +563,7 @@ public class HighPrecisionCurrencyEngine {
       "Using <%= request.getParameter(\"name\") %> directly creates immediate Cross-Site Scripting (XSS) vulnerabilities.",
       "Putting database queries or business calculations directly inside JSP pages violates MVC separation."
     ],
-    prerequisiteTopicIds: ["topic-74","topic-75","topic-76","topic-77","topic-78"],
+    prerequisiteTopicIds: ["topic-74", "topic-75"],
     referenceSolutionCode: "public class DynamicJspCatalogTaglib {\n    public static void main(String[] args) {\n        System.out.println(\"[JSP TRANSLATION] Translated 'catalog.jsp' into 'catalog_jsp.java' servlet bytecode\");\n        System.out.println(\"[RENDER] Evaluating JSTL Core tags <c:forEach var=\"item\" items=\"${products}\">\");\n        System.out.println(\"[TAGLIB] Executed <fmt:currency value=\"1299.99\" currency=\"USD\"/> -> Output: $1,299.99\");\n        System.out.println(\"[TAGLIB] Executed <fmt:currency value=\"849.50\" currency=\"EUR\"/> -> Output: €849.50\");\n        System.out.println(\"[SECURITY] Sanitized malicious product title with <c:out> -> Escaped HTML safe\");\n        System.out.println(\"[VERIFY] Zero scriptlets used; custom tag handler lifecycle verified compliant.\");\n    }\n}",
     solutionArchitectureNotes: "Replacing legacy JSP scriptlets with JSTL and custom tag extensions establishes a clear view-layer boundary, preventing business logic leakage and securing against XSS."
   },
@@ -588,7 +588,7 @@ public class HighPrecisionCurrencyEngine {
       "Failing to close JDBC connections exhausts the pool, freezing the web application under production load.",
       "Forgetting to configure multipart-config causes request.getPart() to return null or throw an exception."
     ],
-    prerequisiteTopicIds: ["topic-79","topic-80","topic-81","topic-82"],
+    prerequisiteTopicIds: ["topic-79", "topic-80", "topic-82"],
     referenceSolutionCode: "public class FullMvcConnectionPoolingApp {\n    public static void main(String[] args) {\n        System.out.println(\"[JNDI POOL] HikariCP / Tomcat Connection Pool initialized (Max: 20, Idle: 5)\");\n        System.out.println(\"[UPLOAD] @MultipartConfig parsed incoming multipart/form-data: avatar.png (124 KB)\");\n        System.out.println(\"[MVC DISPATCH] Model updated in database -> View rendered via /WEB-INF/views/profile.jsp\");\n        System.out.println(\"[FAULT SIMULATION] Handled 404 resource missing -> Dispatched /WEB-INF/errors/404.jsp\");\n        System.out.println(\"[VERIFY] Enterprise MVC architecture and resource pooling verified compliant.\");\n    }\n}",
     solutionArchitectureNotes: "JNDI connection pooling decouples database credentials and pool tuning from application code, allowing operations teams to manage infrastructure resources independently."
   },
@@ -1334,94 +1334,6 @@ public class EnterpriseMicroserviceChallengeDemo {
     "solutionArchitectureNotes": "Combines full-duplex STOMP over WebSockets for interactive trade placement with lightweight Server-Sent Events (SSE) for unidirectional price tickers."
   },
   {
-    "id": "challenge-35",
-    "sectionNumber": 35,
-    "sectionTitle": "Spring Cloud & Microservices Ecosystem (SOA Core)",
-    "part": "Part 3: Spring Boot & Production Stack",
-    "title": "Milestone Challenge 35: Distributed Microservices Cluster with API Gateway, Eureka & Tracing",
-    "scenario": "Orchestrate a complete Spring Cloud microservices cluster: dynamic service registration with Eureka Discovery, intelligent reverse-proxy routing and rate-limiting via Spring Cloud Gateway, centralized dynamic configuration with Spring Cloud Config, declarative inter-service HTTP calls using OpenFeign, and end-to-end distributed trace propagation using Micrometer Tracing with W3C Trace Context headers.",
-    "architecturalConstraints": [
-      "Route client requests through Spring Cloud Gateway with rewritePath and RateLimiter filters.",
-      "Resolve service instances dynamically using lb://service-name with client-side load balancing.",
-      "Propagate traceparent (TraceId and SpanId) across Feign HTTP client calls into SLF4J MDC."
-    ],
-    "expectedOutput": "[GATEWAY] Inbound Request: GET /api/v1/orders/ORD-101\\n - Gateway Route: Matched 'order-route' -> Forwarding to lb://ORDER-SERVICE\\n - Service Discovery: Eureka resolved 'ORDER-SERVICE' to 10.0.1.42:8081\\n - Distributed Trace: traceparent='00-4bf92f3577b34da6a3ce929d0e0e4736-00f067aa0ba902b7-01'\\n - Feign Client: ORDER-SERVICE invoked PAYMENT-SERVICE [200 OK]\\n[CHALLENGE 35] Spring Cloud SOA Cluster: PASSED [COMPLIANT]",
-    "diagnosticHints": [
-      "Use Spring Cloud LoadBalancer to enable client-side load balancing on lb:// URIs.",
-      "Ensure Feign RequestInterceptor injects current traceparent from Tracer or MDC."
-    ],
-    "commonPitfalls": [
-      "Hardcoding service hostnames and ports in inter-service REST clients instead of virtual service names.",
-      "Losing MDC context when executing downstream calls in asynchronous worker threads."
-    ],
-    "prerequisiteTopicIds": [
-      "topic-120",
-      "topic-121",
-      "topic-122",
-      "topic-123",
-      "topic-124"
-    ],
-    "referenceSolutionCode": "import java.util.*;\n\npublic class SpringCloudClusterChallengeDemo {\n\n    public static class DiscoveryRegistry {\n        private final Map<String, String> instances = Map.of(\n            \"ORDER-SERVICE\", \"10.0.1.42:8081\",\n            \"PAYMENT-SERVICE\", \"10.0.1.43:8082\"\n        );\n        public String resolve(String serviceName) { return instances.get(serviceName); }\n    }\n\n    public static void main(String[] args) {\n        DiscoveryRegistry registry = new DiscoveryRegistry();\n        System.out.println(\"[GATEWAY] Inbound Request: GET /api/v1/orders/ORD-101\");\n        System.out.println(\" - Gateway Route: Matched 'order-route' -> Forwarding to lb://ORDER-SERVICE\");\n\n        String ip = registry.resolve(\"ORDER-SERVICE\");\n        System.out.printf(\" - Service Discovery: Eureka resolved 'ORDER-SERVICE' to %s%n\", ip);\n        System.out.println(\" - Distributed Trace: traceparent='00-4bf92f3577b34da6a3ce929d0e0e4736-00f067aa0ba902b7-01'\");\n        System.out.println(\" - Feign Client: ORDER-SERVICE invoked PAYMENT-SERVICE [200 OK]\");\n\n        assert ip != null;\n        System.out.println(\"[CHALLENGE 35] Spring Cloud SOA Cluster: PASSED [COMPLIANT]\");\n    }\n}",
-    "solutionArchitectureNotes": "Implements full-stack Service-Oriented Architecture (SOA) combining Eureka discovery, Gateway routing, Feign clients, and distributed tracing."
-  },
-  {
-    "id": "challenge-36",
-    "sectionNumber": 36,
-    "sectionTitle": "Resilient Messaging & Distributed Transaction Patterns",
-    "part": "Part 3: Spring Boot & Production Stack",
-    "title": "Milestone Challenge 36: Resilient Order Checkout Engine with Outbox & Kafka DLQ",
-    "scenario": "Architect a mission-critical financial order processing pipeline: implement the Transactional Outbox Pattern to guarantee atomic database updates and event publishing without distributed 2PC locks, configure Kafka non-blocking retry topics with exponential backoff routing poison pills to a Dead Letter Queue (DLQ), and coordinate order fulfillment across services via an Orchestrated Saga with automated compensating refunds on inventory failure.",
-    "architecturalConstraints": [
-      "Write business entity and outbox table record within a single local ACID transaction.",
-      "Configure @RetryableTopic(attempts = \"3\", backoff = @Backoff(delay = 1000, multiplier = 2.0)).",
-      "Implement Saga state machine with compensating actions triggered upon downstream rejection."
-    ],
-    "expectedOutput": "[ORDER PIPELINE] Initiating Saga Checkout for Order 'ORD-5541'...\\n - Outbox Commit: Order & OutboxEvent saved in single ACID transaction\\n - CDC Publisher: Outbox record streamed to Kafka 'order-checkout' topic\\n - Consumer Retry: Attempt 1 transient failure -> Retrying with exponential backoff\\n - Saga Orchestrator: Inventory reservation failed -> Triggered COMPENSATE (Payment Refunded)\\n[CHALLENGE 36] Resilient Messaging & Outbox Saga: PASSED [COMPLIANT]",
-    "diagnosticHints": [
-      "Persist outbox records with PROCESSED=false in the same database transaction as the business entity.",
-      "Ensure compensating actions in a Saga are idempotent."
-    ],
-    "commonPitfalls": [
-      "Calling kafkaTemplate.send() directly inside a @Transactional business method (dual-write race condition).",
-      "Missing DLT consumer, causing poison pill events to be discarded without alerting."
-    ],
-    "prerequisiteTopicIds": [
-      "topic-125",
-      "topic-126",
-      "topic-127"
-    ],
-    "referenceSolutionCode": "import java.util.*;\n\npublic class ResilientOutboxSagaChallengeDemo {\n\n    public enum SagaState { STARTED, PAYMENT_DONE, COMPENSATED }\n\n    public static void main(String[] args) {\n        System.out.println(\"[ORDER PIPELINE] Initiating Saga Checkout for Order 'ORD-5541'...\");\n        System.out.println(\" - Outbox Commit: Order & OutboxEvent saved in single ACID transaction\");\n        System.out.println(\" - CDC Publisher: Outbox record streamed to Kafka 'order-checkout' topic\");\n        System.out.println(\" - Consumer Retry: Attempt 1 transient failure -> Retrying with exponential backoff\");\n\n        SagaState state = SagaState.PAYMENT_DONE;\n        // Simulate inventory failure triggering compensation\n        state = SagaState.COMPENSATED;\n        System.out.println(\" - Saga Orchestrator: Inventory reservation failed -> Triggered COMPENSATE (Payment Refunded)\");\n\n        assert state == SagaState.COMPENSATED;\n        System.out.println(\"[CHALLENGE 36] Resilient Messaging & Outbox Saga: PASSED [COMPLIANT]\");\n    }\n}",
-    "solutionArchitectureNotes": "Architects zero-loss distributed event publishing via the Transactional Outbox pattern combined with Kafka retry topics and Saga compensating transactions."
-  },
-  {
-    "id": "challenge-37",
-    "sectionNumber": 37,
-    "sectionTitle": "Cloud-Native Packaging & GraalVM AOT Compilation",
-    "part": "Part 3: Spring Boot & Production Stack",
-    "title": "Milestone Challenge 37: Sub-Second Startup Containerized Microservice via GraalVM Native Image",
-    "scenario": "Package and optimize an enterprise Spring Boot microservice for serverless cloud environments: build an optimized multi-stage Docker container utilizing Spring Boot layered JARs (dependencies, spring-boot-loader, application), enforce non-root security principles, tune JVM cgroup memory ergonomics (-XX:MaxRAMPercentage=75.0), and register Ahead-of-Time (AOT) reflection and resource hints via RuntimeHintsRegistrar to achieve a 35ms cold start with GraalVM Native Image.",
-    "architecturalConstraints": [
-      "Extract layered JAR using jarmode=layertools in multi-stage Dockerfile.",
-      "Run runtime container stage under unprivileged UID 10001 (USER appuser).",
-      "Register custom RuntimeHintsRegistrar declaring reflection metadata for dynamic payload classes."
-    ],
-    "expectedOutput": "[CONTAINER BUILD] Extracting Spring Boot Layered JAR...\\n - Layers: dependencies (cached), spring-boot-loader (cached), application (compiled)\\n - Security: Dropped root privileges -> Running as UID 10001:appuser\\n - GraalVM AOT: RuntimeHintsRegistrar registered 2 reflection & resource hints\\n - Substrate VM: Native executable initialized in 0.034s [Memory: 42 MB RSS]\\n[CHALLENGE 37] Cloud-Native Container & GraalVM AOT: PASSED [COMPLIANT]",
-    "diagnosticHints": [
-      "Pass --no-fallback to native image compiler to prevent silent fallback to standard JVM.",
-      "Set -XX:MaxRAMPercentage=75.0 to size container heap relative to cgroup limits."
-    ],
-    "commonPitfalls": [
-      "Hardcoding -Xmx flags in containerized deployments, ignoring Kubernetes limits.",
-      "Failing to register reflection hints for classes serialized dynamically by Jackson."
-    ],
-    "prerequisiteTopicIds": [
-      "topic-128",
-      "topic-129"
-    ],
-    "referenceSolutionCode": "import java.util.*;\n\npublic class CloudNativeGraalVmChallengeDemo {\n\n    public record NativeBuildProfile(boolean layered, boolean nonRoot, boolean aotRegistered, double startupSec) {}\n\n    public static void main(String[] args) {\n        System.out.println(\"[CONTAINER BUILD] Extracting Spring Boot Layered JAR...\");\n        System.out.println(\" - Layers: dependencies (cached), spring-boot-loader (cached), application (compiled)\");\n        System.out.println(\" - Security: Dropped root privileges -> Running as UID 10001:appuser\");\n        System.out.println(\" - GraalVM AOT: RuntimeHintsRegistrar registered 2 reflection & resource hints\");\n        System.out.println(\" - Substrate VM: Native executable initialized in 0.034s [Memory: 42 MB RSS]\");\n\n        NativeBuildProfile profile = new NativeBuildProfile(true, true, true, 0.034);\n        assert profile.layered() && profile.nonRoot() && profile.startupSec() < 0.1;\n\n        System.out.println(\"[CHALLENGE 37] Cloud-Native Container & GraalVM AOT: PASSED [COMPLIANT]\");\n    }\n}",
-    "solutionArchitectureNotes": "Validates production Docker layered packaging, unprivileged container security, and GraalVM Native Image AOT compilation for instantaneous startup."
-  },
-  {
     "id": "challenge-38",
     "sectionNumber": 38,
     "sectionTitle": "Database Fundamentals & Relational Systems (MySQL & SQL)",
@@ -1444,9 +1356,11 @@ public class EnterpriseMicroserviceChallengeDemo {
       "Executing UPDATE statements without a WHERE clause."
     ],
     "prerequisiteTopicIds": [
-      "topic-130",
-      "topic-131",
-      "topic-132"
+      "topic-120",
+      "topic-122",
+      "topic-123",
+      "topic-127",
+      "topic-128"
     ],
     "referenceSolutionCode": "import java.util.*;\n\npublic class RelationalBankingChallengeDemo {\n    public record Account(long id, String email, double balance) {}\n\n    public static void main(String[] args) {\n        System.out.println(\"[MYSQL PERSISTENCE] Connecting to MySQL on Port 3306...\");\n        System.out.println(\" - HikariCP Pool: 10 connections pre-allocated (Max Lifetime: 1200000ms)\");\n        System.out.println(\" - Schema: 'customers' & 'accounts' tables created with InnoDB foreign key constraints\");\n        System.out.println(\" - Index: Composite B-Tree index 'idx_accounts_tenant_status' created (0 hops)\");\n        System.out.println(\" - Transaction: Atomic funds transfer $250.00 from Acct 101 to Acct 102 COMMITTED\");\n        System.out.println(\"[CHALLENGE 38] Relational SQL & MySQL Persistence: PASSED [COMPLIANT]\");\n    }\n}",
     "solutionArchitectureNotes": "Validates relational schema integrity, HikariCP connection pool tuning, B-Tree index optimization, and ACID transactional boundary management."
@@ -1474,8 +1388,9 @@ public class EnterpriseMicroserviceChallengeDemo {
       "Omitting $set in update operations, resulting in document overwrite."
     ],
     "prerequisiteTopicIds": [
-      "topic-133",
-      "topic-134"
+      "topic-129",
+      "topic-130",
+      "topic-131"
     ],
     "referenceSolutionCode": "import java.util.*;\n\npublic class MongoDbAnalyticsChallengeDemo {\n    public static void main(String[] args) {\n        System.out.println(\"[MONGODB STORE] Connecting to MongoDB Replica Set on Port 27017...\");\n        System.out.println(\" - Connection URI: mongodb://cluster0.mongodb.net/shop?authSource=admin&w=majority\");\n        System.out.println(\" - ODM Mapping: @Document 'products' mapped with 12-byte BSON ObjectId and @CompoundIndex\");\n        System.out.println(\" - Atomic Update: Decremented stock for SKU 'LAPTOP-X1' via MongoTemplate ($inc -1)\");\n        System.out.println(\" - Aggregation Pipeline: Executed $match -> $group -> $project -> $sort across collections\");\n        System.out.println(\"[CHALLENGE 39] MongoDB Document Analytics Store: PASSED [COMPLIANT]\");\n    }\n}",
     "solutionArchitectureNotes": "Validates MongoDB BSON document modeling, replica set write concern consensus, in-place atomic mutations, and multi-stage aggregation pipeline analysis."

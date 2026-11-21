@@ -6,7 +6,7 @@ title: ClassLoaders & JIT Compilation
 part: 'Part 1: Java Core'
 sectionNumber: 14
 sectionTitle: JVM Internals & Memory Architecture
-versionBadge: Java 1.0+ / Enhanced Java 9 & 21
+versionBadge: Java 21 LTS Baseline
 difficulty: Advanced
 readingTime: 13 min read
 shortDescription: >-
@@ -207,8 +207,9 @@ Class<?> c2 = loader2.loadClass("com.example.User");
 - **Java 1.0**: ClassLoader parent delegation model introduced.
 - **Java 7**: Tiered Compilation introduced.
 - **Java 8**: Tiered Compilation enabled by default (`-XX:+TieredCompilation`).
-- **Java 9**: Extension ClassLoader renamed to **Platform ClassLoader** as part of JPMS (Project Jigsaw).
-- **Java 17 / 21**: GraalVM JIT compiler maturity; Ahead-Of-Time (AOT) compilation and native image generation via Graal.
+- **Java 9**: Extension ClassLoader replaced by **Platform ClassLoader** as part of JPMS (Project Jigsaw).
+- **Java 17 / 21 LTS**: GraalVM JIT compiler maturity; Ahead-Of-Time (AOT) compilation and Dynamic Class Data Sharing (`-XX:ArchiveClassesAtExit=app-cds.jsa`).
+- **Java 25 LTS**: Project Leyden optimizations delivering instant container startup with pre-computed classloader and JIT caches.
 
 ---
 

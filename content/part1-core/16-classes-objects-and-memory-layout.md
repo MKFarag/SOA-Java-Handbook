@@ -49,10 +49,10 @@ Procedural programming separates data from the algorithms that operate on that d
 ### Declaration and Instantiation
 ```java
 public class FleetVehicle {
-    // 1. Static Field: Shared across all instances in Metaspace/Heap
+    // 1. Static Field: Stored on the Java Heap (attached to FleetVehicle.class object)
     private static int totalFleetCount = 0;
 
-    // 2. Instance Fields: Unique to each heap object
+    // 2. Instance Fields: Unique to each heap object instance
     private final String vin;
     private double fuelPercent;
 
@@ -70,10 +70,16 @@ public class FleetVehicle {
 | **Reference Variable** (`truck`) | Thread Call Stack | Destroyed immediately when enclosing method stack frame pops. |
 | **Object Instance** | JVM Heap | Persists until unreachable by any living GC root. |
 | **Instance Fields** (`vin`, `fuelPercent`) | Embedded inside Heap Object | Created and destroyed with the enclosing object. |
-| **Static Fields** (`totalFleetCount`) | Class Metadata / Metaspace | Created when class is loaded by ClassLoader; lives until unloaded. |
+| **Static Fields** (`totalFleetCount`) | Java Heap (inside `Class` object) | Initialized when class is initialized; lives as long as the class loader exists. |
+| **Class Metadata** (bytecode, method signatures) | Metaspace (Native OS Memory) | Loaded by ClassLoader; unloads only if class loader is garbage-collected. |
+
+> [!IMPORTANT] Architectural Distinction: Metaspace vs Java Heap
+> Prior to Java 8, static variables and class metadata both resided in the Permanent Generation (PermGen). With Java 8 (JEP 122), PermGen was removed:
+> - **Metaspace (Native Memory):** Stores only class metadata, bytecode definitions, method signatures, and the runtime constant pool.
+> - **Java Heap:** Stores all **static fields** as fields of the `java.lang.Class` mirror object. Because static variables reside on the Heap, any objects they reference are standard heap objects tracked by JVM Garbage Collection.
 
 ### Object Identity vs State Equality
-- `==` operator: Compares **memory address references**. `a == b` is `true` if and only if both variables point to the exact same physical byte address on the Heap.
+- `==` operator: Compares **reference identity**. `a == b` evaluates to `true` if and only if both variables reference the **exact same object instance on the JVM Heap**. Java deliberately abstracts away hardware addresses, so `==` tests object identity rather than physical hardware memory addresses.
 - `.equals(Object obj)`: Compares **logical state values**. Classes override this method to determine whether two distinct objects hold equivalent data.
 
 ---
@@ -113,8 +119,8 @@ public class ClassMemoryLayout {
         System.out.println("Total Instances (Static): " + ClassMemoryLayout.getTotalInstancesCreated());
 
         System.out.println("\n=== 2. Reference Assignment & Aliasing ===");
-        ClassMemoryLayout alias = obj1; // Both pointers reference identical heap address
-        System.out.println("obj1 == alias: " + (obj1 == alias) + " (Identical heap memory address)");
+        ClassMemoryLayout alias = obj1; // Both reference variables point to the exact same heap instance
+        System.out.println("obj1 == alias: " + (obj1 == alias) + " (Same object instance identity)");
         System.out.println("obj1 == obj2: " + (obj1 == obj2) + " (Distinct heap objects)");
 
         alias.setLabel("Alpha-Modified");
@@ -135,7 +141,7 @@ obj2 -> id: 2, label: 'Beta'
 Total Instances (Static): 2
 
 === 2. Reference Assignment & Aliasing ===
-obj1 == alias: true (Identical heap memory address)
+obj1 == alias: true (Same object instance identity)
 obj1 == obj2: false (Distinct heap objects)
 After mutating via alias -> obj1 label is: Alpha-Modified
 
@@ -230,13 +236,13 @@ When executing `FleetVehicle truck1 = new FleetVehicle("1HGCR2F83HA001", ...);`:
      - Padding to 8-byte alignment.
 
 2. Heap Allocation:
-   - JVM zero-initializes allocated heap bytes at address @0x4B20.
+   - JVM allocates object layout on the Heap and zero-initializes field values (conceptually tracked as heap instance `#Obj_01`).
 
 3. Constructor Invocation:
    - Initializes fields with supplied parameters.
 
 4. Reference Assignment:
-   - Variable 'truck1' on the main() stack frame receives memory address @0x4B20.
+   - Variable 'truck1' on the main() stack frame receives the reference value pointing to `#Obj_01` on the Heap.
 ```
 
 ---
@@ -248,7 +254,7 @@ When executing `FleetVehicle truck1 = new FleetVehicle("1HGCR2F83HA001", ...);`:
 FleetVehicle vehicle = null;
 vehicle.updateTelemetry(10.0, 20.0, 5.0); // RUNTIME ERROR
 ```
-**Why it fails:** `vehicle` points to memory address `0x00`. Dereferencing `null` throws `NullPointerException`.
+**Why it fails:** `vehicle` holds the `null` reference (it does not point to any valid object instance on the Heap). Attempting to dereference `null` throws `NullPointerException`.
 **How to fix:** Always instantiate the object or perform defensive null checks (`if (vehicle != null)`).
 
 ### Mistake 2: Accessing Static Members via Object References
@@ -286,8 +292,8 @@ int count = obj.getTotalInstancesCreated(); // WARNING: static method accessed v
 | :--- | :--- | :--- |
 | **Class** | Metaspace | Blueprint defining state and behavior; loaded once per classloader. |
 | **Object** | Heap | Concrete runtime instance created with `new`. |
-| **Reference** | Stack | Pointer variable holding the 64-bit address of an object on the heap. |
-| **Static Field** | Metaspace / Heap | Single shared value shared across all instances of the class. |
+| **Reference** | Stack | Variable holding an abstract reference (compressed OOP or 64-bit reference) pointing to a Heap object. |
+| **Static Field** | Java Heap (in `Class` object) | Single shared field value attached to the java.lang.Class instance on the Heap. |
 | **Instance Field** | Inside Heap Object | Distinct value for every instantiated object. |
 
 ---
@@ -309,7 +315,7 @@ public class EqualityTrap {
 <summary>View Solution</summary>
 
 **Output:** `false`.
-**Explanation:** `==` compares object references (memory addresses). `p1` and `p2` were allocated separately using `new`, giving them distinct heap addresses. To compare coordinate values, `Point` must override `.equals()`, and callers must write `p1.equals(p2)`.
+**Explanation:** `==` compares reference identity (whether both reference variables refer to the exact same object instance on the Heap). Because `p1` and `p2` were allocated via separate `new` expressions, they reference two distinct object instances on the Heap. Therefore, `p1 == p2` evaluates to `false`. To compare coordinate values, `Point` must override `.equals()`, and callers must write `p1.equals(p2)`.
 </details>
 
 ---

@@ -88,9 +88,9 @@ Consider a modern luxury apartment tower (**The SaaS Infrastructure**).
 
 ## 2. Prerequisites
 Before studying multi-tenancy, ensure you have mastered:
-- [Topic 82: JDBC Connection Pooling in Web Applications](file:///c:/Users/modym/OneDrive/Desktop/Java-Doc/content/part2-jakarta/82-jdbc-connection-pooling.md) — HikariCP pool architecture.
-- [Topic 91: Externalized Configuration, YAML Hierarchies & Multi-Profile Deployment](file:///c:/Users/modym/OneDrive/Desktop/Java-Doc/content/part3-spring/91-externalized-configuration-yaml-hierarchies-multi-profile.md) — Dynamic datasource binding.
-- [Topic 95: Spring Data JPA Architecture: Repository Hierarchy & JpaRepository](file:///c:/Users/modym/OneDrive/Desktop/Java-Doc/content/part3-spring/95-spring-data-jpa-architecture-repository-hierarchy-jparepository.md) — Persistence contexts and repository execution.
+- [Topic 82: JDBC Connection Pooling in Web Applications](#topic-82) — HikariCP pool architecture.
+- [Topic 91: Externalized Configuration, YAML Hierarchies & Multi-Profile Deployment](#topic-91) — Dynamic datasource binding.
+- [Topic 95: Spring Data JPA Architecture: Repository Hierarchy & JpaRepository](#topic-95) — Persistence contexts and repository execution.
 
 ---
 

@@ -40,7 +40,108 @@ Imagine arriving at a border customs checkpoint. The customs officer hands you a
 
 ---
 
-### 3. Syntax Breakdown
+### 3. Syntax Breakdown & API Reference
+
+#### 3.0.1 Core `HttpServletRequest` Reference Table
+
+The `jakarta.servlet.http.HttpServletRequest` interface abstracts client request data. Methods are categorized by operational domain:
+
+| Category | Method Signature | Return Type | Description & Operational Behavior | Edge Cases & Gotchas |
+| :--- | :--- | :--- | :--- | :--- |
+| **Parameters** | `getParameter(String name)` | `String` | Retrieves single value from URL query string or `application/x-www-form-urlencoded` POST body. | Returns `null` if parameter does not exist. Returns `""` (empty string) if present without value (`?flag=`). Truncates multi-value parameters to first value. |
+| **Parameters** | `getParameterValues(String name)` | `String[]` | Retrieves all values associated with key (e.g., multi-select inputs, checkboxes). | Returns `null` if parameter is absent. Never throws exception on missing parameter. |
+| **Parameters** | `getParameterMap()` | `Map<String, String[]>` | Returns immutable map of all parameter names and value arrays. | Container map is read-only; calling `.put()` throws `UnsupportedOperationException`. |
+| **Parameters** | `getQueryString()` | `String` | Returns raw, unparsed query string from request URL (e.g. `"id=10&cat=books"`). | Does NOT include POST body parameters. Returns `null` if URL lacks query string. |
+| **Headers** | `getHeader(String name)` | `String` | Retrieves value of specified incoming HTTP header. | Header lookup is **case-insensitive** per RFC 9110 (`"accept"` matches `"Accept"`). Returns `null` if absent. |
+| **Headers** | `getHeaders(String name)` | `Enumeration<String>` | Retrieves all values for headers that appear multiple times (e.g. `Accept`, `Via`). | Returns empty `Enumeration` if header is not present. |
+| **Headers** | `getIntHeader(String name)` | `int` | Convenience parser converting header value to integer. | Returns `-1` if absent. Throws `NumberFormatException` if header value is non-numeric. |
+| **Headers** | `getDateHeader(String name)` | `long` | Parses RFC 1123/850 HTTP date strings into epoch milliseconds. | Returns `-1L` if absent. Throws `IllegalArgumentException` if value cannot be parsed as date. |
+| **Attributes** | `getAttribute(String name)` | `Object` | Retrieves server-side Java object bound to request scope by container or filters. | **`getAttribute` vs `getParameter`**: `getParameter` reads HTTP string data from client wire; `getAttribute` reads server-side JVM objects set via `setAttribute`. |
+| **Attributes** | `setAttribute(String name, Object o)` | `void` | Binds Java object to request scope; shared across `forward()` and `include()`. | Bound objects survive internal forwards but are garbage-collected once request finishes. Passing `null` removes attribute. |
+| **Attributes** | `removeAttribute(String name)` | `void` | Unbinds named attribute from request scope. | No-op if attribute name does not exist. |
+| **Cookies** | `getCookies()` | `Cookie[]` | Returns array of all cookies sent by client in incoming `Cookie` header. | **Null Array Trap**: Returns **`null`** (NOT empty array!) if client sent no cookies. Always null-check (`req.getCookies() != null`) before iterating. |
+| **Session** | `getSession(boolean create)` | `HttpSession` | Retrieves active user session; if none exists, creates new session only if `create` is `true`. | Pass `false` in read-only auth checks to prevent session fixation and avoid wasteful memory allocation for anonymous requests. |
+| **Session** | `getSession()` | `HttpSession` | Equivalent to `getSession(true)`. Returns active session or creates new one. | Automatically issues `JSESSIONID` cookie if new session is created. |
+| **Security** | `getUserPrincipal()` | `Principal` | Returns authenticated user credentials object. | Returns `null` if request is unauthenticated. |
+| **Security** | `isUserInRole(String role)` | `boolean` | Checks if authenticated caller belongs to container-managed security role. | Returns `false` if caller is not authenticated. |
+| **Security** | `isSecure()` | `boolean` | Returns `true` if request was transmitted over secure channel (HTTPS/TLS). | May return `false` behind reverse proxies unless `X-Forwarded-Proto` valve is active. |
+| **Path/URI** | `getContextPath()` | `String` | Web application context root prefix (e.g. `"/myapp"`). | Returns `""` (empty string) for default root application context. |
+| **Path/URI** | `getServletPath()` | `String` | Path portion matching current servlet mapping (e.g. `"/api"`). | Useful for sub-routing inside single servlet. |
+| **Path/URI** | `getRequestURI()` | `String` | Full path from context root to query string (e.g. `"/myapp/api/users"`). | Percent-encoded; does not include host or query string. |
+| **Path/URI** | `getRequestURL()` | `StringBuffer` | Reconstructs full URL including protocol, server host, port, and path. | Does NOT include query string; returns mutable `StringBuffer`. |
+| **Streams** | `getReader()` | `BufferedReader` | Character stream for reading text payloads (JSON, XML). | **Stream Conflict**: Throws `IllegalStateException` if `getInputStream()` was already called on this request. |
+| **Streams** | `getInputStream()` | `ServletInputStream` | Raw byte stream for binary payloads (file uploads, images). | **Stream Conflict**: Throws `IllegalStateException` if `getReader()` was already called on this request. |
+
+---
+
+#### 3.0.2 Core `HttpServletResponse` Reference Table
+
+The `jakarta.servlet.http.HttpServletResponse` interface controls headers, status codes, and outbound byte/character payloads:
+
+| Category | Method Signature | Return Type | Description & Operational Behavior | Edge Cases & Gotchas |
+| :--- | :--- | :--- | :--- | :--- |
+| **Status** | `setStatus(int sc)` | `void` | Sets HTTP status code (e.g. `SC_OK`, `SC_CREATED`). | Does NOT commit response or render error page. Ignored if response is already committed. |
+| **Status** | `sendError(int sc, String msg)` | `void` | Clears response buffer, sets error status, and renders container error page. | **Commits Response**: Immediately commits response. Throws `IllegalStateException` if response already committed. |
+| **Status** | `sendRedirect(String location)` | `void` | Issues HTTP 302 Found redirect with `Location` header. | **Commits Response**: Clears buffer and commits. Relative paths resolve against current request URI. Throws `IllegalStateException` if committed. |
+| **Headers** | `setHeader(String name, String val)` | `void` | Sets response header, **overwriting** any previous value for that header name. | Case-insensitive header name matching. Must be called **before** response is committed. |
+| **Headers** | `addHeader(String name, String val)` | `void` | Appends value to response header, supporting multi-value headers. | Ideal for headers like `Set-Cookie` or `Cache-Control`. |
+| **Headers** | `setContentType(String type)` | `void` | Sets MIME type (e.g. `"application/json"`, `"text/html"`). | May specify character encoding (e.g. `"text/html;charset=UTF-8"`). Must precede `getWriter()` call. |
+| **Headers** | `setCharacterEncoding(String charset)` | `void` | Explicitly configures text encoding (e.g. `"UTF-8"`). | Must be called **before** `getWriter()` is invoked; otherwise has no effect on writer encoding. |
+| **Headers** | `setContentLengthLong(long len)` | `void` | Sets `Content-Length` header in bytes for large payloads. | Overrides chunked transfer encoding if buffer holds entire payload. |
+| **Headers** | `addCookie(Cookie cookie)` | `void` | Appends `Set-Cookie` header to response. | Can be invoked multiple times for distinct cookies. Must precede response commitment. |
+| **Streams** | `getWriter()` | `PrintWriter` | Character stream for writing text, HTML, and JSON responses. | **Mutual Exclusivity Trap**: Throws `IllegalStateException` if `getOutputStream()` was already called! |
+| **Streams** | `getOutputStream()` | `ServletOutputStream` | Binary byte stream for streaming files, PDFs, or media bytes. | **Mutual Exclusivity Trap**: Throws `IllegalStateException` if `getWriter()` was already called! |
+| **Buffer** | `isCommitted()` | `boolean` | Returns `true` if HTTP headers and status code have already been written to wire socket. | Once `isCommitted() == true`, status codes and headers are immutable; reset calls fail. |
+| **Buffer** | `flushBuffer()` | `void` | Forces buffered response content to be written to client network socket. | Calling `flushBuffer()` causes response to commit (`isCommitted() == true`). |
+| **Buffer** | `reset()` | `void` | Clears buffer data, status code, and all response headers. | Throws `IllegalStateException` if response has already committed. |
+| **Buffer** | `resetBuffer()` | `void` | Clears payload content buffer while preserving status code and headers. | Throws `IllegalStateException` if response has already committed. |
+
+---
+
+#### 3.0.3 HTTP Status Codes Reference Table
+
+Standard HTTP status codes defined as constants on `jakarta.servlet.http.HttpServletResponse`:
+
+| Status Code | Constant Identifier | Standard Reason | Category | Specification Behavior & Enterprise Use Case |
+| :---: | :--- | :--- | :--- | :--- |
+| **200** | `SC_OK` | OK | Success (2xx) | Standard successful response for `GET`, `PUT`, or `POST` returning a body. Cacheable per `Cache-Control`. |
+| **201** | `SC_CREATED` | Created | Success (2xx) | Confirms resource successfully created via `POST` or `PUT`. **Requirement**: Should include `Location` header pointing to new resource URI. |
+| **204** | `SC_NO_CONTENT` | No Content | Success (2xx) | Request processed successfully; response body is **strictly empty**. Used for `DELETE` operations or UI actions where view does not change. |
+| **301** | `SC_MOVED_PERMANENTLY` | Moved Permanently | Redirection (3xx) | Resource permanently relocated. Clients and search engines cache this redirect indefinitely; subsequent requests use new URI. |
+| **302** | `SC_FOUND` | Found (Temp Redirect) | Redirection (3xx) | Standard temporary redirect used by `resp.sendRedirect()`. Central to the Post-Redirect-Get (PRG) pattern to prevent duplicate form submission. |
+| **400** | `SC_BAD_REQUEST` | Bad Request | Client Error (4xx) | Malformed syntax, invalid query parameters, or unparseable JSON/XML payload. Client should not retry without modification. |
+| **401** | `SC_UNAUTHORIZED` | Unauthorized | Client Error (4xx) | Authentication credentials missing or invalid. **Requirement**: Response must include `WWW-Authenticate` header describing authentication challenge. |
+| **403** | `SC_FORBIDDEN` | Forbidden | Client Error (4xx) | Caller identity is authenticated, but lacks authorization/permission for the resource. Resubmitting with same credentials will fail. |
+| **404** | `SC_NOT_FOUND` | Not Found | Client Error (4xx) | Target endpoint or resource URI does not exist on server. Default container fallback for unmapped paths. |
+| **500** | `SC_INTERNAL_SERVER_ERROR` | Internal Server Error | Server Error (5xx) | Uncaught runtime exception thrown by servlet, filter, or backend database. Container displays error page or invokes `<error-page>`. |
+
+---
+
+#### 3.0.4 Output Stream Mutual Exclusivity: `getWriter()` vs `getOutputStream()`
+
+The Jakarta Servlet specification (Section 5.5) enforces a strict binary-or-character stream mutual exclusivity contract:
+
+| Stream Method | Return Type | Intended Media Types | Container Internal Flag | Invalidation Condition |
+| :--- | :--- | :--- | :--- | :--- |
+| **`response.getWriter()`** | `java.io.PrintWriter` | Text, HTML, JSON, XML, CSS, JS | Marks response as character-driven (`usingWriter = true`) | Throws `IllegalStateException` if `getOutputStream()` was already called on this response. |
+| **`response.getOutputStream()`** | `jakarta.servlet.ServletOutputStream` | Binary files, PDF, PNG, ZIP, raw byte streams | Marks response as byte-driven (`usingStream = true`) | Throws `IllegalStateException` if `getWriter()` was already called on this response. |
+
+> ⚠️ **The Mutual Exclusivity Trap (`IllegalStateException`):**
+> 
+> ```java
+> // DANGEROUS PITFALL: Mixing streams causes immediate runtime failure
+> PrintWriter writer = response.getWriter();
+> ServletOutputStream out = response.getOutputStream(); 
+> // java.lang.IllegalStateException: getWriter() has already been called for this response
+> ```
+> 
+> **Why it occurs in enterprise applications:**
+> 1. An audit/logging Filter opens `response.getOutputStream()` to calculate response byte size or apply GZIP compression.
+> 2. The downstream target Servlet or JSP view calls `response.getWriter()` to output HTML or JSON.
+> 3. The container throws `IllegalStateException`, aborting the request.
+> 
+> **Architectural Solution:**
+> When a Filter or framework needs to intercept, buffer, or modify response payloads, use **`HttpServletResponseWrapper`** to wrap the response and capture output into an in-memory `ByteArrayOutputStream`, preventing stream state conflicts.
 
 #### 3.1 Extracting Parameters and Headers
 ```java

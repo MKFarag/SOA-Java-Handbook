@@ -2,22 +2,23 @@
 id: topic-80
 slug: form-handling-validation-and-file-uploads
 topicNumber: 80
-title: 'Form Handling, Validation & Multipart File Uploads'
+title: Form Handling, Multipart Uploads & Declarative Error Pages
 part: 'Part 2: Java EE & Jakarta EE'
 sectionNumber: 22
 sectionTitle: Production Web Development
 versionBadge: Jakarta EE 10+ / Servlet 6.0
 difficulty: Intermediate
-readingTime: 14 min read
+readingTime: 16 min read
 shortDescription: >-
-  Process HTML form submissions, execute server-side data validation, and handle
-  binary file uploads with @MultipartConfig and the Part API.
+  Master production form processing: parse multipart file uploads with
+  @MultipartConfig, validate inputs, handle file size limits, and declare web.xml
+  custom error pages.
 prerequisites:
-  - 'Topic 67: Request & Response Processing'
+  - 'Topic 67: Request and Response Processing in Servlets'
   - 'Topic 79: The Web MVC Pattern'
 relevanceLevel: MUST-KNOW / CORE
 ---
-# Topic 80: Form Handling, Validation & Multipart File Uploads
+# Topic 80: Form Handling, Multipart Uploads & Declarative Error Pages
 
 > 🎯 **Roadmap Seal:** **`[MUST-KNOW / CORE]`** — *Essential modern foundation required for backend roles. Master this thoroughly.*
 
@@ -28,23 +29,31 @@ Web applications receive user-submitted input through two primary encoding mecha
 
 The Jakarta Servlet specification provides built-in mechanisms to parse both: standard form fields via `req.getParameter(name)` and binary multipart files via `@MultipartConfig` and `req.getPart(name)`.
 
+Furthermore, production applications must handle failures—such as validation errors, missing resources (404), or uncaught exceptions (500)—gracefully without leaking server stack traces to users. The Jakarta Servlet specification provides **declarative error page mapping** via `web.xml`, enabling the web container to automatically intercept HTTP status codes and uncaught `Throwable` exceptions and dispatch them to custom branded error views.
+
 ### Real-World Analogy
 Think of shipping a care package at a post office:
 - A standard letter (`application/x-www-form-urlencoded`) contains only flat textual words on single paper.
 - A boxed parcel (`multipart/form-data`) contains distinct compartments: one envelope holding your paper letter (metadata), another holding a USB drive (binary file), and a third holding a physical item, all sealed within one master delivery box divided by cardboard dividers (multipart boundaries).
+- If the parcel is damaged or rejected (system fault), the post office does not throw internal logistics paperwork and conveyor belt blueprints onto the street; instead, it delivers a polite, standardized notification slip (**declarative error page**) directing you to customer service.
 
 ### Why It Exists
 Before Servlet 3.0, handling file uploads in Java required heavy third-party libraries like Apache Commons FileUpload. Modern Jakarta EE standardizes native container-level multipart parsing with direct memory-to-disk streaming, configurable memory thresholds, and file-size quotas.
 
+Simultaneously, declarative error handling centralizes failure management at the container level. Individual Servlets do not need repetitive `try-catch` blocks returning custom HTML error markup. The container manages error forwarding automatically, populating the JSP `ErrorData` object with status codes, request URIs, and root causes while preventing information disclosure vulnerabilities (OWASP A05: Security Misconfiguration).
+
 ---
 
 ## 2. Prerequisites
-- **Topic 67: Request & Response Processing:** Reading query parameters and handling POST bodies.
+- **Topic 67: Request and Response Processing in Servlets:** Reading query parameters and handling POST bodies.
+- **Topic 79: The Web MVC Pattern:** Dispatching models and views via Controllers.
 - **Topic 45: Classic I/O Streams:** Reading and copying byte streams with `InputStream` and `Files.copy()`.
 
 ---
 
 ## 3. Syntax Breakdown
+
+### 3.1 Multipart Configuration (`@MultipartConfig`)
 ```java
 @WebServlet("/upload")
 @MultipartConfig(
@@ -64,7 +73,7 @@ public class UploadServlet extends HttpServlet {
 }
 ```
 
-### Key Elements Explained
+#### Key Elements Explained
 - `@MultipartConfig`: Class-level annotation alerting the web container to instantiate multipart parsers for incoming `multipart/form-data` requests.
 - `fileSizeThreshold`: Files smaller than this byte limit remain in RAM; larger files are spooled to temporary container disk files.
 - `req.getPart("document")`: Retrieves the `jakarta.servlet.http.Part` handle matching the HTML `<input type="file" name="document">` form element.
@@ -73,9 +82,52 @@ public class UploadServlet extends HttpServlet {
 
 ---
 
+### 3.2 Declarative Error Page Mapping (`web.xml`)
+Centralized error boundaries configured in the application deployment descriptor:
+
+```xml
+<!-- web.xml Declarative Error Page Configuration -->
+<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee" version="6.0">
+
+    <!-- 1. HTTP 404 Not Found Mapping -->
+    <error-page>
+        <error-code>404</error-code>
+        <location>/WEB-INF/errors/404.jsp</location>
+    </error-page>
+
+    <!-- 2. HTTP 500 Internal Server Error Mapping -->
+    <error-page>
+        <error-code>500</error-code>
+        <location>/WEB-INF/errors/500.jsp</location>
+    </error-page>
+
+    <!-- 3. Java Exception Hierarchy Fallback -->
+    <error-page>
+        <exception-type>java.lang.Throwable</exception-type>
+        <location>/WEB-INF/errors/500.jsp</location>
+    </error-page>
+
+    <!-- 4. Multipart File Size Quota Exceeded Mapping -->
+    <error-page>
+        <exception-type>java.lang.IllegalStateException</exception-type>
+        <location>/WEB-INF/errors/upload-limit.jsp</location>
+    </error-page>
+
+</web-app>
+```
+
+#### Error Data Implicit Model (`pageContext.errorData`)
+When an error page is triggered (`<%@ page isErrorPage="true" %>`), the container populates `ErrorData`:
+- `pageContext.errorData.statusCode`: HTTP status integer (e.g., `404`, `500`).
+- `pageContext.errorData.requestURI`: Original URI that triggered the failure.
+- `pageContext.errorData.throwable`: The caught `Throwable` root cause exception.
+- `pageContext.errorData.servletName`: Name of the servlet where the exception was thrown.
+
+---
+
 ## 4. Runnable Examples
 
-### Example 1: Basic Multipart File Upload Servlet
+### Example 1: Basic Multipart File Upload Servlet with Validation
 ```java
 package com.handbook.web;
 
@@ -148,11 +200,6 @@ public class FileUploadServlet extends HttpServlet {
     <label>Document: <input type="file" name="document" /></label>
     <button type="submit">Upload File</button>
 </form>
-```
-
-#### Expected Output
-```text
-SUCCESS: Uploaded 'report.pdf' (145230 bytes) with description: 'Q3 Financial Audit'
 ```
 
 ---
@@ -235,34 +282,79 @@ public class FormValidationServiceDemo {
 }
 ```
 
-#### Expected Output
-```text
-=== Form Handling & Multipart Validation Demo ===
-Valid submission errors: 0
-Invalid submission caught errors (4):
-  - Invalid email address format.
-  - Invalid role specified. Allowed: [DEVELOPER, ARCHITECT, OPERATOR]
-  - Experience years must be between 0 and 50.
-  - Directory traversal vulnerability detected in filename.
-Multipart streaming verification successful: 48 bytes processed.
+---
+
+### Example 3: Fault Trigger Servlet & Container Error JSP View
+```java
+package com.handbook.web;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
+@WebServlet(name = "FaultTriggerServlet", urlPatterns = {"/fault"})
+public class FaultTriggerServlet extends HttpServlet {
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String type = req.getParameter("type");
+        if ("404".equals(type)) {
+            resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Requested entity does not exist.");
+            return;
+        }
+        if ("runtime".equals(type)) {
+            throw new RuntimeException("Simulated NullPointerException inside business workflow.");
+        }
+        resp.setContentType("text/plain");
+        resp.getWriter().println("Normal execution: No faults triggered.");
+    }
+}
+```
+
+#### Custom Error View (`/WEB-INF/errors/500.jsp`)
+```jsp
+<%@ page isErrorPage="true" contentType="text/html;charset=UTF-8" language="java" %>
+<!DOCTYPE html>
+<html>
+<head><title>500 - Server Application Error</title></head>
+<body>
+    <h1>Application Error (500)</h1>
+    <p>Target URI: <code>${pageContext.errorData.requestURI}</code></p>
+    <p>Status Code: <strong>${pageContext.errorData.statusCode}</strong></p>
+    <p>Root Cause: <em>${pageContext.errorData.throwable.message}</em></p>
+</body>
+</html>
 ```
 
 ---
 
-## 5. Step-by-Step "What Happens When This Runs"
+## 5. Step-by-Step Execution Trace
+
+### File Upload Processing Flow:
 1. **Client Submits Form:** Browser bundles form parts with boundary markers (e.g., `--WebKitFormBoundary7MA4YWxkTrZu0gW`).
-2. **Container Verifies Configuration:** Tomcat checks for `@MultipartConfig` or `<multipart-config>` on the target Servlet.
+2. **Container Verifies Configuration:** Tomcat checks for `@MultipartConfig` on the target Servlet.
 3. **MIME Boundaries Parsed:** The container splits the raw TCP stream into individual headers and bodies.
-4. **Size Enforced:** If a file exceeds `maxFileSize`, an `IllegalStateException` or `MaxUploadSizeExceededException` is thrown before user logic runs.
+4. **Size Enforced:** If a file exceeds `maxFileSize`, an `IllegalStateException` is thrown before user logic runs.
 5. **Memory Spooling:** Payloads smaller than `fileSizeThreshold` stay in RAM buffers; larger payloads stream to disk temp files.
 6. **Execution Delegated:** `doPost()` runs, granting access to `req.getParameter()` and `req.getPart()`.
-7. **Cleanup:** When request processing finishes, the container deletes temporary disk spool files automatically.
+7. **Cleanup:** When request processing finishes, temporary disk spool files are deleted.
+
+### Declarative Error Handling Flow:
+1. **Fault Eruption:** A servlet throws an uncaught `RuntimeException` or invokes `resp.sendError(404)`.
+2. **Container Boundary Interception:** Tomcat catches the fault before closing the HTTP response.
+3. **Descriptor Matching:** The container searches `web.xml` `<error-page>` entries:
+   - First matches exact HTTP status code (`<error-code>404</error-code>`).
+   - If uncaught exception, checks `<exception-type>` hierarchy (most specific matching subtype).
+4. **Internal Error Dispatch:** Container creates an `ErrorData` wrapper and forwards internally to the designated `<location>` JSP.
+5. **Sanitized Response Delivered:** The client receives a polished error page with status 404 or 500 and zero sensitive stack traces.
 
 ---
 
 ## 6. Common Mistakes and Solutions
 
-### Mistake 1: Missing `@MultipartConfig` annotation on Servlet
+### Mistake 1: Missing `@MultipartConfig` Annotation on Servlet
 **Symptom:** Calling `req.getPart("file")` throws `ServletException: UT010057: multipart config was not present on Servlet` or `java.lang.IllegalStateException: No multipart config for servlet`.
 **Cause:** Without `@MultipartConfig`, the web container treats the incoming body as a raw unparsed byte stream and refuses multipart calls.
 **Solution:** Always annotate file upload Servlets with `@MultipartConfig`.
@@ -277,14 +369,19 @@ Files.copy(part.getInputStream(), target);
 **Cause:** Malicious clients can submit filenames like `../../../../usr/bin/malware`. If used directly, attackers overwrite system executables.
 **Solution:** Strip directory prefixes using `new File(filename).getName()` or validate that `filename` does not contain `..` or path separators.
 
+### Mistake 3: Unhandled Multipart Size Exceptions Crashing with Raw 500
+**Cause:** When an uploaded file exceeds `maxFileSize`, Tomcat throws an `IllegalStateException` during `req.getPart()`. If unhandled, this defaults to an ugly container stack trace.
+**Solution:** Configure a declarative `<error-page>` mapping for `java.lang.IllegalStateException` or map HTTP 413 / 500 in `web.xml`.
+
 ---
 
 ## 7. Best Practices and When NOT to Use It
 
 ### Best Practices
 - Always enforce strict `maxFileSize` and `maxRequestSize` quotas to prevent Denial of Service (DoS) attacks.
-- Store uploaded files outside the web root (`/WEB-INF/` or dedicated object storage) so users cannot execute arbitrary uploaded scripts.
+- Store uploaded files outside the public web root (`/WEB-INF/` or dedicated object storage) so users cannot execute arbitrary uploaded scripts.
 - Validate file extensions and magic bytes (MIME type verification).
+- Place error JSPs inside `/WEB-INF/errors/` so users cannot access error pages directly via URL.
 
 ### When NOT to Use It
 - Do not store multi-gigabyte video or backup files directly in local application servers. Use direct-to-cloud presigned URLs (AWS S3, Google Cloud Storage) to offload upload bandwidth from your web container.
@@ -294,18 +391,22 @@ Files.copy(part.getInputStream(), target);
 ## 8. Version Notes
 - **Servlet 3.0 (Java EE 6):** Introduced standard `@MultipartConfig` and `Part` interface.
 - **Jakarta EE 10 / Servlet 6.0:** Deprecated legacy wrapper classes; fully migrated to `jakarta.servlet.http.Part`.
-- **Status:** Stable standard web API.
+- **Status:** Stable modern standard web API.
 
 ---
 
 ## 9. Summary Cheat Sheet
-| Method / Attribute | Purpose | Typical Value / Return |
+
+| Directive / Method | Scope / Location | Operational Behavior |
 |---|---|---|
-| `@MultipartConfig(maxFileSize)` | Caps individual file size | `10 * 1024 * 1024` (10 MB) |
-| `@MultipartConfig(fileSizeThreshold)` | Max RAM buffer before disk spooling | `1024 * 1024` (1 MB) |
-| `req.getPart(name)` | Retrieves single file part | `Part` instance |
-| `part.getSubmittedFileName()` | Client's original filename | `"avatar.png"` |
-| `part.getInputStream()` | Reads byte payload directly | `InputStream` |
+| `@MultipartConfig(maxFileSize)` | Servlet Class | Caps individual file size (e.g. 10 MB) |
+| `@MultipartConfig(fileSizeThreshold)` | Servlet Class | Max RAM buffer before disk spooling (e.g. 1 MB) |
+| `req.getPart("name")` | Servlet `doPost` | Retrieves single uploaded file part |
+| `part.getSubmittedFileName()` | `Part` handle | Original client-side filename |
+| `<error-page><error-code>` | `web.xml` | Maps HTTP status code (404, 500) to view |
+| `<error-page><exception-type>` | `web.xml` | Maps Java exception class to error view |
+| `${pageContext.errorData.statusCode}` | Error JSP (`isErrorPage="true"`) | Returns HTTP status code integer |
+| `${pageContext.errorData.requestURI}` | Error JSP | Returns original requested URI |
 
 ---
 
@@ -324,10 +425,10 @@ p.write("/var/www/html/" + p.getSubmittedFileName());
 2. **Arbitrary Code Execution:** Saving uninspected uploads directly into the public web root (`/var/www/html/`) allows an attacker to upload a `.jsp` file and execute arbitrary shell commands on the server.
 </details>
 
-### Exercise 2: Hands-on Implementation
+### Exercise 2: Hands-on Implementation (Quota & Error Configuration)
 <details>
 <summary>View Solution</summary>
-**Question:** Write an `@MultipartConfig` declaration that allows maximum 2 MB per file, 5 MB total request size, and keeps files under 500 KB entirely in memory.
+**Question:** Write an `@MultipartConfig` declaration that allows maximum 2 MB per file, 5 MB total request size, and keeps files under 500 KB entirely in memory, along with the `web.xml` snippet to catch upload overflow exceptions.
 
 **Solution:**
 ```java
@@ -336,6 +437,12 @@ p.write("/var/www/html/" + p.getSubmittedFileName());
     maxFileSize = 2 * 1024 * 1024,
     maxRequestSize = 5 * 1024 * 1024
 )
+```
+```xml
+<error-page>
+    <exception-type>java.lang.IllegalStateException</exception-type>
+    <location>/WEB-INF/errors/file-too-large.jsp</location>
+</error-page>
 ```
 </details>
 
@@ -363,5 +470,6 @@ try {
 ---
 
 ## 11. Sources
-- [Jakarta Servlet 6.0 Specification - Multipart](https://jakarta.ee/specifications/servlet/6.0/)
+- [Jakarta Servlet 6.0 Specification - Multipart & Error Handling](https://jakarta.ee/specifications/servlet/6.0/)
 - [OWASP File Upload Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html)
+- [OWASP Error Handling & Logging Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Error_Handling_Cheat_Sheet.html)

@@ -33,8 +33,8 @@ Think of an indexed ledger or a notebook where every line is numbered. When you 
 
 ### 2. Prerequisites
 Before studying the List Hierarchy, you should understand:
-- [Topic 33: Generics Fundamentals](file:///c:/Users/modym/OneDrive/Desktop/Java-Doc/content/part1-core/33-generics-fundamentals.md) — How generic type parameters `<E>` provide type safety.
-- [Topic 14: One-Dimensional Arrays](file:///c:/Users/modym/OneDrive/Desktop/Java-Doc/content/part1-core/14-one-dimensional-arrays.md) — Array indexing and memory layout.
+- [Topic 33: Generics Fundamentals](#topic-33) — How generic type parameters `<E>` provide type safety.
+- [Topic 14: One-Dimensional Arrays](#topic-14) — Array indexing and memory layout.
 
 ---
 

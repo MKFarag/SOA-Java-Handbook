@@ -46,9 +46,9 @@ Imagine an automotive assembly plant. **Lombok** is an automated robotic arm tha
 
 ## 2. Prerequisites
 Before mastering Lombok and MapStruct, ensure you understand:
-- [Topic 16: Classes, Objects & Memory Layout](file:///c:/Users/modym/OneDrive/Desktop/Java-Doc/content/part1-core/16-classes-objects-and-memory-layout.md) — How fields, accessors, and constructors interact in the JVM heap.
-- [Topic 26: Java Records](file:///c:/Users/modym/OneDrive/Desktop/Java-Doc/content/part1-core/26-records.md) — Immutability and modern data carrier semantics.
-- [Topic 58: Annotations & Metadata](file:///c:/Users/modym/OneDrive/Desktop/Java-Doc/content/part1-core/58-annotations-and-metadata.md) — How compile-time annotation processors (JSR-269) inspect source code.
+- [Topic 16: Classes, Objects & Memory Layout](#topic-16) — How fields, accessors, and constructors interact in the JVM heap.
+- [Topic 26: Java Records](#topic-26) — Immutability and modern data carrier semantics.
+- [Topic 58: Annotations & Metadata](#topic-58) — How compile-time annotation processors (JSR-269) inspect source code.
 
 ---
 

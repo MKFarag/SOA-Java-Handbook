@@ -33,8 +33,8 @@ Think of a VIP club guest list. An usher checking entries with a `HashSet` uses 
 
 ### 2. Prerequisites
 Before studying the Set Hierarchy, you should understand:
-- [Topic 33: Generics Fundamentals](file:///c:/Users/modym/OneDrive/Desktop/Java-Doc/content/part1-core/33-generics-fundamentals.md) — How type parameters `<E>` ensure element safety.
-- [Topic 19: Encapsulation & Data Integrity](file:///c:/Users/modym/OneDrive/Desktop/Java-Doc/content/part1-core/19-encapsulation-and-data-integrity.md) — The importance of `equals()` and `hashCode()` contracts.
+- [Topic 33: Generics Fundamentals](#topic-33) — How type parameters `<E>` ensure element safety.
+- [Topic 19: Encapsulation & Data Integrity](#topic-19) — The importance of `equals()` and `hashCode()` contracts.
 
 ---
 

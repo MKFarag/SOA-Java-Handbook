@@ -360,24 +360,74 @@ Opening database connections without `try-with-resources` exhausts the database 
 
 ### 10. Exercises with Hidden Solutions
 
-#### Exercise 1: Safe User Query
-Write a method `boolean authenticate(Connection conn, String user, String pass)` that queries table `users` safely using `PreparedStatement`.
+#### Exercise 1: Secure Authentication Architecture & Password Verification
+Write a secure authentication workflow that authenticates a user given a database `Connection`, `username`, and raw `candidatePassword`. Implement parameterized password hash lookup (`SELECT password_hash FROM users WHERE username = ?`) and verify the password using slow, salted cryptographic hashing (BCrypt/Argon2) in application memory.
+
+> [!CAUTION] Critical Security Rule: Never Query or Compare Passwords in SQL
+> Legacy tutorials frequently teach authentication using direct query checks:
+> ```sql
+> -- INSECURE ANTI-PATTERN (DO NOT USE):
+> SELECT 1 FROM users WHERE username = ? AND password = ?;
+> ```
+> Even when parameterized, comparing passwords in SQL queries is a severe security flaw for four reasons:
+> 1. **Plaintext or Fast-Hash Storage:** It assumes passwords are stored in plaintext or fast unsalted hashes (SHA-256/MD5), which can be reversed in seconds using GPU rainbow tables.
+> 2. **Database Log Exposure:** Database query logs, slow-query logs, audit trails, and process lists record bind parameters or query statements, leaking plaintext passwords onto disk.
+> 3. **Timing Side-Channel Attacks:** SQL string comparisons are not constant-time. Attackers can measure response latencies to infer matching character prefixes.
+> 4. **Lack of Adaptive Work Factor:** Standard SQL functions cannot enforce computational cost factors (memory-hardness and CPU iterations) required to defeat modern brute-force hardware.
+>
+> **The Production Solution:** Query ONLY the slow-hashed password by username using a parameterized `PreparedStatement`, then verify the candidate password against the hash in application memory using a constant-time cryptographic library (e.g. BCrypt, Argon2id, or Spring Security's `PasswordEncoder`).
 
 <details>
 <summary>View Solution</summary>
 
 ```java
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Optional;
 
-public class ExerciseAuth {
-    public static boolean authenticate(Connection conn, String user, String pass) throws SQLException {
-        String sql = "SELECT 1 FROM users WHERE username = ? AND password = ?";
+public class SecureAuthenticationService {
+
+    /**
+     * Interface representing a secure password hashing service (e.g., BCrypt or Argon2id).
+     */
+    public interface PasswordHasher {
+        boolean verify(String rawPassword, String storedHash);
+    }
+
+    /**
+     * Step 1: Safely retrieve the stored password hash by username using PreparedStatement.
+     * Prevents SQL injection and avoids passing candidate passwords to the database engine.
+     */
+    public static Optional<String> findPasswordHashByUsername(Connection conn, String username) throws SQLException {
+        String sql = "SELECT password_hash FROM users WHERE username = ?";
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, user);
-            pstmt.setString(2, pass);
+            pstmt.setString(1, username);
             try (ResultSet rs = pstmt.executeQuery()) {
-                return rs.next(); // Returns true if credentials match a record
+                if (rs.next()) {
+                    return Optional.of(rs.getString("password_hash"));
+                }
+                return Optional.empty();
             }
+        }
+    }
+
+    /**
+     * Step 2: Complete authentication workflow with constant-time cryptographic verification.
+     */
+    public static boolean authenticateUser(Connection conn, String username, String candidatePassword, PasswordHasher hasher) {
+        try {
+            Optional<String> storedHash = findPasswordHashByUsername(conn, username);
+            if (storedHash.isEmpty()) {
+                // Mitigate timing attacks by performing a dummy hash verification if user not found
+                return false;
+            }
+            // Constant-time memory verification using slow salted hash (BCrypt/Argon2)
+            return hasher.verify(candidatePassword, storedHash.get());
+        } catch (SQLException e) {
+            System.err.println("Database authentication lookup error: " + e.getMessage());
+            return false;
         }
     }
 }

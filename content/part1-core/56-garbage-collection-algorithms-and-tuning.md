@@ -6,7 +6,7 @@ title: Garbage Collection Algorithms & Tuning
 part: 'Part 1: Java Core'
 sectionNumber: 14
 sectionTitle: JVM Internals & Memory Architecture
-versionBadge: Java 1.0+ / ZGC in Java 21 LTS
+versionBadge: Java 21 LTS Baseline / Java 25 LTS
 difficulty: Intermediate
 readingTime: 13 min read
 shortDescription: >-
@@ -63,8 +63,8 @@ Java provides four levels of reference reachability:
 #### 3.3 Modern Garbage Collectors
 - **Serial GC (`-XX:+UseSerialGC`)**: Single-threaded collector designed for small heaps (< 100 MB) or single-core CLI tools.
 - **Parallel GC (`-XX:+UseParallelGC`)**: Multi-threaded young and old generation collector optimized for maximum batch throughput, accepting longer Stop-The-World (STW) pauses.
-- **G1 GC (`-XX:+UseG1GC`)**: Default since Java 9. Divides the heap into thousands of equal-sized regions. Predictable pause times configured via `-XX:MaxGCPauseMillis=200`.
-- **ZGC (`-XX:+UseZGC`)**: Ultra-low latency, concurrent generational collector (Java 21 LTS). Performs almost all marking, relocation, and reference processing concurrently with sub-millisecond maximum pause times regardless of heap size (from megabytes to 16 terabytes!).
+- **G1 GC (`-XX:+UseG1GC`)**: Standard default server collector since Java 9 through Java 21/25 LTS. Dynamically partitions the heap into equal-sized regions (1MB to 32MB) and collects regions with the most garbage first ("Garbage-First"). Configurable target pause times via `-XX:MaxGCPauseMillis=200`.
+- **Generational ZGC (`-XX:+UseZGC -XX:+ZGenerational` in Java 21 LTS; default mode in Java 23/25 LTS)**: Ultra-low latency concurrent collector. Separates young and old generation collections concurrently using colored pointers and load barriers, guaranteeing sub-millisecond maximum Stop-The-World pause times (< 1 ms) across multi-terabyte heaps.
 - **Shenandoah GC (`-XX:+UseShenandoahGC`)**: Ultra-low latency collector developed by Red Hat, performing concurrent compaction.
 
 ---
@@ -227,8 +227,9 @@ public void processBatch() {
 - **Java 9**: G1 GC became the default collector (replacing Parallel GC); `finalize()` marked deprecated.
 - **Java 11**: ZGC and Shenandoah introduced as experimental features.
 - **Java 15**: ZGC and Shenandoah graduated to production status.
-- **Java 21 (LTS)**: Generational ZGC introduced via JEP 439, separating young and old generation concurrent collection.
-- **Java 18+**: `finalize()` deprecated for removal via JEP 421.
+- **Java 18 (JEP 421)**: `finalize()` deprecated for removal; disabled by default via `-XX:Finalization=disabled`.
+- **Java 21 LTS (JEP 439)**: Generational ZGC introduced (`-XX:+UseZGC -XX:+ZGenerational`).
+- **Java 25 LTS**: Generational mode became the non-optional standard for ZGC; non-generational ZGC removed.
 
 ---
 

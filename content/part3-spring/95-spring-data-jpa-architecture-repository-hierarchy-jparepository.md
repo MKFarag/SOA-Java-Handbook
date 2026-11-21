@@ -56,9 +56,9 @@ Consider a modern automated parcel fulfillment logistics facility.
 
 ## 2. Prerequisites
 Before diving into Spring Data JPA architecture, ensure you have mastered:
-- [Topic 61: JDBC Fundamentals & Architecture](file:///c:/Users/modym/OneDrive/Desktop/Java-Doc/content/part1-core/61-jdbc-fundamentals.md) — Relational drivers, connection pools, and SQL transactions.
-- [Topic 83: Jakarta Persistence (JPA) & Hibernate ORM](file:///c:/Users/modym/OneDrive/Desktop/Java-Doc/content/part2-jakarta/83-jakarta-persistence-jpa-hibernate.md) — ORM entity mapping, `EntityManager`, and persistence contexts.
-- [Topic 89: Component Scanning, Injection Strategies & Bean Lifecycle Callbacks](file:///c:/Users/modym/OneDrive/Desktop/Java-Doc/content/part3-spring/89-component-scanning-injection-strategies-bean-lifecycle.md) — Container scanning, proxy creation, and dependency injection.
+- [Topic 61: JDBC Fundamentals & Architecture](#topic-61) — Relational drivers, connection pools, and SQL transactions.
+- [Topic 83: Jakarta Persistence (JPA) & Hibernate ORM](#topic-83) — ORM entity mapping, `EntityManager`, and persistence contexts.
+- [Topic 89: Component Scanning, Injection Strategies & Bean Lifecycle Callbacks](#topic-89) — Container scanning, proxy creation, and dependency injection.
 
 ---
 

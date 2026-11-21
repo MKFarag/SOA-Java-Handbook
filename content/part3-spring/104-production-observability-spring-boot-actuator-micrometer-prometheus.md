@@ -47,9 +47,9 @@ Observability is the cockpit flight instrument panel of a commercial passenger j
 
 ## 2. Prerequisites
 Before studying Actuator and Micrometer, you should understand:
-- [Topic 48: Threads & Multithreading](file:///c:/Users/modym\OneDrive\Desktop\Java-Doc\content\part1-core\48-threads-and-thread-lifecycle.md) — Understanding thread pools, locks, and CPU execution.
-- [Topic 88: Spring Core & ApplicationContext](file:///c:/Users/modym\OneDrive\Desktop\Java-Doc\content\part3-spring\88-spring-framework-core-beanfactory-vs-applicationcontext.md) — Spring bean lifecycles and event publication.
-- [Topic 90: Auto-Configuration Mechanics](file:///c:/Users/modym\OneDrive\Desktop\Java-Doc\content\part3-spring\90-auto-configuration-mechanics-starters-embedded-runtimes.md) — How Spring Boot enables management endpoints automatically.
+- [Topic 48: Threads & Multithreading](#topic-48) — Understanding thread pools, locks, and CPU execution.
+- [Topic 88: Spring Core & ApplicationContext](#topic-88) — Spring bean lifecycles and event publication.
+- [Topic 90: Auto-Configuration Mechanics](#topic-90) — How Spring Boot enables management endpoints automatically.
 
 ---
 

@@ -6,7 +6,7 @@ title: Pattern Matching for Switch & Records
 part: 'Part 1: Java Core'
 sectionNumber: 8
 sectionTitle: Modern Java Data Modeling
-versionBadge: Java 21+
+versionBadge: Java 21 LTS
 difficulty: Intermediate
 readingTime: 11 min read
 shortDescription: >-
@@ -247,8 +247,9 @@ If a switch does not declare `case null` and receives a `null` argument, it imme
 ---
 
 ## 8. Version Notes
-- **Java 17/18/19/20:** Pattern matching in switch previewed across JEPs 406, 420, 427, 433.
-- **Java 21 LTS (JEP 440 & JEP 441):** Record Patterns and Pattern Matching for `switch` officially finalized as core stable language features.
+- **Java 17/18 (JEP 406 & 420):** Pattern matching for switch previewed using early `&&` guard syntax (e.g. `case Triangle t && t.base() > 0`), which was later abandoned.
+- **Java 19/20 (JEP 427 & 433):** Guard syntax transitioned to `when` clauses (`case Type t when condition`).
+- **Java 21 LTS (JEP 440 & JEP 441):** Record Patterns (JEP 440) and Pattern Matching for `switch` (JEP 441) officially finalized as core stable language features with `when` guard clauses.
 - **Java 22 (JEP 456):** Unnamed variables and patterns (`_`) finalized.
 
 ---

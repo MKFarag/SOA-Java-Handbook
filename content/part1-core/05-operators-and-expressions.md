@@ -83,6 +83,133 @@ In Java, if both operands are integers, the division operator `/` performs **int
 | **13** | `? :` | Ternary conditional | Right to Left |
 | **14 (Lowest)** | `=`, `+=`, `-=`, `*=`, `/=`, `%=` | Assignment operators | Right to Left |
 
+### Math Utilities Reference: `java.lang.Math`
+
+When basic operators (`+`, `-`, `*`, `/`, `%`) are insufficient for algorithmic and scientific calculations, Java provides `java.lang.Math` containing static, thread-safe utility methods and mathematical constants (`Math.PI`, `Math.E`):
+
+| Method | Parameter Types | Returns | Mathematical Operation | Example Invocation | Result | Notes & Edge Cases |
+| :--- | :--- | :---: | :--- | :--- | :--- | :--- |
+| **`Math.abs(x)`** | `int`, `long`, `float`, `double` | Same type | Absolute value $\|x\|$ | `Math.abs(-42)` | `42` | **Warning:** `Math.abs(Integer.MIN_VALUE)` overflows and returns `Integer.MIN_VALUE`! |
+| **`Math.max(a, b)`** | `int`, `long`, `float`, `double` | Same type | Greater of two numbers | `Math.max(10, 25)` | `25` | Returns `NaN` if either operand is `Float.NaN` / `Double.NaN`. |
+| **`Math.min(a, b)`** | `int`, `long`, `float`, `double` | Same type | Lesser of two numbers | `Math.min(10, 25)` | `10` | Follows IEEE 754 floating-point specifications. |
+| **`Math.pow(a, b)`** | `double a, double b` | `double` | Base $a$ raised to exponent $b$ ($a^b$) | `Math.pow(2.0, 8.0)` | `256.0` | Both arguments are converted to `double`. |
+| **`Math.sqrt(x)`** | `double x` | `double` | Principal square root $\sqrt{x}$ | `Math.sqrt(49.0)` | `7.0` | Returns `Double.NaN` if $x < 0.0$. |
+| **`Math.round(x)`** | `float` $\rightarrow$ `int`<br>`double` $\rightarrow$ `long` | `int` / `long` | Rounds to nearest whole integer | `Math.round(4.6)`<br>`Math.round(4.4)` | `5`<br>`4` | Adds $0.5$ and executes `floor()`. Ties round towards positive infinity. |
+| **`Math.floor(x)`** | `double x` | `double` | Largest integer $\le x$ | `Math.floor(4.9)`<br>`Math.floor(-4.1)` | `4.0`<br>`-5.0` | Rounds downwards towards negative infinity. |
+| **`Math.ceil(x)`** | `double x` | `double` | Smallest integer $\ge x$ | `Math.ceil(4.1)`<br>`Math.ceil(-4.9)` | `5.0`<br>`-4.0` | Rounds upwards towards positive infinity. |
+| **`Math.random()`** | None | `double` | Pseudorandom value $\in [0.0, 1.0)$ | `(int)(Math.random() * 100)` | `0 to 99` | Backed by internal `Random` instance. Inclusive of 0.0, exclusive of 1.0. |
+| **`Math.clamp(v, min, max)`** *(Java 21+)* | `int`, `long`, `float`, `double` | Same type | Clamps value within `[min, max]` range | `Math.clamp(120, 0, 100)` | `100` | Eliminates verbose nested `Math.min(Math.max(...))` boilerplate. |
+| **`Math.addExact(x, y)`** | `int`, `long` | Same type | Adds with integer overflow detection | `Math.addExact(2000000000, 1000000000)` | Throws `ArithmeticException` | Prevents silent two's-complement overflow wrap-arounds. |
+
+---
+
+### Financial & High-Precision Arithmetic with `BigDecimal`
+
+In enterprise banking, e-commerce checkouts, and accounting systems, using primitive `float` or `double` is **strictly prohibited**.
+
+#### Why `double` Loses Precision: The IEEE 754 Binary Floating-Point Flaw
+
+Computers represent numbers using binary bits (base-2). Just as the fraction $\frac{1}{3}$ cannot be represented finitely in decimal notation ($0.333333\dots$), simple decimal fractions like $0.1 = \frac{1}{10}$ and $0.2 = \frac{1}{5}$ have **no finite representation in binary**:
+$$0.1_{10} = 0.000110011001100110011\dots_2$$
+
+Because IEEE 754 64-bit floating-point numbers must truncate after 53 mantissa bits, small rounding errors accumulate:
+```java
+// THE FLOATING POINT PRECISION DISASTER:
+System.out.println(0.1 + 0.2); 
+// Prints: 0.30000000000000004  (NOT 0.3!)
+
+double price = 1.00;
+double item = 0.90;
+System.out.println(price - item);
+// Prints: 0.09999999999999998  (A penny vanishes into thin air!)
+```
+In high-volume payment processing, accumulating fractional cents leads to reconciliation failures and regulatory accounting audit penalties.
+
+#### Constructing `BigDecimal`: The Golden Rule
+
+`java.math.BigDecimal` provides arbitrary-precision signed decimal numbers. However, **how you construct a `BigDecimal` makes the difference between exact math and corrupt data**:
+
+| Constructor / Factory | Safe? | Code Example | Internal Stored Value | Verdict |
+| :--- | :---: | :--- | :--- | :--- |
+| **`new BigDecimal(String)`** | **YES** | `new BigDecimal("0.1")` | `0.1` | **Recommended.** Exact decimal string representation. |
+| **`BigDecimal.valueOf(double)`** | **YES** | `BigDecimal.valueOf(0.1)` | `0.1` | **Recommended.** Converts double to canonical string before creation. |
+| **`new BigDecimal(double)`** | ❌ **NO** | `new BigDecimal(0.1)` | `0.1000000000000000055511151231257827021181583404541015625` | ❌ **FORBIDDEN.** Directly embeds the imprecise IEEE 754 double value into `BigDecimal`! |
+
+#### Comprehensive `BigDecimal` Core Methods Reference Table
+
+`BigDecimal` instances are **immutable**. Every arithmetic method returns an entirely new `BigDecimal` instance:
+
+| Method | Parameters | Returns | Description & Real-World Use Case |
+| :--- | :--- | :---: | :--- |
+| **`.add(augend)`** | `BigDecimal` | `BigDecimal` | Sum: this + augend. |
+| **`.subtract(subtrahend)`** | `BigDecimal` | `BigDecimal` | Difference: this - subtrahend. |
+| **`.multiply(multiplicand)`** | `BigDecimal` | `BigDecimal` | Product: this $\times$ multiplicand. Scale of result = `this.scale() + multiplicand.scale()`. |
+| **`.divide(divisor, scale, roundingMode)`** | `BigDecimal, int, RoundingMode` | `BigDecimal` | Quotient: this $\div$ divisor, rounded to `scale` decimal places using specified `RoundingMode`. |
+| **`.setScale(newScale, roundingMode)`** | `int, RoundingMode` | `BigDecimal` | Adjusts decimal places, applying rounding rules for currency display (e.g. 2 decimal places for USD/EUR). |
+| **`.compareTo(val)`** | `BigDecimal` | `int` | **Numerical comparison.** Returns `-1` if `< val`, `0` if numerical values equal, `1` if `> val`. Ignores scale differences. |
+| **`.equals(obj)`** | `Object` | `boolean` | **Warning:** Compares both numerical value **and scale**. `new BigDecimal("2.0").equals(new BigDecimal("2.00"))` is `false`! Always use `.compareTo()` for equality. |
+
+> [!WARNING] The Fatal Non-Terminating Division Exception
+> Calling `a.divide(b)` without specifying a scale and rounding mode throws `java.lang.ArithmeticException: Non-terminating decimal expansion; no exact representable decimal result.` whenever the division results in a repeating decimal (such as dividing $10$ by $3$):
+> ```java
+> BigDecimal a = new BigDecimal("10.00");
+> BigDecimal b = new BigDecimal("3.00");
+> 
+> // CRASHES: ArithmeticException: Non-terminating decimal expansion!
+> // BigDecimal broken = a.divide(b); 
+> 
+> // ROBUST FIX: Always supply scale and RoundingMode:
+> BigDecimal safeResult = a.divide(b, 2, RoundingMode.HALF_UP); // Yields 3.33
+> ```
+
+#### Rounding Modes Cheat-Sheet (`java.math.RoundingMode`)
+
+| Mode | Behavior | Example ($2.45 \rightarrow 1$ decimal) | Example ($2.44 \rightarrow 1$ decimal) | Best For |
+| :--- | :--- | :---: | :---: | :--- |
+| **`RoundingMode.HALF_UP`** | Standard commercial rounding. Rounds towards nearest neighbor, or away from zero if equidistant ($\ge 0.5$). | `2.5` | `2.4` | **Standard financial accounting, invoice calculations, and consumer checkouts.** |
+| **`RoundingMode.HALF_EVEN`** | **Banker's Rounding.** Rounds towards nearest neighbor, or towards nearest even neighbor if equidistant. | `2.4` (even) | `2.4` | Minimizes statistical cumulative bias over millions of financial transactions (IEEE 754 default). |
+| **`RoundingMode.DOWN`** | Truncation. Rounds towards zero (discards all trailing fractional digits). | `2.4` | `2.4` | Tax calculation floors, reward point thresholds. |
+| **`RoundingMode.UP`** | Rounds away from zero. | `2.5` | `2.5` | Penalty fees, conservative liability estimates. |
+
+#### Complete Production Financial Calculation Example
+
+```java
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
+public class FinancialInvoiceCalculator {
+    public static void main(String[] args) {
+        BigDecimal unitPrice = BigDecimal.valueOf(19.99);
+        BigDecimal quantity = BigDecimal.valueOf(3);
+        BigDecimal discountRate = new BigDecimal("0.10"); // 10% discount
+        BigDecimal salesTaxRate = new BigDecimal("0.0825"); // 8.25% state tax
+
+        // 1. Subtotal = unitPrice * quantity
+        BigDecimal subtotal = unitPrice.multiply(quantity);
+
+        // 2. Discount amount = subtotal * discountRate (Round to 2 decimal places)
+        BigDecimal discount = subtotal.multiply(discountRate).setScale(2, RoundingMode.HALF_UP);
+        BigDecimal discountedSubtotal = subtotal.subtract(discount);
+
+        // 3. Tax amount = discountedSubtotal * salesTaxRate
+        BigDecimal tax = discountedSubtotal.multiply(salesTaxRate).setScale(2, RoundingMode.HALF_UP);
+
+        // 4. Final Total = discountedSubtotal + tax
+        BigDecimal total = discountedSubtotal.add(tax);
+
+        // 5. Split bill among 3 payment cards (divide with scale and rounding)
+        BigDecimal perPerson = total.divide(BigDecimal.valueOf(3), 2, RoundingMode.HALF_UP);
+
+        System.out.printf("Subtotal           : $%s%n", subtotal);
+        System.out.printf("Discount (10%%)     : -$%s%n", discount);
+        System.out.printf("Discounted Subtotal: $%s%n", discountedSubtotal);
+        System.out.printf("Tax (8.25%%)        : +$%s%n", tax);
+        System.out.printf("Final Total        : $%s%n", total);
+        System.out.printf("Split (3 persons)  : $%s each%n", perPerson);
+    }
+}
+```
+
 ---
 
 ## 4. Fully Runnable Code Examples

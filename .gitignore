@@ -27,7 +27,13 @@ dist-ssr
 # External tools and downloaded servers
 tools/
 
-# Local compiled classes and demo war artifacts
+# Compiled Java class files
+*.class
+**/*.class
+examples/core/*.class
+examples/spring/*.class
+examples/databases/*.class
+examples/enterprise/*.class
 examples/web/classes/
 examples/web/war-build/
 examples/web/*.war

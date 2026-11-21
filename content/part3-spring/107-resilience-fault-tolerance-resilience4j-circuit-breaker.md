@@ -42,9 +42,9 @@ Think of an electrical **circuit breaker** in your home's breaker panel. If an o
 
 ## 2. Prerequisites
 Before studying Resilience4j, you should understand:
-- [Topic 29: The Java Exception Hierarchy](file:///c:/Users/modym\OneDrive\Desktop\Java-Doc\content\part1-core\29-the-java-exception-hierarchy.md) — Checked vs unchecked exceptions and exception propagation.
-- [Topic 48: Threads & Multithreading](file:///c:/Users/modym\OneDrive\Desktop\Java-Doc\content\part1-core\48-threads-and-thread-lifecycle.md) — Thread pools, blocking I/O, and worker thread starvation.
-- [Topic 89: Component Scanning & Injection Strategies](file:///c:/Users/modym\OneDrive\Desktop\Java-Doc\content\part3-spring\89-component-scanning-injection-strategies-bean-lifecycle.md) — Spring AOP proxy interception mechanics.
+- [Topic 29: The Java Exception Hierarchy](#topic-29) — Checked vs unchecked exceptions and exception propagation.
+- [Topic 48: Threads & Multithreading](#topic-48) — Thread pools, blocking I/O, and worker thread starvation.
+- [Topic 89: Component Scanning & Injection Strategies](#topic-89) — Spring AOP proxy interception mechanics.
 
 ---
 

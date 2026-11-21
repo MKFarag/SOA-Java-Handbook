@@ -53,9 +53,9 @@ Consider assembling a custom burger at a gourmet restaurant.
 
 ## 2. Prerequisites
 Before studying dynamic specifications, ensure you have mastered:
-- [Topic 83: Jakarta Persistence (JPA) & Hibernate ORM](file:///c:/Users/modym/OneDrive/Desktop/Java-Doc/content/part2-jakarta/83-jakarta-persistence-jpa-hibernate.md) — JPA entity mappings and persistence criteria basics.
-- [Topic 95: Spring Data JPA Architecture: Repository Hierarchy & JpaRepository](file:///c:/Users/modym/OneDrive/Desktop/Java-Doc/content/part3-spring/95-spring-data-jpa-architecture-repository-hierarchy-jparepository.md) — Repository hierarchy and dynamic proxy mechanics.
-- [Topic 96: Automated Derived Query Methods, Dynamic Projections & JPQL @Query](file:///c:/Users/modym/OneDrive/Desktop/Java-Doc/content/part3-spring/96-automated-derived-query-methods-dynamic-projections-jpql-query.md) — Query creation and projection fundamentals.
+- [Topic 83: Jakarta Persistence (JPA) & Hibernate ORM](#topic-83) — JPA entity mappings and persistence criteria basics.
+- [Topic 95: Spring Data JPA Architecture: Repository Hierarchy & JpaRepository](#topic-95) — Repository hierarchy and dynamic proxy mechanics.
+- [Topic 96: Automated Derived Query Methods, Dynamic Projections & JPQL @Query](#topic-96) — Query creation and projection fundamentals.
 
 ---
 

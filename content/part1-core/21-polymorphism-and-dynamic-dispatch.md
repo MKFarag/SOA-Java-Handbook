@@ -11,7 +11,7 @@ difficulty: Beginner
 readingTime: 11 min read
 shortDescription: >-
   Unlock runtime flexibility: reference types vs actual runtime object types,
-  dynamic dispatch via the virtual method table (vtable), and Java 16+ pattern
+  dynamic method dispatch (runtime receiver resolution), and Java 16+ pattern
   matching for instanceof.
 prerequisites:
   - 'Topic 16: Classes, Objects & Memory Layout'
@@ -50,19 +50,19 @@ Adding a 4th communication channel would require modifying every single `if` che
 
 ---
 
-## 3. Syntax Breakdown & The Virtual Method Table (vtable)
+## 3. Syntax Breakdown & Dynamic Method Dispatch
 
 ### Reference Type vs Runtime Object Type
 ```java
 Animal myPet = new Dog(); // Upcasting (Always implicit and safe)
 ```
 - **Declared Reference Type (`Animal`):** Checked by the compiler at compile time. Determines **what methods are legal to call** (`myPet.makeSound()` is allowed; `myPet.fetch()` is a compiler error because `Animal` has no `fetch` method).
-- **Runtime Object Type (`Dog`):** Located on the Heap. Determines **which actual bytecode executes** at runtime.
+- **Runtime Object Type (`Dog`):** Located on the Heap. Determines **which actual implementation executes** at runtime.
 
-### How Dynamic Dispatch Works Under the Hood (vtable)
-1. For every loaded class, the JVM builds an internal array of method pointers called the **Virtual Method Table (vtable)** in Metaspace.
-2. When `myPet.makeSound()` is executed, the JVM inspects the object header of `myPet` on the Heap, navigates to its `Klass` pointer, finds the `Dog` vtable, and jumps to the bytecode address of `Dog.makeSound()`.
-3. This vtable lookup takes $O(1)$ constant time.
+### How Dynamic Method Dispatch Works (JLS §15.12 & JVMS §6.5)
+1. **Compile Time (Signature Verification):** The compiler inspects the declared reference type (`Animal`) to verify that `makeSound()` exists and is accessible. It records a symbolic method reference and emits an `invokevirtual` (or `invokeinterface`) bytecode instruction.
+2. **Runtime Resolution (Receiver-Based Lookup):** When `myPet.makeSound()` executes, the JVM retrieves the **actual runtime receiver object** from the Heap. It resolves the method by determining the concrete class of the receiver (`Dog`) and invokes the most specific implementation declared by that class or its closest superclass.
+3. **JIT Performance Optimization:** In production, modern JVMs optimize dynamic dispatch through **Monomorphic Call Site Inlining** and **JIT Devirtualization**. When profiling detects that a call site consistently receives instances of a single concrete class, the JVM eliminates method lookup entirely and inlines the method code directly into native machine instructions for zero-overhead execution.
 
 ### Java 16+ Pattern Matching for `instanceof`
 In modern Java, you no longer need clumsy casting after checking types:
@@ -111,7 +111,7 @@ public class PolymorphismMechanics {
         Animal[] animals = { new Dog(), new Cat(), new Animal() };
 
         for (Animal a : animals) {
-            // JVM executes vtable lookup at runtime: invokes child override!
+            // JVM resolves method on actual runtime receiver instance: invokes child override!
             a.makeSound();
         }
 
@@ -238,14 +238,12 @@ When executing `channel.dispatch(alertPayload)` inside the loop:
 1. Variable 'channel' has declared reference type: NotificationChannel.
 2. The compiler verifies NotificationChannel contains the method 'boolean dispatch(String)'.
 3. At iteration 0:
-   - 'channel' references Heap Object @0xEmail (EmailChannel instance).
-   - CPU executes 'invokevirtual' bytecode instruction.
-   - JVM reads object header -> resolves to EmailChannel.vtable.
-   - Dispatches to EmailChannel.dispatch().
+   - 'channel' holds a reference to an EmailChannel instance on the Heap.
+   - JVM executes 'invokevirtual' bytecode instruction.
+   - Dynamic dispatch identifies the receiver class (EmailChannel) and invokes EmailChannel.dispatch().
 4. At iteration 1:
-   - 'channel' references Heap Object @0xSMS (SMSChannel instance).
-   - JVM resolves to SMSChannel.vtable.
-   - Dispatches to SMSChannel.dispatch().
+   - 'channel' holds a reference to an SMSChannel instance on the Heap.
+   - Dynamic dispatch identifies the receiver class (SMSChannel) and invokes SMSChannel.dispatch().
 ```
 
 ---
@@ -296,7 +294,7 @@ Dog d = (Dog) pet; // RUNTIME ERROR: ClassCastException: Cat cannot be cast to D
 | :--- | :--- | :--- |
 | **Reference Type** | Checked at Compile Time | Dictates what methods are legal to call. |
 | **Runtime Object Type** | Inspected at Runtime | Dictates which method implementation executes. |
-| **Dynamic Dispatch** | Runtime via vtable | Invokes the most specific override on the heap object. |
+| **Dynamic Dispatch** | Runtime (invokevirtual) | JVM resolves and invokes the most specific override based on the runtime receiver object. |
 | **Pattern Matching** | `if (x instanceof Dog d)` | Safely tests and binds casted variable in one step. |
 | **Upcasting** | Implicit and 100% Safe | `SuperType ref = new SubType();` |
 
@@ -361,12 +359,12 @@ public static double calculateTotalArea(List<Shape> shapes) {
 ---
 
 ### Exercise 3: Real-World Edge Case
-Can the Java HotSpot JIT compiler optimize away dynamic vtable dispatch?
+Can the JVM JIT compiler optimize dynamic method dispatch at runtime?
 <details>
 <summary>View Solution</summary>
 
-**Answer:** Yes, via **Monomorphic Inlining**!
-**Explanation:** If the HotSpot JIT compiler observes that only a single concrete class is ever invoked at a particular call site (monomorphic call site), it completely eliminates the vtable lookup and inlines the child method directly into machine code. If a second class is later loaded (polymorphic site), the JIT deoptimizes and falls back to standard vtable lookup.
+**Answer:** Yes, via **Devirtualization and Monomorphic Inlining**!
+**Explanation:** If the JVM JIT compiler profiles a call site and detects that only a single concrete class is ever invoked (a monomorphic call site), it can eliminate dynamic dispatch overhead entirely. The JIT devirtualizes the call and inlines the target method body directly into compiled machine code. If another subclass is dynamically loaded later (a polymorphic or megamorphic call site), the JVM safely deoptimizes and falls back to standard dynamic receiver resolution.
 </details>
 
 ---

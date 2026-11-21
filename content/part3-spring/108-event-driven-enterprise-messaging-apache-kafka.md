@@ -45,9 +45,9 @@ Kafka is like an immutable, leather-bound **bank accounting ledger book**, where
 
 ## 2. Prerequisites
 Before studying Kafka, you should understand:
-- [Topic 48: Threads & Multithreading](file:///c:/Users/modym\OneDrive\Desktop\Java-Doc\content\part1-core\48-threads-and-thread-lifecycle.md) — Asynchronous concurrency and background thread polling.
-- [Topic 52: Asynchronous Pipelines with CompletableFuture](file:///c:/Users/modym\OneDrive\Desktop\Java-Doc\content\part1-core\52-asynchronous-pipelines-with-completablefuture.md) — Non-blocking callback handlers.
-- [Topic 89: Component Scanning & Injection Strategies](file:///c:/Users/modym\OneDrive\Desktop\Java-Doc\content\part3-spring\89-component-scanning-injection-strategies-bean-lifecycle.md) — Spring IoC container integration.
+- [Topic 48: Threads & Multithreading](#topic-48) — Asynchronous concurrency and background thread polling.
+- [Topic 52: Asynchronous Pipelines with CompletableFuture](#topic-52) — Non-blocking callback handlers.
+- [Topic 89: Component Scanning & Injection Strategies](#topic-89) — Spring IoC container integration.
 
 ---
 

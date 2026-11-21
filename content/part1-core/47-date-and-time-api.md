@@ -38,8 +38,8 @@ Think of global flight coordination. A flight departure has two perspectives:
 
 ### 2. Prerequisites
 Before studying the Date and Time API, you should understand:
-- [Topic 04: Variables, Identifiers & Primitive Data Types](file:///c:/Users/modym/OneDrive/Desktop/Java-Doc/content/part1-core/04-variables-and-primitive-types.md) — Fundamental understanding of timestamps and integers.
-- [Topic 16: Classes, Objects & Memory Layout](file:///c:/Users/modym/OneDrive/Desktop/Java-Doc/content/part1-core/16-classes-objects-and-memory-layout.md) — Reference types and immutability.
+- [Topic 04: Variables, Identifiers & Primitive Data Types](#topic-04) — Fundamental understanding of timestamps and integers.
+- [Topic 16: Classes, Objects & Memory Layout](#topic-16) — Reference types and immutability.
 
 ---
 

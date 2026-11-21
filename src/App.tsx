@@ -12,11 +12,31 @@ import { StudentSyncModal } from './components/StudentSyncModal';
 import { CertificateGateModal } from './components/CertificateGateModal';
 import { AdminDashboardModal } from './components/AdminDashboardModal';
 import { BroadcastsModal } from './components/BroadcastsModal';
-import { SiteAccessGateModal } from './components/SiteAccessGateModal';
 import { MobileNav } from './components/MobileNav';
-import { ALL_TOPICS, getTopicById } from './data/topics';
+import { ALL_TOPICS, getTopicById, resolveTopic } from './data/topics';
 import type { ChallengeStatus, PartType, StudentProfile, BroadcastItem } from './types';
-import { saveStudentProfile, getBroadcasts, getSiteAccessConfig, loadStudentProfile } from './services/firebaseService';
+import { saveStudentProfile, getBroadcasts } from './services/firebaseService';
+
+type ViewType = 'home' | 'topic' | 'saved' | 'progress' | 'certificate' | 'capstone';
+
+const parseInitialNav = (): { view: ViewType; topicId: string } => {
+  const fallbackTopicId = ALL_TOPICS[0]?.id || 'topic-01';
+  if (typeof window === 'undefined') {
+    return { view: 'home', topicId: fallbackTopicId };
+  }
+  const rawHash = window.location.hash.replace(/^#\/?/, '').trim();
+  if (!rawHash || rawHash === 'home') return { view: 'home', topicId: fallbackTopicId };
+  if (rawHash === 'saved') return { view: 'saved', topicId: fallbackTopicId };
+  if (rawHash === 'progress') return { view: 'progress', topicId: fallbackTopicId };
+  if (rawHash === 'certificate') return { view: 'certificate', topicId: fallbackTopicId };
+  if (rawHash === 'capstone') return { view: 'capstone', topicId: fallbackTopicId };
+
+  const matched = resolveTopic(rawHash);
+  if (matched) {
+    return { view: 'topic', topicId: matched.id };
+  }
+  return { view: 'home', topicId: fallbackTopicId };
+};
 
 export function App() {
   // Theme state: respects saved choice or system preference
@@ -32,10 +52,11 @@ export function App() {
     return saved ? parseInt(saved, 10) : 100;
   });
 
-  // Views: 'home' | 'topic' | 'saved' | 'progress' | 'certificate' | 'capstone'
-  const [currentView, setCurrentView] = useState<'home' | 'topic' | 'saved' | 'progress' | 'certificate' | 'capstone'>('home');
+  // Synchronous Initial View & Active Topic Parsing to eliminate refresh flicker
+  const initialNav = parseInitialNav();
+  const [currentView, setCurrentView] = useState<ViewType>(initialNav.view);
   const [selectedCapstonePart, setSelectedCapstonePart] = useState<PartType>('Part 1: Java Core');
-  const [activeTopicId, setActiveTopicId] = useState<string | null>('topic-03');
+  const [activeTopicId, setActiveTopicId] = useState<string | null>(initialNav.topicId);
 
   // Bookmarked topics
   const [savedTopicIds, setSavedTopicIds] = useState<string[]>(() => {
@@ -103,34 +124,6 @@ export function App() {
   const [isCertGateOpen, setIsCertGateOpen] = useState(false);
   const [isAdminModalOpen, setIsAdminModalOpen] = useState(false);
   const [isBroadcastsModalOpen, setIsBroadcastsModalOpen] = useState(false);
-
-  // --- Site-Wide Access Passcode Gate ---
-  const [isSiteUnlocked, setIsSiteUnlocked] = useState<boolean>(() => {
-    return localStorage.getItem('soa_site_unlocked') === 'true';
-  });
-
-  useEffect(() => {
-    // Check if site protection is disabled on the cloud
-    getSiteAccessConfig().then((cfg) => {
-      if (!cfg.isProtected) {
-        setIsSiteUnlocked(true);
-      }
-    }).catch(console.warn);
-  }, []);
-
-  const handleSiteUnlocked = async (info?: { role: string; name?: string; code?: string }) => {
-    setIsSiteUnlocked(true);
-    if (info?.role === 'admin') {
-      setIsAdminModalOpen(true);
-    } else if (info?.role === 'student' && info.code) {
-      try {
-        const profile = await loadStudentProfile(info.code);
-        if (profile) handleStudentLogin(profile);
-      } catch (err) {
-        console.warn('Could not auto-login student:', err);
-      }
-    }
-  };
 
   // Syncing state
   const [isSyncing, setIsSyncing] = useState(false);
@@ -297,11 +290,17 @@ export function App() {
     localStorage.removeItem('soa_certificate_unlocked');
   };
 
+  const handleNavigateView = (view: ViewType) => {
+    setCurrentView(view);
+    window.location.hash = view;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   // Certificate Open Gate Check
   const handleOpenCertificate = () => {
     const isLocalComplete = completedTopicIds.size >= ALL_TOPICS.length;
     if (isCertificateUnlocked || isLocalComplete) {
-      setCurrentView('certificate');
+      handleNavigateView('certificate');
     } else {
       setIsCertGateOpen(true);
     }
@@ -313,7 +312,7 @@ export function App() {
       setUnlockedStudentName(studentName);
       localStorage.setItem('java_handbook_custom_name', studentName);
     }
-    setCurrentView('certificate');
+    handleNavigateView('certificate');
   };
 
   // Global Shortcuts Listener (Ctrl+K for search, Ctrl+Shift+A for secret Admin)
@@ -331,19 +330,53 @@ export function App() {
       }
     };
 
-    // Secret URL Hash listener (#admin or #admin-portal)
+    // URL Hash Navigation Listener (#topic-id, #slug, #saved, #progress, #admin, #capstone, #certificate)
     const handleHashChange = () => {
-      if (window.location.hash === '#admin' || window.location.hash === '#admin-portal') {
+      const rawHash = window.location.hash.replace(/^#\/?/, '').trim();
+      if (!rawHash) {
+        setCurrentView('home');
+        return;
+      }
+      if (rawHash === 'admin' || rawHash === 'admin-portal') {
         setIsAdminModalOpen(true);
-        // Clear hash smoothly
-        history.replaceState(null, '', window.location.pathname + window.location.search);
+        return;
+      }
+      if (rawHash === 'home') {
+        setCurrentView('home');
+        return;
+      }
+      if (rawHash === 'saved') {
+        setCurrentView('saved');
+        return;
+      }
+      if (rawHash === 'progress') {
+        setCurrentView('progress');
+        return;
+      }
+      if (rawHash === 'certificate') {
+        setCurrentView('certificate');
+        return;
+      }
+      if (rawHash === 'capstone') {
+        setCurrentView('capstone');
+        return;
+      }
+
+      const matched = resolveTopic(rawHash);
+      if (matched) {
+        setActiveTopicId(matched.id);
+        setCurrentView('topic');
       }
     };
 
     window.addEventListener('keydown', handleKeyDown);
     window.addEventListener('hashchange', handleHashChange);
-    // Check initial hash on load
-    handleHashChange();
+
+    // Initial check for secret admin modal on direct link
+    const initialRaw = window.location.hash.replace(/^#\/?/, '').trim();
+    if (initialRaw === 'admin' || initialRaw === 'admin-portal') {
+      setIsAdminModalOpen(true);
+    }
 
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
@@ -387,8 +420,15 @@ export function App() {
   };
 
   const handleSelectTopic = (topicId: string) => {
-    setActiveTopicId(topicId);
+    const topic = getTopicById(topicId) || resolveTopic(topicId);
+    const targetId = topic ? topic.id : topicId;
+    setActiveTopicId(targetId);
     setCurrentView('topic');
+    if (topic) {
+      window.location.hash = topic.slug || topic.id;
+    } else {
+      window.location.hash = topicId;
+    }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -420,10 +460,10 @@ export function App() {
       {/* Global Header */}
       <Header
         onOpenSearch={() => setIsSearchOpen(true)}
-        onOpenSaved={() => setCurrentView('saved')}
-        onOpenProgress={() => setCurrentView('progress')}
+        onOpenSaved={() => handleNavigateView('saved')}
+        onOpenProgress={() => handleNavigateView('progress')}
         onOpenCertificate={handleOpenCertificate}
-        onGoHome={() => setCurrentView('home')}
+        onGoHome={() => handleNavigateView('home')}
         onOpenSync={() => setIsSyncModalOpen(true)}
         onOpenBroadcasts={handleOpenBroadcasts}
         onOpenAdmin={() => setIsAdminModalOpen(true)}
@@ -445,13 +485,13 @@ export function App() {
         <Sidebar
           activeTopicId={currentView === 'topic' ? activeTopicId : null}
           onSelectTopic={handleSelectTopic}
-          onGoHome={() => setCurrentView('home')}
-          onOpenSaved={() => setCurrentView('saved')}
-          onOpenProgress={() => setCurrentView('progress')}
+          onGoHome={() => handleNavigateView('home')}
+          onOpenSaved={() => handleNavigateView('saved')}
+          onOpenProgress={() => handleNavigateView('progress')}
           onOpenCertificate={handleOpenCertificate}
           onOpenCapstone={(part) => {
             if (part) setSelectedCapstonePart(part);
-            setCurrentView('capstone');
+            handleNavigateView('capstone');
           }}
           onOpenSync={() => setIsSyncModalOpen(true)}
           onOpenBroadcasts={handleOpenBroadcasts}
@@ -472,7 +512,7 @@ export function App() {
               onOpenCertificate={handleOpenCertificate}
               onOpenCapstone={(part) => {
                 if (part) setSelectedCapstonePart(part);
-                setCurrentView('capstone');
+                handleNavigateView('capstone');
               }}
               broadcasts={broadcasts}
               onOpenBroadcasts={handleOpenBroadcasts}
@@ -508,7 +548,7 @@ export function App() {
               onOpenCertificate={handleOpenCertificate}
               onOpenCapstone={(part) => {
                 if (part) setSelectedCapstonePart(part);
-                setCurrentView('capstone');
+                handleNavigateView('capstone');
               }}
               challengeStates={challengeStates}
               targetedReviewIds={targetedReviewIds}
@@ -523,8 +563,8 @@ export function App() {
             <CertificateView
               completedCount={completedTopicIds.size}
               totalTopics={ALL_TOPICS.length}
-              onGoBack={() => setCurrentView('home')}
-              onGoToProgress={() => setCurrentView('progress')}
+              onGoBack={() => handleNavigateView('home')}
+              onGoToProgress={() => handleNavigateView('progress')}
               studentName={unlockedStudentName}
             />
           )}
@@ -534,7 +574,7 @@ export function App() {
               initialPart={selectedCapstonePart}
               completedTopicIds={completedTopicIds}
               onSelectTopic={handleSelectTopic}
-              onGoHome={() => setCurrentView('home')}
+              onGoHome={() => handleNavigateView('home')}
             />
           )}
         </main>
@@ -589,30 +629,15 @@ export function App() {
         onBroadcastsUpdated={refreshBroadcasts}
       />
 
-      {/* Site-Wide Access Passcode Gate Modal */}
-      <SiteAccessGateModal
-        isOpen={!isSiteUnlocked}
-        onUnlocked={handleSiteUnlocked}
-        onOpenAdmin={() => setIsAdminModalOpen(true)}
-      />
 
       {/* Mobile Bottom Navigation Bar */}
       <MobileNav
         currentView={currentView}
-        onGoHome={() => {
-          setCurrentView('home');
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        }}
+        onGoHome={() => handleNavigateView('home')}
         onToggleSidebar={() => setIsMobileSidebarOpen(prev => !prev)}
         onOpenSearch={() => setIsSearchOpen(true)}
-        onOpenSaved={() => {
-          setCurrentView('saved');
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        }}
-        onOpenProgress={() => {
-          setCurrentView('progress');
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        }}
+        onOpenSaved={() => handleNavigateView('saved')}
+        onOpenProgress={() => handleNavigateView('progress')}
         savedCount={savedTopicIds.length}
         percentComplete={Math.round((completedTopicIds.size / Math.max(ALL_TOPICS.length, 1)) * 100)}
       />

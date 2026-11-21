@@ -30,7 +30,7 @@ public class PolymorphismMechanics {
         Animal[] animals = { new Dog(), new Cat(), new Animal() };
 
         for (Animal a : animals) {
-            // JVM executes vtable lookup at runtime: invokes child override!
+            // Dynamic method dispatch resolves child override on runtime receiver object!
             a.makeSound();
         }
 

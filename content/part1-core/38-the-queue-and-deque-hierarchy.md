@@ -36,8 +36,8 @@ Think of a bank teller drive-through lane (FIFO Queue). The car that enters firs
 
 ### 2. Prerequisites
 Before studying the Queue & Deque Hierarchy, you should understand:
-- [Topic 33: Generics Fundamentals](file:///c:/Users/modym/OneDrive/Desktop/Java-Doc/content/part1-core/33-generics-fundamentals.md) — How type parameters `<E>` provide element safety.
-- [Topic 35: The List Hierarchy](file:///c:/Users/modym/OneDrive/Desktop/Java-Doc/content/part1-core/35-the-list-hierarchy.md) — Array resizing mechanics and linked nodes.
+- [Topic 33: Generics Fundamentals](#topic-33) — How type parameters `<E>` provide element safety.
+- [Topic 35: The List Hierarchy](#topic-35) — Array resizing mechanics and linked nodes.
 
 ---
 

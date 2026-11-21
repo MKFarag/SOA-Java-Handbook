@@ -6,7 +6,7 @@ title: Sealed Classes & Interfaces
 part: 'Part 1: Java Core'
 sectionNumber: 8
 sectionTitle: Modern Java Data Modeling
-versionBadge: Java 17+
+versionBadge: 'Java 21 LTS (Sealed: Java 17, Pattern Switch: Java 21 LTS)'
 difficulty: Intermediate
 readingTime: 11 min read
 shortDescription: >-
@@ -33,6 +33,9 @@ Sealed types introduce a controlled middle ground: an author can explicitly decl
 ```java
 public sealed interface ServiceResult permits SuccessResult, FailureResult, PendingResult {}
 ```
+
+> [!NOTE] Version Compatibility Notice
+> Sealed Classes and Interfaces were finalized in **Java 17 LTS (JEP 409)**. However, pairing sealed types with pattern matching in `switch` expressions (`switch (sealedObj) { case Subtype s -> ... }`), as demonstrated throughout this topic, requires **Java 21 LTS (JEP 441)**. In standard Java 17 without `--enable-preview`, conditional dispatch over sealed types required traditional `if (sealedObj instanceof Subtype s)` chains.
 
 ### The Real-World Analogy
 Think of a corporate security access list:
@@ -109,7 +112,7 @@ public class SealedClassMechanics {
     }
 
     public static void main(String[] args) {
-        System.out.println("=== Java 17+ Sealed Hierarchy Evaluation ===");
+        System.out.println("=== Java 21 LTS Sealed Hierarchy Evaluation ===");
 
         ServiceResult s1 = new SuccessResult("Payload 0xFA31");
         ServiceResult s2 = new TimeoutFailure();
@@ -131,7 +134,7 @@ public class SealedClassMechanics {
 
 #### Expected Output
 ```text
-=== Java 17+ Sealed Hierarchy Evaluation ===
+=== Java 21 LTS Sealed Hierarchy Evaluation ===
 Handled Success with data: Payload 0xFA31
 Retrying after timeout: FAILED: Network read timed out.
 Enqueued in memory: PENDING: Awaiting worker node.
@@ -270,8 +273,8 @@ public sealed class Engine permits com.outside.CustomEngine {} // COMPILE ERROR
 ## 8. Version Notes
 - **Java 15 (JEP 360):** Sealed Classes introduced as a preview feature.
 - **Java 16 (JEP 397):** Second preview.
-- **Java 17 (JEP 409):** Sealed Classes and Interfaces finalized as permanent features.
-- **Java 21 (JEP 441):** Pattern matching in `switch` leverages sealed exhaustiveness checking.
+- **Java 17 LTS (JEP 409):** Sealed Classes and Interfaces finalized as permanent features.
+- **Java 21 LTS (JEP 441):** Pattern matching in `switch` officially finalized, enabling exhaustive `switch` expressions over sealed hierarchies without requiring redundant `default:` clauses.
 
 ---
 

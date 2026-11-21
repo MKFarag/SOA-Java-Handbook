@@ -49,6 +49,54 @@ If any checkpoint detects a violation (e.g. invalid passport), you are stopped i
 
 ### 3. Syntax Breakdown
 
+#### 3.0.1 Architectural Comparison: Filter vs Servlet
+
+`Filter` and `Servlet` are complementary building blocks in the Jakarta Servlet specification. The table below contrasts their architectural responsibilities across 9 key dimensions:
+
+| Architectural Dimension | `jakarta.servlet.Filter` | `jakarta.servlet.Servlet` | Architectural Implication & Guidance |
+| :--- | :--- | :--- | :--- |
+| **1. Primary Purpose** | Cross-cutting concern interception (authentication, logging, CORS, encoding, compression). | Core business logic execution and final response generation (endpoints, controllers). | Separate operational plumbing (Filters) from business domain processing (Servlets). |
+| **2. Invocation Cardinality** | **0, 1, or N** filters arranged sequentially per request. | **Exactly 1** target servlet endpoint per resolved request. | Multiple filters form an onion-layered pipeline; only one servlet handles the terminal route. |
+| **3. Execution Phase** | **Bi-directional** ("Onion" model): Pre-processing on descent; post-processing on unwinding ascent after `chain.doFilter()`. | **Terminal & Unidirectional**: Executes within `service()` / `doGet()` / `doPost()` and outputs response. | Filters can inspect incoming requests before servlet execution and inspect/mutate responses after servlet completion. |
+| **4. Target Matching** | Broad matching via `<url-pattern>` (e.g. `/*`, `/api/*`) and/or `<servlet-name>`. | Specific endpoint routing mapped via path or extension (e.g. `/orders/*`, `/login`). | Filters intercept groups of endpoints; Servlets handle specific resource URIs. |
+| **5. Dispatcher Types** | Matches on 5 dispatch modes: `REQUEST`, `FORWARD`, `INCLUDE`, `ERROR`, `ASYNC`. | Invoked directly by container routing or programmatically via `RequestDispatcher`. | Filters can selectively intercept internal forwards or error pages without touching client requests. |
+| **6. Payload Modification** | Modifies requests and responses via wrapper decorators (`HttpServletRequestWrapper`, `HttpServletResponseWrapper`). | Directly reads request parameters/streams and directly writes outbound response payload. | Use Filter wrappers to sanitize inputs, decrypt headers, or compress/buffer output bytes. |
+| **7. Pipeline Control & Halting** | **Can short-circuit**: Deliberately omitting `chain.doFilter()` halts downstream flow immediately (e.g. auth failure). | **Cannot halt upstream**: Must complete execution or throw exception. | Security filters reject unauthenticated calls before expensive servlet database work begins. |
+| **8. Lifecycle Contract** | Single instance: `init(FilterConfig)` on boot; `doFilter(...)` per request; `destroy()` on undeploy. | Single instance: `init(ServletConfig)` on boot or lazy load; `service(...)` per request; `destroy()` on undeploy. | Both are multi-threaded singletons; instance variables must be strictly thread-safe. |
+| **9. Ordering Guarantees** | Deterministic ordering enforced **strictly by `<filter-mapping>` sequence in `web.xml`**. | Disjoint endpoint selection based on longest-prefix or exact-match URL routing. | `@WebFilter` annotation order is non-deterministic; production pipelines require `web.xml` for strict sequencing. |
+
+---
+
+#### 3.0.2 Filter Dispatcher Types Reference Table
+
+The `jakarta.servlet.DispatcherType` enumeration specifies which internal container dispatch phases trigger a filter:
+
+| Dispatcher Type | Trigger Mechanism | Typical Enterprise Use Cases | Annotation & XML Configuration Example |
+| :--- | :--- | :--- | :--- |
+| **`REQUEST`** *(Default)* | Direct HTTP client request arriving from network socket. | Authentication guards, CORS headers, access logging, rate limiting. | `@WebFilter(urlPatterns = "/*", dispatcherTypes = {DispatcherType.REQUEST})`<br>`<dispatcher>REQUEST</dispatcher>` |
+| **`FORWARD`** | Internal dispatch via `request.getRequestDispatcher().forward(req, resp)`. | Security re-evaluation, view model enrichment, internal routing audits. | `@WebFilter(urlPatterns = "/views/*", dispatcherTypes = {DispatcherType.FORWARD})`<br>`<dispatcher>FORWARD</dispatcher>` |
+| **`INCLUDE`** | Internal fragment inclusion via `dispatcher.include(req, resp)`. | Header/footer HTML decoration, sub-view metric tracking, dynamic sidebars. | `@WebFilter(urlPatterns = "/fragments/*", dispatcherTypes = {DispatcherType.INCLUDE})`<br>`<dispatcher>INCLUDE</dispatcher>` |
+| **`ERROR`** | Container routing to declarative error pages (`<error-page>` in `web.xml`). | Exception scrubbing, custom 500 error telemetry, security header retention on fault pages. | `@WebFilter(urlPatterns = "/*", dispatcherTypes = {DispatcherType.ERROR})`<br>`<dispatcher>ERROR</dispatcher>` |
+| **`ASYNC`** | Asynchronous dispatch cycle initiated via `request.startAsync()`. | Virtual thread coordination, SSE (Server-Sent Events) streaming, async timeout handling. | `@WebFilter(urlPatterns = "/async/*", asyncSupported = true, dispatcherTypes = {DispatcherType.ASYNC})`<br>`<dispatcher>ASYNC</dispatcher>` |
+
+---
+
+#### 3.0.3 Filter Lifecycle & Chain Ordering Mechanics
+
+Filter chains execute deterministically when configured via deployment descriptor:
+
+| Lifecycle Stage | Container Action | Execution Trigger | Thread Safety & Rules |
+| :--- | :--- | :--- | :--- |
+| **1. Instantiation** | Container loads filter class via reflection using default constructor. | Container startup / web application deployment. | Filter instance created once per `<filter>` declaration. |
+| **2. `init(FilterConfig)`** | Passes initialization parameters (`<init-param>`) and `ServletContext`. | Immediately after instantiation, before accepting traffic. | Perform one-time setup (e.g. compile regexes, load whitelist configs). |
+| **3. `doFilter(...)`** | Invokes filter logic in sequential chain order for matching requests. | On every incoming request matching URL pattern and dispatcher type. | Executed concurrently by multiple worker threads. **Must be thread-safe**. |
+| **4. `destroy()`** | Notifies filter that it is being taken out of service. | Container shutdown or web application undeployment. | Release allocated resources (e.g. background cleanup threads, connection handles). |
+
+> ⚠️ **The `@WebFilter` Ordering Pitfall & Container Resolution Rules:**
+> 1. **Rule 1 (URL Mappings First):** Filters mapped by `<url-pattern>` are evaluated and executed **before** filters mapped by `<servlet-name>`.
+> 2. **Rule 2 (Declaration Sequence):** Within the same mapping category, filters execute in the **exact textual sequence** they are declared in `web.xml`.
+> 3. **Rule 3 (Annotation Non-Determinism):** The Jakarta Servlet specification does **not** specify an ordering contract for `@WebFilter` annotations. Different containers (Tomcat, Jetty, WildFly) order annotated filters arbitrarily. For production chains requiring strict sequencing (e.g. `CharacterEncodingFilter` -> `AuthFilter` -> `AuditFilter`), declare `<filter-mapping>` order in `web.xml` or register filters programmatically via `ServletContext.addFilter()`.
+
 #### 3.1 The Filter Interface Contract
 ```java
 package jakarta.servlet;

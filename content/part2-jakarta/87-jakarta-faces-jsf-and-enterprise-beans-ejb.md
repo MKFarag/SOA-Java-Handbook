@@ -2,7 +2,7 @@
 id: topic-87
 slug: jakarta-faces-jsf-and-enterprise-beans-ejb
 topicNumber: 87
-title: Jakarta Faces (JSF) & Enterprise Beans (EJB)
+title: Enterprise Beans & Jakarta Faces Reference
 part: 'Part 2: Java EE & Jakarta EE'
 sectionNumber: 23
 sectionTitle: Jakarta EE Enterprise Stack Overview
@@ -10,15 +10,16 @@ versionBadge: Jakarta Faces 4.0 / EE 10
 difficulty: Advanced
 readingTime: 15 min read
 shortDescription: >-
-  Explore component-based web UIs with Jakarta Faces (JSF) and container-managed
-  declarative transactions with Enterprise JavaBeans (EJB).
+  Explore legacy enterprise application architectures: Jakarta Faces (JSF)
+  component lifecycles and Enterprise JavaBeans (EJB) container-managed declarative
+  transactions.
 prerequisites:
-  - 'Topic 74: JSP Architecture & Translation Lifecycle'
+  - 'Topic 74: JSP Architecture, Syntax & Implicit Objects'
   - 'Topic 82: JDBC Connection Pooling in Web Applications'
   - 'Topic 84: Contexts & Dependency Injection (CDI)'
 relevanceLevel: OPTIONAL / LEGACY
 ---
-# Topic 87: Jakarta Faces (JSF) & Enterprise Beans (EJB)
+# Topic 87: Enterprise Beans & Jakarta Faces Reference
 
 > 🏛️ **Roadmap Seal:** **`[OPTIONAL / LEGACY]`** — *Historical / legacy enterprise tech. Safely skip unless maintaining legacy enterprise systems.*
 
@@ -38,7 +39,7 @@ In early enterprise Java, writing transactional business logic required complex 
 ---
 
 ## 2. Prerequisites
-- **Topic 74: JSP Architecture:** Server-side templating and tag libraries.
+- **Topic 74: JSP Architecture, Syntax & Implicit Objects:** Server-side templating and tag libraries.
 - **Topic 82: Connection Pooling:** Transactional database connections.
 - **Topic 84: CDI:** Managed backing beans and scope management.
 

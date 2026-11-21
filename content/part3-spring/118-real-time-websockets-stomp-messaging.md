@@ -64,9 +64,9 @@ Consider telephone communications.
 
 ## 2. Prerequisites
 Before studying WebSockets and STOMP, ensure you have mastered:
-- [Topic 64: Web Architecture Fundamentals (HTTP Protocol, Client-Server)](file:///c:/Users/modym/OneDrive/Desktop/Java-Doc/content/part2-jakarta/64-web-architecture-fundamentals.md) — HTTP verbs, headers, and TCP handshakes.
-- [Topic 92: Production REST Controller Architecture with Spring Web MVC](file:///c:/Users/modym/OneDrive/Desktop/Java-Doc/content/part3-spring/92-production-rest-controller-architecture-spring-web-mvc.md) — Spring MVC request dispatching.
-- [Topic 99: Stateless REST Security with JWT & Method-Level Role Authorization](file:///c:/Users/modym/OneDrive/Desktop/Java-Doc/content/part3-spring/99-stateless-rest-security-jwt-method-level-role-authorization.md) — Authentication tokens and security context.
+- [Topic 64: Web Architecture Fundamentals (HTTP Protocol, Client-Server)](#topic-64) — HTTP verbs, headers, and TCP handshakes.
+- [Topic 92: Production REST Controller Architecture with Spring Web MVC](#topic-92) — Spring MVC request dispatching.
+- [Topic 99: Stateless REST Security with JWT & Method-Level Role Authorization](#topic-99) — Authentication tokens and security context.
 
 ---
 

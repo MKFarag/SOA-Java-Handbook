@@ -72,9 +72,9 @@ Consider bricklayers building a high-rise foundation with 10,000 bricks.
 
 ## 2. Prerequisites
 Before studying Spring Batch, ensure you have mastered:
-- [Topic 51: Executor Framework & Thread Pools](file:///c:/Users/modym/OneDrive/Desktop/Java-Doc/content/part1-core/51-executor-framework-and-thread-pools.md) — Multi-threading and task partitioning.
-- [Topic 95: Spring Data JPA Architecture: Repository Hierarchy & JpaRepository](file:///c:/Users/modym/OneDrive/Desktop/Java-Doc/content/part3-spring/95-spring-data-jpa-architecture-repository-hierarchy-jparepository.md) — Batch writes and dirty checking.
-- [Topic 97: Declarative @Transactional Boundaries, Pagination, Sorting & N+1 Prevention](file:///c:/Users/modym/OneDrive/Desktop/Java-Doc/content/part3-spring/97-declarative-transactional-boundaries-pagination-sorting-n-plus-one.md) — Transaction propagation and commit boundaries.
+- [Topic 51: Executor Framework & Thread Pools](#topic-51) — Multi-threading and task partitioning.
+- [Topic 95: Spring Data JPA Architecture: Repository Hierarchy & JpaRepository](#topic-95) — Batch writes and dirty checking.
+- [Topic 97: Declarative @Transactional Boundaries, Pagination, Sorting & N+1 Prevention](#topic-97) — Transaction propagation and commit boundaries.
 
 ---
 

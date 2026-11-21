@@ -97,6 +97,127 @@ int userAge = 25;
 3. Cannot be a reserved Java keyword (like `class`, `int`, `return`, `public`).
 4. Strictly case-sensitive: `userScore` and `userscore` are two different variables.
 
+### Console Input Quick Reference: `java.util.Scanner`
+
+Java provides `java.util.Scanner` to parse primitive types and strings interactively from standard input (`System.in`) or files using regular expressions:
+
+```java
+import java.util.Scanner;
+
+// Initialize Scanner bound to standard console input stream
+Scanner scanner = new Scanner(System.in);
+```
+
+#### Common `Scanner` Methods Reference Table
+
+| Method | Return Type | Delimiter / Stop Condition | Consumes Trailing Newline? | Thrown Exceptions | Example Input | Returned Value |
+| :--- | :---: | :--- | :---: | :--- | :--- | :--- |
+| **`nextLine()`** | `String` | Line break (`\r\n` or `\n`) | **Yes** | `NoSuchElementException` | `John Doe [Enter]` | `"John Doe"` |
+| **`next()`** | `String` | Any whitespace (space, tab, newline) | **No** | `NoSuchElementException` | `Alice Bob` | `"Alice"` (leaves `" Bob"` in buffer) |
+| **`nextInt()`** | `int` | Any whitespace | **No** | `InputMismatchException` | `42 [Enter]` | `42` (leaves `\n` in buffer!) |
+| **`nextLong()`** | `long` | Any whitespace | **No** | `InputMismatchException` | `9876543210 [Enter]` | `9876543210L` (leaves `\n` in buffer!) |
+| **`nextDouble()`**| `double` | Any whitespace (uses locale decimal) | **No** | `InputMismatchException` | `19.99 [Enter]` | `19.99` (leaves `\n` in buffer!) |
+| **`nextBoolean()`**| `boolean` | Any whitespace | **No** | `InputMismatchException` | `true [Enter]` | `true` (case-insensitive) |
+| **`hasNextInt()`**| `boolean` | Looks ahead at next token | — | None (safe guard) | `42` vs `abc` | `true` vs `false` |
+| **`hasNextDouble()`**| `boolean`| Looks ahead at next token | — | None (safe guard) | `3.14` vs `xyz` | `true` vs `false` |
+| **`hasNextLine()`**| `boolean` | Checks if another line exists | — | None (safe guard) | Any text | `true` if input stream is open |
+
+---
+
+### The Notorious "Trailing Newline Buffer Trap"
+
+> [!WARNING] The `nextInt()` / `nextDouble()` Followed by `nextLine()` Trap
+> The most infamous bug in introductory Java console programming occurs when reading a string with `nextLine()` immediately after reading a numeric value with `nextInt()`, `nextDouble()`, or `next()`.
+
+#### Why the Bug Happens (Internal Buffer Trace)
+
+When a user enters `25` and presses the `[Enter]` key on their keyboard:
+1. The standard input buffer (`System.in`) receives three characters: `'2'`, `'5'`, and the newline `'\n'`.
+2. Calling `scanner.nextInt()` scans only the numeric characters `2` and `5`, converts them to the integer `25`, and leaves the trailing newline character `'\n'` sitting inside the input buffer.
+3. When the subsequent line executes `scanner.nextLine()`, it immediately scans the buffer for the next newline. It encounters the leftover `'\n'`, consumes and discards it, and returns an **empty string (`""`)** instantly without ever pausing for the user to type anything!
+
+```
+User types "25" + [Enter]:
+┌─────┬─────┬──────┐
+│ '2' │ '5' │ '\n' │
+└─────┴─────┴──────┘
+   ▲     ▲
+   └─────┴───────── nextInt() consumes digits '2' and '5'
+               ▲
+               └─── '\n' is left abandoned in the buffer!
+
+Next call: nextLine() sees '\n' immediately -> returns "" without prompting user!
+```
+
+#### Buggy Code vs Fixed Solutions
+
+```java
+// ==========================================
+// 1. THE BUGGY PATTERN (Will skip user input!)
+// ==========================================
+System.out.print("Enter your age: ");
+int age = scanner.nextInt(); // Consumes 25, leaves '\n' in buffer
+
+System.out.print("Enter your full name: ");
+String name = scanner.nextLine(); // Instantly consumes leftover '\n'! Returns ""!
+
+System.out.printf("Age: %d, Name: '%s'%n", age, name);
+// Output: Age: 25, Name: ''  <-- BUG! Name was never entered!
+```
+
+```java
+// ==========================================
+// 2. FIX 1: Explicit Buffer Flush (Simple Idiom)
+// ==========================================
+System.out.print("Enter your age: ");
+int age = scanner.nextInt(); 
+scanner.nextLine(); // FLUSH: Consumes and discards the leftover '\n'
+
+System.out.print("Enter your full name: ");
+String name = scanner.nextLine(); // Now cleanly waits for user input!
+```
+
+```java
+// ==========================================
+// 3. FIX 2: Line-Oriented Parsing (Industry Best Practice)
+// ==========================================
+// Never mix token-based reading with line-based reading.
+// Always read full lines with nextLine() and parse explicitly:
+System.out.print("Enter your age: ");
+int age = Integer.parseInt(scanner.nextLine().trim());
+
+System.out.print("Enter your full name: ");
+String name = scanner.nextLine(); // Zero buffer conflicts possible!
+```
+
+#### Safe Input Validation Guard Pattern
+
+In production console applications, users often enter invalid input (such as typing `"twenty"` when a number is expected). Calling `scanner.nextInt()` directly on non-numeric input throws an unchecked `java.util.InputMismatchException` and crashes the program.
+
+Always guard interactive numeric input using `hasNextInt()` in a retry loop:
+
+```java
+int validAge = -1;
+while (validAge < 0) {
+    System.out.print("Enter valid age (0-120): ");
+    if (scanner.hasNextInt()) {
+        int input = scanner.nextInt();
+        scanner.nextLine(); // Flush newline
+        if (input >= 0 && input <= 120) {
+            validAge = input;
+        } else {
+            System.out.println("Error: Age must be between 0 and 120.");
+        }
+    } else {
+        System.out.println("Error: Invalid number format. Please enter digits only.");
+        scanner.nextLine(); // Discard bad token from buffer
+    }
+}
+```
+
+> [!NOTE]
+> When you finish using a `Scanner` created around `System.in`, calling `scanner.close()` also closes the underlying `System.in` stream for the entire JVM lifetime. Do not close a `Scanner(System.in)` inside helper methods; close it only once when the application terminates.
+
 ---
 
 ## 4. Fully Runnable Code Examples

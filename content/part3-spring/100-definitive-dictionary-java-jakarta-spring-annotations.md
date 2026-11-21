@@ -66,9 +66,9 @@ Consider international maritime shipping.
 
 ## 2. Prerequisites
 Before studying this comprehensive reference dictionary, ensure you understand:
-- [Topic 58: Annotations & Metadata](file:///c:/Users/modym/OneDrive/Desktop/Java-Doc/content/part1-core/58-annotations-and-metadata.md) — Custom annotations, retention policies, and reflection.
-- [Topic 84: Jakarta Contexts and Dependency Injection (CDI)](file:///c:/Users/modym/OneDrive/Desktop/Java-Doc/content/part2-jakarta/84-jakarta-cdi.md) — Specification dependency injection vs Spring.
-- [Topic 89: Component Scanning, Injection Strategies & Bean Lifecycle Callbacks](file:///c:/Users/modym/OneDrive/Desktop/Java-Doc/content/part3-spring/89-component-scanning-injection-strategies-bean-lifecycle.md) — Stereotype annotations and IoC lifecycle.
+- [Topic 58: Annotations & Metadata](#topic-58) — Custom annotations, retention policies, and reflection.
+- [Topic 84: Jakarta Contexts and Dependency Injection (CDI)](#topic-84) — Specification dependency injection vs Spring.
+- [Topic 89: Component Scanning, Injection Strategies & Bean Lifecycle Callbacks](#topic-89) — Stereotype annotations and IoC lifecycle.
 
 ---
 

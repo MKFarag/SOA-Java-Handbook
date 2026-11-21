@@ -65,9 +65,9 @@ Consider an airport departures information board.
 
 ## 2. Prerequisites
 Before studying Server-Sent Events, ensure you have mastered:
-- [Topic 64: Web Architecture Fundamentals (HTTP Protocol, Client-Server)](file:///c:/Users/modym/OneDrive/Desktop/Java-Doc/content/part2-jakarta/64-web-architecture-fundamentals.md) — HTTP streaming and connection keep-alive.
-- [Topic 92: Production REST Controller Architecture with Spring Web MVC](file:///c:/Users/modym/OneDrive/Desktop/Java-Doc/content/part3-spring/92-production-rest-controller-architecture-spring-web-mvc.md) — REST controllers and response bodies.
-- [Topic 118: Real-Time Bidirectional Communication with WebSockets, STOMP & SockJS](file:///c:/Users/modym/OneDrive/Desktop/Java-Doc/content/part3-spring/118-real-time-websockets-stomp-messaging.md) — Real-time trade-offs and full-duplex protocols.
+- [Topic 64: Web Architecture Fundamentals (HTTP Protocol, Client-Server)](#topic-64) — HTTP streaming and connection keep-alive.
+- [Topic 92: Production REST Controller Architecture with Spring Web MVC](#topic-92) — REST controllers and response bodies.
+- [Topic 118: Real-Time Bidirectional Communication with WebSockets, STOMP & SockJS](#topic-118) — Real-time trade-offs and full-duplex protocols.
 
 ---
 

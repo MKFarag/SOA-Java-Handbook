@@ -44,9 +44,9 @@ Imagine **Git** for your database tables. While Git tracks line-by-line code com
 
 ## 2. Prerequisites
 Before studying Flyway, you should understand:
-- [Topic 61: JDBC Fundamentals](file:///c:/Users/modym\OneDrive\Desktop\Java-Doc\content\part1-core\61-jdbc-fundamentals.md) — How Java connects to relational databases and executes SQL DDL/DML.
-- [Topic 83: Jakarta Persistence JPA & Hibernate](file:///c:/Users/modym\OneDrive\Desktop\Java-Doc\content\part2-jakarta\83-jakarta-persistence-jpa-and-hibernate.md) — Object-relational mapping and schema generation hazards.
-- [Topic 90: Spring Boot Auto-Configuration Mechanics](file:///c:/Users/modym\OneDrive\Desktop\Java-Doc\content\part3-spring\90-auto-configuration-mechanics-starters-embedded-runtimes.md) — How Spring Boot automatically triggers Flyway beans before the `EntityManagerFactory` initializes.
+- [Topic 61: JDBC Fundamentals](#topic-61) — How Java connects to relational databases and executes SQL DDL/DML.
+- [Topic 83: Jakarta Persistence JPA & Hibernate](#topic-83) — Object-relational mapping and schema generation hazards.
+- [Topic 90: Spring Boot Auto-Configuration Mechanics](#topic-90) — How Spring Boot automatically triggers Flyway beans before the `EntityManagerFactory` initializes.
 
 ---
 

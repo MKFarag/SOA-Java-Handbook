@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import MiniSearch from 'minisearch';
 import { Search, X, BookOpen, ArrowRight } from 'lucide-react';
-import { ALL_TOPICS } from '../data/topics';
+import { ALL_TOPICS, resolveTopic } from '../data/topics';
 
 interface SearchModalProps {
   isOpen: boolean;
@@ -21,38 +21,51 @@ export const SearchModal: React.FC<SearchModalProps> = ({
   // Initialize offline search engine
   const miniSearch = useMemo(() => {
     const ms = new MiniSearch({
-      fields: ['title', 'shortDescription', 'sectionTitle', 'keywords', 'tokens'],
+      fields: ['id', 'title', 'shortDescription', 'sectionTitle', 'keywords', 'tokens', 'searchableTerms', 'cheatSheetText'],
       storeFields: ['id', 'title', 'slug', 'part', 'sectionTitle', 'shortDescription', 'versionBadge', 'difficulty'],
       searchOptions: {
-        boost: { title: 3, sectionTitle: 1.5, keywords: 2 },
+        boost: { id: 6, title: 3, searchableTerms: 2.5, cheatSheetText: 2, sectionTitle: 1.5, tokens: 2, keywords: 1.5 },
         prefix: true,
         fuzzy: 0.2
       }
     });
 
-    const documents = ALL_TOPICS.map(t => ({
-      id: t.id,
-      title: t.title,
-      slug: t.slug,
-      part: t.part,
-      sectionTitle: t.sectionTitle,
-      shortDescription: t.shortDescription,
-      versionBadge: t.versionBadge,
-      difficulty: t.difficulty,
-      keywords: `${t.part} ${t.sectionTitle} ${t.whatAndWhy?.definition || ''}`,
-      tokens: t.syntaxBreakdown?.tokens?.map(tok => tok.token).join(' ') || ''
-    }));
+    const documents = ALL_TOPICS.map(t => {
+      const cheatSheetText = t.cheatSheetText 
+        || (t.cheatSheet ? `${t.cheatSheet.headers.join(' ')} ${t.cheatSheet.rows.flat().join(' ')}` : '');
+      const terms = Array.isArray(t.searchableTerms) ? t.searchableTerms.join(' ') : '';
+      return {
+        id: t.id,
+        title: t.title,
+        slug: t.slug,
+        part: t.part,
+        sectionTitle: t.sectionTitle,
+        shortDescription: t.shortDescription,
+        versionBadge: t.versionBadge,
+        difficulty: t.difficulty,
+        keywords: `${t.part} ${t.sectionTitle} ${t.whatAndWhy?.definition || ''}`,
+        tokens: t.syntaxBreakdown?.tokens?.map(tok => tok.token).join(' ') || '',
+        searchableTerms: terms,
+        cheatSheetText: cheatSheetText
+      };
+    });
 
     ms.addAll(documents);
     return ms;
   }, []);
 
   const searchResults = useMemo(() => {
-    if (!query.trim()) {
+    const trimmed = query.trim();
+    if (!trimmed) {
       return ALL_TOPICS.slice(0, 6);
     }
-    const results = miniSearch.search(query.trim());
-    return results.map(r => ALL_TOPICS.find(t => t.id === r.id)!).filter(Boolean);
+    const results = miniSearch.search(trimmed);
+    const mapped = results.map(r => ALL_TOPICS.find(t => t.id === r.id)!).filter(Boolean);
+    const exactTopic = resolveTopic(trimmed);
+    if (exactTopic) {
+      return [exactTopic, ...mapped.filter(t => t.id !== exactTopic.id)];
+    }
+    return mapped;
   }, [query, miniSearch]);
 
   useEffect(() => {

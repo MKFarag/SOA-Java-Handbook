@@ -67,8 +67,8 @@ Imagine ordering ingredients for a restaurant kitchen.
 
 ## 2. Prerequisites
 Before studying derived queries and projections, ensure you understand:
-- [Topic 83: Jakarta Persistence (JPA) & Hibernate ORM](file:///c:/Users/modym/OneDrive/Desktop/Java-Doc/content/part2-jakarta/83-jakarta-persistence-jpa-hibernate.md) — Entity mapping, JPQL syntax, and query execution.
-- [Topic 95: Spring Data JPA Architecture: Repository Hierarchy & JpaRepository](file:///c:/Users/modym/OneDrive/Desktop/Java-Doc/content/part3-spring/95-spring-data-jpa-architecture-repository-hierarchy-jparepository.md) — The repository hierarchy and dynamic proxy mechanics.
+- [Topic 83: Jakarta Persistence (JPA) & Hibernate ORM](#topic-83) — Entity mapping, JPQL syntax, and query execution.
+- [Topic 95: Spring Data JPA Architecture: Repository Hierarchy & JpaRepository](#topic-95) — The repository hierarchy and dynamic proxy mechanics.
 
 ---
 

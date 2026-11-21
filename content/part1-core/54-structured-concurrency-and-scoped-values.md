@@ -6,7 +6,7 @@ title: Structured Concurrency & Scoped Values
 part: 'Part 1: Java Core'
 sectionNumber: 13
 sectionTitle: Concurrency & Multithreading
-versionBadge: Java 21–26 (Preview / JEP 480 & 481)
+versionBadge: Java 21 LTS Preview / Java 25 LTS (JEP 480 & 481)
 difficulty: Advanced
 readingTime: 13 min read
 shortDescription: >-
@@ -234,8 +234,9 @@ Using `ThreadLocal` with millions of virtual threads can cause massive memory co
 
 ### 8. Version Notes
 - **Java 19 / 20**: Structured Concurrency introduced as an incubator feature (JEP 428 & JEP 437).
-- **Java 21 / 22 / 23**: Refined as a Preview Feature (JEP 453 & JEP 462).
-- **Java 24 / 25 / 26**: JEP 480 / JEP 481 streamlined the `StructuredTaskScope` API with the `Joiner` factory design. Enabled using `--enable-preview`.
+- **Java 21 LTS (JEP 453 / 446)**: Previewed in Java 21 LTS using subclass policies (`StructuredTaskScope.ShutdownOnFailure` and `ShutdownOnSuccess`).
+- **Java 22 / 23 (JEP 462 / 480)**: Refined as second and third previews.
+- **Java 24 / 25 LTS (JEP 480 & JEP 481)**: Streamlined the `StructuredTaskScope` API using the modern `Joiner` factory design (`StructuredTaskScope.open(Joiner)`), with `ScopedValue` finalized under JEP 481. Enabled using `--enable-preview`.
 
 ---
 
