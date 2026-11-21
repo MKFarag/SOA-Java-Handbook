@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Copy, Check, Terminal, Code2, WrapText } from 'lucide-react';
-import Prism from 'prismjs';
-import 'prismjs/components/prism-java';
+import Prism from '../lib/prism';
 
 interface CodeBlockProps {
   code: string;

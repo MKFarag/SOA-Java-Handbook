@@ -20,8 +20,11 @@ export default defineConfig({
             if (id.includes('lucide-react')) {
               return 'vendor-icons';
             }
-            if (id.includes('prismjs') || id.includes('marked')) {
+            if (id.includes('marked')) {
               return 'vendor-markdown';
+            }
+            if (id.includes('prismjs')) {
+              return undefined;
             }
             if (id.includes('minisearch')) {
               return 'vendor-search';

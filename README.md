@@ -47,6 +47,8 @@ cd SOA-Java-Handbook
 # 2. Install dependencies and start development server
 npm install
 npm run dev
+# Run production smoke test regression guard:
+npm run test:smoke
 ```
 Then open your browser at: **[http://localhost:5173](http://localhost:5173)**.
 

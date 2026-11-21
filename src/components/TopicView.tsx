@@ -14,15 +14,7 @@ import {
   BookMarked 
 } from 'lucide-react';
 import { marked } from 'marked';
-import Prism from 'prismjs';
-import 'prismjs/components/prism-java';
-import 'prismjs/components/prism-sql';
-import 'prismjs/components/prism-json';
-import 'prismjs/components/prism-bash';
-import 'prismjs/components/prism-markup';
-import 'prismjs/components/prism-properties';
-import 'prismjs/components/prism-yaml';
-import 'prismjs/components/prism-javascript';
+import Prism from '../lib/prism';
 import type { TopicDetail } from '../types';
 import { ALL_TOPICS, resolveTopic } from '../data/topics';
 import { CodeBlock } from './CodeBlock';
