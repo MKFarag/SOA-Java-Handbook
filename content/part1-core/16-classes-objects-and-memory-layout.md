@@ -73,10 +73,10 @@ public class FleetVehicle {
 | **Static Fields** (`totalFleetCount`) | Java Heap (inside `Class` object) | Initialized when class is initialized; lives as long as the class loader exists. |
 | **Class Metadata** (bytecode, method signatures) | Metaspace (Native OS Memory) | Loaded by ClassLoader; unloads only if class loader is garbage-collected. |
 
-> [!IMPORTANT] Architectural Distinction: Metaspace vs Java Heap
-> Prior to Java 8, static variables and class metadata both resided in the Permanent Generation (PermGen). With Java 8 (JEP 122), PermGen was removed:
-> - **Metaspace (Native Memory):** Stores only class metadata, bytecode definitions, method signatures, and the runtime constant pool.
-> - **Java Heap:** Stores all **static fields** as fields of the `java.lang.Class` mirror object. Because static variables reside on the Heap, any objects they reference are standard heap objects tracked by JVM Garbage Collection.
+> [!IMPORTANT] Architectural Distinction: Metaspace vs Java Heap (HotSpot Implementation)
+> The JVM Specification (§2.5.4) specifies the **Method Area** logically, leaving physical placement to the virtual machine implementation. In the OpenJDK HotSpot JVM:
+> - Prior to Java 8, static variables and class metadata both resided in the Permanent Generation (PermGen).
+> - With Java 8 (JEP 122), PermGen was removed: **Metaspace (Native OS Memory)** stores class metadata, bytecode, and constant pools, while HotSpot allocates all **static fields on the Java Heap** as part of the `java.lang.Class` mirror object. Because static variables reside on the Heap, any objects they reference are standard heap objects tracked by Garbage Collection roots.
 
 ### Object Identity vs State Equality
 - `==` operator: Compares **reference identity**. `a == b` evaluates to `true` if and only if both variables reference the **exact same object instance on the JVM Heap**. Java deliberately abstracts away hardware addresses, so `==` tests object identity rather than physical hardware memory addresses.

@@ -98,12 +98,39 @@ async function runSmokeTest() {
       }
     }
 
-    // 3. Check deep link navigation
-    console.log('[smoke-test] Checking deep links (#saved, #progress)...');
-    await page.goto(`${BASE_URL}/#saved`, { waitUntil: 'load' });
-    await page.waitForTimeout(400);
-    await page.goto(`${BASE_URL}/#progress`, { waitUntil: 'load' });
-    await page.waitForTimeout(400);
+    // 3. Check deep link navigation & legacy aliases
+    console.log('[smoke-test] Checking deep links & legacy aliases...');
+    const navTests = [
+      { path: '#saved', expectedTitleSubstr: '' },
+      { path: '#progress', expectedTitleSubstr: '' },
+      { path: '#topic-134', expectedTitleSubstr: 'Persistence' }, // redirects to topic-131
+      { path: '#topic-76', expectedTitleSubstr: 'JSP' },         // redirects to topic-74
+      { path: '#topic-81', expectedTitleSubstr: 'Form' }          // redirects to topic-80
+    ];
+
+    for (const t of navTests) {
+      await page.goto(`${BASE_URL}/${t.path}`, { waitUntil: 'load' });
+      await page.waitForTimeout(400);
+      if (t.expectedTitleSubstr) {
+        const bodyText = await page.innerText('body');
+        if (!bodyText.toLowerCase().includes(t.expectedTitleSubstr.toLowerCase())) {
+          caughtErrors.push(`[Navigation Warning]: ${t.path} did not resolve to expected content containing "${t.expectedTitleSubstr}"`);
+        }
+      }
+    }
+
+    // 4. Test Viewports (360px, 390px, 768px)
+    console.log('[smoke-test] Testing mobile and tablet viewports (360px, 390px, 768px)...');
+    for (const width of [360, 390, 768]) {
+      await page.setViewportSize({ width, height: 800 });
+      await page.goto(`${BASE_URL}/#topic-124`, { waitUntil: 'load' });
+      await page.waitForTimeout(400);
+      // Verify no horizontal page blowup
+      const bodyWidth = await page.evaluate(() => document.body.clientWidth);
+      if (bodyWidth > width + 5) {
+        caughtErrors.push(`[Viewport Error]: Page body width ${bodyWidth}px exceeds viewport width ${width}px on #topic-124`);
+      }
+    }
 
     await browser.close();
 

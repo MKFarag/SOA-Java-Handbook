@@ -1,7 +1,7 @@
 # NTI Java & SOA Master Interactive Handbook (Offline-First)
 
-> **A comprehensive, offline-first reference and learning platform covering Java 8 through Java 26, Jakarta EE 10/11, and Service-Oriented Architecture (SOA) with Spring Boot.**  
-> Designed from absolute zero for beginners and modern enterprise software engineers.
+> **A comprehensive, offline-first reference and learning platform covering Java 21 LTS (Java 25 Ready), Jakarta EE 10, Spring Boot 3.x, and Database Systems (MySQL & MongoDB).**  
+> Designed as a junior-friendly, practical technical reference for software engineers.
 >
 > **Architect & Author:** **Mohamed Khaled Farag**  
 > 🔗 **LinkedIn:** [linkedin.com/in/mk-farag](https://www.linkedin.com/in/mk-farag/)  
@@ -15,14 +15,14 @@
 
 - **100% Offline-First:** Zero runtime CDN dependencies, zero external font fetches. Everything runs directly on your local machine or container.
 - **Cross-Device Cloud Progress Sync:** Seamlessly save and resume your progress across PC, laptop, and mobile using a lightweight unique student code without passwords or emails (Firebase Firestore).
-- **Official Completion Certificate & Security Gate:** Interactive, print-ready, and exportable verified Certificate of Technical Mastery issued exclusively upon completing all 134 modules or instructor verification.
-- **Confidential Instructor & Admin Portal:** Secret command center (`Ctrl + Shift + A` or `#admin`) protected by complex master authentication, featuring real-time student roster, progress metrics, CSV export, and security audit logs.
+- **Official Completion Certificate & Security Gate:** Interactive, print-ready, and exportable verified Certificate of Technical Mastery issued exclusively upon completing the complete 127-module curriculum or instructor verification.
+- **Confidential Instructor & Admin Portal:** Secret command center (`Ctrl + Shift + A` or `#admin`) protected by master authentication, featuring real-time student roster, progress metrics, CSV export, and security audit logs.
 - **Live Broadcasts & Shared Resources:** Instructor broadcast system for pushing Google Drive folders, project assignments, tasks, and notices to all learners with interactive notification badges.
-- **VS Code Dark+ & Light Paper Themes:** Built to match developer ergonomics with a deep `#18181b` slate theme, warm Java amber/orange accents, and crisp light paper mode.
+- **VS Code Dark+ & Light Paper Themes:** Built to match developer ergonomics with a deep `#18181b` slate theme, calm neutral reference tables, and crisp light paper mode.
 - **Offline Full-Text Search:** Sub-millisecond client-side indexing powered by MiniSearch with instant keyword matching, fuzzy tolerance, and `Ctrl + K` shortcut.
 - **Dual-Tab Code Blocks:** Switch between Java source code and exact terminal/console output with one-click copy buttons.
 - **Interactive Exercises & Capstones:** Multi-tiered Capstone projects and milestone challenges per topic with click-to-reveal solution panels.
-- **Local JDK & Apache Tomcat Verification:** Every code snippet is compiled against JDK 26.0.1 and Apache Tomcat 10.1.61 with 160 automated test suites passed (0 failed).
+- **Local JDK & Apache Tomcat Verification:** Every code snippet is compiled against Java 21 LTS / 25 LTS and Apache Tomcat 10.1.x with 197 automated test suites passed (100% pass rate: 0 failed, 0 skipped).
 
 ---
 

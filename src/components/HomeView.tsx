@@ -58,13 +58,13 @@ export const HomeView: React.FC<HomeViewProps> = ({
         </h1>
 
         <p className="text-base sm:text-lg text-zinc-600 dark:text-zinc-300 leading-relaxed font-sans">
-          Built from absolute zero for beginners and modern reference engineers. Every topic strictly follows our 11-step depth standard with runnable, locally verified code. Runs 100% offline.
+          Built as a practical technical reference for software engineers. Concise explanations, clear lookup tables, and runnable, locally verified code. Runs 100% offline.
         </p>
 
         {/* Feature Highlights Pills */}
         <div className="flex flex-wrap items-center justify-center gap-2 pt-2">
           <span className="px-3 py-1 rounded-full text-xs font-mono bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-700">
-            Java 8 through 26 LTS
+            Java 21 LTS (Java 25 Ready)
           </span>
           <span className="px-3 py-1 rounded-full text-xs font-mono bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-700">
             Jakarta EE 10 &amp; 11

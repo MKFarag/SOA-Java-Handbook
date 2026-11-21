@@ -60,8 +60,8 @@ Animal myPet = new Dog(); // Upcasting (Always implicit and safe)
 - **Runtime Object Type (`Dog`):** Located on the Heap. Determines **which actual implementation executes** at runtime.
 
 ### How Dynamic Method Dispatch Works (JLS §15.12 & JVMS §6.5)
-1. **Compile Time (Signature Verification):** The compiler inspects the declared reference type (`Animal`) to verify that `makeSound()` exists and is accessible. It records a symbolic method reference and emits an `invokevirtual` (or `invokeinterface`) bytecode instruction.
-2. **Runtime Resolution (Receiver-Based Lookup):** When `myPet.makeSound()` executes, the JVM retrieves the **actual runtime receiver object** from the Heap. It resolves the method by determining the concrete class of the receiver (`Dog`) and invokes the most specific implementation declared by that class or its closest superclass.
+1. **Compile Time — Language Semantics (JLS §15.12):** The compiler checks the declared reference type (`Animal`) to ensure the method name and arguments are valid and accessible. It emits an \`invokevirtual\` (or \`invokeinterface\`) bytecode instruction with a symbolic reference to \`Animal.makeSound()\`.
+2. **Runtime — Bytecode Resolution (JVMS §6.5.invokevirtual):** At execution time, the JVM inspects the **actual runtime receiver object** on the heap. Following JVMS dynamic lookup rules, it determines the receiver's concrete class (\`Dog\`) and invokes its overriding implementation.
 3. **JIT Performance Optimization:** In production, modern JVMs optimize dynamic dispatch through **Monomorphic Call Site Inlining** and **JIT Devirtualization**. When profiling detects that a call site consistently receives instances of a single concrete class, the JVM eliminates method lookup entirely and inlines the method code directly into native machine instructions for zero-overhead execution.
 
 ### Java 16+ Pattern Matching for `instanceof`

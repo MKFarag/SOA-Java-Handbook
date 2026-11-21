@@ -11,7 +11,7 @@ difficulty: Beginner
 readingTime: 7 min read
 shortDescription: >-
   Write, compile with javac, and execute with java your very first program.
-  Understand the anatomy of main() and bytecode execution.
+  Understand the anatomy of main(), bytecode execution, and standard console output (print, println, printf).
 prerequisites:
   - 'Topic 01: What is Programming & How Code Runs'
   - 'Topic 02: JDK vs JRE vs JVM & Setup'

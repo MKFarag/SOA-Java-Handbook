@@ -79,12 +79,15 @@ When thousands of users execute transactions simultaneously against the same tab
 
 ### Setting Isolation Levels in MySQL
 ```sql
--- View current transaction isolation level:
+-- View current transaction isolation level (defaults to REPEATABLE READ in MySQL InnoDB):
 SELECT @@transaction_isolation;
 
 -- Set isolation level for the current session:
 SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED;
 ```
+
+> [!NOTE] MySQL Default vs Other Engines
+> Unlike PostgreSQL, Oracle, and SQL Server (which default to `READ COMMITTED`), **MySQL InnoDB defaults to `REPEATABLE READ`**. It prevents phantom reads in standard consistent non-locking reads via MVCC read views, and in locking reads via next-key locks.
 
 > [!TIP]
 > In 99% of production backend services, **`READ COMMITTED`** or **`REPEATABLE READ`** provides the ideal balance between absolute data consistency and high-throughput concurrency. `SERIALIZABLE` introduces severe lock contention and deadlocks under heavy load.

@@ -67,8 +67,8 @@ Sidebar Navigation Hierarchy
 │   └── ...
 │
 ├── 📂 [Part 4] Database Systems & Persistence   [▼ / ▶ Toggle All Sections]
-│   ├── 📁 Section 38: Database Fundamentals & Relational Systems (Topics 130-132)
-│   └── 📁 Section 39: Document Databases & NoSQL Systems (Topics 133-134)
+│   ├── 📁 Section 35: Relational Foundations & SQL Mastery (Topics 120-128)
+│   └── 📁 Section 36: NoSQL Document Stores & Persistence Integration (Topics 129-131)
 │
 └── 📊 Global Quick Actions: [Progress Matrix] | [Saved Bookmarks] | [Certificate]
 ```

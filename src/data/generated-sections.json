@@ -14,7 +14,7 @@
     "sectionNumber": 2,
     "title": "Language Basics & Data Types",
     "part": "Part 1: Java Core",
-    "description": "Explore the 8 fundamental primitive data types in Java, understand memory allocation on the stack, byte sizes, range limits, and variable identifier rules.",
+    "description": "Explore the 8 primitive data types in Java, memory allocation on the stack, byte sizes, range limits, variable identifiers, and reading console input via Scanner.",
     "topicIds": [
       "topic-04",
       "topic-05",

@@ -1542,7 +1542,7 @@ runTest('Jakarta EE - Topic 80: FileUploadServlet.java & FormValidationServiceDe
   if (!out.includes('Multipart streaming verification successful')) throw new Error(out);
 });
 
-runTest('Jakarta EE - Topic 81: Error Pages (404/500), FaultTriggerServlet.java & ErrorHandlingDispatcherDemo.java', () => {
+runTest('Jakarta EE - Topic 80 (Section 6b / Legacy 81): Error Pages (404/500), FaultTriggerServlet.java & ErrorHandlingDispatcherDemo.java', () => {
   const outDir = 'examples/web/classes';
   execSync(`${JAVAC} -cp "${TOMCAT_LIB};${outDir}" -d ${outDir} examples/web/FaultTriggerServlet.java examples/web/ErrorHandlingDispatcherDemo.java`);
   if (!fs.existsSync('examples/web/war-build/error-404.jsp') || !fs.existsSync('examples/web/war-build/error-500.jsp')) {
@@ -1819,36 +1819,36 @@ runTest('Spring Boot - Topic 119: ServerSentEventsStreamingDemo.java execution',
   if (!out.includes('Topic 119 Server-Sent Events and HTTP streaming verified successfully.')) throw new Error(out);
 });
 
-// Part 4: Database Systems & Persistence
-runTest('Database - Topic 130: SqlVsNoSqlParadigmsDemo.java execution', () => {
+// Part 4: Database Systems & Persistence (Topics 120-131)
+runTest('Database - Topic 120 (Paradigms & Architecture): SqlVsNoSqlParadigmsDemo.java execution', () => {
   const outDir = 'examples/web/classes';
   execSync(`${JAVAC} -d ${outDir} examples/databases/SqlVsNoSqlParadigmsDemo.java`);
   const out = execSync(`${JAVA} -cp ${outDir} com.handbook.databases.SqlVsNoSqlParadigmsDemo`).toString();
   if (!out.includes('[SUCCESS] Topic 130 SQL vs NoSQL Paradigms Demo executed cleanly.')) throw new Error(out);
 });
 
-runTest('Database - Topic 131: MySqlQueriesAndOptimizationDemo.java execution', () => {
+runTest('Database - Topics 124-126, 130 (Queries, Joins & Tuning): MySqlQueriesAndOptimizationDemo.java execution', () => {
   const outDir = 'examples/web/classes';
   execSync(`${JAVAC} -d ${outDir} examples/databases/MySqlQueriesAndOptimizationDemo.java`);
   const out = execSync(`${JAVA} -cp ${outDir} com.handbook.databases.MySqlQueriesAndOptimizationDemo`).toString();
   if (!out.includes('[SUCCESS] Topic 131 MySQL Mastery Demo executed cleanly.')) throw new Error(out);
 });
 
-runTest('Database - Topic 132: JavaMySqlPersistencePropertiesDemo.java execution', () => {
+runTest('Database - Topics 121, 123 (MySQL Environment & Persistence): JavaMySqlPersistencePropertiesDemo.java execution', () => {
   const outDir = 'examples/web/classes';
   execSync(`${JAVAC} -d ${outDir} examples/databases/JavaMySqlPersistencePropertiesDemo.java`);
   const out = execSync(`${JAVA} -cp ${outDir} com.handbook.databases.JavaMySqlPersistencePropertiesDemo`).toString();
   if (!out.includes('[SUCCESS] Topic 132 Java MySQL Persistence Demo executed cleanly.')) throw new Error(out);
 });
 
-runTest('Database - Topic 133: MongoDbDocumentAndAggregationDemo.java execution', () => {
+runTest('Database - Topic 120 (Document Data Modeling & Aggregations): MongoDbDocumentAndAggregationDemo.java execution', () => {
   const outDir = 'examples/web/classes';
   execSync(`${JAVAC} -d ${outDir} examples/databases/MongoDbDocumentAndAggregationDemo.java`);
   const out = execSync(`${JAVA} -cp ${outDir} com.handbook.databases.MongoDbDocumentAndAggregationDemo`).toString();
   if (!out.includes('[SUCCESS] Topic 133 MongoDB Mastery Demo executed cleanly.')) throw new Error(out);
 });
 
-runTest('Database - Topic 134: JavaMongoDbPersistencePropertiesDemo.java execution', () => {
+runTest('Database - Topic 121 (Document Store Persistence Configuration): JavaMongoDbPersistencePropertiesDemo.java execution', () => {
   const outDir = 'examples/web/classes';
   execSync(`${JAVAC} -d ${outDir} examples/databases/JavaMongoDbPersistencePropertiesDemo.java`);
   const out = execSync(`${JAVA} -cp ${outDir} com.handbook.databases.JavaMongoDbPersistencePropertiesDemo`).toString();

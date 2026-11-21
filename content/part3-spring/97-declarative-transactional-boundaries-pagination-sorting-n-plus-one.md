@@ -92,6 +92,15 @@ Before studying transactional boundaries and pagination, ensure you understand:
 public void executeOrder(Order order) { ... }
 ```
 
+| Attribute | Type | Default | Operational Purpose |
+|---|---|---|---|
+| `propagation` | `Propagation` | `REQUIRED` | Joins existing transaction or creates a new one |
+| `isolation` | `Isolation` | `DEFAULT` | Engine default (`REPEATABLE READ` in MySQL) |
+| `readOnly` | `boolean` | `false` | Skips Hibernate dirty-check snapshots when `true` |
+| `timeout` | `int` | `-1` (unlimited) | Max execution seconds before aborting |
+| `rollbackFor` | `Class[]` | `RuntimeException, Error` | Exceptions triggering rollback (add `Exception.class` for checked) |
+| `noRollbackFor` | `Class[]` | `{}` | Exceptions that should commit despite throwing |
+
 1. **Propagation Behaviors:**
    - `REQUIRED` (Default): Joins an existing active transaction; creates a new one if none exists.
    - `REQUIRES_NEW`: Suspends any outer transaction and opens a completely isolated, independent transaction.

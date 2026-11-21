@@ -639,7 +639,7 @@ export function App() {
         onOpenSaved={() => handleNavigateView('saved')}
         onOpenProgress={() => handleNavigateView('progress')}
         savedCount={savedTopicIds.length}
-        percentComplete={Math.round((completedTopicIds.size / Math.max(ALL_TOPICS.length, 1)) * 100)}
+        percentComplete={Math.min(100, Math.round((completedTopicIds.size / Math.max(ALL_TOPICS.length, 1)) * 100))}
       />
     </div>
   );

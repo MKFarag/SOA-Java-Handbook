@@ -375,6 +375,44 @@ Files.copy(part.getInputStream(), target);
 
 ---
 
+## 6b. Web Error Pages & Exception Handling (`<error-page>`)
+
+In production Jakarta EE applications, unhandled exceptions and HTTP error codes must never display raw server stack traces or Tomcat default error pages to end users. Configure declarative error mappings in `WEB-INF/web.xml`:
+
+### Declarative Error Mappings in `web.xml`
+```xml
+<!-- Map HTTP Status Code 404 (Not Found) -->
+<error-page>
+    <error-code>404</error-code>
+    <location>/WEB-INF/views/errors/404.jsp</location>
+</error-page>
+
+<!-- Map HTTP Status Code 500 (Internal Server Error) -->
+<error-page>
+    <error-code>500</error-code>
+    <location>/WEB-INF/views/errors/500.jsp</location>
+</error-page>
+
+<!-- Map Specific Java Exception Types -->
+<error-page>
+    <exception-type>java.lang.Throwable</exception-type>
+    <location>/WEB-INF/views/errors/error.jsp</location>
+</error-page>
+```
+
+### Standard Servlet Error Attributes
+When forwarding to an error page, the container populates standard request attributes:
+| Attribute Name | Type | Description |
+|---|---|---|
+| `jakarta.servlet.error.status_code` | `Integer` | HTTP status code (e.g., `404`, `500`) |
+| `jakarta.servlet.error.exception_type` | `Class<?>` | Runtime class of the exception thrown |
+| `jakarta.servlet.error.message` | `String` | Exception error message string |
+| `jakarta.servlet.error.exception` | `Throwable` | The actual exception object instance |
+| `jakarta.servlet.error.request_uri` | `String` | URI of the target resource that failed |
+| `jakarta.servlet.error.servlet_name` | `String` | Name of the servlet where error occurred |
+
+---
+
 ## 7. Best Practices and When NOT to Use It
 
 ### Best Practices

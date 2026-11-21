@@ -38,6 +38,9 @@ You have two primary setup options for local development:
 3. Open the **XAMPP Control Panel**.
 4. Click **Start** next to **Apache** (serves phpMyAdmin) and **MySQL** (database engine). Both turn green when active.
 
+> [!NOTE] XAMPP & MariaDB Compatibility
+> Standard modern XAMPP distributions bundle **MariaDB 10.4+** as their database engine. For all Java/JDBC syntax, DDL, DML, JOINs, and Spring Data JPA demonstrations in this handbook, MariaDB is 100% binary-compatible. If your production target strictly requires Oracle MySQL 8.4 LTS, use Option B (Docker) below.
+
 ```text
 +-------------------------------------------------------------+
 | XAMPP Control Panel                                         |

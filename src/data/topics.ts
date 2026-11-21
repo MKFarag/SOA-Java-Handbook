@@ -13,6 +13,47 @@ export function getTopicBySlug(slug: string): TopicDetail | undefined {
   return ALL_TOPICS.find(t => t.slug === slug);
 }
 
+/**
+ * Map of legacy topic IDs and slugs from earlier curriculum iterations (e.g. 134-topic era)
+ * to their permanent consolidated or renumbered destinations in the 127-topic architecture.
+ */
+export const LEGACY_TOPIC_ALIASES: Record<string, string> = {
+  // Merged JSP & Presentation topics
+  'topic-75-legacy': 'topic-74',
+  'topic-76': 'topic-74',
+  'jsp-implicit-objects-and-standard-actions': 'topic-74',
+  'jsp-syntax-elements': 'topic-74',
+  'topic-77': 'topic-75',
+  'topic-78': 'topic-75',
+  'custom-jsp-tag-libraries': 'topic-75',
+  'topic-81': 'topic-80',
+  'error-pages-and-exception-handling': 'topic-80',
+
+  // Database 134-era mappings
+  'topic-130-legacy': 'topic-129',
+  'topic-131-legacy': 'topic-120',
+  'topic-132': 'topic-131',
+  'topic-133': 'topic-130',
+  'topic-134': 'topic-131',
+  'java-mongodb-persistence-spring-data-properties': 'topic-131',
+  'mongodb-document-store-compass-queries': 'topic-130',
+  'java-mysql-persistence-spring-data-properties': 'topic-131',
+  'mysql-fundamentals-queries-xampp': 'topic-120',
+  'sql-vs-nosql-architecture-tradeoffs': 'topic-129',
+
+  // Pruned Cloud/Microservices slugs (gracefully redirected to relevant core backend topics)
+  'service-discovery-registration-eureka-consul': 'topic-88',
+  'api-gateway-spring-cloud-gateway': 'topic-92',
+  'centralized-configuration-spring-cloud-config': 'topic-91',
+  'declarative-rest-clients-feign-restclient': 'topic-92',
+  'distributed-tracing-micrometer-opentelemetry-zipkin': 'topic-104',
+  'kafka-resilience-retryable-topics-dlt': 'topic-108',
+  'transactional-outbox-pattern-cdc-debezium': 'topic-97',
+  'distributed-transactions-saga-pattern': 'topic-97',
+  'production-dockerization-layered-jars': 'topic-90',
+  'graalvm-native-image-aot-compilation': 'topic-90'
+};
+
 export function resolveTopic(identifier: string): TopicDetail | undefined {
   if (!identifier) return undefined;
 
@@ -32,6 +73,18 @@ export function resolveTopic(identifier: string): TopicDetail | undefined {
   // 2. Direct Slug match (case-insensitive)
   const bySlug = ALL_TOPICS.find(t => t.slug.toLowerCase() === clean);
   if (bySlug) return bySlug;
+
+  // 2b. Legacy Alias check for relocated/renumbered/merged topics
+  if (LEGACY_TOPIC_ALIASES[clean]) {
+    const targetId = LEGACY_TOPIC_ALIASES[clean];
+    const target = ALL_TOPICS.find(t => t.id === targetId);
+    if (target) return target;
+  }
+  if (LEGACY_TOPIC_ALIASES[`topic-${clean}`]) {
+    const targetId = LEGACY_TOPIC_ALIASES[`topic-${clean}`];
+    const target = ALL_TOPICS.find(t => t.id === targetId);
+    if (target) return target;
+  }
 
   // 3. Match "topic-{number}" or "t-{number}" or "topic{number}" with any digit count
   const topicNumMatch = clean.match(/^(?:topic|t)[-_]?(\d+)$/i);

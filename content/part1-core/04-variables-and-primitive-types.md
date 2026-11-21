@@ -10,9 +10,8 @@ versionBadge: Java 8+
 difficulty: Beginner
 readingTime: 10 min read
 shortDescription: >-
-  Explore the 8 fundamental primitive data types in Java, understand memory
-  allocation on the stack, byte sizes, range limits, and variable identifier
-  rules.
+  Explore the 8 primitive data types in Java, memory allocation on the stack,
+  byte sizes, range limits, variable identifiers, and reading console input via Scanner.
 prerequisites:
   - 'Topic 01: What is Programming & How Code Runs'
   - 'Topic 03: Your First Java Program'
