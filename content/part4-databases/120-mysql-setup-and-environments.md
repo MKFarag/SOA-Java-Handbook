@@ -81,6 +81,15 @@ To verify the container is running:
 docker ps
 ```
 
+### MySQL Environment Deployment Comparison
+
+| Setup Mode | Installation Effort | Host Impact | Version Flexibility | Recommended Use Case |
+| :--- | :--- | :--- | :--- | :--- |
+| **XAMPP / MariaDB** | Minimal (GUI installer) | High (installs system services) | Bundled version only | Beginners wanting instant GUI via phpMyAdmin |
+| **Native Installer** | Moderate (MSI / DMG) | High (runs background daemon) | Single installed version | Dedicated workstations without container runtimes |
+| **Docker Container** | Low (single CLI command) | Zero (isolated filesystem) | Instant version switching | Modern development, multi-project workflows, CI/CD |
+| **Testcontainers** | Zero (managed by Java tests) | Ephemeral (auto-terminated) | Any Docker image tag | Automated persistence unit & integration tests |
+
 ---
 
 ## Creating Your First Database
@@ -97,3 +106,22 @@ USE enterprise_shop;
 
 > [!TIP] Always Use `utf8mb4` Encoding
 > Standard `utf8` in MySQL only allocates up to 3 bytes per character, failing on emojis, rare Unicode glyphs, and supplementary characters. **Always use `utf8mb4`** for complete UTF-8 compliance.
+
+---
+
+## Pitfalls
+
+- **Using Legacy `utf8` instead of `utf8mb4`:** MySQL's legacy `utf8` charset only supports 3 bytes, failing with errors when users submit 4-byte characters (emojis, complex scripts). Always specify `utf8mb4` and `utf8mb4_unicode_ci`.
+- **Leaving Root Account Unprotected:** Local XAMPP and developmental Docker containers often default to an empty root password. Never reuse default development passwords in production environments.
+- **Port 3306 Conflicts:** Running both local XAMPP and Docker MySQL instances simultaneously causes bind collisions on port 3306. Check active listening ports with `netstat` or PowerShell `Get-NetTCPConnection` before starting containers.
+
+---
+
+## Practice
+
+### Q: Why is `utf8mb4` required in modern MySQL database configurations instead of MySQL's legacy `utf8` charset?
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
+> **Answer:** MySQL's legacy `utf8` charset only supports up to 3 bytes per character. Real-world international text, including emojis, mathematical symbols, and historic glyphs, requires full 4-byte UTF-8 encoding. Attempting to insert a 4-byte character into a legacy `utf8` column triggers an `Incorrect string value` error. `utf8mb4` guarantees complete 4-byte Unicode support.
+</details>

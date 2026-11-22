@@ -287,3 +287,14 @@ public ResponseEntity<PageResponse<ProductDto>> searchProducts(ProductSearchCrit
 - [Spring Framework Reference: REST Controllers](https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-controller.html)
 - [Spring Framework Reference: Mapping Requests](https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-controller/ann-requestmapping.html)
 - [RFC 9110: HTTP Semantics & Status Codes](https://www.rfc-editor.org/rfc/rfc9110.html)
+
+---
+
+## Practice
+
+### Q: Why should production REST endpoints return explicit `ResponseEntity<T>` return types rather than raw entity instances?
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
+> **Answer:** `ResponseEntity<T>` provides complete programmatic control over the HTTP response: setting accurate status codes (`201 Created`, `204 No Content`, `404 Not Found`), appending custom security or cache headers (`ETag`, `Cache-Control`), and wrapping response bodies in standard DTO envelopes.
+</details>

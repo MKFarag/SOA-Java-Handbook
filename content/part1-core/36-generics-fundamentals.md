@@ -105,11 +105,14 @@ public class GenericCacheStore<K, V> {
 }
 ```
 
-### Execution Output:
+<details data-type="output">
+<summary>View Output</summary>
+
 ```text
 Cached [metrics_port] -> 8080
 Threshold breached: true
 ```
+</details>
 
 ---
 
@@ -134,8 +137,13 @@ public class Factory<T> {
 }
 ```
 
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
 ### Explanation
 1. Under JVM Type Erasure, `T` is erased to `Object` at compile time.
 2. The runtime has no knowledge of what class `T` represents, what constructors it possesses, or what memory space to allocate.
 3. Compiling `new T()` triggers compiler error: `unexpected type, found: type parameter: T`.
 4. Solution: Pass a class token: `Class<T> clazz` and invoke `clazz.getDeclaredConstructor().newInstance()`.
+
+</details>

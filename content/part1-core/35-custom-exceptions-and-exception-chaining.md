@@ -71,6 +71,15 @@ public class PaymentProcessingException extends RuntimeException {
  topException.getCause()     ──► java.net.ConnectException: Connection refused
 ```
 
+### Exception Wrapping Strategies Reference
+
+| Strategy | Code Idiom | Root Cause Preserved? | Production Evaluation |
+| :--- | :--- | :---: | :--- |
+| **Chained Wrapper** | `throw new ServiceException("msg", cause);` | **YES (Complete)** | **Industry Standard:** Clean domain abstraction with full stack diagnostics |
+| **Silent Swallowing** | `catch (Exception e) { /* empty */ }` | **NO (Destroyed)** | **Severe Anti-Pattern:** Silently obscures bugs and leads to data corruption |
+| **Message-Only Wrap** | `throw new ServiceException(e.getMessage());` | **NO (Destroyed)** | Drops stack traces, exception type, and causal root causes |
+| **Unchecked Conversion** | `throw new UncheckedException(checkedException);` | **YES (Complete)** | Standard in modern reactive & functional Java pipelines |
+
 If the cause is omitted in `super(message)`, the root cause stack trace is obliterated, concealing the underlying hardware or SQL error.
 
 ---
@@ -127,12 +136,15 @@ public class DomainExceptionChainingDemo {
 }
 ```
 
-### Execution Output:
+<details data-type="output">
+<summary>View Output</summary>
+
 ```text
 Domain Error [503]: Failed to initialize storage cluster: cluster-eu-west (Resource: cluster-eu-west)
 Root Cause Class : java.io.IOException
 Root Cause Detail: TCP Handshake timeout after 5000ms
 ```
+</details>
 
 ---
 
@@ -150,8 +162,13 @@ Root Cause Detail: TCP Handshake timeout after 5000ms
 ### Question
 What is the consequence of executing `throw new CustomException(e.getMessage());` instead of `throw new CustomException(e.getMessage(), e);`?
 
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
 ### Explanation
 1. Passing only `e.getMessage()` invokes the single-string constructor `CustomException(String message)`.
 2. The `cause` reference inside `Throwable` remains initialized to `null`.
 3. When the stack trace is logged or printed, the chained `Caused by:` section detailing the original exception's line numbers and type is completely lost.
 4. Passing `(e.getMessage(), e)` preserves the full causal graph.
+
+</details>

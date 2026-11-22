@@ -109,13 +109,16 @@ public class TryWithResourcesDemo {
 }
 ```
 
-### Execution Output:
+<details data-type="output">
+<summary>View Output</summary>
+
 ```text
 [Session SESSION-001] Acquired connection.
 [Session SESSION-001] Executing SQL batch...
 [Session SESSION-001] Closing socket and releasing pool lock.
 Caught Primary Exception: Network socket reset during query execution
 ```
+</details>
 
 ---
 
@@ -139,8 +142,13 @@ try (ResourceA a = new ResourceA();
 }
 ```
 
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
 ### Explanation
 1. `ResourceA` is initialized first, followed by `ResourceB`.
 2. The `try-with-resources` specification mandates that resources are closed in reverse order of their declaration (LIFO stack).
 3. Upon exit from the block, `b.close()` executes first, followed by `a.close()`.
 4. Output order of closures: `b.close()` then `a.close()`.
+
+</details>

@@ -104,13 +104,16 @@ public class ServerNode {
 }
 ```
 
-### Execution Output:
+<details data-type="output">
+<summary>View Output</summary>
+
 ```text
 Cluster active nodes: 2
 Node[id=node-01, ip=10.0.0.1, online=true]
 Node[id=node-02, ip=10.0.0.2, online=true]
 After decommissioning node1, active count: 1
 ```
+</details>
 
 ---
 
@@ -147,7 +150,12 @@ public class TestOOP {
 }
 ```
 
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
 ### Explanation
 1. `globalCount` is `static`: a single memory slot shared by all instances. Both `c1.increment()` and `c2.increment()` increment this shared counter $\rightarrow$ `globalCount` becomes `2`.
 2. `instanceCount` is an instance field: each object maintains its own independent copy. `c1` was incremented once (`1`), and `c2` was incremented once (`1`).
 3. Output: `2 1 1`.
+
+</details>

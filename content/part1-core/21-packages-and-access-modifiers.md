@@ -121,7 +121,12 @@ public class Beta extends Alpha {
 ```
 Does this code compile?
 
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
 ### Explanation
 1. Line 1 accesses `this.count`. Because `Beta` inherits from `Alpha`, it accesses `count` through inheritance. Line 1 is valid.
 2. Line 2 accesses `a.count` on an explicit instance reference of `Alpha`. Because `Beta` is in a different package (`pkgB`) than `Alpha` (`pkgA`), Java forbids accessing protected members across arbitrary object instances. Line 2 **fails compilation**.
 3. Result: Compilation error on Line 2.
+
+</details>

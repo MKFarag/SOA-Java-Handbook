@@ -111,7 +111,12 @@ String c = b.intern();
 System.out.println((a == b) + " " + (a == c));
 ```
 
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
 ### Explanation
 1. `a == b` evaluates to `false` because `b` was created via `new String()`, allocating a distinct object outside the String Pool.
 2. `b.intern()` returns the canonical reference from the String Constant Pool, which is identical to `a`. Thus `a == c` evaluates to `true`.
 3. Output: `false true`.
+
+</details>

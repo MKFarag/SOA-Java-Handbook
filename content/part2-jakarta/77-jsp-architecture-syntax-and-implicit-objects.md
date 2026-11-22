@@ -4,13 +4,14 @@ slug: jsp-architecture-syntax-and-implicit-objects
 topicNumber: 77
 title: 'JSP Architecture, Syntax & Implicit Objects'
 part: 'Part 2: Java EE & Jakarta EE'
-sectionNumber: 20
+sectionNumber: 21
 sectionTitle: Server-Side Rendering with JSP & JSTL
 versionBadge: Jakarta Pages 3.1
 difficulty: Intermediate
 readingTime: 8 min read
 shortDescription: >-
-  Reference: JavaServer Pages translation lifecycle into HttpJspPage servlets, directive syntax, scriptlet elimination, and the 9 implicit runtime objects.
+  Reference: JavaServer Pages translation lifecycle into HttpJspPage servlets,
+  directive syntax, scriptlet elimination, and the 9 implicit runtime objects.
 prerequisites:
   - 'Topic 69: Servlet Lifecycle & Threading Model'
   - 'Topic 70: HttpServletRequest & HttpServletResponse Processing'
@@ -113,3 +114,14 @@ Browser Request: /index.jsp
 **Question:** An engineer changes a JSP file on a production server, but users continue seeing the old page content. What causes this in Tomcat's Jasper engine?
 
 **Explanation:** In production configurations, Tomcat's Jasper servlet parameter `development` is set to `false`, disabling automatic modification checks on every request for performance. The compiled `_jsp.class` in Tomcat's `work/` directory is cached. To apply changes, either trigger a redeploy, touch the WAR file, or delete the cached `.class` file inside the `work/` folder.
+
+---
+
+## Practice
+
+### Q: Why are Java Scriptlets (`<% ... %>`) considered deprecated legacy practices in modern server-side templating?
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
+> **Answer:** Scriptlets mix imperative Java code directly with HTML presentation, violating Model-View-Controller separation of concerns, hindering frontend maintainability, making automated unit testing impossible, and introducing critical Cross-Site Scripting (XSS) vulnerabilities due to lack of automatic HTML entity escaping.
+</details>

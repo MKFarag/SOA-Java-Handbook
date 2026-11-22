@@ -361,3 +361,14 @@ public class BillingEngine {
 - [Spring Framework Reference: The IoC Container](https://docs.spring.io/spring-framework/reference/core/beans.html)
 - [Spring Framework API: BeanFactory JavaDoc](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/beans/factory/BeanFactory.html)
 - [Spring Framework API: ApplicationContext JavaDoc](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/context/ApplicationContext.html)
+
+---
+
+## Practice
+
+### Q: Why does Spring Boot default to `ApplicationContext` rather than `BeanFactory` in enterprise applications?
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
+> **Answer:** `BeanFactory` uses lazy initialization, instantiating beans only upon explicit lookup. `ApplicationContext` is an enterprise superset that eagerly pre-instantiates singleton beans at startup, catching dependency injection misconfigurations and missing bean errors immediately during deployment before serving traffic.
+</details>

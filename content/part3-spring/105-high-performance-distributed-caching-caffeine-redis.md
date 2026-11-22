@@ -405,3 +405,14 @@ Modern enterprise architectures use **Redis Pub/Sub Event Invalidation**:
 - [Spring Framework Cache Abstraction Guide](https://docs.spring.io/spring-framework/reference/integration/cache.html)
 - [Caffeine Cache Architecture & TinyLFU Design](https://github.com/ben-manes/caffeine/wiki)
 - [Redis Official Documentation on Cache Eviction and Patterns](https://redis.io/docs/latest/develop/use/eviction/)
+
+---
+
+## Practice
+
+### Q: What is the "Cache Stampede" problem, and how does configuring `sync = true` in Spring's `@Cacheable` mitigate it?
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
+> **Answer:** When a high-traffic cached key expires, hundreds of concurrent threads may simultaneously encounter a cache miss and all execute the expensive database query at once, overloading the database. Setting `@Cacheable(sync = true)` causes the cache provider to synchronize access: only one thread executes the underlying query while other threads wait to receive the refreshed cache value.
+</details>

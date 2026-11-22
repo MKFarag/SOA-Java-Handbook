@@ -98,7 +98,9 @@ public class JvmMemoryMetricsDemo {
 }
 ```
 
-### Execution Output:
+<details data-type="output">
+<summary>View Output</summary>
+
 ```text
 --- JVM Heap Status ---
 Max Heap (-Xmx)   :      4,096 MB
@@ -109,6 +111,7 @@ Free In Allocation:        244 MB
 Non-Heap Used     :          8 MB
 Non-Heap Committed:         15 MB
 ```
+</details>
 
 ---
 
@@ -125,6 +128,11 @@ Non-Heap Committed:         15 MB
 ### Question
 Where are local primitive variables (`int x = 5;`) stored inside the JVM, and where are object instance variables stored?
 
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
 ### Explanation
 1. Local primitive variables declared inside a method are stored directly inside the **Local Variable Table of the active Thread Stack Frame** on the thread call stack.
 2. Object instance variables (even primitives declared as fields inside a class) are stored on the **Java Heap**, embedded directly inside the memory layout of the enclosing heap object instance.
+
+</details>

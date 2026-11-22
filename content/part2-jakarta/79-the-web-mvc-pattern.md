@@ -2,15 +2,16 @@
 id: topic-79
 slug: the-web-mvc-pattern
 topicNumber: 79
-title: 'The Web Model-View-Controller (MVC) Pattern'
+title: The Web Model-View-Controller (MVC) Pattern
 part: 'Part 2: Java EE & Jakarta EE'
-sectionNumber: 21
+sectionNumber: 22
 sectionTitle: Enterprise Web Applications & Data Flow
 versionBadge: Jakarta EE 10
 difficulty: Intermediate
 readingTime: 8 min read
 shortDescription: >-
-  Reference: Model-View-Controller architectural separation in server-side Java, Front Controller dispatching, and request-scoped model binding.
+  Reference: Model-View-Controller architectural separation in server-side Java,
+  Front Controller dispatching, and request-scoped model binding.
 prerequisites:
   - 'Topic 70: HttpServletRequest & HttpServletResponse Processing'
   - 'Topic 72: Request Dispatching: Forward, Include & Redirect'
@@ -109,3 +110,14 @@ public class AccountController extends HttpServlet {
 **Question:** Why must JSP views in an MVC application be stored under the `/WEB-INF/` directory rather than the public root of the WAR file?
 
 **Explanation:** The servlet specification dictates that containers must reject all direct client HTTP requests to `/WEB-INF/` with a 404 or 403 status. This guarantees that views can only be rendered via internal server-side dispatching (`RequestDispatcher.forward()`) originating from a Controller servlet, ensuring business validation and model population always occur first.
+
+---
+
+## Practice
+
+### Q: In the server-side Java MVC architecture, what are the distinct responsibilities of the Controller, Model, and View?
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
+> **Answer:** The Controller (Servlet) receives the incoming HTTP request, validates input, calls business services, and places resulting domain data into request scope. The Model represents business entities and services containing data and logic. The View (JSP or template) reads data from request attributes and renders the presentation HTML for the client without performing business calculations.
+</details>

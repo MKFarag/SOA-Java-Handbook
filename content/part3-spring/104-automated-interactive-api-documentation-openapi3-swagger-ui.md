@@ -431,3 +431,14 @@ The JSON output contains:
 - [OpenAPI Specification v3.0.3 Official Standard](https://spec.openapis.org/oas/v3.0.3)
 - [Springdoc-OpenAPI Official Guide](https://springdoc.org/)
 - [Swagger UI Official Documentation](https://swagger.io/tools/swagger-ui/)
+
+---
+
+## Practice
+
+### Q: How does `springdoc-openapi` generate interactive API documentation without requiring manual YAML synchronization?
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
+> **Answer:** `springdoc-openapi` examines Spring Web MVC controller mappings (`@GetMapping`, `@PostMapping`), parameter annotations (`@PathVariable`, `@RequestBody`), and Bean Validation constraints at runtime via reflection, automatically generating compliant OpenAPI 3 JSON specifications and rendering the interactive Swagger UI dynamically.
+</details>

@@ -112,7 +112,9 @@ public class RetryAndSearchPipeline {
 }
 ```
 
-### Execution Output:
+<details data-type="output">
+<summary>View Output</summary>
+
 ```text
 Processed 2 valid readings. Average: 73.50
 Encountered fatal sentinel value. Aborting analysis.
@@ -120,6 +122,7 @@ Attempting connection: attempt 1/3...
 Attempting connection: attempt 2/3...
 Connection status: CONNECTED (after 2 attempts)
 ```
+</details>
 
 ---
 
@@ -149,6 +152,9 @@ for (int i = 0; i < 3; i++) {
 }
 ```
 
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
 ### Explanation
 1. When `i = 0`: inner loop runs for `j = 0, 1, 2` $\rightarrow$ `count` increments 3 times (total: 3).
 2. When `i = 1`:
@@ -156,3 +162,5 @@ for (int i = 0; i < 3; i++) {
    - `j = 1`: `continue outer;` triggers, skipping the rest of the inner loop (`j = 2` never executes) and advancing directly to `i = 2`.
 3. When `i = 2`: inner loop runs for `j = 0, 1, 2` $\rightarrow$ `count` increments 3 times (total: 7).
 4. Final value of `count`: `7`.
+
+</details>

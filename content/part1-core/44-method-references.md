@@ -116,11 +116,14 @@ public class MethodReferenceDemo {
 }
 ```
 
-### Execution Output:
+<details data-type="output">
+<summary>View Output</summary>
+
 ```text
 Remaining Low-Value ID: TX-101
 Array allocated with length: 1
 ```
+</details>
 
 ---
 
@@ -137,9 +140,14 @@ Array allocated with length: 1
 ### Question
 To which lambda expression is `BiFunction<String, Integer, String> func = String::substring;` equivalent?
 
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
 ### Explanation
 1. `String::substring` is an **unbound instance method reference**.
 2. In unbound instance references, the first parameter of the functional interface becomes the receiver object on which the instance method is invoked.
 3. The remaining parameters are forwarded as arguments to the method.
 4. With `BiFunction<String, Integer, String>`, parameter 1 is `String` (the receiver target) and parameter 2 is `Integer` (the start index).
 5. Equivalent lambda: `(str, index) -> str.substring(index)`.
+
+</details>

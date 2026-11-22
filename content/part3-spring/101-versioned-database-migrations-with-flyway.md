@@ -322,3 +322,14 @@ Running `V2_1` leaves the table schema backwards-compatible with active Version 
 - [Flyway Official Documentation](https://documentation.red-gate.com/fd/)
 - [Spring Boot Database Initialization & Flyway Integration](https://docs.spring.io/spring-boot/reference/data/sql.html#data.sql.datasource.flyway)
 - [Martin Fowler — Evolutionary Database Design & The Expand/Contract Pattern](https://martinfowler.com/articles/evodb.html)
+
+---
+
+## Practice
+
+### Q: How does Flyway guarantee that database schema migrations execute in strict order across multiple application cluster instances?
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
+> **Answer:** Flyway creates and locks a metadata tracking table (`flyway_schema_history`) in the target database. When an instance boots, Flyway acquires an exclusive database lock, checks previously executed checksums, applies pending versioned migration scripts (`V1__...`, `V2__...`) sequentially in single transactions, and records each execution checksum before unlocking.
+</details>

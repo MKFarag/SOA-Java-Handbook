@@ -87,13 +87,16 @@ public class SetHierarchyDemo {
 }
 ```
 
-### Execution Output:
+<details data-type="output">
+<summary>View Output</summary>
+
 ```text
 Insertion-Ordered IPs: [192.168.1.50, 10.0.0.1, 172.16.0.4]
 Ceiling for 185ms: 250ms
 Floor for 185ms  : 100ms
 Range [100, 500]: [100, 250, 500]
 ```
+</details>
 
 ---
 
@@ -123,8 +126,13 @@ set.add(new Node(1, "Alpha"));
 set.add(new Node(1, "Beta"));
 ```
 
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
 ### Explanation
 1. `TreeSet` determines element equality using `compareTo()`, NOT `equals()`.
 2. When adding the second `Node(1, "Beta")`, `compareTo` compares `id = 1` with the existing `id = 1`, yielding `0`.
 3. Because `compareTo` returns `0`, `TreeSet` considers the second node a duplicate of the first and discards it.
 4. Total elements in `set`: **1**.
+
+</details>

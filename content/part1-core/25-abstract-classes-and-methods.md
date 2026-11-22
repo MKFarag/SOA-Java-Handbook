@@ -107,12 +107,15 @@ public class AbstractTemplateMethodDemo {
 }
 ```
 
-### Execution Output:
+<details data-type="output">
+<summary>View Output</summary>
+
 ```text
 --- Starting Report: Daily-Metrics ---
 Transmitting payload (31 bytes): {"status": "ACTIVE", "count": 42}
 --- Report Dispatch Complete ---
 ```
+</details>
 
 ---
 
@@ -140,8 +143,13 @@ public abstract class Worker {
 }
 ```
 
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
 ### Explanation
 1. `private abstract void execute();` fails because private methods cannot be accessed or overridden by subclasses.
 2. `public static abstract void compute();` fails because static methods cannot be overridden via dynamic dispatch.
 3. `public final abstract void terminate();` fails because final methods forbid overriding, while abstract requires it.
 4. Result: All three methods trigger **compile-time errors**.
+
+</details>

@@ -373,3 +373,14 @@ public class OrderNotificationService {
 - [HTML Living Standard: Server-Sent Events](https://html.spec.whatwg.org/multipage/server-sent-events.html)
 - [Spring Framework Reference: Server-Sent Events](https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-controller/ann-methods/responsebodyemitter.html#mvc-ann-async-sse)
 - [MDN Web Docs: Using Server-Sent Events](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events)
+
+---
+
+## Practice
+
+### Q: When should an architect choose Server-Sent Events (SSE) instead of WebSockets for real-time web features?
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
+> **Answer:** Server-Sent Events are ideal when communication is unidirectional (server-to-client only), such as stock tickers, live sports scores, build logs, or notification alerts. SSE operates over standard HTTP/HTTPS (benefiting from standard HTTP/2 multiplexing, native browser reconnection, and proxy compatibility) without the protocol overhead of full-duplex WebSockets.
+</details>

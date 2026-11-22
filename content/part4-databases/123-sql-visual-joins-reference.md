@@ -168,3 +168,22 @@ ORDER BY o.order_date DESC;
 | **`RIGHT JOIN`** | All right records + matched left records | Excluded | Included (with `NULL`s) |
 | **`FULL JOIN`** | All records from both tables | Included (with `NULL`s) | Included (with `NULL`s) |
 | **`CROSS JOIN`**| Cartesian product ($M \times N$ combinations) | All combined | All combined |
+
+---
+
+## Pitfalls
+
+- **Accidental Cartesian Product (`CROSS JOIN`):** Forgetting the `ON` condition or writing `FROM tableA, tableB` without a linking predicate calculates the Cartesian product ($M \times N$). On tables with 10,000 rows each, this produces 100,000,000 rows, exhausting server memory.
+- **Accidental Conversion of `LEFT JOIN` to `INNER JOIN` via `WHERE`:** Placing a filter on the right table inside the `WHERE` clause (e.g. `WHERE o.status = 'PAID'`) discards all rows where `o.status IS NULL`, converting the `LEFT JOIN` into an `INNER JOIN`. Place right-table filters inside the `ON` condition instead (`ON c.id = o.customer_id AND o.status = 'PAID'`).
+- **Ambiguous Column Names:** Referencing a column like `id` or `created_at` without a table alias when both tables contain that column triggers `Column 'id' in field list is ambiguous`. Always prefix columns with their table alias (e.g. `c.id`, `o.id`).
+
+---
+
+## Practice
+
+### Q: Why does adding `WHERE orders.status = 'SHIPPED'` to a `LEFT JOIN` query unintentionally turn it into an `INNER JOIN`?
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
+> **Answer:** A `LEFT JOIN` preserves all left rows by filling missing right-side attributes with `NULL`. When `WHERE orders.status = 'SHIPPED'` runs, any left row with no matching order has `orders.status = NULL`, which evaluates to `UNKNOWN` and is discarded by the `WHERE` clause. This removes all unmatched left records, turning the query into an `INNER JOIN`. To preserve unmatched left records, place the filter inside the join clause: `LEFT JOIN orders ON customers.id = orders.customer_id AND orders.status = 'SHIPPED'`.
+</details>

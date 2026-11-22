@@ -108,10 +108,13 @@ public class CompletableFuturePipelineDemo {
 }
 ```
 
-### Execution Output:
+<details data-type="output">
+<summary>View Output</summary>
+
 ```text
 Assembled Summary: User=USER-99, Bal=$4500.00, Score=780
 ```
+</details>
 
 ---
 
@@ -128,7 +131,12 @@ Assembled Summary: User=USER-99, Bal=$4500.00, Score=780
 ### Question
 What is the difference between `future.thenApply(fn)` and `future.thenCompose(fn)`?
 
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
 ### Explanation
 1. `thenApply(Function<T, R>)` expects a function that returns a raw value `R`, wrapping the result inside a new `CompletableFuture<R>`.
 2. `thenCompose(Function<T, CompletableFuture<R>>)` expects a function that itself returns a `CompletableFuture<R>`, flattening the resulting structure so it does not become `CompletableFuture<CompletableFuture<R>>`.
 3. `thenApply` is analogous to `Stream.map()`, whereas `thenCompose` is analogous to `Stream.flatMap()`.
+
+</details>

@@ -119,7 +119,9 @@ public class DateTimeArchitectureDemo {
 }
 ```
 
-### Execution Output:
+<details data-type="output">
+<summary>View Output</summary>
+
 ```text
 Current Machine UTC Instant: 2026-11-22T12:00:00Z
 Tokyo Time: 2026-11-22 21:00:00 JST
@@ -127,6 +129,7 @@ Cairo Time: 2026-11-22 14:00:00 EET
 Contract Lifespan: 2 years, 10 months, 21 days
 Task Execution Time: 1450 ms
 ```
+</details>
 
 ---
 
@@ -143,8 +146,13 @@ Task Execution Time: 1450 ms
 ### Question
 Given `LocalDate d = LocalDate.of(2026, 3, 1); d.plusMonths(1); System.out.println(d);`, what is printed?
 
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
 ### Explanation
 1. `LocalDate` is strictly immutable.
 2. The method `.plusMonths(1)` calculates a new `LocalDate` instance (`2026-04-01`) and returns it.
 3. Because the returned reference is not assigned (`d = d.plusMonths(1)`), the original object referenced by `d` remains unaltered.
 4. Output: `2026-03-01`.
+
+</details>

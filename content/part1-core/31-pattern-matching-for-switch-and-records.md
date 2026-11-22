@@ -39,6 +39,16 @@ Pattern matching for `switch` (finalized in Java 21 LTS via JEP 441) and record 
  └──────────────────────────────────────────────────────────────────┘
 ```
 
+### Pattern Matching Feature Reference (Java 16 - 21 LTS)
+
+| Pattern Type | Syntax Form | Java Version | Core Behavior |
+| :--- | :--- | :--- | :--- |
+| **`instanceof` Pattern** | `if (obj instanceof String s)` | Java 16 LTS | Replaces cast; safely binds `s` in scope |
+| **Switch Type Pattern** | `case String s -> ...` | Java 21 LTS | Dispatches cleanly by runtime subtype |
+| **Guarded Pattern** | `case Integer i when i > 0 -> ...` | Java 21 LTS | Appends boolean predicate via `when` |
+| **Record Pattern** | `case Point(int x, int y) -> ...` | Java 21 LTS | Deconstructs record attributes inline |
+| **Null Handling** | `case null -> ...` | Java 21 LTS | Handles `null` directly without throwing NPE |
+
 ### Pattern Dominance & Ordering Invariant
 
 The compiler enforces strict **dominance checking**: a broader or more general pattern must NEVER precede a narrower or guarded subtype pattern. Placing a dominating pattern earlier triggers a compile-time error (`this case label is dominated by a preceding case label`):
@@ -111,12 +121,15 @@ public class PatternMatchingDemo {
 }
 ```
 
-### Execution Output:
+<details data-type="output">
+<summary>View Output</summary>
+
 ```text
 Standard Text Payload (61 chars): System connection established successfully on cluster node A.
 ALERT: Metric [cpu_load] breached threshold at value: 98.60
 Received NULL reference
 ```
+</details>
 
 ---
 
@@ -142,9 +155,14 @@ public static void process(Object o) {
 }
 ```
 
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
 ### Explanation
 1. `case String s` matches any non-null `String` object unconditionally.
 2. The subsequent label `case String s when s.length() > 5` matches a subset of `String`.
 3. Because the unguarded `String s` label appears first, it **dominates** the guarded label.
 4. Java compiler flags this with an error: `this case label is dominated by a preceding case label`.
 5. Result: **Compile-time error**.
+
+</details>

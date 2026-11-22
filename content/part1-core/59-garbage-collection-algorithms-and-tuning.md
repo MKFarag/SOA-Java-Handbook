@@ -101,7 +101,9 @@ public class GcDiagnosticsDemo {
 }
 ```
 
-### Execution Output:
+<details data-type="output">
+<summary>View Output</summary>
+
 ```text
 --- Active JVM Garbage Collectors ---
 Collector Name : G1 Young Generation
@@ -113,6 +115,7 @@ Collector Name : G1 Old Generation
   Accumulated Time : 0 ms
   Memory Pools     : G1 Eden Space, G1 Survivor Space, G1 Old Gen
 ```
+</details>
 
 ---
 
@@ -129,8 +132,13 @@ Collector Name : G1 Old Generation
 ### Question
 Why is `WeakHashMap` unable to automatically collect keys that are `String` literals (e.g. `map.put("AUTH_TOKEN", data)`)?
 
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
 ### Explanation
 1. `WeakHashMap` uses `WeakReference` for its keys: when a key is no longer strongly referenced, its entry is purged on the next GC.
 2. However, string literals like `"AUTH_TOKEN"` are automatically stored and interned in the JVM **String Constant Pool**.
 3. The String Constant Pool maintains a permanent **strong reference** to the literal string object for the entire lifetime of the JVM.
 4. Because the key is never weakly reachable, the entry is never collected, defeating the purpose of `WeakHashMap`.
+
+</details>

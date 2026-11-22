@@ -121,3 +121,22 @@ Therefore, when a network partition occurs, architects must choose:
 | High-velocity IoT telemetry, sensor logs, user clickstreams | **NoSQL (Time-Series / Wide-Column)** | Cassandra, InfluxDB, MongoDB |
 | Fast in-memory caching, user sessions, distributed rate-limiters | **NoSQL (Key-Value / Cache)** | Redis, Memcached |
 | Social networks, fraud detection, recommendation knowledge graphs | **NoSQL (Graph)** | Neo4j, AWS Neptune |
+
+---
+
+## Pitfalls
+
+- **Assuming Document Stores Never Support ACID Transactions:** Modern document engines (such as MongoDB 4.0+) provide distributed multi-document ACID transactions across replica sets and sharded clusters. Do not avoid document stores under the outdated assumption that they lack transactional integrity.
+- **"Schemaless" Chaos in Production:** While NoSQL permits flexible fields, abandoning document schema governance leads to divergent field names (`phone` vs `phoneNumber`), missing attributes, and indexing nightmares. Always enforce schema validation rules at the application or database level.
+- **The Entity-Attribute-Value (EAV) Anti-Pattern in SQL:** Attempting to force polymorphic dynamic attributes into relational tables with `(entity_id, attribute_name, attribute_value)` creates dozens of costly self-joins. Use modern SQL `JSON` data types or a dedicated document store.
+
+---
+
+## Practice
+
+### Q: Under the CAP Theorem, why must an architect choose between Consistency (CP) and Availability (AP) whenever a network partition occurs?
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
+> **Answer:** When network partitions physically sever communication between distributed nodes, updates written to one partition cannot be synchronized to nodes on the other partition. If the system continues accepting requests on both sides to remain Available (AP), reads on the isolated partition will serve stale, inconsistent data. If the system enforces strict Consistency (CP), it must reject requests on the isolated nodes until synchronization restores, sacrificing Availability.
+</details>

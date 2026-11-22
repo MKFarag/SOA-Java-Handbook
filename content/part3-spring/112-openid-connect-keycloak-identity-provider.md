@@ -352,3 +352,14 @@ public class SecurityConfig {
 - [OpenID Connect Core 1.0 Specification](https://openid.net/specs/openid-connect-core-1_0.html)
 - [Spring Security Reference: OAuth 2.0 Login](https://docs.spring.io/spring-security/reference/servlet/oauth2/login/index.html)
 - [Keycloak Documentation: Securing Applications](https://www.keycloak.org/docs/latest/securing_apps/)
+
+---
+
+## Practice
+
+### Q: What is the fundamental difference between OAuth 2.0 and OpenID Connect (OIDC)?
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
+> **Answer:** OAuth 2.0 is strictly an *authorization* framework designed to grant third-party applications scoped access to APIs via Access Tokens. OpenID Connect (OIDC) is an *identity authentication* layer built on top of OAuth 2.0 that provides an `ID Token` (JWT) containing verified user identity attributes (username, email, roles).
+</details>

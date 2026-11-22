@@ -118,12 +118,15 @@ public class ExecutorArchitectureDemo {
 }
 ```
 
-### Execution Output:
+<details data-type="output">
+<summary>View Output</summary>
+
 ```text
 Is task done before wait: false
 Result from worker: SUCCESS: Record ID 4920 fetched
 Executor pool terminated cleanly.
 ```
+</details>
 
 ---
 
@@ -140,7 +143,12 @@ Executor pool terminated cleanly.
 ### Question
 Under `CallerRunsPolicy`, what occurs when both the thread pool's maximum threads are busy and the bounded task queue is full?
 
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
 ### Explanation
 1. When saturation is reached, the executor delegates task execution to its `RejectedExecutionHandler`.
 2. Under `CallerRunsPolicy`, the task is executed synchronously by the **caller thread** that invoked `executor.submit()`.
 3. This pauses the calling thread from submitting further tasks, automatically applying **backpressure** and allowing the pool workers to catch up on queued work.
+
+</details>

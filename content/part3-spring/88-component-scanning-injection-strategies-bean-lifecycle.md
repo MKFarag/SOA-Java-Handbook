@@ -455,3 +455,14 @@ Now neither OrderService nor BillingService depends on the other. Both are injec
 - [Spring Framework Reference: Dependencies & Dependency Injection](https://docs.spring.io/spring-framework/reference/core/beans/dependencies.html)
 - [Spring Framework Reference: Customizing the Nature of a Bean](https://docs.spring.io/spring-framework/reference/core/beans/factory-nature.html)
 - [Jakarta Annotations 2.1 Specification (`@PostConstruct`, `@PreDestroy`)](https://jakarta.ee/specifications/annotations/2.1/)
+
+---
+
+## Practice
+
+### Q: Why is Constructor Injection strongly favored over Field Injection (`@Autowired` on private fields) in modern Spring development?
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
+> **Answer:** Field injection relies on reflection to mutate private fields, hides class dependencies, and prevents classes from being instantiated in pure unit tests without Spring test runners. Constructor injection guarantees immutability (`final` fields), ensures required dependencies cannot be null, and permits straightforward unit testing with plain mock constructors.
+</details>

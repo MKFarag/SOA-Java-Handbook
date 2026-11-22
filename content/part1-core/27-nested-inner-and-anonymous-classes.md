@@ -131,12 +131,15 @@ public class CustomContainer implements Iterable<String> {
 }
 ```
 
-### Execution Output:
+<details data-type="output">
+<summary>View Output</summary>
+
 ```text
 Node: Cluster-A
 Node: Cluster-B
 Node: Cluster-C
 ```
+</details>
 
 ---
 
@@ -168,9 +171,14 @@ public class Processor {
 }
 ```
 
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
 ### Explanation
 1. `attempt` is declared as a local variable inside `start()`.
 2. The anonymous `Runnable` captures `attempt`.
 3. The statement `attempt++;` modifies `attempt` after initialization, meaning `attempt` is no longer **effectively final**.
 4. The Java compiler rejects local variable captures that are not effectively final.
 5. Result: **Compile-time error**.
+
+</details>

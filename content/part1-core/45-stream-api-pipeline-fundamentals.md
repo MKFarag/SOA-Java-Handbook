@@ -103,11 +103,14 @@ public class StreamPipelineDemo {
 }
 ```
 
-### Execution Output:
+<details data-type="output">
+<summary>View Output</summary>
+
 ```text
 Distinct Platform Skills: [Docker, Go, Java, Kubernetes, Rust, TypeScript]
 Total combined skill assignments: 11
 ```
+</details>
 
 ---
 
@@ -131,8 +134,13 @@ Stream<String> stream = items.stream().filter(s -> {
 });
 ```
 
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
 ### Explanation
 1. `filter()` is an **intermediate operation**.
 2. Stream intermediate operations are **lazy**: they execute zero code until a terminal operation is invoked.
 3. Because no terminal operation (such as `toList()`, `findFirst()`, or `count()`) is attached to `stream`, the pipeline is never executed.
 4. Output: `"Filtering: "` is printed **zero times**.
+
+</details>

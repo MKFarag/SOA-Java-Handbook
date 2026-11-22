@@ -95,10 +95,13 @@ public class VirtualThreadScaleDemo {
 }
 ```
 
-### Execution Output:
+<details data-type="output">
+<summary>View Output</summary>
+
 ```text
 Successfully executed 10,000 concurrent tasks in 380 ms!
 ```
+</details>
 
 ---
 
@@ -115,9 +118,14 @@ Successfully executed 10,000 concurrent tasks in 380 ms!
 ### Question
 Why does executing 10,000 tasks that each sleep for 200ms complete in ~380ms with virtual threads, whereas platform threads in a pool of 10 threads would require ~200 seconds?
 
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
 ### Explanation
 1. With platform threads in a pool of 10 workers, only 10 threads can sleep concurrently. 10,000 tasks / 10 = 1,000 batches $\times$ 200ms = 200 seconds.
 2. With virtual threads, all 10,000 tasks are launched concurrently.
 3. When each virtual thread hits `Thread.sleep(200)`, it immediately **unmounts** from its carrier thread.
 4. The handful of CPU carrier threads easily schedule and unmount all 10,000 tasks within milliseconds.
 5. After 200ms, all 10,000 timers expire, and carrier threads remount and complete them almost simultaneously in parallel.
+
+</details>

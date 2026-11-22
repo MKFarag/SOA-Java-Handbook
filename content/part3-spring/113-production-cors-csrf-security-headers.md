@@ -337,3 +337,14 @@ protected void doFilterInternal(HttpServletRequest request,
 - [Spring Security Reference: CORS](https://docs.spring.io/spring-security/reference/servlet/integrations/cors.html)
 - [Spring Security Reference: Security HTTP Response Headers](https://docs.spring.io/spring-security/reference/servlet/exploits/headers.html)
 - [OWASP Secure Headers Project](https://owasp.org/www-project-secure-headers/)
+
+---
+
+## Practice
+
+### Q: Why does a web browser issue an HTTP `OPTIONS` preflight request before sending a custom `PUT` or `POST` request with a `Bearer` authorization header?
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
+> **Answer:** Under the Cross-Origin Resource Sharing (CORS) security model, requests that include non-standard headers (like `Authorization`) or non-simple HTTP methods are considered complex. The browser sends a lightweight `OPTIONS` preflight request first to verify that the target server explicitly permits that origin, method, and header before transmitting the actual payload.
+</details>

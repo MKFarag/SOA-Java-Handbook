@@ -24,7 +24,7 @@ export const SECTION_CHALLENGES: SectionMilestoneChallenge[] = [
       'Confusing totalMemory() (currently allocated heap) with maxMemory() (maximum ceiling JVM can allocate).',
       'Assuming java.version always returns an integer; parse specification version carefully.'
     ],
-    prerequisiteTopicIds: ['topic-01', 'topic-02', 'topic-03'],
+    prerequisiteTopicIds: ["topic-01","topic-02","topic-03"],
     referenceSolutionCode: `public class SystemEnvironmentInspector {
     public static void main(String[] args) {
         Runtime runtime = Runtime.getRuntime();
@@ -66,7 +66,7 @@ export const SECTION_CHALLENGES: SectionMilestoneChallenge[] = [
       'Calling new BigDecimal(0.1) introduces immediate IEEE-754 binary floating approximation flaws.',
       'Forgetting that BigDecimal is immutable; arithmetic methods return new instances.'
     ],
-    prerequisiteTopicIds: ['topic-04', 'topic-05', 'topic-06', 'topic-07'],
+    prerequisiteTopicIds: ["topic-04","topic-05","topic-06","topic-07","topic-08","topic-09","topic-10"],
     referenceSolutionCode: `import java.math.BigDecimal;
 import java.math.RoundingMode;
 
@@ -112,7 +112,7 @@ public class HighPrecisionCurrencyEngine {
       "Forgetting that traditional switch cases fall through without explicit break, while arrow syntax does not.",
       "Non-exhaustive switch statements when switching over types without a default branch."
     ],
-    prerequisiteTopicIds: ["topic-08","topic-09","topic-10"],
+    prerequisiteTopicIds: ["topic-11","topic-12","topic-13"],
     referenceSolutionCode: "public class TrafficRoutingStateEngine {\n    enum Protocol { HTTP, HTTPS, SSH, DNS, ICMP, UNKNOWN }\n\n    record Packet(int id, Protocol protocol, int port, int payloadSize) {}\n\n    public static String routePacket(Packet packet) {\n        return switch (packet.protocol()) {\n            case HTTPS -> {\n                if (packet.port() == 443) {\n                    yield \"SECURE_GATEWAY (Priority: HIGH)\";\n                } else {\n                    yield \"CUSTOM_SECURE (Priority: MEDIUM)\";\n                }\n            }\n            case SSH -> \"ADMIN_TUNNEL (Priority: CRITICAL)\";\n            case DNS, HTTP -> \"STANDARD_PROXY (Priority: NORMAL)\";\n            case ICMP -> \"ICMP_DISCARD (Priority: LOW)\";\n            default -> \"QUARANTINE_SINK (Priority: NONE)\";\n        };\n    }\n\n    public static void main(String[] args) {\n        Packet[] batch = {\n            new Packet(101, Protocol.HTTPS, 443, 1024),\n            new Packet(102, Protocol.SSH, 22, 256),\n            new Packet(103, Protocol.ICMP, 0, 64)\n        };\n\n        int routed = 0;\n        batchLoop:\n        for (int i = 0; i < batch.length; i++) {\n            Packet p = batch[i];\n            if (p.payloadSize() > 65535) {\n                System.err.println(\"[DROP] Oversized packet: \" + p.id());\n                continue batchLoop;\n            }\n            String route = routePacket(p);\n            System.out.printf(\"[ROUTER] Processing packet #%d: %s -> Route: %s%n\",\n                p.id(), p.protocol(), route);\n            routed++;\n        }\n        System.out.printf(\"[ROUTER] Batch complete: %d packets routed, 0 dropped.%n\", routed);\n    }\n}",
     solutionArchitectureNotes: "Leveraging Java 14+ arrow switch expressions guarantees compile-time exhaustiveness, eliminates accidental fall-through bugs, and produces cleaner state-machine dispatchers."
   },
@@ -138,7 +138,7 @@ public class HighPrecisionCurrencyEngine {
       "Passing null to a varargs method without defensive null-checks leads to NullPointerException.",
       "Attempting to reassign a primitive parameter inside a method and expecting the caller variable to change."
     ],
-    prerequisiteTopicIds: ["topic-11","topic-12","topic-13"],
+    prerequisiteTopicIds: ["topic-14","topic-15","topic-16"],
     referenceSolutionCode: "public class DynamicCalculator {\n    public static double computeAverage(double... values) {\n        if (values == null || values.length == 0) {\n            throw new IllegalArgumentException(\"Input values cannot be null or empty\");\n        }\n        var sum = 0.0;\n        for (var v : values) {\n            sum += v;\n        }\n        return sum / values.length;\n    }\n\n    public static double computeAverage(double[] values, double calibrationOffset) {\n        if (values == null || values.length == 0) return 0.0;\n        var sum = 0.0;\n        for (var v : values) {\n            sum += (v + calibrationOffset);\n        }\n        return sum / values.length;\n    }\n\n    public static void testPassByValue(double baseline) {\n        baseline += 50.0; // Local modification only\n    }\n\n    public static void main(String[] args) {\n        var readings = new double[] { 18.2, 22.4, 24.5, 26.4, 31.5 };\n        var avg = computeAverage(readings);\n        var min = 18.20;\n        var max = 31.50;\n\n        System.out.printf(\"[STAT] Processed varargs batch: count=%d, avg=%.2f, min=%.2f, max=%.2f%n\",\n            readings.length, avg, min, max);\n\n        var sensorBatch = new double[] { 90.0, 100.0, 110.0 };\n        var calibratedAvg = computeAverage(sensorBatch, 0.0);\n        System.out.printf(\"[STAT] Processed overloaded array: count=%d, avg=%.2f%n\",\n            sensorBatch.length, calibratedAvg);\n\n        var baseline = 10.0;\n        testPassByValue(baseline);\n        System.out.printf(\"[VERIFY] Caller calibration baseline remained unchanged: %.1f%n\", baseline);\n    }\n}",
     solutionArchitectureNotes: "Varargs internally desugar into array allocations by the compiler, allowing intuitive DSL-like API ergonomics while method overloading provides specialized performance optimizations."
   },
@@ -163,7 +163,7 @@ public class HighPrecisionCurrencyEngine {
       "Iterating j from 0 to n-1 in in-place transpose results in double-swapping elements back to their original positions.",
       "Assuming all sub-arrays in a multi-dimensional array have identical dimensions."
     ],
-    prerequisiteTopicIds: ["topic-14","topic-15"],
+    prerequisiteTopicIds: ["topic-17","topic-18"],
     referenceSolutionCode: "import java.util.Arrays;\n\npublic class MatrixTransformationEngine {\n    public static void transposeInPlace(int[][] matrix) {\n        int n = matrix.length;\n        for (int i = 0; i < n; i++) {\n            for (int j = i + 1; j < n; j++) {\n                int temp = matrix[i][j];\n                matrix[i][j] = matrix[j][i];\n                matrix[j][i] = temp;\n            }\n        }\n    }\n\n    public static void printMatrix(int[][] matrix) {\n        for (int[] row : matrix) {\n            for (int val : row) {\n                System.out.printf(\"%2d \", val);\n            }\n            System.out.println();\n        }\n    }\n\n    public static void main(String[] args) {\n        int[][] matrix = {\n            { 1, 2, 3 },\n            { 4, 5, 6 },\n            { 7, 8, 9 }\n        };\n\n        System.out.println(\"[MATRIX] Original 3x3 Matrix:\");\n        printMatrix(matrix);\n\n        transposeInPlace(matrix);\n        System.out.println(\"[MATRIX] Transposed In-Place Matrix:\");\n        printMatrix(matrix);\n\n        int[][] jagged = {\n            { 5, 10 },\n            { 10, 10, 10, 20 },\n            { 100 }\n        };\n\n        for (int r = 0; r < jagged.length; r++) {\n            int sum = 0;\n            for (int val : jagged[r]) sum += val;\n            System.out.printf(\"[JAGGED] Row %d Length: %d | Sum: %d%n\", r, jagged[r].length, sum);\n        }\n    }\n}",
     solutionArchitectureNotes: "2D arrays in Java are arrays of array references in heap memory rather than contiguous row-major blocks; in-place transposition minimizes cache misses and eliminates GC allocation churn."
   },
@@ -188,7 +188,7 @@ public class HighPrecisionCurrencyEngine {
       "Returning direct references to mutable internal lists allows external callers to bypass domain encapsulation.",
       "Missing synchronization or atomic operations when balances are updated in concurrent environments."
     ],
-    prerequisiteTopicIds: ["topic-16","topic-17","topic-18","topic-19"],
+    prerequisiteTopicIds: ["topic-19","topic-20","topic-21","topic-22"],
     referenceSolutionCode: "import java.util.*;\n\npublic class SecureBankingAccountSystem {\n    public static final class BankAccount {\n        private final String accountNumber;\n        private final String owner;\n        private double balance;\n        private final List<String> auditLog = new ArrayList<>();\n\n        public BankAccount(String accountNumber, String owner, double initialBalance) {\n            if (accountNumber == null || accountNumber.isBlank()) {\n                throw new IllegalArgumentException(\"Account number cannot be empty\");\n            }\n            if (initialBalance < 0) {\n                throw new IllegalArgumentException(\"Initial balance cannot be negative\");\n            }\n            this.accountNumber = accountNumber;\n            this.owner = owner;\n            this.balance = initialBalance;\n        }\n\n        public synchronized void deposit(double amount) {\n            if (amount <= 0) throw new IllegalArgumentException(\"Deposit amount must be positive\");\n            this.balance += amount;\n            auditLog.add(String.format(\"DEPOSIT: +$%.2f (New Balance: $%.2f)\", amount, this.balance));\n            System.out.printf(\"[TX] Deposited: $%.2f -> New Balance: $%.2f%n\", amount, this.balance);\n        }\n\n        public synchronized boolean withdraw(double amount) {\n            if (amount <= 0) throw new IllegalArgumentException(\"Withdrawal amount must be positive\");\n            if (amount > this.balance) {\n                System.out.printf(\"[SECURITY] Overdraft rejected: Insufficient funds for withdrawal of $%.2f%n\", amount);\n                return false;\n            }\n            this.balance -= amount;\n            auditLog.add(String.format(\"WITHDRAW: -$%.2f (New Balance: $%.2f)\", amount, this.balance));\n            System.out.printf(\"[TX] Withdrew: $%.2f -> New Balance: $%.2f%n\", amount, this.balance);\n            return true;\n        }\n\n        public List<String> getAuditLog() {\n            return Collections.unmodifiableList(auditLog);\n        }\n\n        public String getAccountNumber() { return accountNumber; }\n        public String getOwner() { return owner; }\n        public double getBalance() { return balance; }\n    }\n\n    public static void main(String[] args) {\n        BankAccount acc = new BankAccount(\"ACC-9941\", \"Alice\", 1500.00);\n        System.out.printf(\"[ACCOUNT] Created: %s for %s (Balance: $%.2f)%n\",\n            acc.getAccountNumber(), acc.getOwner(), acc.getBalance());\n\n        acc.deposit(500.00);\n        acc.withdraw(800.00);\n        acc.withdraw(2500.00);\n\n        System.out.printf(\"[AUDIT] Total transactions recorded: %d%n\", acc.getAuditLog().size());\n    }\n}",
     solutionArchitectureNotes: "Defensive encapsulation ensures business domain invariants (such as preventing negative balances and unauthorized ledger edits) are enforced strictly within the aggregate root."
   },
@@ -213,7 +213,7 @@ public class HighPrecisionCurrencyEngine {
       "Violating the Liskov Substitution Principle (LSP) by having a subclass throw UnsupportedOperationException.",
       "Failing to call super.validateCredentials() when overriding lifecycle hooks in subclasses."
     ],
-    prerequisiteTopicIds: ["topic-20","topic-21","topic-22","topic-23","topic-24","topic-25"],
+    prerequisiteTopicIds: ["topic-23","topic-24","topic-25","topic-26","topic-27"],
     referenceSolutionCode: "public class CloudStorageProviderHierarchy {\n    enum StorageTier { STANDARD, INFREQUENT_ACCESS, ARCHIVE }\n\n    interface CloudStorage {\n        void upload(String bucket, String filename, int sizeKb);\n        default String generatePresignedUrl(String bucket, String filename) {\n            return \"https://\" + bucket + \".cloud.internal/\" + filename + \"?token=exp60m\";\n        }\n    }\n\n    abstract static class AbstractCloudStorage implements CloudStorage {\n        protected final String providerName;\n\n        public AbstractCloudStorage(String providerName) {\n            this.providerName = providerName;\n        }\n\n        @Override\n        public void upload(String bucket, String filename, int sizeKb) {\n            System.out.printf(\"[CLOUD: %s] Uploading '%s' (%d KB) to bucket '%s'...%n\",\n                providerName, filename, sizeKb, bucket);\n            performUpload(bucket, filename, sizeKb);\n        }\n\n        protected abstract void performUpload(String bucket, String filename, int sizeKb);\n    }\n\n    static class AwsS3Storage extends AbstractCloudStorage {\n        public AwsS3Storage() { super(\"AWS-S3\"); }\n        @Override\n        protected void performUpload(String bucket, String filename, int sizeKb) {\n            System.out.println(\"[CLOUD: AWS-S3] S3 Multi-Part Upload verified: s3://\" + bucket + \"/\" + filename);\n        }\n    }\n\n    static class GcpBlobStorage extends AbstractCloudStorage {\n        public GcpBlobStorage() { super(\"GCP-BLOB\"); }\n        @Override\n        protected void performUpload(String bucket, String filename, int sizeKb) {\n            System.out.println(\"[CLOUD: GCP-BLOB] GCP Resumable Channel verified: gs://\" + bucket + \"/\" + filename);\n        }\n    }\n\n    public static void main(String[] args) {\n        CloudStorage[] providers = {\n            new AwsS3Storage(),\n            new GcpBlobStorage()\n        };\n\n        providers[0].upload(\"corp-reports\", \"report.pdf\", 2048);\n        providers[1].upload(\"analytics-lake\", \"data.parquet\", 8192);\n\n        System.out.printf(\"[DISPATCH] Polymorphic dispatch completed across %d cloud providers.%n\", providers.length);\n    }\n}",
     solutionArchitectureNotes: "The Template Method design pattern implemented via abstract classes ensures uniform auditing and validation while delegating transport mechanics polymorphically."
   },
@@ -238,7 +238,7 @@ public class HighPrecisionCurrencyEngine {
       "Adding a default branch when switching over sealed hierarchies suppresses compile-time missing subclass warnings.",
       "Forgetting that Record compact constructors should validate invariants directly."
     ],
-    prerequisiteTopicIds: ["topic-26","topic-27","topic-28"],
+    prerequisiteTopicIds: ["topic-28","topic-29","topic-30","topic-31"],
     referenceSolutionCode: "public class FinancialEventPatternMatcher {\n    public sealed interface FinancialEvent permits Deposit, Withdrawal, WireTransfer {\n        int eventId();\n        double amount();\n    }\n\n    public record Deposit(int eventId, double amount, String sourceAccount) implements FinancialEvent {}\n    public record Withdrawal(int eventId, double amount, String atmId) implements FinancialEvent {}\n    public record WireTransfer(int eventId, double amount, String destinationCountry) implements FinancialEvent {}\n\n    public static String evaluateRisk(FinancialEvent event) {\n        return switch (event) {\n            case Deposit d when d.amount() < 10000 -> \"APPROVED (Domestic Low Risk)\";\n            case Deposit d -> \"FLAGGED_LARGE_DEPOSIT (Reporting required)\";\n            case Withdrawal w when w.amount() > 10000 -> \"FLAGGED_FOR_REVIEW (Exceeds daily threshold)\";\n            case Withdrawal w -> \"APPROVED (Normal withdrawal)\";\n            case WireTransfer wt when wt.amount() > 10000 -> \"ESCALATE_AML (Cross-border AML Trigger)\";\n            case WireTransfer wt -> \"APPROVED_WIRE (Standard international wire)\";\n        };\n    }\n\n    public static void main(String[] args) {\n        FinancialEvent[] events = {\n            new Deposit(1, 5000.00, \"ACC-101\"),\n            new Withdrawal(2, 15000.00, \"ATM-NYC-04\"),\n            new WireTransfer(3, 12000.00, \"CH\")\n        };\n\n        for (FinancialEvent e : events) {\n            String decision = evaluateRisk(e);\n            String typeName = e.getClass().getSimpleName();\n            System.out.printf(\"[RISK] Evaluated Event #%d (%s: $%.2f): %s%n\",\n                e.eventId(), typeName, e.amount(), decision);\n        }\n        System.out.println(\"[VERIFY] Pattern matching exhaustiveness verified with 0 default branches.\");\n    }\n}",
     solutionArchitectureNotes: "Combining Sealed Types with Pattern Matching creates an algebraic data type (ADT) system in Java, enforcing exhaustive handling of business domain events at compile time."
   },
@@ -263,7 +263,7 @@ public class HighPrecisionCurrencyEngine {
       "Swallowing exceptions by catching Exception and printing nothing or not rethrowing.",
       "Losing the original root cause by instantiating a new exception without passing the caught cause."
     ],
-    prerequisiteTopicIds: ["topic-29","topic-30","topic-31","topic-32"],
+    prerequisiteTopicIds: ["topic-32","topic-33","topic-34","topic-35"],
     referenceSolutionCode: "import java.io.Closeable;\n\npublic class ResilientFileParsing {\n    public static class IngestionProcessingException extends Exception {\n        public IngestionProcessingException(String message, Throwable cause) {\n            super(message, cause);\n        }\n    }\n\n    public static class SimulatedConfigStream implements AutoCloseable {\n        private final String resourceName;\n\n        public SimulatedConfigStream(String resourceName) {\n            this.resourceName = resourceName;\n            System.out.println(\"[INGEST] Resource acquired: \" + resourceName);\n        }\n\n        public void parseLine(String line) throws IngestionProcessingException {\n            try {\n                String[] parts = line.split(\"=\");\n                String key = parts[0];\n                int value = Integer.parseInt(parts[1].trim());\n            } catch (Exception ex) {\n                throw new IngestionProcessingException(\"Failed to ingest configuration batch\", ex);\n            }\n        }\n\n        @Override\n        public void close() {\n            System.out.println(\"[INGEST] Resource closed: \" + resourceName);\n        }\n    }\n\n    public static void main(String[] args) {\n        try (var stream = new SimulatedConfigStream(\"config-pipeline-stream\")) {\n            stream.parseLine(\"TIMEOUT=30\");\n            stream.parseLine(\"RETRIES=3\");\n            System.out.println(\"[INGEST] Successfully parsed 2 records from stream.\");\n        } catch (IngestionProcessingException e) {\n            System.err.println(\"Unexpected failure: \" + e.getMessage());\n        }\n\n        System.out.println(\"[FAULT TEST] Triggered corrupted stream parsing:\");\n        try (var stream = new SimulatedConfigStream(\"corrupted-stream\")) {\n            stream.parseLine(\"PORT=INVALID_PORT\");\n        } catch (IngestionProcessingException e) {\n            System.out.println(\"[ERROR CAUGHT] Domain Exception: \" + e.getMessage());\n            System.out.println(\"[ROOT CAUSE] \" + e.getCause());\n            System.out.println(\"[VERIFY] Exception chaining verified successfully.\");\n        }\n    }\n}",
     solutionArchitectureNotes: "Exception chaining ensures high-level application tiers receive actionable domain-specific exceptions while maintaining operational root-cause diagnostics for telemetry."
   },
@@ -288,7 +288,7 @@ public class HighPrecisionCurrencyEngine {
       "Trying to add elements into a collection typed as <? extends Number>; it is read-only (producer).",
       "Using raw types (List without generic type arguments) causing compile-time warnings and unsafe runtime casts."
     ],
-    prerequisiteTopicIds: ["topic-33","topic-34","topic-35","topic-36","topic-37","topic-38","topic-39"],
+    prerequisiteTopicIds: ["topic-36","topic-37","topic-38","topic-39","topic-40","topic-41","topic-42"],
     referenceSolutionCode: "import java.util.*;\n\npublic class HighThroughputBuffer<E> {\n    private final List<E> storage = new ArrayList<>();\n    private final int capacity;\n\n    public HighThroughputBuffer(int capacity) {\n        this.capacity = capacity;\n    }\n\n    public void pushAll(Iterable<? extends E> source) {\n        for (E item : source) {\n            if (storage.size() < capacity) {\n                storage.add(item);\n            }\n        }\n    }\n\n    public void drainTo(Collection<? super E> destination) {\n        destination.addAll(storage);\n        storage.clear();\n    }\n\n    public static void main(String[] args) {\n        HighThroughputBuffer<Number> buffer = new HighThroughputBuffer<>(10);\n\n        List<Integer> intList = List.of(10, 20);\n        List<Double> doubleList = List.of(45.2);\n\n        buffer.pushAll(intList);\n        buffer.pushAll(doubleList);\n        System.out.println(\"[BUFFER] Ingested 3 items using Producer-Extends wildcard (? extends Number).\");\n\n        List<Object> destination = new ArrayList<>();\n        buffer.drainTo(destination);\n        System.out.println(\"[BUFFER] Drained 3 items using Consumer-Super wildcard (? super Number).\");\n\n        List<Number> numbers = new ArrayList<>();\n        for (Object o : destination) numbers.add((Number) o);\n\n        numbers.sort((a, b) -> Double.compare(b.doubleValue(), a.doubleValue()));\n        System.out.println(\"[SORT] Drained items sorted descending: \" + numbers);\n        System.out.println(\"[VERIFY] Type-safe generic boundary verification: PASSED\");\n    }\n}",
     solutionArchitectureNotes: "PECS (Producer Extends, Consumer Super) maximizes API flexibility, enabling generic containers to interoperate smoothly with sub-types and super-types without compromising type safety."
   },
@@ -313,7 +313,7 @@ public class HighPrecisionCurrencyEngine {
       "Calling Optional.get() without checking isPresent() risks NoSuchElementException.",
       "Mutating external collections inside a stream peek() or forEach() violates functional purity."
     ],
-    prerequisiteTopicIds: ["topic-40","topic-41","topic-42","topic-43","topic-44"],
+    prerequisiteTopicIds: ["topic-43","topic-44","topic-45","topic-46","topic-47"],
     referenceSolutionCode: "import java.util.*;\nimport java.util.stream.Collectors;\n\npublic class FinancialAnalyticsAggregatorPipeline {\n    record Trade(String id, String currency, double amount) {}\n\n    public static void main(String[] args) {\n        List<Trade> trades = List.of(\n            new Trade(\"TX-101\", \"USD\", 2500.00),\n            new Trade(\"TX-102\", \"EUR\", 3200.00),\n            new Trade(\"TX-901\", \"USD\", 25000.00),\n            new Trade(\"TX-902\", \"EUR\", 8000.00),\n            new Trade(\"TX-003\", \"JPY\", 120.00) // Filtered out below\n        );\n\n        Map<String, DoubleSummaryStatistics> stats = trades.stream()\n            .filter(t -> t.amount() >= 1000.00)\n            .collect(Collectors.groupingBy(\n                Trade::currency,\n                Collectors.summarizingDouble(Trade::amount)\n            ));\n\n        stats.forEach((curr, s) -> {\n            System.out.printf(\"[ANALYTICS] Currency %s -> Trades: %d, Total Volume: $%.2f, Max: $%.2f%n\",\n                curr, s.getCount(), s.getSum(), s.getMax());\n        });\n\n        Optional<Trade> topTrade = trades.stream()\n            .max(Comparator.comparingDouble(Trade::amount));\n\n        topTrade.ifPresentOrElse(\n            t -> System.out.printf(\"[TOP TRADE] Highest Trade Globally: %s ($%.2f %s)%n\",\n                t.id(), t.amount(), t.currency()),\n            () -> System.out.println(\"[TOP TRADE] No trades available\")\n        );\n\n        System.out.println(\"[VERIFY] Zero side-effects and immutability preserved throughout stream pipeline.\");\n    }\n}",
     solutionArchitectureNotes: "Java Stream pipelines provide declarative parallelizable execution paths while Collectors.summarizingDouble computes count, sum, min, average, and max in a single O(N) pass."
   },
@@ -338,7 +338,7 @@ public class HighPrecisionCurrencyEngine {
       "Using java.util.Date and SimpleDateFormat which are mutable and notoriously thread-unsafe.",
       "Failing to close Files.lines() or DirectoryStream resulting in Windows file locks."
     ],
-    prerequisiteTopicIds: ["topic-45","topic-46","topic-47"],
+    prerequisiteTopicIds: ["topic-48","topic-49","topic-50"],
     referenceSolutionCode: "import java.time.*;\nimport java.time.temporal.ChronoUnit;\nimport java.util.*;\n\npublic class AutomatedAuditLogRotator {\n    record SimulatedLogFile(String filename, Instant createdAt) {}\n\n    public static void main(String[] args) {\n        Instant now = Instant.parse(\"2026-11-19T18:00:00Z\");\n        List<SimulatedLogFile> logs = List.of(\n            new SimulatedLogFile(\"app-2026-11-10.log\", Instant.parse(\"2026-11-10T12:00:00Z\")),\n            new SimulatedLogFile(\"app-2026-11-18.log\", Instant.parse(\"2026-11-18T10:00:00Z\")),\n            new SimulatedLogFile(\"app-current.log\", Instant.parse(\"2026-11-19T17:30:00Z\"))\n        );\n\n        System.out.println(\"[ARCHIVER] Ingested 3 log files from /var/log/audit\");\n\n        int archived = 0;\n        int retained = 0;\n        for (SimulatedLogFile log : logs) {\n            long daysOld = ChronoUnit.DAYS.between(log.createdAt(), now);\n            if (daysOld >= 7) {\n                System.out.printf(\"[ROTATOR] Evaluated '%s': Age=%d days -> ARCHIVED%n\", log.filename(), daysOld);\n                archived++;\n            } else {\n                System.out.printf(\"[ROTATOR] Evaluated '%s': Age=%d days -> RETAINED (Active)%n\", log.filename(), daysOld);\n                retained++;\n            }\n        }\n\n        System.out.printf(\"[SUMMARY] Archived %d stale log file(s), Retained %d active log file(s).%n\", archived, retained);\n        System.out.println(\"[VERIFY] Non-blocking NIO.2 Path operations executed atomically.\");\n    }\n}",
     solutionArchitectureNotes: "The modern java.time domain model is immutable and thread-safe by default, preventing concurrency bugs common in legacy Date/Calendar architectures."
   },
@@ -363,7 +363,7 @@ public class HighPrecisionCurrencyEngine {
       "Pooling virtual threads with custom ThreadPoolExecutors: virtual threads are lightweight and meant to be spawned per task, never pooled.",
       "Holding synchronized monitors around blocking I/O which pins the virtual thread to its carrier OS thread."
     ],
-    prerequisiteTopicIds: ["topic-48","topic-49","topic-50","topic-51","topic-52","topic-53","topic-54"],
+    prerequisiteTopicIds: ["topic-51","topic-52","topic-53","topic-54","topic-55","topic-56","topic-57"],
     referenceSolutionCode: "import java.util.concurrent.*;\nimport java.util.concurrent.atomic.LongAdder;\n\npublic class AsynchronousWebCrawlerVirtualThreads {\n    public static void main(String[] args) throws Exception {\n        int taskCount = 1000;\n        LongAdder successCounter = new LongAdder();\n\n        System.out.printf(\"[VIRTUAL THREADS] Spawning %d asynchronous crawl tasks on Virtual Threads...%n\", taskCount);\n\n        long startTime = System.currentTimeMillis();\n        try (var executor = Executors.newVirtualThreadPerTaskExecutor()) {\n            for (int i = 0; i < taskCount; i++) {\n                final int id = i;\n                executor.submit(() -> {\n                    try {\n                        // Simulate non-blocking network I/O\n                        Thread.sleep(10);\n                        successCounter.increment();\n                    } catch (InterruptedException e) {\n                        Thread.currentThread().interrupt();\n                    }\n                });\n            }\n        } // Auto-awaits termination of all virtual threads\n\n        long duration = System.currentTimeMillis() - startTime;\n        System.out.println(\"[CRAWLER] Batch processing in progress (Zero OS thread pool exhaustion)...\");\n        System.out.printf(\"[COMPLETED] %d tasks finished in %dms%n\", taskCount, duration);\n        System.out.printf(\"[METRICS] Successful crawls: %d, Failures: 0%n\", successCounter.sum());\n        System.out.println(\"[VERIFY] Loom virtual thread scheduling verified without platform thread exhaustion.\");\n    }\n}",
     solutionArchitectureNotes: "Project Loom Virtual Threads decouple concurrency from OS thread limitations, allowing millions of concurrent tasks to execute simultaneously with near-zero memory footprint."
   },
@@ -388,7 +388,7 @@ public class HighPrecisionCurrencyEngine {
       "Holding static references to loaded classes prevents the ClassLoader from being garbage collected, causing Metaspace OOM.",
       "Overriding loadClass instead of findClass breaks Java parent delegation invariants."
     ],
-    prerequisiteTopicIds: ["topic-55","topic-56","topic-57"],
+    prerequisiteTopicIds: ["topic-58","topic-59","topic-60"],
     referenceSolutionCode: "import java.lang.management.ManagementFactory;\nimport java.lang.management.MemoryMXBean;\n\npublic class DynamicClassLoaderMemoryMonitor {\n    public static class MockPluginClassLoader extends ClassLoader {\n        public MockPluginClassLoader(ClassLoader parent) {\n            super(parent);\n        }\n\n        public Class<?> loadMockPlugin(String name) {\n            System.out.println(\"[LOADER] Custom PluginClassLoader isolated plugin: \" + name);\n            return this.getClass();\n        }\n    }\n\n    public static void main(String[] args) {\n        MemoryMXBean memBean = ManagementFactory.getMemoryMXBean();\n        long heapUsed = memBean.getHeapMemoryUsage().getUsed() / (1024 * 1024);\n        long heapMax = memBean.getHeapMemoryUsage().getMax() / (1024 * 1024);\n\n        System.out.printf(\"[JVM MONITOR] Initial Heap: Used=%d MB | Max=%d MB%n\", heapUsed, heapMax);\n\n        MockPluginClassLoader loader = new MockPluginClassLoader(ClassLoader.getSystemClassLoader());\n        loader.loadMockPlugin(\"PaymentServicePlugin\");\n\n        System.out.println(\"[JVM MONITOR] Metaspace verification: STABLE (No uncollected ClassLoader leaks)\");\n        System.out.println(\"[VERIFY] ClassLoader hierarchy and JVM Memory MXBeans verified compliant.\");\n    }\n}",
     solutionArchitectureNotes: "Understanding JVM classloading delegation and Metaspace memory lifecycle is critical for building modular plugin systems, hot-reload engines, and micro-frameworks."
   },
@@ -413,7 +413,7 @@ public class HighPrecisionCurrencyEngine {
       "Missing @Retention(RetentionPolicy.RUNTIME) makes annotations invisible to reflection at runtime (defaults to CLASS).",
       "In JPMS (Java 9+), deep reflection across un-opened modules throws InaccessibleObjectException."
     ],
-    prerequisiteTopicIds: ["topic-58","topic-59","topic-60"],
+    prerequisiteTopicIds: ["topic-61","topic-62","topic-63"],
     referenceSolutionCode: "import java.lang.annotation.*;\nimport java.lang.reflect.*;\n\npublic class CustomDiFrameworkAnnotations {\n    @Retention(RetentionPolicy.RUNTIME)\n    @Target(ElementType.TYPE)\n    @interface Service {}\n\n    @Retention(RetentionPolicy.RUNTIME)\n    @Target(ElementType.FIELD)\n    @interface Autowired {}\n\n    @Service\n    static class NotificationEngine {\n        public void send(String msg) {\n            System.out.println(\"[EXECUTION] OrderManager dispatched order confirmation: \" + msg);\n        }\n    }\n\n    static class OrderManager {\n        @Autowired\n        private NotificationEngine notifier;\n\n        public void processOrder() {\n            notifier.send(\"SUCCESS\");\n        }\n    }\n\n    public static void main(String[] args) throws Exception {\n        System.out.println(\"[FRAMEWORK] Discovered @Service component: NotificationEngine\");\n\n        OrderManager manager = new OrderManager();\n        for (Field f : OrderManager.class.getDeclaredFields()) {\n            if (f.isAnnotationPresent(Autowired.class)) {\n                f.setAccessible(true);\n                f.set(manager, new NotificationEngine());\n                System.out.println(\"[FRAMEWORK] Injected NotificationEngine into OrderManager via reflection\");\n            }\n        }\n\n        manager.processOrder();\n        System.out.println(\"[VERIFY] Runtime annotation inspection & dependency injection verified.\");\n    }\n}",
     solutionArchitectureNotes: "Runtime reflection combined with retention annotations powers enterprise frameworks like Spring and CDI, enabling declarative inversion of control and loose coupling."
   },
@@ -438,7 +438,7 @@ public class HighPrecisionCurrencyEngine {
       "Concatenating user input directly into SQL strings causes catastrophic SQL Injection attacks.",
       "Leaving transactions open without commit or rollback locks database rows indefinitely."
     ],
-    prerequisiteTopicIds: ["topic-61","topic-62"],
+    prerequisiteTopicIds: ["topic-64","topic-65"],
     referenceSolutionCode: "public class AutomatedJdbcTransactionRepository {\n    // Simulated Transaction Demonstrator\n    public static void main(String[] args) {\n        System.out.println(\"[JDBC] Transaction begun (autoCommit=false)\");\n        System.out.println(\"[JDBC] Executed batch insert of 2 account records\");\n        System.out.println(\"[JDBC] Savepoint created: BeforeOptionalBonus\");\n        System.out.println(\"[JDBC] Warning: Bonus grant failed -> Rolled back to Savepoint\");\n        System.out.println(\"[JDBC] Transaction committed successfully (Primary records persisted)\");\n        System.out.println(\"[VERIFY] ACID transaction boundaries and parameter safety verified.\");\n    }\n}",
     solutionArchitectureNotes: "Managing explicit transaction boundaries and savepoints at the JDBC level provides foundational understanding for higher-level ORMs like Hibernate and declarative Spring @Transactional."
   },
@@ -463,7 +463,7 @@ public class HighPrecisionCurrencyEngine {
       "Missing the Content-Length header causes keep-alive HTTP clients to hang waiting for more bytes.",
       "Failing to handle URL-encoded query parameters properly (e.g., %20 for spaces)."
     ],
-    prerequisiteTopicIds: ["topic-63","topic-64"],
+    prerequisiteTopicIds: ["topic-66","topic-67"],
     referenceSolutionCode: "public class RawHttpProtocolParser {\n    public static void main(String[] args) {\n        String rawRequest = \"GET /api/v1/health?verbose=true HTTP/1.1\\r\\n\" +\n                           \"Host: localhost:8080\\r\\n\" +\n                           \"User-Agent: Mozilla/5.0\\r\\n\\r\\n\";\n\n        String[] lines = rawRequest.split(\"\\r\\n\");\n        String requestLine = lines[0];\n        String[] parts = requestLine.split(\" \");\n        String verb = parts[0];\n        String fullPath = parts[1];\n        String path = fullPath.contains(\"?\") ? fullPath.substring(0, fullPath.indexOf('?')) : fullPath;\n        String query = fullPath.contains(\"?\") ? fullPath.substring(fullPath.indexOf('?') + 1) : \"\";\n\n        System.out.println(\"[HTTP PARSER] Ingested Request Line: \" + requestLine);\n        System.out.printf(\"[HTTP PARSER] Verb: %s | Path: %s | Query: %s%n\", verb, path, query);\n        System.out.println(\"[HTTP PARSER] Host Header: localhost:8080\");\n\n        String body = \"{\"status\": \"UP\", \"code\": 200}\";\n        System.out.printf(\"[DISPATCHER] Dispatched 200 OK with Content-Length: %d bytes%n\", body.length());\n        System.out.println(\"[VERIFY] Standard HTTP/1.1 client-server protocol parsing verified.\");\n    }\n}",
     solutionArchitectureNotes: "Servlets and web servers sit on top of raw TCP streams; understanding HTTP protocol serialization and parsing demystifies how servlet containers process client requests."
   },
@@ -488,7 +488,7 @@ public class HighPrecisionCurrencyEngine {
       "Placing Java class files outside WEB-INF/classes makes them inaccessible to Tomcat ClassLoaders.",
       "Exposing sensitive configuration files outside WEB-INF makes them directly downloadable by web browsers."
     ],
-    prerequisiteTopicIds: ["topic-65"],
+    prerequisiteTopicIds: ["topic-68"],
     referenceSolutionCode: "public class StandaloneWarPackager {\n    public static void main(String[] args) {\n        System.out.println(\"[PACKAGER] Scanning webapp source directory...\");\n        System.out.println(\"[STRUCTURE CHECK] WEB-INF: VALID\");\n        System.out.println(\"[STRUCTURE CHECK] WEB-INF/classes: VALID (5 classes detected)\");\n        System.out.println(\"[STRUCTURE CHECK] WEB-INF/web.xml: VALID (Jakarta EE 10 Schema)\");\n        System.out.println(\"[ARCHIVE] Built target/ecommerce-core.war (Size: 4.2 MB)\");\n        System.out.println(\"[VERIFY] Standard WAR packaging compliant with Apache Tomcat 10.1 standards.\");\n    }\n}",
     solutionArchitectureNotes: "The standard WAR archive specification defines the contract between developers and web containers, ensuring vendor-neutral deployment across Tomcat, WildFly, and WebLogic."
   },
@@ -513,7 +513,7 @@ public class HighPrecisionCurrencyEngine {
       "Attempting to forward or redirect after writing bytes to the response output stream causes IllegalStateException.",
       "Forgetting that forward maintains request attributes while redirect creates a brand new HTTP request."
     ],
-    prerequisiteTopicIds: ["topic-66","topic-67","topic-68","topic-69"],
+    prerequisiteTopicIds: ["topic-69","topic-70","topic-71","topic-72"],
     referenceSolutionCode: "import java.util.*;\n\npublic class FrontControllerPatternSimulation {\n    interface ActionCommand {\n        String execute(Map<String, Object> reqAttrs);\n    }\n\n    public static void main(String[] args) {\n        Map<String, ActionCommand> routes = new HashMap<>();\n        routes.put(\"/catalog\", attrs -> {\n            attrs.put(\"products\", List.of(\"Laptop\", \"Monitor\"));\n            return \"FORWARD:/WEB-INF/views/catalog.jsp\";\n        });\n        routes.put(\"/checkout\", attrs -> \"REDIRECT:/confirmation?orderId=ORD-991\");\n\n        System.out.printf(\"[FRONT CONTROLLER] Initialized FrontController with %d route actions%n\", routes.size());\n\n        // Simulate GET /catalog\n        Map<String, Object> reqAttrs1 = new HashMap<>();\n        String dest1 = routes.get(\"/catalog\").execute(reqAttrs1);\n        System.out.println(\"[REQUEST] GET /dispatcher/catalog -> Action: ListProductsCommand\");\n        System.out.println(\"[DISPATCH] Forwarded server-side to \" + dest1.replace(\"FORWARD:\", \"\") + \" (attributes preserved)\");\n\n        // Simulate POST /checkout\n        Map<String, Object> reqAttrs2 = new HashMap<>();\n        String dest2 = routes.get(\"/checkout\").execute(reqAttrs2);\n        System.out.println(\"[REQUEST] POST /dispatcher/checkout -> Action: CheckoutCommand\");\n        System.out.println(\"[DISPATCH] Redirected client-side (302) to \" + dest2.replace(\"REDIRECT:\", \"\"));\n        System.out.println(\"[VERIFY] Post-Redirect-Get (PRG) pattern and request scope lifecycle verified.\");\n    }\n}",
     solutionArchitectureNotes: "The Front Controller pattern centralizes authentication, logging, and view resolution, forming the architectural foundation of modern web frameworks like Spring Web MVC."
   },
@@ -538,7 +538,7 @@ public class HighPrecisionCurrencyEngine {
       "Allowing state-changing requests via GET invites CSRF attacks because image tags can trigger GETs.",
       "Failing to invalidate and regenerate the session ID upon login leaves the user vulnerable to session fixation."
     ],
-    prerequisiteTopicIds: ["topic-70","topic-71","topic-72","topic-73"],
+    prerequisiteTopicIds: ["topic-73","topic-74","topic-75","topic-76"],
     referenceSolutionCode: "public class EnterpriseSessionGuard {\n    public static void main(String[] args) {\n        System.out.println(\"[FILTER CHAIN] Registered 2 filters: AuthGuardFilter -> CsrfValidationFilter\");\n        System.out.println(\"[REQUEST 1] GET /account/profile (Valid Session) -> 200 OK\");\n        System.out.println(\"[REQUEST 2] POST /account/transfer (Missing CSRF Token) -> 403 FORBIDDEN\");\n        System.out.println(\"[REQUEST 3] POST /account/transfer (Valid CSRF Token) -> 200 OK\");\n        System.out.println(\"[COOKIE GUARD] JSESSIONID cookie stamped with: HttpOnly; Secure; SameSite=Strict\");\n        System.out.println(\"[VERIFY] Web security defense in depth verified compliant with OWASP guidelines.\");\n    }\n}",
     solutionArchitectureNotes: "Servlet filters implement the Intercepting Filter pattern, providing non-intrusive security, cross-origin checks, and session sanitization prior to servlet execution."
   },
@@ -563,7 +563,7 @@ public class HighPrecisionCurrencyEngine {
       "Using <%= request.getParameter(\"name\") %> directly creates immediate Cross-Site Scripting (XSS) vulnerabilities.",
       "Putting database queries or business calculations directly inside JSP pages violates MVC separation."
     ],
-    prerequisiteTopicIds: ["topic-74", "topic-75"],
+    prerequisiteTopicIds: ["topic-77","topic-78"],
     referenceSolutionCode: "public class DynamicJspCatalogTaglib {\n    public static void main(String[] args) {\n        System.out.println(\"[JSP TRANSLATION] Translated 'catalog.jsp' into 'catalog_jsp.java' servlet bytecode\");\n        System.out.println(\"[RENDER] Evaluating JSTL Core tags <c:forEach var=\"item\" items=\"${products}\">\");\n        System.out.println(\"[TAGLIB] Executed <fmt:currency value=\"1299.99\" currency=\"USD\"/> -> Output: $1,299.99\");\n        System.out.println(\"[TAGLIB] Executed <fmt:currency value=\"849.50\" currency=\"EUR\"/> -> Output: €849.50\");\n        System.out.println(\"[SECURITY] Sanitized malicious product title with <c:out> -> Escaped HTML safe\");\n        System.out.println(\"[VERIFY] Zero scriptlets used; custom tag handler lifecycle verified compliant.\");\n    }\n}",
     solutionArchitectureNotes: "Replacing legacy JSP scriptlets with JSTL and custom tag extensions establishes a clear view-layer boundary, preventing business logic leakage and securing against XSS."
   },
@@ -588,7 +588,7 @@ public class HighPrecisionCurrencyEngine {
       "Failing to close JDBC connections exhausts the pool, freezing the web application under production load.",
       "Forgetting to configure multipart-config causes request.getPart() to return null or throw an exception."
     ],
-    prerequisiteTopicIds: ["topic-79", "topic-80", "topic-82"],
+    prerequisiteTopicIds: ["topic-79","topic-80","topic-81"],
     referenceSolutionCode: "public class FullMvcConnectionPoolingApp {\n    public static void main(String[] args) {\n        System.out.println(\"[JNDI POOL] HikariCP / Tomcat Connection Pool initialized (Max: 20, Idle: 5)\");\n        System.out.println(\"[UPLOAD] @MultipartConfig parsed incoming multipart/form-data: avatar.png (124 KB)\");\n        System.out.println(\"[MVC DISPATCH] Model updated in database -> View rendered via /WEB-INF/views/profile.jsp\");\n        System.out.println(\"[FAULT SIMULATION] Handled 404 resource missing -> Dispatched /WEB-INF/errors/404.jsp\");\n        System.out.println(\"[VERIFY] Enterprise MVC architecture and resource pooling verified compliant.\");\n    }\n}",
     solutionArchitectureNotes: "JNDI connection pooling decouples database credentials and pool tuning from application code, allowing operations teams to manage infrastructure resources independently."
   },
@@ -613,7 +613,7 @@ public class HighPrecisionCurrencyEngine {
       "Mixing old javax.* and new jakarta.* imports leads to ClassNotFoundException or un-injected dependencies.",
       "Performing un-validated updates directly on JPA detached entities bypasses Bean Validation guards."
     ],
-    prerequisiteTopicIds: ["topic-83","topic-84","topic-85","topic-86","topic-87"],
+    prerequisiteTopicIds: ["topic-82","topic-83","topic-84","topic-85","topic-86"],
     referenceSolutionCode: "public class MultiLayerEnterpriseBackend {\n    public static void main(String[] args) {\n        System.out.println(\"[BOOTSTRAP] Jakarta EE 10 Container booted: CDI + JPA + JAX-RS active\");\n        System.out.println(\"[JAX-RS] Registered endpoint: POST /api/v1/accounts/transfer\");\n        System.out.println(\"[VALIDATION] TransferRequest payload validated: amount=$750.00 (Valid)\");\n        System.out.println(\"[CDI] Injected AccountService into TransferResource\");\n        System.out.println(\"[JPA] EntityManager persisted AuditEntity within active JTA transaction\");\n        System.out.println(\"[RESPONSE] 201 Created with JSON payload: {\"status\": \"COMPLETED\"}\");\n        System.out.println(\"[VERIFY] Multi-tier Jakarta EE enterprise specifications working in harmony.\");\n    }\n}",
     solutionArchitectureNotes: "Jakarta EE specifications define standard portable interfaces (JAX-RS for REST, CDI for injection, JPA for ORM, Bean Validation for integrity) that execute seamlessly on enterprise runtimes."
   },
@@ -639,7 +639,7 @@ public class HighPrecisionCurrencyEngine {
       'Not calling setAccessible(true) on private fields causing IllegalAccessException.',
       'Circular dependency deadlock: instantiate beans before attempting bidirectional injection.'
     ],
-    prerequisiteTopicIds: ['topic-59', 'topic-88', 'topic-89'],
+    prerequisiteTopicIds: ["topic-87","topic-88"],
     referenceSolutionCode: `import java.lang.annotation.*;
 import java.lang.reflect.*;
 import java.util.*;
@@ -742,7 +742,7 @@ public class MiniIoCContainer {
       'Permitting negative or zero connection pool sizes causing thread starvation.',
       'Failing to handle null tenant keys gracefully.'
     ],
-    prerequisiteTopicIds: ['topic-26', 'topic-90', 'topic-91'],
+    prerequisiteTopicIds: ["topic-89","topic-90"],
     referenceSolutionCode: `import java.util.*;
 
 public class MultiTenantConfigBootstrap {
@@ -818,7 +818,7 @@ public class MultiTenantConfigBootstrap {
       'Returning 200 OK with an error body instead of genuine 4xx status codes.',
       'Leaking raw exception stack traces in 500 responses.'
     ],
-    prerequisiteTopicIds: ['topic-92', 'topic-93', 'topic-94'],
+    prerequisiteTopicIds: ["topic-91","topic-92","topic-93"],
     referenceSolutionCode: `import java.net.URI;
 import java.time.Instant;
 import java.util.*;
@@ -903,7 +903,7 @@ public class ResilientCustomerRestApiChallenge {
       'Swallowing exceptions inside transaction methods, which prevents the transaction interceptor from initiating a rollback.',
       'Invoking lazy-loaded child collections outside transactional or persistence context boundaries, resulting in LazyInitializationException.'
     ],
-    prerequisiteTopicIds: ['topic-95', 'topic-96', 'topic-97'],
+    prerequisiteTopicIds: ["topic-94","topic-95","topic-96"],
     referenceSolutionCode: `import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -1013,7 +1013,7 @@ public class BankingLedgerChallengeDemo {
       'Failing to clear the SecurityContext ThreadLocal at the end of the request, causing security context pollution in thread pools.',
       'Accepting unsigned or alg:none tokens.'
     ],
-    prerequisiteTopicIds: ['topic-98', 'topic-99'],
+    prerequisiteTopicIds: ["topic-97","topic-98"],
     referenceSolutionCode: `import java.util.*;
 
 public class JwtRbacGuardChallengeDemo {
@@ -1088,7 +1088,7 @@ public class JwtRbacGuardChallengeDemo {
     commonPitfalls: [
       'Entering infinite recursion on standard JDK meta-annotations. Check for java.lang.annotation package to break cycles.'
     ],
-    prerequisiteTopicIds: ['topic-58', 'topic-100'],
+    prerequisiteTopicIds: ["topic-99"],
     referenceSolutionCode: `import java.lang.annotation.*;
 import java.lang.reflect.Method;
 import java.util.*;
@@ -1168,7 +1168,7 @@ public class AnnotationInspectorChallengeDemo {
     commonPitfalls: [
       'Publishing Kafka events before database transactions commit (dual-write dilemma).'
     ],
-    prerequisiteTopicIds: ['topic-104', 'topic-106', 'topic-107', 'topic-108'],
+    prerequisiteTopicIds: ["topic-100","topic-101","topic-102","topic-103","topic-104","topic-105","topic-106","topic-107"],
     referenceSolutionCode: `import java.util.*;
 
 public class EnterpriseMicroserviceChallengeDemo {
@@ -1239,11 +1239,7 @@ public class EnterpriseMicroserviceChallengeDemo {
       "Leaking tenant context across reused thread pool worker threads.",
       "Querying historical Envers tables without indexing the revision timestamp column."
     ],
-    "prerequisiteTopicIds": [
-      "topic-109",
-      "topic-110",
-      "topic-111"
-    ],
+    "prerequisiteTopicIds": ["topic-108","topic-109","topic-110"],
     "referenceSolutionCode": "import java.util.*;\n\npublic class DynamicMultiTenantAuditingChallengeDemo {\n\n    public static class TenantContext {\n        private static final ThreadLocal<String> CURRENT = new ThreadLocal<>();\n        public static void setTenant(String id) { CURRENT.set(id); }\n        public static String getTenant() { return CURRENT.get(); }\n        public static void clear() { CURRENT.remove(); }\n    }\n\n    public record LedgerEntry(String id, String status, double amount) {}\n\n    public static void main(String[] args) {\n        TenantContext.setTenant(\"TENANT_EMEA\");\n        try {\n            System.out.printf(\"[TENANT CONTEXT] Active Tenant: '%s' -> Routing to EMEA Datasource%n\", TenantContext.getTenant());\n            System.out.println(\" - Specification Query: Filter applied (status=CONFIRMED AND amount >= 1000)\");\n            List<LedgerEntry> results = List.of(\n                new LedgerEntry(\"TX-101\", \"CONFIRMED\", 1500.0),\n                new LedgerEntry(\"TX-102\", \"CONFIRMED\", 2400.0)\n            );\n            System.out.printf(\" - Query Results: Found %d matching ledger records%n\", results.size());\n            System.out.println(\" - Envers Audit Log: Created Revision #142 [MODIFICATION] by auditor 'system_sec'\");\n            assert results.size() == 2;\n            System.out.println(\"[CHALLENGE 31] Advanced Persistence & Multi-Tenancy: PASSED [COMPLIANT]\");\n        } finally {\n            TenantContext.clear();\n        }\n    }\n}",
     "solutionArchitectureNotes": "Demonstrates multi-tenant database isolation, dynamic JPA Criteria query composition, and temporal audit trail persistence."
   },
@@ -1268,11 +1264,7 @@ public class EnterpriseMicroserviceChallengeDemo {
       "Failing to map role prefix (\"ROLE_\"), causing @PreAuthorize(\"hasRole('ADMIN')\") checks to fail silently.",
       "Disabling CSRF without verifying the service is purely stateless with zero browser session cookies."
     ],
-    "prerequisiteTopicIds": [
-      "topic-112",
-      "topic-113",
-      "topic-114"
-    ],
+    "prerequisiteTopicIds": ["topic-111","topic-112","topic-113"],
     "referenceSolutionCode": "import java.util.*;\n\npublic class OAuth2ZeroTrustChallengeDemo {\n\n    public static class JwtClaimsExtractor {\n        public static List<String> extractRoles(Map<String, Object> claims) {\n            Map<String, Object> realmAccess = (Map<String, Object>) claims.get(\"realm_access\");\n            List<String> rawRoles = (List<String>) realmAccess.get(\"roles\");\n            return rawRoles.stream().map(r -> \"ROLE_\" + r).toList();\n        }\n    }\n\n    public static void main(String[] args) {\n        System.out.println(\"[AUTH SERVER] Validating RS256 JWT from 'https://iam.enterprise.com/realms/production'...\");\n        System.out.println(\" - Signature: VALID (Key ID: rsa-key-2026)\");\n\n        Map<String, Object> mockClaims = Map.of(\n            \"sub\", \"usr-9912\",\n            \"realm_access\", Map.of(\"roles\", List.of(\"FINANCE_ADMIN\", \"AUDITOR\"))\n        );\n\n        List<String> authorities = JwtClaimsExtractor.extractRoles(mockClaims);\n        System.out.printf(\" - Claims Extracted: Subject='%s', Roles=%s%n\", mockClaims.get(\"sub\"), authorities);\n        System.out.println(\" - Security Headers: CSP, HSTS, X-Frame-Options: DENY applied\");\n        System.out.println(\" - Access Granted: Route '/api/v1/ledger/reports' [200 OK]\");\n\n        assert authorities.contains(\"ROLE_FINANCE_ADMIN\");\n        System.out.println(\"[CHALLENGE 32] Zero-Trust OAuth2 Security: PASSED [COMPLIANT]\");\n    }\n}",
     "solutionArchitectureNotes": "Implements production OAuth2 token verification, claim-to-role authority transformation, and security header enforcement."
   },
@@ -1297,11 +1289,7 @@ public class EnterpriseMicroserviceChallengeDemo {
       "Using unbounded queues with ThreadPoolExecutor, leading to silent memory exhaustion.",
       "Allowing multiple container replicas to execute identical scheduled billing jobs concurrently."
     ],
-    "prerequisiteTopicIds": [
-      "topic-115",
-      "topic-116",
-      "topic-117"
-    ],
+    "prerequisiteTopicIds": ["topic-114","topic-115","topic-116"],
     "referenceSolutionCode": "import java.util.*;\n\npublic class AsyncBatchSchedulingChallengeDemo {\n\n    public static class ClusterLockCoordinator {\n        private final Set<String> activeLocks = new HashSet<>();\n        public synchronized boolean acquireLock(String lockName) {\n            return activeLocks.add(lockName);\n        }\n    }\n\n    public static void main(String[] args) {\n        ClusterLockCoordinator coordinator = new ClusterLockCoordinator();\n        System.out.println(\"[DISTRIBUTED SCHEDULER] Node-01 attempting ShedLock acquisition on 'ledger-sync-job'...\");\n\n        boolean acquired = coordinator.acquireLock(\"ledger-sync-job\");\n        assert acquired;\n        System.out.println(\" - Lock Status: ACQUIRED (lockAtMostFor: 10m)\");\n        System.out.println(\" - Spring Batch Job: 'ledgerBatchJob' started (Chunk Size: 500)\");\n        System.out.println(\" - Step Execution: Read 1000 items -> Processed -> Written to DB [Commit Count: 2]\");\n        System.out.println(\" - Async Task: Dispatched notification thread pool [Active: 4, Queue: 0]\");\n\n        System.out.println(\"[CHALLENGE 33] Async Batch & Distributed Scheduling: PASSED [COMPLIANT]\");\n    }\n}",
     "solutionArchitectureNotes": "Integrates distributed cluster synchronization via ShedLock with Spring Batch chunk transaction processing and bounded async executors."
   },
@@ -1326,10 +1314,7 @@ public class EnterpriseMicroserviceChallengeDemo {
       "Holding HTTP request threads during SSE connections instead of returning SseEmitter immediately.",
       "Failing to handle SockJS fallback for enterprise proxy networks that strip WebSocket Upgrade headers."
     ],
-    "prerequisiteTopicIds": [
-      "topic-118",
-      "topic-119"
-    ],
+    "prerequisiteTopicIds": ["topic-117","topic-118"],
     "referenceSolutionCode": "import java.util.*;\n\npublic class RealTimeStreamingChallengeDemo {\n\n    public static class MarketBroadcaster {\n        private final List<String> activeClients = new ArrayList<>();\n        public void registerClient(String clientId) { activeClients.add(clientId); }\n        public boolean hasClient(String clientId) { return activeClients.contains(clientId); }\n    }\n\n    public static void main(String[] args) {\n        System.out.println(\"[REAL-TIME HUB] Initializing STOMP WebSocket broker on '/ws-market'...\");\n        System.out.println(\" - Broker Prefixes: '/topic' (Broadcast), '/queue' (User Private)\");\n\n        MarketBroadcaster broadcaster = new MarketBroadcaster();\n        broadcaster.registerClient(\"trader-session-81\");\n\n        System.out.println(\" - SSE Stream: Connected client 'trader-session-81' to '/api/ticks/stream'\");\n        System.out.println(\" - Event Dispatched: SSE tick EUR/USD=1.0842 at 2026-11-20T18:00:00Z\");\n        System.out.println(\" - STOMP Message: Broadcasted trade execution 'TRD-7719' to '/topic/trades'\");\n\n        assert broadcaster.hasClient(\"trader-session-81\");\n        System.out.println(\"[CHALLENGE 34] Real-Time Streaming & WebSockets: PASSED [COMPLIANT]\");\n    }\n}",
     "solutionArchitectureNotes": "Combines full-duplex STOMP over WebSockets for interactive trade placement with lightweight Server-Sent Events (SSE) for unidirectional price tickers."
   },
@@ -1355,13 +1340,7 @@ public class EnterpriseMicroserviceChallengeDemo {
       "Deploying spring.jpa.hibernate.ddl-auto=update in production instead of validate.",
       "Executing UPDATE statements without a WHERE clause."
     ],
-    "prerequisiteTopicIds": [
-      "topic-120",
-      "topic-122",
-      "topic-123",
-      "topic-127",
-      "topic-128"
-    ],
+    "prerequisiteTopicIds": ["topic-119","topic-120","topic-121","topic-122","topic-123","topic-124","topic-125","topic-126","topic-127"],
     "referenceSolutionCode": "import java.util.*;\n\npublic class RelationalBankingChallengeDemo {\n    public record Account(long id, String email, double balance) {}\n\n    public static void main(String[] args) {\n        System.out.println(\"[MYSQL PERSISTENCE] Connecting to MySQL on Port 3306...\");\n        System.out.println(\" - HikariCP Pool: 10 connections pre-allocated (Max Lifetime: 1200000ms)\");\n        System.out.println(\" - Schema: 'customers' & 'accounts' tables created with InnoDB foreign key constraints\");\n        System.out.println(\" - Index: Composite B-Tree index 'idx_accounts_tenant_status' created (0 hops)\");\n        System.out.println(\" - Transaction: Atomic funds transfer $250.00 from Acct 101 to Acct 102 COMMITTED\");\n        System.out.println(\"[CHALLENGE 35] Relational SQL & MySQL Persistence: PASSED [COMPLIANT]\");\n    }\n}",
     "solutionArchitectureNotes": "Validates relational schema integrity, HikariCP connection pool tuning, B-Tree index optimization, and ACID transactional boundary management."
   },
@@ -1387,11 +1366,7 @@ public class EnterpriseMicroserviceChallengeDemo {
       "Building unbounded embedded arrays inside documents (16MB BSON limit).",
       "Omitting $set in update operations, resulting in document overwrite."
     ],
-    "prerequisiteTopicIds": [
-      "topic-128",
-      "topic-129",
-      "topic-130"
-    ],
+    "prerequisiteTopicIds": ["topic-128","topic-129","topic-130"],
     "referenceSolutionCode": "import java.util.*;\n\npublic class MongoDbAnalyticsChallengeDemo {\n    public static void main(String[] args) {\n        System.out.println(\"[MONGODB STORE] Connecting to MongoDB Replica Set on Port 27017...\");\n        System.out.println(\" - Connection URI: mongodb://cluster0.mongodb.net/shop?authSource=admin&w=majority\");\n        System.out.println(\" - ODM Mapping: @Document 'products' mapped with 12-byte BSON ObjectId and @CompoundIndex\");\n        System.out.println(\" - Atomic Update: Decremented stock for SKU 'LAPTOP-X1' via MongoTemplate ($inc -1)\");\n        System.out.println(\" - Aggregation Pipeline: Executed $match -> $group -> $project -> $sort across collections\");\n        System.out.println(\"[CHALLENGE 36] MongoDB Document Analytics Store: PASSED [COMPLIANT]\");\n    }\n}",
     "solutionArchitectureNotes": "Validates MongoDB BSON document modeling, replica set write concern consensus, in-place atomic mutations, and multi-stage aggregation pipeline analysis."
   }

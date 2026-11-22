@@ -399,3 +399,14 @@ public Step processTransactionsStep(JobRepository jobRepository, PlatformTransac
 - [Spring Batch Official Documentation](https://docs.spring.io/spring-batch/reference/)
 - [Spring Batch 5 Migration Guide](https://github.com/spring-projects/spring-batch/wiki/Spring-Batch-5.0-Migration-Guide)
 - [Baeldung: Introduction to Spring Batch](https://www.baeldung.com/introduction-to-spring-batch)
+
+---
+
+## Practice
+
+### Q: What are the distinct roles of `ItemReader`, `ItemProcessor`, and `ItemWriter` in a Spring Batch chunk-oriented step?
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
+> **Answer:** In a chunk-oriented step (e.g. chunk size = 500), the `ItemReader` reads records one by one from the data source. The `ItemProcessor` transforms, validates, or filters each individual record. Once 500 records are processed, the `ItemWriter` writes the entire batch of 500 records to the destination database in a single atomic transaction commit.
+</details>

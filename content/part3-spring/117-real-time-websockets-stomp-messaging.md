@@ -372,3 +372,14 @@ public class SecureWebSocketConfig implements WebSocketMessageBrokerConfigurer {
 - [Spring Framework Reference: WebSockets & STOMP](https://docs.spring.io/spring-framework/reference/web/websocket/stomp.html)
 - [STOMP Protocol Specification (v1.2)](https://stomp.github.io/stomp-specification-1.2.html)
 - [RFC 6455: The WebSocket Protocol](https://datatracker.ietf.org/doc/html/rfc6455)
+
+---
+
+## Practice
+
+### Q: What is the purpose of the STOMP protocol when layered over raw WebSockets in Spring Boot?
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
+> **Answer:** Raw WebSockets provide only a bare bidirectional TCP byte stream without framing, addressing, or message headers. STOMP (Simple Text Oriented Messaging Protocol) defines a structured publish-subscribe messaging frame (COMMAND, headers, body), allowing clients to subscribe to specific topics (e.g. `/topic/prices`) and route messages to specific controller endpoints (`@MessageMapping`).
+</details>

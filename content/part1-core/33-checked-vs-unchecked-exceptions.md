@@ -113,12 +113,15 @@ public class ExceptionBoundaryDemo {
 }
 ```
 
-### Execution Output:
+<details data-type="output">
+<summary>View Output</summary>
+
 ```text
 Successfully dispatched 512 bytes.
 Handled checked boundary condition: Packet size exceeds buffer limit
 Handled programming defect: Payload cannot be null
 ```
+</details>
 
 ---
 
@@ -148,8 +151,13 @@ public class MultiCatchQuiz {
 }
 ```
 
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
 ### Explanation
 1. `java.io.FileNotFoundException` is a direct subclass of `java.io.IOException`.
 2. Java language specification forbids listing alternatives in a multi-catch block where one alternative is a subclass of another.
 3. The compiler flags this with error: `Types in multi-catch must be disjoint: FileNotFoundException is a subclass of IOException`.
 4. Result: **Compile-time error**.
+
+</details>

@@ -214,3 +214,22 @@ public interface ProductMongoRepository extends MongoRepository<ProductDocument,
 | **Avoid N+1 Queries** | Use `@EntityGraph` or `JOIN FETCH` queries. | Not applicable if related data is embedded inside the document. |
 | **Connection Pooling** | Use HikariCP with `maximum-pool-size = 10`. | Mongo driver maintains an internal connection pool automatically. |
 | **Currency Handling** | Always use `BigDecimal` mapped to `DECIMAL(12, 2)`. | Store as `Decimal128` or integer cents to prevent floating-point drift. |
+
+---
+
+## Pitfalls
+
+- **Mixing JPA and Mongo Repositories in the Same Package:** In polyglot architectures containing both `@Entity` and `@Document` classes, placing both in the same package can confuse Spring Boot auto-configuration. Explicitly separate packages and annotate configurations with `@EnableJpaRepositories` and `@EnableMongoRepositories`.
+- **Deploying `ddl-auto=update` to Production:** Relying on Hibernate to auto-update production relational schemas can lock tables or alter columns destructively during rolling deploys. Always set `spring.jpa.hibernate.ddl-auto=validate` and execute versioned Flyway migrations.
+- **Storing Floating-Point Values for Money:** Using `double` primitives for prices in MongoDB documents introduces binary floating-point round-off errors. Always store currency as `Decimal128` or integer cents.
+
+---
+
+## Practice
+
+### Q: In a hybrid enterprise service using both Spring Data JPA and Spring Data MongoDB, how do you prevent repository proxy collisions?
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
+> **Answer:** You must physically isolate relational and document repositories into separate sub-packages (e.g. `com.example.repository.jpa` and `com.example.repository.mongo`) and specify explicit package boundaries in configuration classes using `@EnableJpaRepositories(basePackages = "com.example.repository.jpa")` and `@EnableMongoRepositories(basePackages = "com.example.repository.mongo")`. This guarantees Spring initializes the appropriate proxy generator for each interface.
+</details>

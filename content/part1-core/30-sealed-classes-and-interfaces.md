@@ -100,11 +100,14 @@ public class SealedHierarchyDemo {
 }
 ```
 
-### Execution Output:
+<details data-type="output">
+<summary>View Output</summary>
+
 ```text
 HTTP 200 OK: {"status":"active"} (took 45 ms)
 HTTP 500 FAIL [ERR_AUTH]: Token signature expired
 ```
+</details>
 
 ---
 
@@ -126,8 +129,13 @@ public class InitialState implements State {}
 ```
 Why does this fail compilation?
 
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
 ### Explanation
 1. `InitialState` is a permitted subclass of sealed interface `State`.
 2. By Java language specification, every permitted subclass must explicitly declare either `final`, `sealed`, or `non-sealed`.
 3. `InitialState` lacks any of these three mandatory modifiers.
 4. Result: **Compile-time error**.
+
+</details>

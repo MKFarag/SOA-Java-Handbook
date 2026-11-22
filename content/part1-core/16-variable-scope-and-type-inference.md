@@ -103,13 +103,16 @@ public class ScopeAndInferenceDemo {
 }
 ```
 
-### Execution Output:
+<details data-type="output">
+<summary>View Output</summary>
+
 ```text
 [TelemetryPipeline] Event counts:
   - warn: 1
   - error: 3
   - info: 1
 ```
+</details>
 
 ---
 
@@ -133,9 +136,14 @@ var c = {1, 2};                 // Line 3
 var d = (String) null;          // Line 4
 ```
 
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
 ### Explanation
 1. Line 1 infers `int`. Valid.
 2. Line 2 explicitly allocates `int[]`. Valid.
 3. Line 3 uses an array literal initializer without a type. Java requires an explicit target type for `{1, 2}`. Line 3 **fails compilation**.
 4. Line 4 explicitly casts `null` to `String`, allowing the compiler to infer `String`. Valid.
 5. Error is on **Line 3**.
+
+</details>

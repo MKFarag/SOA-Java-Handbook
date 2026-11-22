@@ -305,3 +305,14 @@ public @interface SecuredRestService {
 - [Spring Framework Reference: Annotation Programming Model](https://docs.spring.io/spring-framework/reference/core/beans/annotation-config.html)
 - [Jakarta Annotations Specification 2.1](https://jakarta.ee/specifications/annotations/2.1/)
 - [Java SE 21 Language Specification: Annotations](https://docs.oracle.com/javase/specs/jls/se21/html/jls-9.html#jls-9.6)
+
+---
+
+## Practice
+
+### Q: What is the architectural difference between `@Component` and `@Bean` in Spring?
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
+> **Answer:** `@Component` is a class-level annotation indicating auto-detection through classpath scanning. `@Bean` is a method-level annotation used within `@Configuration` classes, providing explicit programmatic bean instantiation—essential when configuring third-party library classes whose source code cannot be annotated with `@Component`.
+</details>

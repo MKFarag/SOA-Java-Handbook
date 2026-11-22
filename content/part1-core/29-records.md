@@ -109,13 +109,16 @@ public class RecordDataCarrierDemo {
 }
 ```
 
-### Execution Output:
+<details data-type="output">
+<summary>View Output</summary>
+
 ```text
 Latitude accessor : 37.7749
 Value Equality    : true
 String Format     : GeoCoordinate[latitude=37.7749, longitude=-122.4194]
 Validation Guard: Latitude out of range [-90, 90]
 ```
+</details>
 
 ---
 
@@ -139,8 +142,13 @@ Container p1 = new Container(new int[]{1, 2});
 Container p2 = new Container(new int[]{1, 2});
 ```
 
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
 ### Explanation
 1. By default, the synthesized `equals()` method on a record uses `Objects.equals(componentA, componentB)`.
 2. For array references, `Objects.equals()` compares pointer identities (`==`), NOT array elements (it does NOT use `Arrays.equals()`).
 3. Because `p1.data` and `p2.data` are distinct heap arrays, the equality comparison evaluates to `false`.
 4. Fix: Override `equals()` and `hashCode()` to use `Arrays.equals(data, other.data)` if array components are required.
+
+</details>

@@ -2,15 +2,17 @@
 id: topic-78
 slug: expression-language-el-and-jstl
 topicNumber: 78
-title: 'Expression Language (EL) & JSTL Core Tags'
+title: Expression Language (EL) & JSTL Core Tags
 part: 'Part 2: Java EE & Jakarta EE'
-sectionNumber: 20
+sectionNumber: 21
 sectionTitle: Server-Side Rendering with JSP & JSTL
 versionBadge: Jakarta Tags 3.0 / EL 5.0
 difficulty: Intermediate
 readingTime: 9 min read
 shortDescription: >-
-  Reference: Expression Language syntax (${expr}), scope resolution hierarchy (page -> request -> session -> application), and JSTL core tags (c:if, c:forEach, c:choose, c:out).
+  Reference: Expression Language syntax (${expr}), scope resolution hierarchy
+  (page -> request -> session -> application), and JSTL core tags (c:if,
+  c:forEach, c:choose, c:out).
 prerequisites:
   - 'Topic 77: JSP Architecture, Syntax & Implicit Objects'
 ---
@@ -116,3 +118,14 @@ Returns null (renders empty string "" without NullPointerException)
 **Question:** If both `request.setAttribute("tier", "GOLD");` and `session.setAttribute("tier", "PLATINUM");` are set, what value does `${tier}` evaluate to in the JSP?
 
 **Explanation:** It evaluates to `"GOLD"`. Following the EL scope resolution order (`page` -> `request` -> `session` -> `application`), the request scope is evaluated before the session scope. To explicitly target the session attribute, use `${sessionScope.tier}`.
+
+---
+
+## Practice
+
+### Q: How does Jakarta Expression Language (EL) handle `null` properties compared to raw Java code?
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
+> **Answer:** In raw Java, calling a method or property on a null reference throws a `NullPointerException`. In Jakarta EL (`${user.address.street}`), EL gracefully coerces `null` references into empty output (`""`) rather than crashing the page rendering, allowing clean view logic without defensive null-checking boilerplate.
+</details>

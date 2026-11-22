@@ -113,11 +113,14 @@ public class ClassicIoPipelineDemo {
 }
 ```
 
-### Execution Output:
+<details data-type="output">
+<summary>View Output</summary>
+
 ```text
 [01] TIMESTAMP=2026-11-22T12:00:00Z | LEVEL=INFO | HOST=node-01
 [02] TIMESTAMP=2026-11-22T12:00:05Z | LEVEL=WARN | HOST=node-02
 ```
+</details>
 
 ---
 
@@ -134,7 +137,12 @@ public class ClassicIoPipelineDemo {
 ### Question
 What does `BufferedReader.readLine()` return when it reaches the End of File (EOF)?
 
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
 ### Explanation
 1. Unlike `read()`, which returns integer `-1` at EOF, `readLine()` processes sequences of characters into a `String`.
 2. When the end of the stream is reached without reading any characters, `readLine()` returns `null`.
 3. Standard idiom: `while ((line = reader.readLine()) != null) { ... }`.
+
+</details>

@@ -352,3 +352,14 @@ public class ValidDateRangeValidator implements ConstraintValidator<ValidDateRan
 - [Spring Framework Reference: Validation, Data Binding, and Type Conversion](https://docs.spring.io/spring-framework/reference/core/validation.html)
 - [Jakarta Bean Validation 3.0 Specification](https://jakarta.ee/specifications/bean-validation/3.0/)
 - [Hibernate Validator Official Reference Guide](https://hibernate.org/validator/documentation/)
+
+---
+
+## Practice
+
+### Q: What is the purpose of the `@Valid` or `@Validated` annotation on a `@RequestBody` controller parameter?
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
+> **Answer:** Annotating `@RequestBody @Valid UserDto dto` triggers Spring's `MethodValidationPostProcessor` to intercept incoming deserialized JSON payloads and validate all constraint annotations (`@NotBlank`, `@Email`) before invoking the controller method. If constraints fail, a `MethodArgumentNotValidException` is thrown before business logic executes.
+</details>

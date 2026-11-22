@@ -96,12 +96,15 @@ public class ListArchitectureDemo {
 }
 ```
 
-### Execution Output:
+<details data-type="output">
+<summary>View Output</summary>
+
 ```text
 Pending Window View: [ORDER_CREATED, PAYMENT_PENDING]
 Underlying Buffer: [AUTH_SUCCESS, ORDER_CONFIRMED, PAYMENT_PENDING, SETTLED]
 Immutable Snapshot: [AUTH_SUCCESS, ORDER_CONFIRMED, PAYMENT_PENDING, SETTLED]
 ```
+</details>
 
 ---
 
@@ -123,9 +126,14 @@ numbers.remove(1);
 System.out.println(numbers);
 ```
 
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
 ### Explanation
 1. `List.of(10, 20, 30)` creates an unmodifiable list containing `[10, 20, 30]`.
 2. `new ArrayList<>(...)` creates a mutable copy.
 3. `numbers.remove(1)` matches the method `remove(int index)` rather than `remove(Object o)`.
 4. Index 1 holds the element `20`. The element `20` is removed.
 5. Remaining elements: `[10, 30]`.
+
+</details>

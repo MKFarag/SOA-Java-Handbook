@@ -352,3 +352,14 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 - [Spring Data JPA Reference: Projections](https://docs.spring.io/spring-data/jpa/reference/repositories/projections.html)
 - [Spring Data JPA Reference: Query Methods](https://docs.spring.io/spring-data/jpa/reference/jpa/query-methods.html)
 - [Jakarta Persistence (JPA) Specification 3.1: JPQL](https://jakarta.ee/specifications/persistence/3.1/)
+
+---
+
+## Practice
+
+### Q: How does Spring Data JPA generate SQL queries from method names like `findByEmailAndStatusOrderByCreatedAtDesc`?
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
+> **Answer:** Spring Data JPA parses method names at application startup using regex tokenization: stripping prefixes (`findBy`), identifying entity properties (`email`, `status`), parsing logical conjunctions (`And`), and building an Abstract Syntax Tree (AST) that is converted into JPQL and compiled into native SQL prepared statements at runtime.
+</details>

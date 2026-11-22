@@ -118,11 +118,14 @@ public class SortingPipelineDemo {
 }
 ```
 
-### Execution Output:
+<details data-type="output">
+<summary>View Output</summary>
+
 ```text
 Natural Sort (SKU): [SKU-A($129.50, qty=15), SKU-B($49.99, qty=100), SKU-C($49.99, qty=500)]
 Custom Sort (Price asc, Qty desc): [SKU-C($49.99, qty=500), SKU-B($49.99, qty=100), SKU-A($129.50, qty=15)]
 ```
+</details>
 
 ---
 
@@ -142,8 +145,13 @@ Why is the following comparator considered defective in production software?
 Comparator<Integer> badComp = (a, b) -> (a > b) ? 1 : -1;
 ```
 
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
 ### Explanation
 1. The comparison contract requires returning `0` when two elements are equivalent (`a.equals(b)`).
 2. This comparator returns `-1` when `a == b`.
 3. As a consequence, `badComp.compare(x, x)` returns `-1`, which violates the fundamental reflexivity and antisymmetry axioms ($compare(x, x) == 0$).
 4. When passed to `Arrays.sort()`, TimSort detects this invariant breach and throws `IllegalArgumentException: Comparison method violates its general contract`.
+
+</details>

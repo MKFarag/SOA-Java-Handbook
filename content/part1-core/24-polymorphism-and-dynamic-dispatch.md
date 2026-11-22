@@ -49,6 +49,15 @@ PaymentGateway gateway = new StripeGateway();
 ```
 Each class loaded into memory maintains a **vtable** of function pointers. When an instance method is called, the JVM performs an indexed array lookup into the runtime object's vtable in $O(1)$ constant time.
 
+### Static Binding vs Dynamic Binding Reference
+
+| Characteristic | Compile-Time (Static Binding) | Runtime (Dynamic Binding) |
+| :--- | :--- | :--- |
+| **Resolution Phase** | Resolved at compile-time by `javac` | Resolved at runtime by JVM execution engine |
+| **Bytecode Instruction** | `invokestatic`, `invokespecial` | `invokevirtual`, `invokeinterface` |
+| **Target Methods** | `static`, `private`, `final` methods, method overloading | Overridden non-private, non-final instance methods |
+| **Lookup Cost** | Direct call address in constant pool | $O(1)$ indexed vtable pointer traversal |
+
 ---
 
 ## Type Casting & Pattern Matching (`instanceof`)
@@ -117,11 +126,14 @@ public class PolymorphicPipeline {
 }
 ```
 
-### Execution Output:
+<details data-type="output">
+<summary>View Output</summary>
+
 ```text
 [EMAIL] Sending to dev-ops@internal.net: Service latency breached 250ms threshold
 [SMS] Sending to dev-ops@internal.net: Service latency breached 250ms threshold
 ```
+</details>
 
 ---
 
@@ -157,7 +169,12 @@ public class DispatchTest {
 }
 ```
 
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
 ### Explanation
 1. `ref.value` accesses a field. Fields do not participate in dynamic dispatch and are resolved statically by the reference type (`SuperClass`). Thus `ref.value` evaluates to `10`.
 2. `ref.print()` invokes an overridden instance method. The JVM dispatches to the actual heap object type (`SubClass`). Inside `SubClass.print()`, `value` accesses `SubClass`'s field (`20`).
 3. Output: `10 Sub-20 `.
+
+</details>

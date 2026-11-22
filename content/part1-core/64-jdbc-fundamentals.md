@@ -143,12 +143,15 @@ public class JdbcTransactionDemo {
 }
 ```
 
-### Execution Output:
+<details data-type="output">
+<summary>View Output</summary>
+
 ```text
 Transaction committed successfully.
 Account ID 1 -> Balance: $800.00
 Account ID 2 -> Balance: $450.00
 ```
+</details>
 
 ---
 
@@ -165,6 +168,11 @@ Account ID 2 -> Balance: $450.00
 ### Question
 Why must `pstmt.setString(1, userInput)` be used instead of string concatenation `stmt.execute("... " + userInput)`?
 
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
 ### Explanation
 1. String concatenation embeds user input directly into the SQL command text. If an attacker inputs `' OR '1'='1`, the database parser interprets the input as executable syntax, leading to SQL Injection.
 2. `PreparedStatement` pre-compiles the query template with placeholders (`?`). The database engine treats parameter values strictly as literal values, never interpreting them as executable SQL commands.
+
+</details>

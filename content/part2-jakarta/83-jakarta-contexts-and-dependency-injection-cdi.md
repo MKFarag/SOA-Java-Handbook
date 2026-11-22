@@ -2,15 +2,17 @@
 id: topic-83
 slug: jakarta-contexts-and-dependency-injection-cdi
 topicNumber: 83
-title: 'Jakarta Contexts & Dependency Injection (CDI)'
+title: Jakarta Contexts & Dependency Injection (CDI)
 part: 'Part 2: Java EE & Jakarta EE'
-sectionNumber: 22
+sectionNumber: 23
 sectionTitle: Modern Jakarta EE Specifications
 versionBadge: Jakarta CDI 4.0
 difficulty: Advanced
 readingTime: 8 min read
 shortDescription: >-
-  Reference: Contexts and Dependency Injection architecture (@Inject), contextual scopes (@RequestScoped, @ApplicationScoped), qualifiers, and producer methods.
+  Reference: Contexts and Dependency Injection architecture (@Inject),
+  contextual scopes (@RequestScoped, @ApplicationScoped), qualifiers, and
+  producer methods.
 prerequisites:
   - 'Topic 26: Interfaces & Modern Default Methods'
   - 'Topic 69: Servlet Lifecycle & Threading Model'
@@ -98,3 +100,14 @@ public class OrderCheckoutBean {
 **Question:** What is the critical architectural difference between `@ApplicationScoped` and `@Dependent` in CDI?
 
 **Explanation:** An `@ApplicationScoped` bean is instantiated once per application; all injection targets receive a reference to the same shared contextual client proxy. An `@Dependent` bean has no independent lifecycle: a brand new instance is created specifically for the injection target and is destroyed alongside the bean that holds it.
+
+---
+
+## Practice
+
+### Q: What is the difference between `@RequestScoped` and `@ApplicationScoped` beans in Jakarta CDI?
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
+> **Answer:** A `@RequestScoped` bean is instantiated when an HTTP request begins and destroyed when the response terminates, isolating state to that single client interaction. An `@ApplicationScoped` bean is an application-wide singleton created once across all web sessions and shared concurrently across all threads and users.
+</details>

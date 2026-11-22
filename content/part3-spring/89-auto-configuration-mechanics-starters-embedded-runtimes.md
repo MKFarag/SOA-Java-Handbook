@@ -340,3 +340,14 @@ How do you configure a Maven `pom.xml` to replace embedded Tomcat with embedded 
 - [Spring Boot Reference Documentation: Auto-Configuration](https://docs.spring.io/spring-boot/docs/current/reference/html/using.html#using.auto-configuration)
 - [Spring Boot Reference Documentation: Embedded Web Servers](https://docs.spring.io/spring-boot/docs/current/reference/html/web.html#web.servlet.embedded-container)
 - [Spring Boot AutoConfiguration JavaDoc](https://docs.spring.io/spring-boot/docs/current/api/org/springframework/boot/autoconfigure/AutoConfiguration.html)
+
+---
+
+## Practice
+
+### Q: How does Spring Boot's `@ConditionalOnClass` annotation enable modular auto-configuration?
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
+> **Answer:** @ConditionalOnClass evaluates the JVM classpath at runtime using reflection. If a specific class (e.g. HikariDataSource.class or KafkaTemplate.class) is present in the classpath, Spring activates the corresponding auto-configuration bean; if absent, the configuration class is silently bypassed without throwing ClassNotFoundException.
+</details>

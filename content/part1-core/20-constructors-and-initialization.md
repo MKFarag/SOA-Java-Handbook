@@ -51,6 +51,14 @@ Constructors can delegate to overloaded peer constructors within the same class 
 - **Mutual Exclusivity:** A single constructor cannot call both `this(...)` and `super(...)`.
 - **Prohibition of Recursion:** Circular chaining (`Constructor A` calls `B`, `B` calls `A`) triggers compile-time error `recursive constructor invocation`.
 
+### Initialization Construct Comparison
+
+| Construct | Execution Trigger | Frequency | Can Access `this`? | Primary Use Case |
+| :--- | :--- | :--- | :--- | :--- |
+| **Static Initializer (`static { }`)** | Class loading by JVM | Once per ClassLoader | No (static context only) | Loading native libraries, static registry lookup |
+| **Instance Initializer (`{ }`)** | Object allocation | Every instantiation | Yes | Shared init code across anonymous classes |
+| **Constructor (`ClassName()`)** | Explicit `new` invocation | Every instantiation | Yes | Parameterized state validation and initialization |
+
 ---
 
 ## Implementation Example
@@ -96,11 +104,14 @@ public class DatabasePoolConfig {
 }
 ```
 
-### Execution Output:
+<details data-type="output">
+<summary>View Output</summary>
+
 ```text
 Pool[url=jdbc:postgresql://localhost:5432/orders, maxConn=10, timeout=30s]
 Pool[url=jdbc:postgresql://localhost:5432/analytics, maxConn=50, timeout=60s]
 ```
+</details>
 
 ---
 
@@ -132,6 +143,9 @@ class Child extends Parent {
 }
 ```
 
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
 ### Explanation
 1. `new Child()` delegates to `this("A ")`.
 2. `Child(String s)` does not contain an explicit `this()` or `super()`, so the compiler automatically injects `super()` as its first statement.
@@ -139,3 +153,5 @@ class Child extends Parent {
 4. `Child(String s)` resumes $\rightarrow$ prints `"A "`.
 5. Control returns to `Child()` $\rightarrow$ prints `"B "`.
 6. Output: `P A B `.
+
+</details>

@@ -69,6 +69,16 @@ public class Service implements InterfaceA, InterfaceB {
 }
 ```
 
+### Interface vs Abstract Class Comparison
+
+| Dimension | Interface (`interface`) | Abstract Class (`abstract class`) |
+| :--- | :--- | :--- |
+| **Multiple Inheritance** | Yes (class can implement multiple interfaces) | No (single class inheritance hierarchy only) |
+| **State / Instance Fields** | No (only `public static final` constants) | Yes (can declare `private`, `protected`, mutable fields) |
+| **Constructors** | None | Yes (invoked during subclass instantiation) |
+| **Method Types** | `abstract`, `default`, `static`, `private` | Any access modifier (`public`, `protected`, `package-private`, `private`) |
+| **Design Intent** | Behavioral capability ("What it can do" - *can-do*) | Shared identity / base implementation ("What it is" - *is-a*) |
+
 ---
 
 ## Implementation Example
@@ -125,11 +135,14 @@ public class ModernInterfaceDemo {
 }
 ```
 
-### Execution Output:
+<details data-type="output">
+<summary>View Output</summary>
+
 ```text
 Is key length valid: true
 Encrypted output   : 123F3636350D3528363E
 ```
+</details>
 
 ---
 
@@ -157,8 +170,13 @@ interface ParentB extends ParentA {
 class AlphaImpl implements ParentA, ParentB {}
 ```
 
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
 ### Explanation
 1. `AlphaImpl` implements both `ParentA` and `ParentB`.
 2. `ParentB` extends `ParentA` and overrides `greet()`.
 3. Under Rule 2 (Sub-Interface Wins), the more specific interface in the hierarchy takes precedence automatically without requiring explicit disambiguation.
 4. Output: `B`.
+
+</details>

@@ -102,11 +102,14 @@ public class OptionalArchitectureDemo {
 }
 ```
 
-### Execution Output:
+<details data-type="output">
+<summary>View Output</summary>
+
 ```text
 Resolved Endpoint: https://api.global-default.net
 Found registered tenant: US-EAST
 ```
+</details>
 
 ---
 
@@ -133,8 +136,13 @@ static String generateToken() {
 }
 ```
 
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
 ### Explanation
 1. `orElse(value)` is a normal Java method invocation.
 2. In Java, method arguments are evaluated **eagerly** before the method is invoked, regardless of whether `cachedToken` is present.
 3. Therefore, `generateToken()` executes and prints `"Generating new token..."`, even though its return value is discarded in favor of `"VALID-TOKEN-123"`.
 4. Fix: Use `cachedToken.orElseGet(() -> generateToken());` to evaluate lazily.
+
+</details>

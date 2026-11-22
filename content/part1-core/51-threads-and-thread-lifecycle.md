@@ -117,7 +117,9 @@ public class ThreadLifecycleDemo {
 }
 ```
 
-### Execution Output:
+<details data-type="output">
+<summary>View Output</summary>
+
 ```text
 Initial Thread State: NEW
 State after start(): RUNNABLE
@@ -130,6 +132,7 @@ Worker received interrupt during sleep. Cleaning up...
 Worker thread terminated cleanly.
 State after join(): TERMINATED
 ```
+</details>
 
 ---
 
@@ -155,8 +158,13 @@ while (!Thread.currentThread().isInterrupted()) {
 }
 ```
 
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
 ### Explanation
 1. When `Thread.sleep()` is interrupted, it throws `InterruptedException`.
 2. By Java language specification, throwing `InterruptedException` **clears the interruption flag** (resets it to `false`).
 3. If the catch block does not re-assert interruption (`Thread.currentThread().interrupt()`) or `break`, the loop condition `!Thread.currentThread().isInterrupted()` evaluates to `true` on the next iteration.
 4. Result: The thread fails to cancel and resumes running indefinitely.
+
+</details>

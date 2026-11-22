@@ -388,3 +388,14 @@ Hibernate Envers queries `bank_accounts_aud` joined to `REVINFO`, finding the la
 - [Spring Data JPA Reference: Auditing](https://docs.spring.io/spring-data/jpa/reference/auditing.html)
 - [Hibernate Envers User Guide](https://docs.jboss.org/hibernate/orm/current/userguide/html_single/Hibernate_User_Guide.html#envers)
 - [Baeldung: Entity Auditing with Spring Data JPA](https://www.baeldung.com/database-auditing-jpa)
+
+---
+
+## Practice
+
+### Q: How does Hibernate Envers capture entity modification history without requiring manual audit logging code in business services?
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
+> **Answer:** Annotating an entity with `@Audited` instructs Hibernate Envers to intercept entity lifecycle events (insert, update, delete). During transaction commit, Envers automatically duplicates the mutated entity state into an audit table (e.g. `customers_AUD`) tagged with an incrementing revision ID and timestamp, providing an immutable historical ledger.
+</details>

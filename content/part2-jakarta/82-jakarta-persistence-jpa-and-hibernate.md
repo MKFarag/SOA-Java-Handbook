@@ -2,15 +2,17 @@
 id: topic-82
 slug: jakarta-persistence-jpa-and-hibernate
 topicNumber: 82
-title: 'Jakarta Persistence (JPA) & Hibernate ORM'
+title: Jakarta Persistence (JPA) & Hibernate ORM
 part: 'Part 2: Java EE & Jakarta EE'
-sectionNumber: 22
+sectionNumber: 23
 sectionTitle: Modern Jakarta EE Specifications
 versionBadge: Jakarta Persistence 3.1 / Hibernate 6.4
 difficulty: Advanced
 readingTime: 9 min read
 shortDescription: >-
-  Reference: Object-Relational Mapping (ORM) fundamentals, EntityManager lifecycle states (Transient, Managed, Detached, Removed), dirty checking, and 1st-level cache.
+  Reference: Object-Relational Mapping (ORM) fundamentals, EntityManager
+  lifecycle states (Transient, Managed, Detached, Removed), dirty checking, and
+  1st-level cache.
 prerequisites:
   - 'Topic 19: Classes, Objects & Memory Layout'
   - 'Topic 81: JDBC Connection Pooling & JNDI in Web Containers'
@@ -153,3 +155,14 @@ public class ProductDao {
 **Question:** An entity is fetched inside an open transaction via `em.find()`, its setter is invoked to modify a field, and then `em.getTransaction().commit()` is executed without calling `em.persist()` or `em.update()`. Does the database get updated?
 
 **Explanation:** Yes. Because the entity was retrieved via `em.find()`, it resides in the `MANAGED` state inside the 1st-level cache. During transaction commit, the `EntityManager` runs dirty checking by comparing the entity's current state with its initial snapshot taken when loaded. If any property changed, Hibernate generates and executes the appropriate SQL `UPDATE` statement automatically.
+
+---
+
+## Practice
+
+### Q: What is the difference between a JPA entity in the "Managed" state versus the "Detached" state?
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
+> **Answer:** A Managed entity is associated with an active `EntityManager` persistence context; any mutations to its getters/setters are tracked by snapshot dirty-checking and automatically synchronized to the database upon transaction commit. A Detached entity was once managed but its `EntityManager` session has closed; mutations to detached objects are ignored by the database unless explicitly reattached via `em.merge()`.
+</details>

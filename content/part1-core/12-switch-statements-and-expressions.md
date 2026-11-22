@@ -100,12 +100,15 @@ public class HttpStatusDispatcher {
 }
 ```
 
-### Execution Output:
+<details data-type="output">
+<summary>View Output</summary>
+
 ```text
 Code 200 Category: SUCCESS
 CRITICAL [PROD]: Server failure code 503
 Code 503 Category: SERVER_ERROR
 ```
+</details>
 
 ---
 
@@ -136,8 +139,13 @@ switch (day) {
 }
 ```
 
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
 ### Explanation
 1. Execution matches `case 2:`, appending `"Tue"` to `result`.
 2. Because `case 2:` lacks a `break` statement, execution falls through unconditionally into `case 3:`, appending `"Wed"`.
 3. `case 3:` contains a `break;`, which terminates the switch statement and skips `case 4:` and `default`.
 4. Result: `"TueWed"`.
+
+</details>

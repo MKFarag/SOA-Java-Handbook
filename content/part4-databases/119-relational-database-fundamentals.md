@@ -98,3 +98,22 @@ Multiple records in Table A relate to multiple records in Table B.
 - **Primary Keys (PK)** guarantee uniqueness and provide high-speed indexed row lookups.
 - **Foreign Keys (FK)** enforce referential integrity: the database rejects orders pointing to non-existent customers.
 - **Junction tables** resolve Many-to-Many relationships cleanly with composite unique keys.
+
+---
+
+## Pitfalls
+
+- **Storing Comma-Separated Lists (Violating 1NF):** Storing `"1,4,7"` in an `order_ids` column prevents index usage, prevents relational `JOIN` operations, and causes full table scans. Always use a dedicated 1:N table or junction table.
+- **Missing Foreign Key Indexes:** While Primary Keys are indexed automatically, foreign key columns (e.g. `orders.customer_id`) are not always automatically indexed. Joining on unindexed foreign keys causes severe performance degradation on large tables.
+- **Orphaned Child Records:** Omitting Foreign Key constraints allows deleting a parent customer while leaving their orders behind without referential integrity. Always declare foreign keys with explicit constraints.
+
+---
+
+## Practice
+
+### Q: Why cannot a Many-to-Many (M:N) relationship between Orders and Products be stored directly with a single Foreign Key in either table?
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
+> **Answer:** A single foreign key column can only reference one parent record. Because an order can contain many products, and a product can belong to many orders, putting a foreign key in either table would require either duplicating rows or storing comma-separated values (violating First Normal Form). An intermediate **Junction Table** (e.g., `order_items`) containing foreign keys to both tables resolves the relationship cleanly.
+</details>

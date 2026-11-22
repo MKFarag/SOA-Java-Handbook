@@ -98,7 +98,9 @@ public class QueueArchitectureDemo {
 }
 ```
 
-### Execution Output:
+<details data-type="output">
+<summary>View Output</summary>
+
 ```text
 Processing FIFO Event: EVENT-01
 Next up without removing: EVENT-02
@@ -107,6 +109,7 @@ Dispatched [Security-Alert] with priority 1
 Dispatched [User-Signup] with priority 3
 Dispatched [Batch-Report] with priority 5
 ```
+</details>
 
 ---
 
@@ -123,8 +126,13 @@ Dispatched [Batch-Report] with priority 5
 ### Question
 What happens when you execute `new PriorityQueue<>().offer(new Object());`?
 
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
 ### Explanation
 1. `new PriorityQueue<>()` utilizes the natural ordering of elements by default.
 2. In natural ordering, elements must implement `java.lang.Comparable`.
 3. `Object` does not implement `Comparable`.
 4. When `offer()` attempts to cast the object to `Comparable` during heap sift-up, it throws `java.lang.ClassCastException`.
+
+</details>

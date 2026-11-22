@@ -103,10 +103,13 @@ public class MethodHandleInspectionDemo {
 }
 ```
 
-### Execution Output:
+<details data-type="output">
+<summary>View Output</summary>
+
 ```text
 MethodHandle calculated output: 30
 ```
+</details>
 
 ---
 
@@ -125,8 +128,13 @@ MethodHandle calculated output: 30
 ### Question
 Why does `handle.invokeExact(engine, 5)` throw `WrongMethodTypeException` if `calculate` accepts `long`?
 
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
 ### Explanation
 1. `invokeExact()` requires an **exact type signature match** at the bytecode call site.
 2. Passing the literal `5` is typed as an `int`.
 3. Because the method expects `long`, and `invokeExact()` forbids automatic widening promotions, the types diverge.
 4. Fix: Pass literal `5L`: `handle.invokeExact(engine, 5L)`.
+
+</details>

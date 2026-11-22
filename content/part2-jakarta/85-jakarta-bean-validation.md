@@ -2,15 +2,16 @@
 id: topic-85
 slug: jakarta-bean-validation
 topicNumber: 85
-title: 'Jakarta Bean Validation Specification'
+title: Jakarta Bean Validation Specification
 part: 'Part 2: Java EE & Jakarta EE'
-sectionNumber: 22
+sectionNumber: 23
 sectionTitle: Modern Jakarta EE Specifications
 versionBadge: Jakarta Validation 3.0 / Hibernate Validator 8.0
 difficulty: Intermediate
 readingTime: 8 min read
 shortDescription: >-
-  Reference: Declarative data integrity constraints (@NotNull, @Size, @Email, @Pattern), Validator API execution, and custom constraint validators.
+  Reference: Declarative data integrity constraints (@NotNull, @Size, @Email,
+  @Pattern), Validator API execution, and custom constraint validators.
 prerequisites:
   - 'Topic 61: Annotations & Metadata'
   - 'Topic 82: Jakarta Persistence (JPA) & Hibernate ORM'
@@ -109,3 +110,14 @@ public class ValidationDemo {
 **Question:** An engineer annotates a String field with `@NotNull` and `@Size(min = 5)`. A client sends a payload where the field is omitted entirely (`null`). How many constraint violations are generated?
 
 **Explanation:** Exactly one constraint violation is generated (for `@NotNull`). By design in Jakarta Bean Validation, almost all constraint annotations (such as `@Size`, `@Pattern`, `@Min`) consider `null` values to be **valid**. This allows fields to remain optional unless explicitly paired with `@NotNull` or `@NotBlank`.
+
+---
+
+## Practice
+
+### Q: Why should validation annotations (like `@NotNull`, `@Size`, `@Min`) be declared on DTOs and entities rather than writing manual `if-else` validation checks inside controllers?
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
+> **Answer:** Declarative Bean Validation centralizes business constraint invariants directly on domain types, automatically integrates with serialization frameworks, standardizes internationalized error messages, and triggers uniform validation across all application layers (REST controllers, services, and persistence entities) without repetitive manual boilerplate.
+</details>

@@ -2,15 +2,17 @@
 id: topic-86
 slug: jakarta-faces-jsf-and-enterprise-beans-ejb
 topicNumber: 86
-title: 'Jakarta Faces (JSF) & Enterprise JavaBeans (EJB)'
+title: Jakarta Faces (JSF) & Enterprise JavaBeans (EJB)
 part: 'Part 2: Java EE & Jakarta EE'
-sectionNumber: 22
+sectionNumber: 23
 sectionTitle: Modern Jakarta EE Specifications
 versionBadge: Jakarta Faces 4.0 / EJB 4.0
 difficulty: Advanced
 readingTime: 8 min read
 shortDescription: >-
-  Reference: Jakarta Faces component-based UI lifecycle, Facelets .xhtml templates, Enterprise JavaBeans architecture (@Stateless vs @Stateful), and container-managed transactions.
+  Reference: Jakarta Faces component-based UI lifecycle, Facelets .xhtml
+  templates, Enterprise JavaBeans architecture (@Stateless vs @Stateful), and
+  container-managed transactions.
 prerequisites:
   - 'Topic 82: Jakarta Persistence (JPA) & Hibernate ORM'
   - 'Topic 83: Jakarta Contexts & Dependency Injection (CDI)'
@@ -108,3 +110,14 @@ public class BankingServiceBean {
 **Question:** If a method in a `@Stateless` EJB annotated with `@TransactionAttribute(TransactionAttributeType.REQUIRED)` throws an `IllegalArgumentException`, what happens to the database transaction?
 
 **Explanation:** The container automatically rolls back the transaction. Because `IllegalArgumentException` is an unchecked exception (`RuntimeException`), the EJB specification requires the container interceptor to catch it, mark the transaction for rollback, and rethrow the exception to the caller.
+
+---
+
+## Practice
+
+### Q: Why have modern cloud architectures shifted away from stateful JSF component trees toward stateless RESTful services with decoupled client single-page apps?
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
+> **Answer:** JSF maintains a stateful server-side UI component tree in `HttpSession` memory for every active browser session. Under horizontal cloud auto-scaling, stateful sessions require sticky sessions or expensive session replication across cluster nodes. Stateless REST APIs decouple presentation entirely, allow client caching, and enable stateless container instances to scale out linearly behind simple round-robin load balancers.
+</details>

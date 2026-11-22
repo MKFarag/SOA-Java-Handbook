@@ -109,7 +109,9 @@ public class FormattedOutputDemo {
 }
 ```
 
-### Execution Output:
+<details data-type="output">
+<summary>View Output</summary>
+
 ```text
 SERVICE            |     PORT | LATENCY (ms)
 --------------------------------------------
@@ -118,6 +120,7 @@ PaymentWorker      |     9092 |       145.89
 CacheReplica       |     6379 |         0.41
 Alert: Service [PaymentWorker] breached latency threshold: 145.9 ms
 ```
+</details>
 
 ---
 
@@ -135,8 +138,13 @@ Alert: Service [PaymentWorker] breached latency threshold: 145.9 ms
 ### Question
 Given the call `System.out.printf("[%10.3s]", "ProductionServer");`, what exact string is printed between the brackets?
 
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
 ### Explanation
 1. The `.3` precision applied to a string truncates the input string to its first 3 characters: `"ProductionServer"` becomes `"Pro"`.
 2. The `10` width specifies a minimum field width of 10 characters.
 3. Without the `-` left-align flag, the 3-character string is right-aligned and padded with 7 leading spaces: `"       Pro"`.
 4. The output is `[       Pro]`.
+
+</details>

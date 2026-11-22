@@ -453,3 +453,14 @@ spring:
 - [Apache Kafka Official Documentation](https://kafka.apache.org/documentation/)
 - [Spring for Apache Kafka Reference Documentation](https://docs.spring.io/spring-kafka/reference/)
 - [Confluent Architecture Guides: Kafka Partitioning & Rebalancing Strategies](https://developer.confluent.io/learn/kafka-internals/)
+
+---
+
+## Practice
+
+### Q: How does Apache Kafka guarantee message ordering while still enabling horizontal scaling across multiple consumers?
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
+> **Answer:** Kafka partitions topics. Message ordering is strictly guaranteed *within a single partition*, not across the entire topic. By publishing messages with a deterministic Partition Key (e.g. `customerId`), all events for that customer land in the exact same partition, where a single assigned consumer in a consumer group processes them in strict chronological sequence.
+</details>

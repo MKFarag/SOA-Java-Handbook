@@ -141,3 +141,14 @@ public class MinimalHttpServer {
 **Question:** An API developer updates a user's email address by issuing a `POST` request. Another developer recommends using `PUT` or `PATCH`. Which HTTP method is semantically appropriate for changing only the email field, and why?
 
 **Explanation:** `PATCH` is the RFC-compliant method for partial modifications of a resource. `PUT` requires sending the entire resource representation (replacing all fields). `POST` is non-idempotent and typically reserved for creating new subordinate entities or non-standard actions.
+
+---
+
+## Practice
+
+### Q: Why is the HTTP protocol fundamentally stateless, and what mechanism does the server-side web stack use to correlate sequential requests from the same user?
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
+> **Answer:** The HTTP protocol treats every client request as an independent, isolated transaction with zero historical context. Enterprise servlet containers link sequential requests by generating a cryptographically secure, random session identifier (`JSESSIONID`) on the server upon initial contact and exchanging it via a session cookie or URL rewriting on subsequent requests.
+</details>

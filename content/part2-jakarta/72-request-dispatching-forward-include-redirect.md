@@ -4,13 +4,15 @@ slug: request-dispatching-forward-include-redirect
 topicNumber: 72
 title: 'Request Dispatching: Forward, Include & Redirect'
 part: 'Part 2: Java EE & Jakarta EE'
-sectionNumber: 18
+sectionNumber: 19
 sectionTitle: Servlet API Architecture & Request Handling
 versionBadge: Jakarta Servlet 6.0
 difficulty: Intermediate
 readingTime: 8 min read
 shortDescription: >-
-  Reference: Server-side dispatching (RequestDispatcher.forward vs include) preserving request context vs client-side HTTP redirection (sendRedirect), and the PRG pattern.
+  Reference: Server-side dispatching (RequestDispatcher.forward vs include)
+  preserving request context vs client-side HTTP redirection (sendRedirect), and
+  the PRG pattern.
 prerequisites:
   - 'Topic 67: Web Architecture Fundamentals: The HTTP Protocol'
   - 'Topic 70: HttpServletRequest & HttpServletResponse Processing'
@@ -101,3 +103,14 @@ public class OrderDispatchServlet extends HttpServlet {
 **Question:** Why does submitting a form via `POST` and forwarding directly to `confirmation.jsp` cause a duplicate form submission warning when the user presses F5 (browser refresh)?
 
 **Explanation:** In a forward, the browser's address bar remains at the original `POST /order/process` URL. Refreshing the browser causes the user-agent to re-send the original HTTP `POST` request with the form payload. Using the Post-Redirect-Get (PRG) pattern replaces the POST URL with a `GET /order/confirmation` URL in the browser, making F5 refreshes completely safe.
+
+---
+
+## Practice
+
+### Q: What are the two primary differences between `RequestDispatcher.forward()` and `HttpServletResponse.sendRedirect()`?
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
+> **Answer:** 1) Client Visibility: `forward()` is executed entirely inside the servlet container (the browser URL does not change), whereas `sendRedirect()` returns an HTTP 302 Found response directing the browser to initiate a new HTTP request to the new URL. 2) Scope Preservation: `forward()` preserves all request attributes and parameters, whereas `sendRedirect()` terminates the current request lifecycle, discarding request-scoped attributes.
+</details>

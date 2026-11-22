@@ -120,10 +120,13 @@ public class ModuleBootstrapDemo {
 }
 ```
 
-### Execution Output:
+<details data-type="output">
+<summary>View Output</summary>
+
 ```text
 Discovered and notified SPI providers: 0
 ```
+</details>
 
 ---
 
@@ -140,6 +143,11 @@ Discovered and notified SPI providers: 0
 ### Question
 What is the difference between `exports com.app.model;` and `opens com.app.model;` in `module-info.java`?
 
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
 ### Explanation
 1. `exports com.app.model;` exposes public types in that package for normal compile-time compilation and standard runtime invocation by other modules. However, it does NOT allow other modules to inspect private members via deep reflection.
 2. `opens com.app.model;` permits runtime deep reflection (`setAccessible(true)` on private fields/methods) by frameworks (such as Jackson or Hibernate), while hiding the package from compile-time imports.
+
+</details>

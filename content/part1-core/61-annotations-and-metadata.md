@@ -109,11 +109,14 @@ public class AnnotationProcessingDemo {
 }
 ```
 
-### Execution Output:
+<details data-type="output">
+<summary>View Output</summary>
+
 ```text
 Guarded Method: [purgeDatabase] -> Required Role: SUPER_ADMIN (Tier 3)
 Public Method : [publicPing] (Unguarded)
 ```
+</details>
 
 ---
 
@@ -136,9 +139,14 @@ public @interface MyTag {
 }
 ```
 
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
 ### Explanation
 1. `MyTag` declares `@Target(ElementType.METHOD)` but does NOT declare `@Retention`.
 2. When `@Retention` is omitted, the Java compiler applies the default retention policy: `RetentionPolicy.CLASS`.
 3. Under `RetentionPolicy.CLASS`, the annotation is recorded in the `.class` bytecode file, but is discarded by the JVM during class loading.
 4. It is not loaded into Metaspace and is therefore invisible to the reflection API.
 5. Fix: Add `@Retention(RetentionPolicy.RUNTIME)`.
+
+</details>

@@ -110,7 +110,9 @@ public class MatrixAndArraysDemo {
 }
 ```
 
-### Execution Output:
+<details data-type="output">
+<summary>View Output</summary>
+
 ```text
 Total logged hours across all shifts: 64
 Matrix Representation: [[8, 8, 8], [12, 12], [8, 4, 8, 4]]
@@ -118,6 +120,7 @@ Sorted pings: [120, 230, 450, 600, 890]
 Ping 230 found at sorted index: 1
 Ping 300 missing; search result: -3 (insertion point: 2)
 ```
+</details>
 
 ---
 
@@ -135,9 +138,14 @@ Ping 300 missing; search result: -3 (insertion point: 2)
 ### Question
 What is the return value of `Arrays.binarySearch(new int[]{10, 20, 30, 40}, 25)`?
 
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
 ### Explanation
 1. The target value `25` is not present in the sorted array.
 2. If `25` were inserted, it would be positioned at index 2 (between `20` at index 1 and `30` at index 2).
 3. The binary search contract defines the return value for an absent key as `-(insertionPoint) - 1`.
 4. With `insertionPoint = 2`, the calculation is `-(2) - 1 = -3`.
 5. Return value: `-3`.
+
+</details>

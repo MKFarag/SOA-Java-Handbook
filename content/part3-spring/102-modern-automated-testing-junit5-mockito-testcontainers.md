@@ -489,3 +489,14 @@ All 40 integration test classes extend `AbstractIntegrationTest`. The container 
 - [Mockito Official Documentation](https://site.mockito.org/)
 - [Testcontainers for Java Guide](https://java.testcontainers.org/)
 - [Spring Boot Testing Reference](https://docs.spring.io/spring-boot/reference/testing/index.html)
+
+---
+
+## Practice
+
+### Q: Why does the industry favor Testcontainers over in-memory H2 databases for persistence integration tests?
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
+> **Answer:** H2 has subtle SQL dialect differences, lacks support for advanced PostgreSQL/MySQL functions (JSON operators, specific index types, locking behaviors), and hides database-specific constraint bugs. Testcontainers launches real, ephemeral Docker containers of the exact production database version, guaranteeing 100% fidelity with production environments.
+</details>

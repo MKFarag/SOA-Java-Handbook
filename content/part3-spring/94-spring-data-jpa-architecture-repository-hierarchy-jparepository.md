@@ -380,3 +380,14 @@ Why does calling `productRepository.getReferenceById(42L)` deliver significantly
 - [Spring Data JPA Reference Documentation: Repositories](https://docs.spring.io/spring-data/jpa/reference/repositories/core-concepts.html)
 - [Spring Data JPA JavaDoc: JpaRepository Interface](https://docs.spring.io/spring-data/jpa/docs/current/api/org/springframework/data/jpa/repository/JpaRepository.html)
 - [Jakarta Persistence Specification 3.1](https://jakarta.ee/specifications/persistence/3.1/)
+
+---
+
+## Practice
+
+### Q: What does `JpaRepository<T, ID>` provide over `CrudRepository<T, ID>` in Spring Data?
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
+> **Answer:** While `CrudRepository` provides basic CRUD operations (`save`, `findById`, `delete`), `JpaRepository` extends `PagingAndSortingRepository` and adds JPA-specific persistence features: batch flushing (`saveAllAndFlush`), immediate persistence context synchronization (`flush`), pagination (`Pageable`), and query by example.
+</details>

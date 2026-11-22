@@ -344,3 +344,14 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 - [Spring Framework Reference: Transaction Management](https://docs.spring.io/spring-framework/reference/data-access/transaction.html)
 - [Spring Data JPA Reference: Entity Graphs](https://docs.spring.io/spring-data/jpa/reference/jpa/entity-graph.html)
 - [Hibernate ORM User Guide: Fetching Strategies](https://docs.jboss.org/hibernate/orm/current/userguide/html_single/Hibernate_User_Guide.html#fetching)
+
+---
+
+## Practice
+
+### Q: What is the N+1 select problem in Spring Data JPA, and how does `@EntityGraph` prevent it?
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
+> **Answer:** When querying 100 orders with lazy-loaded customer relations, an application issues 1 query to fetch orders and then 100 secondary queries to fetch each order's customer (1 + 100). `@EntityGraph` instructs Hibernate to override lazy loading and fetch related entities in a single SQL query using an `INNER JOIN` or `LEFT JOIN`, reducing 101 queries to 1.
+</details>

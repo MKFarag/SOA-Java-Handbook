@@ -41,6 +41,14 @@ The Java platform is organized into three concentric tiers: the JVM executes byt
 - **JRE (Java Runtime Environment):** Bundles the JVM with compiled standard class libraries (`java.lang`, `java.util`, `java.io`). Required strictly for running existing applications. Since Java 9, custom lightweight runtimes are created via `jlink` rather than standalone JRE installers.
 - **JDK (Java Development Kit):** The full developer suite containing the JRE, JVM, and CLI tools: `javac` (compiler), `jar` (packager), `jshell` (REPL), `javap` (disassembler), and `jdb` (debugger).
 
+### Component Comparison Reference
+
+| Tier | Full Name | Primary Purpose | Key Contents | Target Audience |
+| :--- | :--- | :--- | :--- | :--- |
+| **JVM** | Java Virtual Machine | Execute bytecode on target host OS | ClassLoader, Execution Engine, JIT, Garbage Collector | Machine runtime |
+| **JRE** | Java Runtime Environment | Run compiled Java bytecode applications | JVM + Core Class Libraries (`java.base`, Collections, I/O) | End-users / Production Servers |
+| **JDK** | Java Development Kit | Author, compile, debug, and package Java code | JRE + Tools (`javac`, `jar`, `jshell`, `jlink`, `jdb`) | Software Engineers & CI/CD |
+
 ---
 
 ## Environment

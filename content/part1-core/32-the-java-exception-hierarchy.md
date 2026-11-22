@@ -114,7 +114,9 @@ public class ExceptionHierarchyDemo {
 }
 ```
 
-### Execution Output:
+<details data-type="output">
+<summary>View Output</summary>
+
 ```text
 Caught exception in StepA: Storage engine is offline
   at ExceptionHierarchyDemo.executeStepC (ExceptionHierarchyDemo.java:4)
@@ -122,6 +124,7 @@ Caught exception in StepA: Storage engine is offline
   at ExceptionHierarchyDemo.executeStepA (ExceptionHierarchyDemo.java:13)
 Application recovered safely and continues running.
 ```
+</details>
 
 ---
 
@@ -147,9 +150,14 @@ try {
 }
 ```
 
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
 ### Explanation
 1. `java.io.IOException` is a subclass of `java.lang.Exception`.
 2. The first catch block `catch (Exception e)` matches all exceptions that are subclasses of `Exception`, including `IOException`.
 3. Consequently, the second block `catch (IOException e)` can never be reached under any scenario.
 4. Java compiler rejects unreachable catch blocks with error `exception IOException has already been caught`.
 5. Fix: Specific subclasses must always precede general superclasses in catch ladders.
+
+</details>

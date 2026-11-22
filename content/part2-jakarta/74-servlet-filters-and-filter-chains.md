@@ -2,15 +2,17 @@
 id: topic-74
 slug: servlet-filters-and-filter-chains
 topicNumber: 74
-title: 'Servlet Filters & FilterChain Architecture'
+title: Servlet Filters & FilterChain Architecture
 part: 'Part 2: Java EE & Jakarta EE'
-sectionNumber: 19
-sectionTitle: State Management, Filtering & Security
+sectionNumber: 20
+sectionTitle: 'State Management, Filtering & Security'
 versionBadge: Jakarta Servlet 6.0
 difficulty: Intermediate
 readingTime: 9 min read
 shortDescription: >-
-  Reference: jakarta.servlet.Filter interface, Intercepting Filter pattern, FilterChain pipeline execution, request/response wrapping, and filter ordering mechanics.
+  Reference: jakarta.servlet.Filter interface, Intercepting Filter pattern,
+  FilterChain pipeline execution, request/response wrapping, and filter ordering
+  mechanics.
 prerequisites:
   - 'Topic 69: Servlet Lifecycle & Threading Model'
   - 'Topic 70: HttpServletRequest & HttpServletResponse Processing'
@@ -122,3 +124,14 @@ public class SecurityHeadersFilter implements Filter {
 **Question:** An engineer wants to log the exact request payload (JSON) in an audit filter before the servlet processes it. Why does reading `request.getReader()` in the filter break the downstream servlet?
 
 **Explanation:** The `ServletInputStream` is a forward-only, one-time readable stream. Once consumed by the filter's `getReader()`, the stream reaches EOF. When the servlet later calls `req.getReader()`, it finds an empty stream. The solution is to extend `HttpServletRequestWrapper`, read the stream into a byte array once, and return a fresh stream on each subsequent `getInputStream()` / `getReader()` call.
+
+---
+
+## Practice
+
+### Q: What happens if a developer forgets to invoke `chain.doFilter(request, response)` inside a custom `HttpFilter`?
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
+> **Answer:** Omitting `chain.doFilter(request, response)` halts the execution chain immediately. Downstream filters and the target destination servlet will never be invoked, resulting in an incomplete request lifecycle and a blank HTTP response.
+</details>

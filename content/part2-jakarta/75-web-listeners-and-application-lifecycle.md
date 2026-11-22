@@ -2,15 +2,17 @@
 id: topic-75
 slug: web-listeners-and-application-lifecycle
 topicNumber: 75
-title: 'Web Listeners & Application Lifecycle Events'
+title: Web Listeners & Application Lifecycle Events
 part: 'Part 2: Java EE & Jakarta EE'
-sectionNumber: 19
-sectionTitle: State Management, Filtering & Security
+sectionNumber: 20
+sectionTitle: 'State Management, Filtering & Security'
 versionBadge: Jakarta Servlet 6.0
 difficulty: Intermediate
 readingTime: 8 min read
 shortDescription: >-
-  Reference: Observer pattern implementation in servlet containers, ServletContextListener, HttpSessionListener, ServletRequestListener, and lifecycle event orchestration.
+  Reference: Observer pattern implementation in servlet containers,
+  ServletContextListener, HttpSessionListener, ServletRequestListener, and
+  lifecycle event orchestration.
 prerequisites:
   - 'Topic 69: Servlet Lifecycle & Threading Model'
   - 'Topic 73: State Management: Sessions & Secure Cookies'
@@ -92,3 +94,14 @@ public class AppMonitoringListener implements ServletContextListener, HttpSessio
 **Question:** Which web listener is the appropriate place to initialize a shared HikariCP database connection pool for a Jakarta EE application, and why?
 
 **Explanation:** `ServletContextListener` is the correct choice. Its `contextInitialized()` method runs exactly once when the web application is loaded by the container before any servlets or filters service incoming requests. Its `contextDestroyed()` method provides the guarantee to cleanly shut down the pool when the application is undeployed.
+
+---
+
+## Practice
+
+### Q: Why is `ServletContextListener.contextInitialized()` the standard enterprise hook for starting background thread pools, caches, and database connection pools?
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
+> **Answer:** `contextInitialized()` triggers once when the web application is bootstrapped into memory, before any HTTP servlet or filter accepts client traffic. This guarantees that shared enterprise infrastructure (HikariCP connection pools, cache singletons, scheduled executors) is online and verified before any user requests arrive.
+</details>

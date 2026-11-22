@@ -2,15 +2,16 @@
 id: topic-81
 slug: jdbc-connection-pooling-in-web-apps
 topicNumber: 81
-title: 'JDBC Connection Pooling & JNDI in Web Containers'
+title: JDBC Connection Pooling & JNDI in Web Containers
 part: 'Part 2: Java EE & Jakarta EE'
-sectionNumber: 21
+sectionNumber: 22
 sectionTitle: Enterprise Web Applications & Data Flow
 versionBadge: JDBC 4.3 / HikariCP 5.1
 difficulty: Intermediate
 readingTime: 8 min read
 shortDescription: >-
-  Reference: Database connection pooling architecture (HikariCP, Tomcat JDBC Pool), JNDI DataSource resource registration, and connection leak mitigation.
+  Reference: Database connection pooling architecture (HikariCP, Tomcat JDBC
+  Pool), JNDI DataSource resource registration, and connection leak mitigation.
 prerequisites:
   - 'Topic 64: JDBC Fundamentals & Transactions'
   - 'Topic 75: Web Listeners & Application Lifecycle Events'
@@ -122,3 +123,14 @@ public class DatabaseManager {
 **Question:** When an application calls `connection.close()` on a connection obtained from a `HikariDataSource`, does it terminate the physical TCP socket connection to the database?
 
 **Explanation:** No. `HikariDataSource.getConnection()` returns a wrapper proxy (`HikariProxyConnection`). Calling `.close()` on the proxy intercepts the call, rolls back any uncommitted transactions, resets connection flags, and returns the underlying physical connection to the idle pool ready for the next thread.
+
+---
+
+## Practice
+
+### Q: Why is creating a new database connection via `DriverManager.getConnection()` on every HTTP request disastrous for production web applications?
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
+> **Answer:** Establishing a physical database connection requires TCP handshakes, TLS negotiation, authentication verification, and server process memory allocation, taking 50 to 300 milliseconds. Under concurrent traffic, thousands of concurrent requests creating raw connections overwhelm database socket limits and crash the server. Connection pools (like HikariCP) pre-allocate a fixed pool of persistent connections that are borrowed and returned in microseconds ($O(1)$).
+</details>

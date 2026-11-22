@@ -462,3 +462,14 @@ During recursion, when MapStruct encounters an entity instance it has already pr
 - [Project Lombok Official Features Reference](https://projectlombok.org/features/)
 - [MapStruct Official Reference Documentation](https://mapstruct.org/documentation/stable/reference/html/)
 - [JSR 269: Pluggable Annotation Processing API](https://jcp.org/en/jsr/detail?id=269)
+
+---
+
+## Practice
+
+### Q: Why is MapStruct preferred over runtime reflection mappers like ModelMapper in high-throughput enterprise applications?
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
+> **Answer:** Reflection-based mappers inspect object fields dynamically at runtime on every mapping call, incurring significant CPU and reflection overhead. MapStruct is an annotation processor that generates plain, type-safe Java code at compile time, achieving native mapping speeds indistinguishable from hand-written getters and setters.
+</details>

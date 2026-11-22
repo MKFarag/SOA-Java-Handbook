@@ -63,6 +63,15 @@ To construct a fully immutable class that is thread-safe without synchronization
 4. Defensively copy mutable arguments in constructors before assignment.
 5. Defensively copy mutable return values in accessors (or return unmodifiable wrappers).
 
+### Encapsulation Strategies Comparison
+
+| Strategy | Mutability | Thread-Safety | Performance Overhead | Best Used For |
+| :--- | :--- | :--- | :--- | :--- |
+| **Public Fields** | Unrestricted | None (Data race prone) | Zero | Internal low-level C-style structs (anti-pattern in domain code) |
+| **Getters / Setters** | Controlled by guards | Requires external sync | Minimal (JIT inlined) | Stateful domain entities (JPA entities) |
+| **Defensive Copying** | Controlled | Thread-safe snapshots | Minor (allocation cost) | Exposing mutable collections/arrays from classes |
+| **Immutable Class / Record** | Zero (Read-only) | Guaranteed thread-safe | Zero ongoing sync | DTOs, Value Objects, Config models, Security principals |
+
 ---
 
 ## Implementation Example
@@ -118,11 +127,14 @@ public final class SecurityProfile {
 }
 ```
 
-### Execution Output:
+<details data-type="output">
+<summary>View Output</summary>
+
 ```text
 Profile Permissions: [ROLE_USER]
 Blocked unauthorized mutation via unmodifiable view.
 ```
+</details>
 
 ---
 
@@ -153,8 +165,13 @@ public final class ExperimentRun {
 }
 ```
 
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
 ### Explanation
 1. In the constructor, `sampleScores` is properly cloned defensively.
 2. However, the getter `getSampleScores()` returns the internal `sampleScores` reference directly.
 3. A caller can execute `run.getSampleScores()[0] = 999;`, mutating the internal state of `ExperimentRun` after instantiation.
 4. Fix: The getter must return `sampleScores.clone()`.
+
+</details>

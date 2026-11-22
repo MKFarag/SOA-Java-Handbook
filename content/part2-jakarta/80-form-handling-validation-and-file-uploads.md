@@ -4,13 +4,15 @@ slug: form-handling-validation-and-file-uploads
 topicNumber: 80
 title: 'Form Handling, Validation & Multipart File Uploads'
 part: 'Part 2: Java EE & Jakarta EE'
-sectionNumber: 21
+sectionNumber: 22
 sectionTitle: Enterprise Web Applications & Data Flow
 versionBadge: Jakarta Servlet 6.0
 difficulty: Intermediate
 readingTime: 9 min read
 shortDescription: >-
-  Reference: Processing standard forms and multipart/form-data with @MultipartConfig, Part API stream handling, input validation, and upload security safeguards.
+  Reference: Processing standard forms and multipart/form-data with
+  @MultipartConfig, Part API stream handling, input validation, and upload
+  security safeguards.
 prerequisites:
   - 'Topic 70: HttpServletRequest & HttpServletResponse Processing'
   - 'Topic 72: Request Dispatching: Forward, Include & Redirect'
@@ -123,3 +125,14 @@ public class FileUploadServlet extends HttpServlet {
 **Question:** An attacker uploads a file named `avatar.jpg` containing raw executable PHP or JSP code into a publicly served directory. Why is generating a random `UUID` and storing files outside the web root essential?
 
 **Explanation:** If an uploaded file retains its original name and is stored inside a publicly accessible web root, the web server or container might execute it as server-side script when requested via URL, granting the attacker Remote Code Execution (RCE). Storing files outside the web root under synthetic UUID names ensures they can never be directly executed by the server.
+
+---
+
+## Practice
+
+### Q: Why must an `HttpServlet` be annotated with `@MultipartConfig` when processing file uploads submitted with `enctype="multipart/form-data"`?
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
+> **Answer:** Standard URL-encoded forms submit data as key-value text pairs. `multipart/form-data` transmits boundaries separating binary file payloads and form fields. The `@MultipartConfig` annotation instructs the servlet container to activate multipart parser handlers, enabling the servlet to invoke `request.getPart("file")` and stream uploaded binary chunks directly to disk or temporary buffers.
+</details>

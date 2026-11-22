@@ -136,3 +136,22 @@ EXPLAIN SELECT * FROM orders WHERE customer_id = 42;
   -- USES INDEX RANGE SCAN (FAST!):
   WHERE order_date >= '2026-01-01' AND order_date < '2027-01-01';
   ```
+
+---
+
+## Pitfalls
+
+- **Wrapping Indexed Columns in Functions in `WHERE` Clauses:** Writing `WHERE YEAR(created_at) = 2026` or `WHERE UPPER(email) = 'ALICE@EXAMPLE.COM'` prevents B-Tree index traversal, triggering a slow full table scan. Filter raw ranges instead: `WHERE created_at >= '2026-01-01' AND created_at < '2027-01-01'`.
+- **Violating the Leftmost Prefix Rule:** A composite index on `(tenant_id, status, created_at)` is completely ignored if the query only filters `WHERE status = 'ACTIVE'`. The query predicate must include the leading column (`tenant_id`).
+- **Leading Wildcards in `LIKE` (`LIKE '%keyword'`):** Standard B-Tree indexes sort strings lexicographically from left to right. Placing a `%` wildcard at the beginning prevents index seeks and causes full table scans. Use specialized Full-Text indexes for arbitrary substring searching.
+
+---
+
+## Practice
+
+### Q: Why does querying `SELECT * FROM orders WHERE DATE(order_date) = '2026-11-22';` perform a full table scan even though `order_date` is indexed?
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
+> **Answer:** When a function like `DATE()` wraps an indexed column in a `WHERE` clause, the database cannot calculate the index tree lookup key directly; it must compute the function for every row in the table, resulting in a full table scan (`ALL`). To utilize the index with an index range scan (`range`), write an unmanipulated range filter: `WHERE order_date >= '2026-11-22 00:00:00' AND order_date < '2026-11-23 00:00:00'`.
+</details>

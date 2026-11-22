@@ -110,11 +110,14 @@ public class StructuredConcurrencyDemo {
 }
 ```
 
-### Execution Output:
+<details data-type="output">
+<summary>View Output</summary>
+
 ```text
 Fetching balance for principal: admin-service-account
 Fetched: User=USER-104, Bal=$8250.50, Points=1450
 ```
+</details>
 
 ---
 
@@ -131,8 +134,13 @@ Fetched: User=USER-104, Bal=$8250.50, Points=1450
 ### Question
 Under `StructuredTaskScope.ShutdownOnSuccess<T>`, what happens to other concurrently running subtasks when the first subtask succeeds?
 
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
 ### Explanation
 1. `ShutdownOnSuccess` models a race between concurrent subtasks (e.g. querying two redundant database replicas).
 2. The instant the first subtask finishes successfully, the scope transitions to the shutdown state.
 3. The scope automatically issues cancellation interrupts to all other currently executing sibling subtasks.
 4. Calling `scope.result()` retrieves the winning result, ignoring the cancelled siblings.
+
+</details>

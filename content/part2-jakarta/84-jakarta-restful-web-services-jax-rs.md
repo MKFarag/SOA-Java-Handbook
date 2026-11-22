@@ -2,15 +2,17 @@
 id: topic-84
 slug: jakarta-restful-web-services-jax-rs
 topicNumber: 84
-title: 'Jakarta RESTful Web Services (JAX-RS)'
+title: Jakarta RESTful Web Services (JAX-RS)
 part: 'Part 2: Java EE & Jakarta EE'
-sectionNumber: 22
+sectionNumber: 23
 sectionTitle: Modern Jakarta EE Specifications
 versionBadge: Jakarta RESTful Web Services 3.1
 difficulty: Intermediate
 readingTime: 8 min read
 shortDescription: >-
-  Reference: JAX-RS specification, resource class routing (@Path, @GET, @POST), parameter binding (@PathParam, @QueryParam), content negotiation, and Response builder.
+  Reference: JAX-RS specification, resource class routing (@Path, @GET, @POST),
+  parameter binding (@PathParam, @QueryParam), content negotiation, and Response
+  builder.
 prerequisites:
   - 'Topic 67: Web Architecture Fundamentals: The HTTP Protocol'
   - 'Topic 70: HttpServletRequest & HttpServletResponse Processing'
@@ -105,3 +107,14 @@ public class UserResource {
 **Question:** What HTTP response status code does JAX-RS return if a client sends a `PUT` request to an endpoint where the `@Path` matches, but only `@GET` and `@POST` annotations are defined?
 
 **Explanation:** JAX-RS automatically returns HTTP `405 Method Not Allowed`, accompanied by an `Allow` header listing the permitted HTTP verbs (`Allow: GET, POST, OPTIONS`).
+
+---
+
+## Practice
+
+### Q: How do `@PathParam` and `@QueryParam` differ in JAX-RS resource method signatures?
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
+> **Answer:** `@PathParam` extracts variables embedded directly in the URI path hierarchy (e.g. `@Path("/users/{id}")` with URL `/users/42` extracts `42`). `@QueryParam` extracts optional key-value filters appended after the question mark in the URL string (e.g. `/users?status=active` extracts `active`).
+</details>

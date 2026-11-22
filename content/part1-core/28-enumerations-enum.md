@@ -111,13 +111,16 @@ public class EnumArchitectureDemo {
 }
 ```
 
-### Execution Output:
+<details data-type="output">
+<summary>View Output</summary>
+
 ```text
 Can PENDING -> APPROVED : true
 Can PENDING -> SETTLED  : false
 Is PENDING terminal: false
 Approved count: 120
 ```
+</details>
 
 ---
 
@@ -138,7 +141,12 @@ Given the enum below, why does `Status.valueOf("pending")` fail at runtime?
 public enum Status { PENDING, ACTIVE, INACTIVE }
 ```
 
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
 ### Explanation
 1. `Enum.valueOf(Class, String)` requires an **exact, case-sensitive match** against the declared constant identifier.
 2. Passing `"pending"` instead of `"PENDING"` fails the match.
 3. The method throws `java.lang.IllegalArgumentException: No enum constant Status.pending`.
+
+</details>

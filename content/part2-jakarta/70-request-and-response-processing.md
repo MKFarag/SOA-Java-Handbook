@@ -2,15 +2,17 @@
 id: topic-70
 slug: request-and-response-processing
 topicNumber: 70
-title: 'HttpServletRequest & HttpServletResponse Processing'
+title: HttpServletRequest & HttpServletResponse Processing
 part: 'Part 2: Java EE & Jakarta EE'
-sectionNumber: 18
+sectionNumber: 19
 sectionTitle: Servlet API Architecture & Request Handling
 versionBadge: Jakarta Servlet 6.0
 difficulty: Intermediate
 readingTime: 9 min read
 shortDescription: >-
-  Reference: Reading query parameters, headers, cookies, request bodies (getReader vs getInputStream), configuring response headers, status codes, and output streams.
+  Reference: Reading query parameters, headers, cookies, request bodies
+  (getReader vs getInputStream), configuring response headers, status codes, and
+  output streams.
 prerequisites:
   - 'Topic 67: Web Architecture Fundamentals: The HTTP Protocol'
   - 'Topic 69: Servlet Lifecycle & Threading Model'
@@ -109,3 +111,14 @@ public class OrderProcessingServlet extends HttpServlet {
 **Question:** What happens if a servlet calls `resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid input");` followed immediately by `resp.getWriter().println("Detailed diagnostics");`?
 
 **Explanation:** Once `sendError()` is invoked, the container considers the response committed and begins processing the error page mechanism. Writing further data to the response writer will trigger an `IllegalStateException` because the output stream is closed or cleared by the error dispatcher.
+
+---
+
+## Practice
+
+### Q: What is the fundamental difference between `request.getParameter(name)` and `request.getAttribute(name)` in the Servlet API?
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
+> **Answer:** `request.getParameter(name)` retrieves client-submitted HTTP request data (query parameters in the URL or form-encoded POST body values) and strictly returns a `String` or `String[]`. In contrast, `request.getAttribute(name)` retrieves server-side Java objects placed in request scope by filters or servlets via `request.setAttribute(name, object)` during internal forward dispatching, returning a polymorphic `Object`.
+</details>

@@ -441,3 +441,14 @@ This guarantees that operational telemetry is 100% accessible to internal monito
 - [Micrometer Documentation & Concept Guides](https://micrometer.io/docs/concepts)
 - [Prometheus Exposition Formats Standard](https://prometheus.io/docs/instrumenting/exposition_formats/)
 - [Kubernetes Pod Lifecycle: Liveness, Readiness, and Startup Probes](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/)
+
+---
+
+## Practice
+
+### Q: Why should the `/actuator/env` and `/actuator/heapdump` endpoints be protected from public internet exposure in Spring Boot?
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
+> **Answer:** Actuator endpoints expose deep internal system telemetry. Exposing `/env` can leak database credentials, API secrets, and encryption keys. Exposing `/heapdump` allows attackers to download complete JVM memory snapshots containing unencrypted passwords, personal user data, and active session tokens.
+</details>

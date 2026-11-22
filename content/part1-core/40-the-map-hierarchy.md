@@ -101,11 +101,14 @@ public class MapArchitectureDemo {
 }
 ```
 
-### Execution Output:
+<details data-type="output">
+<summary>View Output</summary>
+
 ```text
 Surviving cache entries: [sess-3, sess-1, sess-4]
 Word Frequencies: {orange=1, banana=1, apple=3}
 ```
+</details>
 
 ---
 
@@ -128,7 +131,12 @@ index.computeIfAbsent("errors", k -> new ArrayList<>()).add("500");
 System.out.println(index.get("errors"));
 ```
 
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
 ### Explanation
 1. On the first call, the key `"errors"` is absent. The lambda `k -> new ArrayList<>()` initializes a new empty list, inserts it into the map, and returns it. `.add("404")` appends to this list.
 2. On the second call, the key `"errors"` is present. `computeIfAbsent` does NOT invoke the lambda; it directly returns the existing list. `.add("500")` appends to that same list.
 3. Output: `[404, 500]`.
+
+</details>

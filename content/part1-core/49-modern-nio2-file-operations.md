@@ -107,7 +107,9 @@ public class Nio2PipelineDemo {
 }
 ```
 
-### Execution Output:
+<details data-type="output">
+<summary>View Output</summary>
+
 ```text
 --- Reading Configuration Lines ---
 DATABASE_URL=jdbc:postgresql://localhost:5432/db
@@ -116,6 +118,7 @@ Found node: nio2_demo_123456789
 Found node: app.conf
 Found node: app.conf.bak
 ```
+</details>
 
 ---
 
@@ -137,9 +140,14 @@ List<String> logs = Files.lines(Path.of("app.log"))
     .toList();
 ```
 
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
 ### Explanation
 1. `Files.lines(path)` opens an underlying operating system file stream.
 2. The returned stream implements `AutoCloseable` because it holds an open OS file handle.
 3. Chaining `.toList()` terminal operation consumes the stream, but does **not** close the underlying stream handle automatically.
 4. If this line executes repeatedly, the JVM exhausts file descriptors, leading to `IOException: Too many open files`.
 5. Fix: Always enclose `Files.lines()` in `try (Stream<String> stream = Files.lines(path))`.
+
+</details>

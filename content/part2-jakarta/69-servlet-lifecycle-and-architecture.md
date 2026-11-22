@@ -2,15 +2,17 @@
 id: topic-69
 slug: servlet-lifecycle-and-architecture
 topicNumber: 69
-title: 'Servlet Lifecycle & Threading Model'
+title: Servlet Lifecycle & Threading Model
 part: 'Part 2: Java EE & Jakarta EE'
-sectionNumber: 18
+sectionNumber: 19
 sectionTitle: Servlet API Architecture & Request Handling
 versionBadge: Jakarta Servlet 6.0
 difficulty: Intermediate
 readingTime: 9 min read
 shortDescription: >-
-  Reference: jakarta.servlet.Servlet interface lifecycle phases (init, service, destroy), container thread-pooling model, and instance-variable concurrency hazards.
+  Reference: jakarta.servlet.Servlet interface lifecycle phases (init, service,
+  destroy), container thread-pooling model, and instance-variable concurrency
+  hazards.
 prerequisites:
   - 'Topic 51: Threads & Thread Lifecycle'
   - 'Topic 68: Apache Tomcat & The WAR Packaging Structure'
@@ -130,3 +132,14 @@ public class MetricsServlet extends HttpServlet {
 **Question:** If 500 concurrent HTTP requests arrive simultaneously at `MetricsServlet`, how many instances of `MetricsServlet` are instantiated by the container, and how many threads execute `doGet()`?
 
 **Explanation:** The container instantiates exactly **one** instance of `MetricsServlet`. Up to 500 threads from the container's HTTP connector thread pool invoke `doGet()` simultaneously on that single instance. This is why non-thread-safe instance fields cause catastrophic concurrency failures in servlets.
+
+---
+
+## Practice
+
+### Q: Why is declaring mutable instance variables inside an `HttpServlet` class considered a dangerous concurrency anti-pattern?
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
+> **Answer:** A servlet container instantiates only a single instance of each `HttpServlet` per mapped URL path during application lifecycle. Incoming HTTP requests are processed concurrently by worker threads from the container thread pool executing the `service()`, `doGet()`, or `doPost()` methods on that same instance. Storing request-specific state in instance fields creates cross-user data races and security vulnerabilities.
+</details>

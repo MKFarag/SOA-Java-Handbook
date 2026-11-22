@@ -4,13 +4,15 @@ slug: servlet-configuration-annotations-vs-web-xml
 topicNumber: 71
 title: 'Servlet Configuration: @WebServlet vs web.xml'
 part: 'Part 2: Java EE & Jakarta EE'
-sectionNumber: 18
+sectionNumber: 19
 sectionTitle: Servlet API Architecture & Request Handling
 versionBadge: Jakarta Servlet 6.0
 difficulty: Intermediate
 readingTime: 8 min read
 shortDescription: >-
-  Reference: Modern declarative @WebServlet metadata vs deployment descriptor web.xml configurations, init-param injection, loadOnStartup ordering, and precedence mechanics.
+  Reference: Modern declarative @WebServlet metadata vs deployment descriptor
+  web.xml configurations, init-param injection, loadOnStartup ordering, and
+  precedence mechanics.
 prerequisites:
   - 'Topic 61: Annotations & Metadata'
   - 'Topic 69: Servlet Lifecycle & Threading Model'
@@ -116,3 +118,14 @@ public class PaymentGatewayServlet extends HttpServlet {
 **Question:** An annotation specifies `timeoutSeconds = 15`, but `web.xml` defines the same parameter with value `30`. What value does `config.getInitParameter("timeoutSeconds")` return at runtime?
 
 **Explanation:** It returns `"30"`. The deployment descriptor (`web.xml`) always takes precedence over annotations, allowing operational engineers to override application parameters in production without modifying source code.
+
+---
+
+## Practice
+
+### Q: If a servlet is declared with both `@WebServlet(urlPatterns = "/orders")` and defined in `web.xml` with `<url-pattern>/api/orders</url-pattern>`, which configuration takes precedence?
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
+> **Answer:** The `web.xml` deployment descriptor strictly overrides bytecode annotations. The Servlet specification dictates that explicit XML configuration takes precedence over annotations, allowing administrators and DevOps teams to reconfigure URL mappings and parameters at deployment time without recompiling Java source code.
+</details>

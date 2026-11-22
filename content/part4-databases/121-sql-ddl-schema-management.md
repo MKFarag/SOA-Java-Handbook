@@ -136,3 +136,22 @@ ALTER TABLE products RENAME COLUMN stock TO stock_quantity;
 -- Drop an obsolete column:
 ALTER TABLE customers DROP COLUMN phone;
 ```
+
+---
+
+## Pitfalls
+
+- **Using `FLOAT` or `DOUBLE` for Monetary Amounts:** Binary floating-point data types cannot represent decimal fractions exactly, accumulating rounding discrepancies. Always use `DECIMAL(precision, scale)` for currency.
+- **Dropping Columns During Active Traffic:** Running `ALTER TABLE ... DROP COLUMN` on a live production table while application servers are still querying that column causes immediate runtime SQL errors. Follow multi-stage migration patterns: remove code references first, deploy, then drop the column.
+- **Overusing `ON DELETE CASCADE`:** Cascading deletes on top-level parent entities (such as customers or organizations) can inadvertently delete thousands of historical order and transaction records. Use `ON DELETE RESTRICT` for financial records to prevent accidental mass deletion.
+
+---
+
+## Practice
+
+### Q: Why must financial currencies be stored as `DECIMAL(precision, scale)` in relational schemas rather than `DOUBLE` or `FLOAT`?
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
+> **Answer:** `FLOAT` and `DOUBLE` utilize binary floating-point representation (IEEE 754), which cannot represent base-10 decimal fractions like `0.10` precisely, leading to cumulative rounding drift. `DECIMAL` stores exact fixed-point base-10 values, guaranteeing precision down to the exact cent as required by financial and tax regulations.
+</details>

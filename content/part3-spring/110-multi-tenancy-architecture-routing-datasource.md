@@ -397,3 +397,14 @@ public class MultiTenantFlywayMigrator implements ApplicationRunner {
 - [Spring Framework Reference: Dynamic DataSource Routing](https://docs.spring.io/spring-framework/reference/data-access/jdbc/datasource.html)
 - [Hibernate ORM User Guide: Multi-Tenancy Architecture](https://docs.jboss.org/hibernate/orm/current/userguide/html_single/Hibernate_User_Guide.html#multitenancy)
 - [Baeldung: Multitenancy with Spring Data JPA](https://www.baeldung.com/multitenancy-with-spring-data-jpa)
+
+---
+
+## Practice
+
+### Q: How does a `ThreadLocal` Tenant Context work in conjunction with Spring's `AbstractRoutingDataSource`?
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
+> **Answer:** A servlet filter extracts the tenant identifier from the incoming HTTP request (via header or JWT claim) and stores it in a `ThreadLocal` context. When Spring requests a database connection, `AbstractRoutingDataSource.determineCurrentLookupKey()` queries the `ThreadLocal` and dynamically returns the connection pool bound to that specific tenant, isolating tenant data at the physical database layer.
+</details>

@@ -31,6 +31,14 @@ Java source code (`.java`) compiles into platform-independent bytecode (`.class`
 2. **Class Loading & Verification:** The JVM ClassLoader loads bytecode into memory. The Bytecode Verifier checks structural constraints, stack bounds, and type safety before execution.
 3. **Execution & JIT Optimization:** The JVM interpreter starts executing bytecode immediately. The JIT (Just-In-Time) compiler identifies frequently executed methods ("hot code") and compiles them directly into native host CPU instructions (x86, ARM) at runtime.
 
+### Execution Model Comparison
+
+| Model | Source to Execution | Examples | Portability | Startup Speed | Peak Performance |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **Purely Compiled** | Source -> Machine Binary | C, C++, Rust, Go | Platform-dependent binary | Instant | Maximum |
+| **Purely Interpreted** | Source parsed & evaluated line-by-line | Python, Ruby, PHP | Portable scripts | Instant | Lower |
+| **JVM Hybrid** | Source -> Bytecode (`javac`) -> JIT Native | Java, Kotlin, Scala | Write Once, Run Anywhere | Moderate | Near-native |
+
 ---
 
 ## Pitfalls

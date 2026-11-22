@@ -117,3 +117,22 @@ HAVING lifetime_spend >= 100.00
 ORDER BY lifetime_spend DESC;
 ```
 *(Notice the use of `COALESCE(..., 0.00)` to convert `NULL` sums into `$0.00` for customers with zero orders.)*
+
+---
+
+## Pitfalls
+
+- **Using Aggregate Functions in `WHERE`:** Writing `WHERE COUNT(o.id) > 2` or `WHERE SUM(total) > 500` causes an immediate SQL syntax error because `WHERE` filters rows *before* groups are created. Always filter aggregated groups using `HAVING`.
+- **`COUNT(*)` vs `COUNT(column)` in Outer Joins:** `COUNT(*)` counts all rows returned by the join, including rows where right-side columns are `NULL`. In `customers LEFT JOIN orders`, `COUNT(*)` returns `1` for a customer with 0 orders, whereas `COUNT(o.id)` accurately returns `0`.
+- **`ONLY_FULL_GROUP_BY` Violations:** Selecting columns that are neither grouped in `GROUP BY` nor wrapped in an aggregate function (e.g. `SELECT id, name, category, AVG(price) FROM products GROUP BY category`) violates MySQL 8+ `ONLY_FULL_GROUP_BY` mode.
+
+---
+
+## Practice
+
+### Q: Why does the query `SELECT customer_id, SUM(total) FROM orders WHERE SUM(total) > 500 GROUP BY customer_id;` produce a syntax error?
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
+> **Answer:** SQL evaluates the `WHERE` clause *before* grouping rows with `GROUP BY`. At the `WHERE` evaluation stage, aggregate totals have not yet been computed, so aggregate functions like `SUM()` are illegal. Filtering based on aggregate values must be written in the `HAVING` clause: `SELECT customer_id, SUM(total) FROM orders GROUP BY customer_id HAVING SUM(total) > 500;`.
+</details>

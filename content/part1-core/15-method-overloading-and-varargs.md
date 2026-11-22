@@ -93,12 +93,15 @@ public class QueryBuilderUtility {
 }
 ```
 
-### Execution Output:
+<details data-type="output">
+<summary>View Output</summary>
+
 ```text
 SELECT * FROM users
 SELECT id FROM users
 SELECT id, email, created_at FROM users
 ```
+</details>
 
 ---
 
@@ -125,9 +128,14 @@ public class OverloadQuiz {
 }
 ```
 
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
 ### Explanation
 1. The arguments `(10, 20)` are both `int`.
 2. Matching `process(long, int)` requires widening argument 1 (`int` $\rightarrow$ `long`).
 3. Matching `process(int, long)` requires widening argument 2 (`int` $\rightarrow$ `long`).
 4. Both methods require exactly one primitive widening conversion, making neither more specific than the other.
 5. Result: The code **fails compilation** with `reference to process is ambiguous`.
+
+</details>

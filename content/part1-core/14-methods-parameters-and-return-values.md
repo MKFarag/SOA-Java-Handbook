@@ -95,12 +95,15 @@ public class ParameterPassingDemonstration {
 }
 ```
 
-### Execution Output:
+<details data-type="output">
+<summary>View Output</summary>
+
 ```text
 Scalar value after call: 25
 Buffer size after call : 2
 Buffer contents         : [Initial-State, Event-Recorded]
 ```
+</details>
 
 ---
 
@@ -133,6 +136,9 @@ public class PassTest {
 }
 ```
 
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
 ### Explanation
 1. `swap` receives copies of the references `s1` and `s2`.
 2. `x.append("-A")` mutates the heap object referenced by `s1` (`"1-A"`).
@@ -140,3 +146,5 @@ public class PassTest {
 4. `y.append("-B")` mutates that same heap object, making `s1` `"1-A-B"`.
 5. `s2` remained pointing to `"2"`.
 6. Output: `1-A-B 2`.
+
+</details>

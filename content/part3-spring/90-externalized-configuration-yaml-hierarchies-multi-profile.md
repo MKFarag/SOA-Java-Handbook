@@ -352,3 +352,14 @@ Command-line argument '--spring.profiles.active=prod' overrides any value specif
 - [Spring Boot Reference Documentation: Externalized Configuration](https://docs.spring.io/spring-boot/docs/current/reference/html/features.html#features.external-config)
 - [Spring Boot Reference: Type-safe Configuration Properties](https://docs.spring.io/spring-boot/docs/current/reference/html/features.html#features.external-config.typesafe-configuration-properties)
 - [Jakarta Bean Validation Specification](https://jakarta.ee/specifications/bean-validation/)
+
+---
+
+## Practice
+
+### Q: In Spring Boot's property resolution hierarchy, does an environment variable override a value defined in `application.yml`?
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
+> **Answer:** Yes. Operating system environment variables (and CLI arguments) have higher priority in Spring Boot's configuration hierarchy than internal `application.yml` files, allowing cloud orchestrators (Kubernetes, Docker) to dynamically inject passwords, hostnames, and profiles into production containers without modifying packaged code.
+</details>

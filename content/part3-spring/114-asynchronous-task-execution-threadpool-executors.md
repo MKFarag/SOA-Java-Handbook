@@ -389,3 +389,14 @@ public class AsyncThreadPoolConfig {
 - [Spring Framework Reference: Task Execution and Scheduling](https://docs.spring.io/spring-framework/reference/integration/scheduling.html)
 - [Spring Framework API: ThreadPoolTaskExecutor](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/scheduling/concurrent/ThreadPoolTaskExecutor.html)
 - [Java Platform SE 21: ThreadPoolExecutor JavaDoc](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/ThreadPoolExecutor.html)
+
+---
+
+## Practice
+
+### Q: Why must `@Async` methods in Spring Boot be declared on `public` methods and invoked from an external class?
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
+> **Answer:** Spring's `@Async` operates via runtime AOP proxies. If an `@Async` method is called internally from within the same class (`this.method()`), the invocation bypasses the Spring proxy and executes directly on the caller thread. Furthermore, Spring cannot generate proxy wrappers around `private` methods.
+</details>

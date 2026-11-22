@@ -114,10 +114,13 @@ public class ConcurrencyCoordinationDemo {
 }
 ```
 
-### Execution Output:
+<details data-type="output">
+<summary>View Output</summary>
+
 ```text
 Worker stopped. Final count: 1845209
 ```
+</details>
 
 ---
 
@@ -145,9 +148,14 @@ public class PollingTask implements Runnable {
 }
 ```
 
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
 ### Explanation
 1. `active` is not declared `volatile`, and the `while` loop body contains no synchronization or memory barriers.
 2. The JIT compiler optimizes the loop by hoisting the read: `if (active) while (true) {}`.
 3. The core running the thread caches `active = true` in an L1/L2 register and never re-reads the updated value from main RAM.
 4. Calling `stop()` from another thread modifies RAM, but the worker core never observes the update.
 5. Fix: Declare `private volatile boolean active = true;`.
+
+</details>

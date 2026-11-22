@@ -304,3 +304,14 @@ public ProblemDetail handleNoResource(NoResourceFoundException ex, HttpServletRe
 - [Spring Framework Reference: Error Responses & ProblemDetail](https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-ann-rest-exceptions.html)
 - [IETF RFC 7807: Problem Details for HTTP APIs](https://datatracker.ietf.org/doc/html/rfc7807)
 - [IETF RFC 9457: Problem Details for HTTP APIs (Standard Update)](https://datatracker.ietf.org/doc/html/rfc9457)
+
+---
+
+## Practice
+
+### Q: How does RFC 7807 (`ProblemDetail`) standardize REST API error responses across microservice ecosystems?
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
+> **Answer:** Prior to RFC 7807, APIs returned disparate custom JSON error formats. RFC 7807 establishes a universal specification containing standard attributes: `type` (URI reference), `title` (human-readable summary), `status` (HTTP status code), `detail` (specific explanation), and `instance` (request URI), allowing client SDKs to deserialize errors consistently.
+</details>

@@ -105,11 +105,14 @@ public class ExplicitLocksAndAtomicDemo {
 }
 ```
 
-### Execution Output:
+<details data-type="output">
+<summary>View Output</summary>
+
 ```text
 Processed sessions count: 2
 Active sessions map      : {session-xyz=1763812300000, session-abc=1763812300000}
 ```
+</details>
 
 ---
 
@@ -126,8 +129,13 @@ Active sessions map      : {session-xyz=1763812300000, session-abc=1763812300000
 ### Question
 Why is `new ReentrantLock(true)` (fair lock) generally discouraged in high-throughput production services?
 
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
 ### Explanation
 1. A fair lock enforces strict FIFO order: threads acquire the lock in the order they requested it.
 2. Under unfair locking, a thread currently running on the CPU can immediately acquire a newly released lock, avoiding an expensive operating system thread sleep and context switch.
 3. Enforcing strict fairness forces the JVM to suspend active threads and wake up sleeping threads from the OS kernel queue, slashing throughput by up to 10x-50x.
 4. Unfair locks (the default) deliver dramatically higher throughput in almost all enterprise workloads.
+
+</details>

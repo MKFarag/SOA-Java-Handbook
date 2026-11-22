@@ -31,15 +31,16 @@ public class HelloWorld {
 }
 ```
 
-### Keyword Specifications
+### Keyword & Signature Reference
 
-- **`public` (class):** Grants the JVM runtime access to load and inspect the class definition.
-- **`class HelloWorld`:** Defines the type container. The source file on disk must strictly match: `HelloWorld.java`.
-- **`public` (method):** Allows the JVM launcher to invoke the entry point from outside the class boundary.
-- **`static`:** Binds the method to the class itself, allowing invocation without allocating an object instance in heap memory.
-- **`void`:** Declares that the method returns no value to the runtime caller upon termination.
-- **`main`:** The exact identifier the JVM runtime searches for when bootstrapping execution.
-- **`String[] args`:** Receives command-line arguments passed to the program at launch.
+| Token | Scope / Type | Purpose | If Omitted |
+| :--- | :--- | :--- | :--- |
+| **`public`** | Access Modifier | Allows the JVM runtime launcher to access the entry point from outside | Runtime access error |
+| **`class`** | Keyword | Declares the type boundary container (must match filename `.java`) | Compilation error |
+| **`static`** | Memory Modifier | Binds `main` to the class directly without allocating a heap object | Fails with `Main method is not static` |
+| **`void`** | Return Type | Specifies that the entry method returns no value to the runtime | Compilation error |
+| **`main`** | Identifier | The exact entry point name sought by the JVM launcher | Runtime error: `Main method not found` |
+| **`String[] args`** | Parameter | Receives CLI arguments passed to the program (`java App arg1 arg2`) | Method signature mismatch |
 
 ---
 

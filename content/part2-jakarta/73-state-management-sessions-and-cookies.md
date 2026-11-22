@@ -4,13 +4,15 @@ slug: state-management-sessions-and-cookies
 topicNumber: 73
 title: 'State Management: Sessions & Secure Cookies'
 part: 'Part 2: Java EE & Jakarta EE'
-sectionNumber: 19
-sectionTitle: State Management, Filtering & Security
+sectionNumber: 20
+sectionTitle: 'State Management, Filtering & Security'
 versionBadge: Jakarta Servlet 6.0
 difficulty: Intermediate
 readingTime: 9 min read
 shortDescription: >-
-  Reference: HTTP statelessness mitigation, HttpSession lifecycle, JSESSIONID tracking mechanics, secure cookie flags (HttpOnly, Secure, SameSite), and session concurrency.
+  Reference: HTTP statelessness mitigation, HttpSession lifecycle, JSESSIONID
+  tracking mechanics, secure cookie flags (HttpOnly, Secure, SameSite), and
+  session concurrency.
 prerequisites:
   - 'Topic 67: Web Architecture Fundamentals: The HTTP Protocol'
   - 'Topic 70: HttpServletRequest & HttpServletResponse Processing'
@@ -108,3 +110,14 @@ public class SecureSessionServlet extends HttpServlet {
 **Question:** What is the critical behavioral difference between `request.getSession(true)` and `request.getSession(false)`?
 
 **Explanation:** `request.getSession(true)` looks up the existing session associated with the request's `JSESSIONID`; if none exists, it creates and returns a brand-new `HttpSession`. `request.getSession(false)` returns the existing session if one is active, or returns `null` without creating a new session.
+
+---
+
+## Practice
+
+### Q: Why should production web applications always enforce `HttpOnly` and `Secure` flags on the `JSESSIONID` cookie?
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
+> **Answer:** The `HttpOnly` flag prevents client-side scripts (such as JavaScript accessed via XSS) from reading the session cookie via `document.cookie`, mitigating session hijacking. The `Secure` flag ensures the browser will only transmit the cookie over encrypted HTTPS connections, preventing network eavesdroppers from intercepting the session identifier on unencrypted networks.
+</details>

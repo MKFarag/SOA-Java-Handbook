@@ -364,3 +364,14 @@ public class ProductionSecurityConfig {
 - [Spring Security Reference: The Security Filter Chain](https://docs.spring.io/spring-security/reference/servlet/architecture.html)
 - [Spring Security Reference: Password Storage Configuration](https://docs.spring.io/spring-security/reference/features/authentication/password-storage.html)
 - [OWASP Password Storage Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html)
+
+---
+
+## Practice
+
+### Q: Why should passwords never be stored using fast hashing algorithms like MD5 or SHA-256 in production databases?
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
+> **Answer:** MD5 and SHA-256 are designed for high-speed file checksums and can compute billions of hashes per second on modern GPUs, making brute-force and rainbow table attacks trivial. Production authentication mandates slow, salted, adaptive key derivation algorithms (like `BCrypt` or `Argon2`) that incorporate configurable work factors to defeat hardware acceleration.
+</details>

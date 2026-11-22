@@ -199,12 +199,20 @@
     "description": "Reference: Historic evolution from J2EE/Java EE to Eclipse Jakarta EE, package namespace migration from javax.* to jakarta.*, and application server runtime compatibility matrices.",
     "topicIds": [
       "topic-66",
-      "topic-67",
-      "topic-68"
+      "topic-67"
     ]
   },
   {
     "sectionNumber": 18,
+    "title": "Web Containers & Packaging",
+    "part": "Part 2: Java EE & Jakarta EE",
+    "description": "Reference: Web Application Archive (WAR) anatomy, the protected WEB-INF boundary, web.xml vs annotations, Catalina container hierarchy, and Tomcat deployment pipelines.",
+    "topicIds": [
+      "topic-68"
+    ]
+  },
+  {
+    "sectionNumber": 19,
     "title": "Servlet API Architecture & Request Handling",
     "part": "Part 2: Java EE & Jakarta EE",
     "description": "Reference: jakarta.servlet.Servlet interface lifecycle phases (init, service, destroy), container thread-pooling model, and instance-variable concurrency hazards.",
@@ -216,7 +224,7 @@
     ]
   },
   {
-    "sectionNumber": 19,
+    "sectionNumber": 20,
     "title": "State Management, Filtering & Security",
     "part": "Part 2: Java EE & Jakarta EE",
     "description": "Reference: HTTP statelessness mitigation, HttpSession lifecycle, JSESSIONID tracking mechanics, secure cookie flags (HttpOnly, Secure, SameSite), and session concurrency.",
@@ -228,7 +236,7 @@
     ]
   },
   {
-    "sectionNumber": 20,
+    "sectionNumber": 21,
     "title": "Server-Side Rendering with JSP & JSTL",
     "part": "Part 2: Java EE & Jakarta EE",
     "description": "Reference: JavaServer Pages translation lifecycle into HttpJspPage servlets, directive syntax, scriptlet elimination, and the 9 implicit runtime objects.",
@@ -238,7 +246,7 @@
     ]
   },
   {
-    "sectionNumber": 21,
+    "sectionNumber": 22,
     "title": "Enterprise Web Applications & Data Flow",
     "part": "Part 2: Java EE & Jakarta EE",
     "description": "Reference: Model-View-Controller architectural separation in server-side Java, Front Controller dispatching, and request-scoped model binding.",
@@ -249,7 +257,7 @@
     ]
   },
   {
-    "sectionNumber": 22,
+    "sectionNumber": 23,
     "title": "Modern Jakarta EE Specifications",
     "part": "Part 2: Java EE & Jakarta EE",
     "description": "Reference: Object-Relational Mapping (ORM) fundamentals, EntityManager lifecycle states (Transient, Managed, Detached, Removed), dirty checking, and 1st-level cache.",

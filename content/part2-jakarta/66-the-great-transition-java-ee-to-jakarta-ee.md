@@ -107,3 +107,14 @@ public class NamespaceValidatorInitializer implements ServletContainerInitialize
 **Question:** A legacy Spring Boot 2.7 service running Java 8 is upgraded directly to Spring Boot 3.2 on Java 21. What happens during compilation if the source code contains `import javax.servlet.http.HttpServletRequest;`?
 
 **Explanation:** The build fails with a compilation error (`package javax.servlet.http does not exist`). Spring Boot 3.x is built on Spring Framework 6.x and Jakarta EE 10 (`jakarta.servlet.*`). The legacy `javax.*` APIs are completely omitted from the classpath. All imports must be refactored to `import jakarta.servlet.http.HttpServletRequest;`.
+
+---
+
+## Practice
+
+### Q: Why did the enterprise namespace transition from `javax.*` to `jakarta.*` break backward binary compatibility, and how does Apache Tomcat 10.1+ handle older WAR files?
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
+> **Answer:** Oracle retained trademark ownership over the `javax` package namespace when donating Java EE to the Eclipse Foundation. Consequently, Jakarta EE 9+ migrated all APIs to the `jakarta.*` package namespace (`javax.servlet` -> `jakarta.servlet`). Containers like Tomcat 10+ adhere strictly to Jakarta EE specifications and reject `javax.*` servlets unless bytecode migration tools rewrite class references prior to deployment.
+</details>

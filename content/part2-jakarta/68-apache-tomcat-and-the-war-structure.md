@@ -2,15 +2,17 @@
 id: topic-68
 slug: apache-tomcat-and-the-war-structure
 topicNumber: 68
-title: 'Apache Tomcat & The WAR Packaging Structure'
+title: Apache Tomcat & The WAR Packaging Structure
 part: 'Part 2: Java EE & Jakarta EE'
-sectionNumber: 17
-sectionTitle: Web Architecture & The Jakarta EE Evolution
+sectionNumber: 18
+sectionTitle: Web Containers & Packaging
 versionBadge: Tomcat 10.1+ / Servlet 6.0
 difficulty: Beginner
 readingTime: 8 min read
 shortDescription: >-
-  Reference: Web Application Archive (WAR) anatomy, the protected WEB-INF boundary, web.xml vs annotations, Catalina container hierarchy, and Tomcat deployment pipelines.
+  Reference: Web Application Archive (WAR) anatomy, the protected WEB-INF
+  boundary, web.xml vs annotations, Catalina container hierarchy, and Tomcat
+  deployment pipelines.
 prerequisites:
   - 'Topic 65: Build Tools: Maven & Gradle'
   - 'Topic 67: Web Architecture Fundamentals: The HTTP Protocol'
@@ -113,3 +115,14 @@ myapp.war
 **Question:** An engineer uploads a sensitive configuration file `db.properties` into the root directory of a deployed WAR instead of `WEB-INF/classes/`. What security vulnerability is created?
 
 **Explanation:** Files placed in the root of a WAR are served directly as static files by Tomcat's `DefaultServlet`. Anyone navigating to `https://example.com/db.properties` can download the database credentials in plaintext. Moving the file to `WEB-INF/classes/` makes it accessible to the classloader via `getResourceAsStream()` while strictly preventing direct HTTP access.
+
+---
+
+## Practice
+
+### Q: Why are resources located within the `/WEB-INF/` directory inaccessible via direct HTTP client URLs, and how does the server access them?
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
+> **Answer:** The Servlet specification explicitly designates the `/WEB-INF/` directory (including `/WEB-INF/classes`, `/WEB-INF/lib`, and `/WEB-INF/web.xml`) as private and protected from direct HTTP client requests (returning HTTP 404). The container accesses `/WEB-INF/` files solely via internal server-side forwarding (`RequestDispatcher.forward()`), protecting views, configurations, and bytecode from unauthorized public downloads.
+</details>

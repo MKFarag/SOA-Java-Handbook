@@ -131,8 +131,13 @@ When Library A depends on `Lib C:1.0` and Library B depends on `Lib C:2.0`:
 ### Question
 Why is the `provided` dependency scope used for `servlet-api` in traditional web applications?
 
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
 ### Explanation
 1. During compilation, the application code requires `servlet-api` classes (`HttpServletRequest`, `HttpServletResponse`) to compile cleanly.
 2. At runtime, the hosting servlet container (such as Apache Tomcat) already provides its own copy of the servlet API in its shared library folder.
 3. If the application bundled its own `servlet-api.jar` inside `WEB-INF/lib`, a ClassLoader conflict would occur, throwing `LinkageError` or `ClassCastException`.
 4. Marking it `provided` includes it on the compile and test classpaths, but excludes it from the final WAR package.
+
+</details>

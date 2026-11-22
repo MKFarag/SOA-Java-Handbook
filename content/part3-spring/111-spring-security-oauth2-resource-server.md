@@ -389,3 +389,14 @@ public class CustomOAuth2ResourceServerConfig {
 - [Spring Security Reference: OAuth 2.0 Resource Server](https://docs.spring.io/spring-security/reference/servlet/oauth2/resource-server/index.html)
 - [RFC 6749: The OAuth 2.0 Authorization Framework](https://datatracker.ietf.org/doc/html/rfc6749)
 - [RFC 7517: JSON Web Key (JWK) Specification](https://datatracker.ietf.org/doc/html/rfc7517)
+
+---
+
+## Practice
+
+### Q: In an OAuth2 Resource Server, what is the role of the JWKS (JSON Web Key Set) endpoint?
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
+> **Answer:** The Identity Provider (e.g. Keycloak, Auth0) signs JWT tokens using its private RSA key and exposes the matching public keys at a public JWKS endpoint. The Spring Security Resource Server periodically fetches and caches these public keys to verify incoming JWT signatures locally without calling the authorization server on every single HTTP request.
+</details>

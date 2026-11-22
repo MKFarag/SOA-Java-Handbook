@@ -377,3 +377,14 @@ public class ProductCatalogService {
 - [Spring Data JPA Reference: Specifications](https://docs.spring.io/spring-data/jpa/reference/repositories/specifications.html)
 - [Jakarta Persistence Specification 3.1: Criteria API](https://jakarta.ee/specifications/persistence/3.1/)
 - [Vlad Mihalcea: The Best Way to Use Spring Data JPA Specifications](https://vladmihalcea.com/spring-data-jpa-specifications/)
+
+---
+
+## Practice
+
+### Q: Why are Spring Data Specifications preferred over dynamic string concatenation for multi-filter search screens?
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
+> **Answer:** Dynamic string concatenation (`"WHERE 1=1 " + sql`) is vulnerable to SQL injection, error-prone with spacing and parentheses, and impossible to type-check at compile time. Spring Data `Specification<T>` leverages the JPA Criteria API, building type-safe, composable predicate trees that compile cleanly and prevent injection attacks.
+</details>

@@ -382,3 +382,14 @@ public class DynamicReconciliationTask {
 - [Spring Framework Reference: Scheduling and Execution](https://docs.spring.io/spring-framework/reference/integration/scheduling.html)
 - [ShedLock Official Documentation & GitHub](https://github.com/lukas-krecan/ShedLock)
 - [Baeldung: Guide to ShedLock with Spring](https://www.baeldung.com/shedlock-spring)
+
+---
+
+## Practice
+
+### Q: Why does deploying a standard `@Scheduled` task to a multi-replica Kubernetes cluster cause duplicate job execution, and how does ShedLock solve it?
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
+> **Answer:** Standard Spring `@Scheduled` tasks execute locally within each JVM instance. In a cluster with 5 Kubernetes pods, all 5 pods trigger the cron job at the exact same minute. ShedLock coordinates execution using a shared database table or Redis lock: the first pod acquires the lock and executes the task while the other 4 pods see the active lock and skip execution cleanly.
+</details>

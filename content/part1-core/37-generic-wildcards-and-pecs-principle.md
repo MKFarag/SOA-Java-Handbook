@@ -117,12 +117,15 @@ public class PecsPipelineDemo {
 }
 ```
 
-### Execution Output:
+<details data-type="output">
+<summary>View Output</summary>
+
 ```text
 Sum of doubles: 8.00
 Populated Number Sink: [1, 2, 3, 4]
 Sum of sink elements: 10.00
 ```
+</details>
 
 ---
 
@@ -144,8 +147,13 @@ listA.add(10);                                           // Line 2
 Number n = listA.get(0);                                 // Line 3
 ```
 
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
 ### Explanation
 1. Line 1: `ArrayList<Integer>` is compatible with `List<? extends Number>` (Covariance). Valid.
 2. Line 2: `listA` is a Producer (`? extends`). The compiler cannot determine whether the underlying list is `Integer`, `Double`, etc., so it rejects all writes except `null`. Line 2 **fails compilation**.
 3. Line 3: Reading an element as `Number` from `? extends Number` is guaranteed type-safe. Valid.
 4. Error is on **Line 2**.
+
+</details>

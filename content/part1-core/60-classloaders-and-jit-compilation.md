@@ -101,13 +101,16 @@ public class ClassLoaderInspectionDemo {
 }
 ```
 
-### Execution Output:
+<details data-type="output">
+<summary>View Output</summary>
+
 ```text
 User ClassLoader     : jdk.internal.loader.ClassLoaders$AppClassLoader@75b84c92
 Parent ClassLoader   : jdk.internal.loader.ClassLoaders$PlatformClassLoader@6d06d69c
 Bootstrap ClassLoader: null
 String.class Loader  : null
 ```
+</details>
 
 ---
 
@@ -125,8 +128,13 @@ String.class Loader  : null
 ### Question
 Why does `String.class.getClassLoader()` return `null`?
 
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
 ### Explanation
 1. `java.lang.String` is a foundational Java runtime class located inside module `java.base`.
 2. Core runtime classes are loaded directly by the **Bootstrap ClassLoader**.
 3. Because the Bootstrap ClassLoader is written in native C/C++ inside the JVM binary, it is not a Java object.
 4. The Java runtime API represents the Bootstrap ClassLoader with the reference `null`.
+
+</details>

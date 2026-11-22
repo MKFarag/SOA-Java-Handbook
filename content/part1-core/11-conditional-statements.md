@@ -107,13 +107,16 @@ public class TieredFeeCalculator {
 }
 ```
 
-### Execution Output:
+<details data-type="output">
+<summary>View Output</summary>
+
 ```text
 Gross Amount  : $  1,450.00
 Fee Rate      :       1.20%
 Processing Fee: $     17.40
 Net Settlement: $  1,432.60
 ```
+</details>
 
 ---
 
@@ -160,8 +163,13 @@ public static void checkStatus(boolean flagA, boolean flagB) {
 }
 ```
 
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
 ### Explanation
 1. Because braces `{}` are omitted, the `else` binds to the immediately preceding `if (flagB)`, not `if (flagA)`.
 2. When `flagA` is `false`, the outer `if` condition fails entirely, skipping the inner `if-else` construct.
 3. Execution proceeds immediately to the statement following the block: `System.out.print("3");`.
 4. Output: `3`.
+
+</details>

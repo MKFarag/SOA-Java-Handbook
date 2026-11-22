@@ -331,3 +331,14 @@ resilience4j:
 - [Resilience4j Official Documentation & Architecture Guide](https://resilience4j.readme.io/)
 - [Spring Cloud Circuit Breaker Documentation](https://docs.spring.io/spring-cloud-circuitbreaker/reference/)
 - [Martin Fowler — CircuitBreaker Architectural Pattern](https://martinfowler.com/bliki/CircuitBreaker.html)
+
+---
+
+## Practice
+
+### Q: How does a Circuit Breaker prevent cascading failures in distributed microservice architectures?
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
+> **Answer:** If a downstream service slows down or fails, upstream caller threads pile up waiting for timeouts, quickly exhausting thread pools. A Circuit Breaker monitors failure rates: when failures cross a threshold (e.g. 50%), it trips from CLOSED to OPEN, immediately returning fallback responses without attempting network calls and allowing the downstream service time to recover.
+</details>

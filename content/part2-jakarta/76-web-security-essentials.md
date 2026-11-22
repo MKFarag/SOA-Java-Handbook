@@ -2,15 +2,17 @@
 id: topic-76
 slug: web-security-essentials
 topicNumber: 76
-title: 'Jakarta Web Security Essentials'
+title: Jakarta Web Security Essentials
 part: 'Part 2: Java EE & Jakarta EE'
-sectionNumber: 19
-sectionTitle: State Management, Filtering & Security
+sectionNumber: 20
+sectionTitle: 'State Management, Filtering & Security'
 versionBadge: Jakarta Security 3.0 / Servlet 6.0
 difficulty: Advanced
 readingTime: 9 min read
 shortDescription: >-
-  Reference: Container-managed declarative security in web.xml (security-constraint, auth-constraint), authentication mechanisms (BASIC, FORM, CLIENT-CERT), and programmatic security APIs.
+  Reference: Container-managed declarative security in web.xml
+  (security-constraint, auth-constraint), authentication mechanisms (BASIC,
+  FORM, CLIENT-CERT), and programmatic security APIs.
 prerequisites:
   - 'Topic 73: State Management: Sessions & Secure Cookies'
   - 'Topic 74: Servlet Filters & FilterChain Architecture'
@@ -103,3 +105,14 @@ Principal user = req.getUserPrincipal();             // Returns caller identity 
 **Question:** An application defines `<auth-constraint><role-name>*</role-name></auth-constraint>`. What does the asterisk `*` specify according to the Jakarta Servlet specification?
 
 **Explanation:** In Jakarta Servlet 3.0+, `*` matches **any authenticated user**, regardless of specific role assignment, provided the user successfully authenticated against the container realm. In contrast, `<role-name>**</role-name>` specifically requires that the user is authenticated and mapped to at least one declared application role.
+
+---
+
+## Practice
+
+### Q: How does the Synchronizer Token Pattern defend against Cross-Site Request Forgery (CSRF) attacks in server-side Java web applications?
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
+> **Answer:** CSRF attacks rely on the browser automatically attaching session cookies (`JSESSIONID`) when submitting cross-site requests. The Synchronizer Token Pattern stores an unpredictable random token in user session state and embeds it in HTML forms as a hidden field. Because malicious cross-origin sites cannot read or forge this token under the Same-Origin Policy, the server validates the incoming token against session state and rejects requests where tokens mismatch.
+</details>

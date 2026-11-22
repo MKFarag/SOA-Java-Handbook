@@ -121,3 +121,22 @@ SELECT first_name, email, 'INTERNATIONAL' AS type FROM international_customers;
 1. Both `SELECT` queries must return the **exact same number of columns**.
 2. Corresponding columns must have **compatible data types**.
 3. Column names in the final output are determined by the **first `SELECT` query**.
+
+---
+
+## Pitfalls
+
+- **`NOT IN (subquery)` with `NULL` Values:** If the subquery in a `NOT IN` clause produces even one `NULL` value, the predicate evaluates to `UNKNOWN` for all rows, returning an empty result set. Prefer `NOT EXISTS (SELECT 1 ...)` to handle `NULL`s safely.
+- **Defaulting to `UNION` Over `UNION ALL`:** Standard `UNION` forces the database engine to perform an expensive in-memory sort or hashing pass to discard duplicates. Default to `UNION ALL` unless row deduplication is explicitly required.
+- **Omitting Derived Table Aliases:** In SQL, any subquery placed in the `FROM` clause must have an explicit alias. Writing `FROM (SELECT id FROM orders)` without appending `AS temp_orders` throws `Every derived table must have its own alias`.
+
+---
+
+## Practice
+
+### Q: Why is `NOT EXISTS` preferred over `NOT IN` when querying against subqueries that may contain `NULL` values?
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
+> **Answer:** If any row returned by a subquery contains `NULL`, `value NOT IN (...)` evaluates to `UNKNOWN` for every row in the outer query due to SQL three-valued logic, returning an empty result set. `NOT EXISTS` evaluates existence rather than value comparison, short-circuits immediately upon finding the first match, and handles `NULL` values safely without unexpected query failures.
+</details>

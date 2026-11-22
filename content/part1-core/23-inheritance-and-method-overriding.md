@@ -105,11 +105,14 @@ public class InheritanceHierarchyDemo {
 }
 ```
 
-### Execution Output:
+<details data-type="output">
+<summary>View Output</summary>
+
 ```text
 Standard Worker 50h  : $1,250.00
 Contractor Worker 50h: $1,375.00
 ```
+</details>
 
 ---
 
@@ -136,7 +139,12 @@ class Derived extends Base {
 }
 ```
 
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
 ### Explanation
 1. Visibility: `Derived.compute()` reduces access to `protected` while `Base.compute()` is `public`. This violates visibility rules.
 2. Exceptions: `Derived.compute()` declares `throws Exception`, which is broader than `Base`'s `IOException`. This violates exception bounds.
 3. Both violations trigger **compile-time errors**.
+
+</details>

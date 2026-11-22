@@ -112,7 +112,9 @@ public class MemoryArrayPipeline {
 }
 ```
 
-### Execution Output:
+<details data-type="output">
+<summary>View Output</summary>
+
 ```text
 Array Length : 5
 Min / Max    : 78 / 95
@@ -120,6 +122,7 @@ Mean Average : 87.40
 String Rep   : [84, 92, 78, 95, 88]
 Expanded Array: [84, 92, 78, 95, 88, 99, 100]
 ```
+</details>
 
 ---
 
@@ -149,6 +152,9 @@ static void modify(int[] arr) {
 }
 ```
 
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
 ### Explanation
 1. `items` holds a heap reference pointer to an array of size 3.
 2. `modify` receives a copy of this reference pointer.
@@ -157,3 +163,5 @@ static void modify(int[] arr) {
 5. `arr[1] = 20;` affects only the newly instantiated array.
 6. The caller reads index 0 (modified to `10`) and index 1 (unmodified, retaining default `0`).
 7. Output: `10 0`.
+
+</details>

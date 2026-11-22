@@ -157,3 +157,22 @@ WHERE is_active = FALSE AND stock = 0;
 
 > [!CAUTION] The Danger of Unrestricted `DELETE`
 > Running `DELETE FROM products;` without a `WHERE` clause wipes every record from the table! In production applications, many teams prefer **Soft Deletes** (e.g. `UPDATE products SET is_deleted = TRUE WHERE id = 5;`) to preserve historical audit trails.
+
+---
+
+## Pitfalls
+
+- **Comparing `NULL` with `= NULL`:** In SQL's three-valued logic (3VL), comparing with `NULL` via `=` or `!=` always evaluates to `UNKNOWN`, returning 0 rows. Always use `IS NULL` or `IS NOT NULL`.
+- **Executing `UPDATE` or `DELETE` Without `WHERE`:** Omitting the `WHERE` clause applies mutations to every row across the entire table. Always verify filtering criteria with a read-only `SELECT` query first.
+- **Deep Offset Pagination Latency:** Using large offsets (e.g. `LIMIT 20 OFFSET 500000`) forces the database storage engine to scan and discard 500,000 rows. In high-traffic systems, prefer keyset/cursor pagination (`WHERE id > :lastSeenId ORDER BY id ASC LIMIT 20`).
+
+---
+
+## Practice
+
+### Q: Why does executing `SELECT * FROM customers WHERE phone = NULL;` fail to return customers with no phone number?
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
+> **Answer:** In relational databases, `NULL` represents an unknown or missing value rather than a literal value. In SQL three-valued logic, comparing anything to `NULL` using `=` or `<>` yields `UNKNOWN` instead of `TRUE`. Because `WHERE` clauses require a predicate to evaluate strictly to `TRUE` to include a row, zero rows are returned. You must query with `WHERE phone IS NULL`.
+</details>

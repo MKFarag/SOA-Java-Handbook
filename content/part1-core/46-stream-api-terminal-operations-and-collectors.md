@@ -106,12 +106,15 @@ public class CollectorsArchitectureDemo {
 }
 ```
 
-### Execution Output:
+<details data-type="output">
+<summary>View Output</summary>
+
 ```text
 Cost breakdown by priority: {LOW=50.0, NORMAL=320.0, HIGH=1300.0}
 Major incidents (> $300): [INC-101, INC-103]
 Minor incidents (<= $300): [INC-102, INC-104, INC-105]
 ```
+</details>
 
 ---
 
@@ -133,9 +136,14 @@ Map<Integer, String> map = items.stream()
     .collect(Collectors.toMap(String::length, s -> s));
 ```
 
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
 ### Explanation
 1. `String::length` extracts the string length as the map key.
 2. Both `"alpha"` and `"apple"` have a length of 5.
 3. The overloaded `Collectors.toMap(keyMapper, valueMapper)` requires unique keys by default.
 4. When encountering duplicate key `5`, it throws `java.lang.IllegalStateException: Duplicate key 5 (attempted merging values alpha and apple)`.
 5. Fix: Provide a merge function: `Collectors.toMap(String::length, s -> s, (s1, s2) -> s1)`.
+
+</details>

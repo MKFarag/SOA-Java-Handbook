@@ -102,12 +102,15 @@ public class LambdaTaxonomyDemo {
 }
 ```
 
-### Execution Output:
+<details data-type="output">
+<summary>View Output</summary>
+
 ```text
 DISPATCH -> [ALERT 1763812300000] WARN: Memory pressure detected
 DISPATCH -> [ALERT 1763812300000] ERROR: DB connection timeout
 Total alerts processed: 2
 ```
+</details>
 
 ---
 
@@ -132,8 +135,13 @@ public void execute() {
 }
 ```
 
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
 ### Explanation
 1. The lambda expression captures the local variable `factor`.
 2. Java language specification requires that any local variable captured by a lambda must be `final` or effectively final.
 3. The statement `factor = 3;` reassigns `factor`, violating the effectively final requirement.
 4. Result: **Compile-time error**: `local variables referenced from a lambda expression must be final or effectively final`.
+
+</details>

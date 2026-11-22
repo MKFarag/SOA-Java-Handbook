@@ -387,3 +387,14 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 - [Spring Security Reference: Method Security](https://docs.spring.io/spring-security/reference/servlet/authorization/method-security.html)
 - [RFC 7519: JSON Web Token (JWT) Specification](https://datatracker.ietf.org/doc/html/rfc7519)
 - [OWASP JSON Web Token Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/JSON_Web_Token_for_Java_Cheat_Sheet.html)
+
+---
+
+## Practice
+
+### Q: How does stateless JWT authentication eliminate the need for server-side session storage in clustered microservices?
+<details data-type="solution">
+<summary>Reveal Answer</summary>
+
+> **Answer:** In session-based auth, servers store session IDs in memory, requiring cluster session replication. With JWT, all user claims and permissions are signed with a secret key or asymmetric RSA private key and held entirely by the client. Any server in the cluster can cryptographically verify the token signature using the public key without querying a database or shared cache.
+</details>
