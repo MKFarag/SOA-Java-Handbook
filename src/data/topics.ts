@@ -17,8 +17,37 @@ export function getTopicBySlug(slug: string): TopicDetail | undefined {
  * Map of legacy topic IDs and slugs from earlier curriculum iterations (e.g. 134-topic era)
  * to their permanent consolidated or renumbered destinations in the 127-topic architecture.
  */
+export const CURRENT_TOPIC_IDS = new Set(ALL_TOPICS.map(t => t.id));
+
+export const REBUILD_TIMESTAMP_MS = new Date('2026-11-21T19:32:50.000Z').getTime();
+
+// Unambiguous legacy IDs that never exist in the 127-topic curriculum
+export const LEGACY_ONLY_IDS = new Set([
+  'topic-76', 'topic-77', 'topic-78', 'topic-81',
+  'topic-132', 'topic-133', 'topic-134'
+]);
+
+// Single-pass, unchained old -> new mapping
+export const OLD_TO_NEW_TOPIC_MAP: Record<string, string> = {
+  'topic-75': 'topic-74',
+  'topic-76': 'topic-74',
+  'topic-77': 'topic-75',
+  'topic-78': 'topic-75',
+  'topic-81': 'topic-80',
+  'topic-130': 'topic-129',
+  'topic-131': 'topic-121',
+  'topic-132': 'topic-131',
+  'topic-133': 'topic-130',
+  'topic-134': 'topic-131'
+};
+
+export const RETIRED_MICROSERVICE_IDS = new Set([
+  'topic-120', 'topic-121', 'topic-122', 'topic-123', 'topic-124',
+  'topic-125', 'topic-126', 'topic-127', 'topic-128', 'topic-129'
+]);
+
 export const LEGACY_TOPIC_ALIASES: Record<string, string> = {
-  // Merged JSP & Presentation topics
+  // Merged JSP & Presentation topics (unambiguous old IDs)
   'topic-75-legacy': 'topic-74',
   'topic-76': 'topic-74',
   'jsp-implicit-objects-and-standard-actions': 'topic-74',
@@ -29,16 +58,16 @@ export const LEGACY_TOPIC_ALIASES: Record<string, string> = {
   'topic-81': 'topic-80',
   'error-pages-and-exception-handling': 'topic-80',
 
-  // Database 134-era mappings
+  // Database 134-era unambiguous mappings
   'topic-130-legacy': 'topic-129',
-  'topic-131-legacy': 'topic-120',
+  'topic-131-legacy': 'topic-121',
   'topic-132': 'topic-131',
   'topic-133': 'topic-130',
   'topic-134': 'topic-131',
   'java-mongodb-persistence-spring-data-properties': 'topic-131',
   'mongodb-document-store-compass-queries': 'topic-130',
   'java-mysql-persistence-spring-data-properties': 'topic-131',
-  'mysql-fundamentals-queries-xampp': 'topic-120',
+  'mysql-fundamentals-queries-xampp': 'topic-121',
   'sql-vs-nosql-architecture-tradeoffs': 'topic-129',
 
   // Pruned Cloud/Microservices slugs (gracefully redirected to relevant core backend topics)
@@ -53,6 +82,69 @@ export const LEGACY_TOPIC_ALIASES: Record<string, string> = {
   'production-dockerization-layered-jars': 'topic-90',
   'graalvm-native-image-aot-compilation': 'topic-90'
 };
+
+/**
+ * Versioned profile migration: sanitizes stored completed & saved topics
+ */
+export function migrateProfileData(profile: any): any {
+  if (!profile) return profile;
+  if (profile.schemaVersion && profile.schemaVersion >= 2) {
+    const sanitizedCompleted = Array.from(new Set(
+      (profile.completedTopics || []).filter((id: string) => CURRENT_TOPIC_IDS.has(id))
+    ));
+    const sanitizedSaved = Array.from(new Set(
+      (profile.savedTopics || []).filter((id: string) => CURRENT_TOPIC_IDS.has(id))
+    ));
+    return {
+      ...profile,
+      completedTopics: sanitizedCompleted,
+      completedCount: sanitizedCompleted.length,
+      savedTopics: sanitizedSaved,
+      certificateUnlocked: sanitizedCompleted.length === ALL_TOPICS.length
+    };
+  }
+
+  const rawCompleted: string[] = profile.completedTopics || [];
+  const rawSaved: string[] = profile.savedTopics || [];
+
+  const hasLegacyOnlyIds = rawCompleted.concat(rawSaved).some(id => LEGACY_ONLY_IDS.has(id));
+  const isPreRebuildTimestamp = profile.lastActive && (new Date(profile.lastActive).getTime() < REBUILD_TIMESTAMP_MS);
+  const isOldEra = hasLegacyOnlyIds || Boolean(isPreRebuildTimestamp);
+
+  const migrateList = (list: string[]) => {
+    const result = new Set<string>();
+    for (const id of list) {
+      if (isOldEra) {
+        if (RETIRED_MICROSERVICE_IDS.has(id)) {
+          // Drop retired microservices
+          continue;
+        }
+        const mappedId = OLD_TO_NEW_TOPIC_MAP[id] || id;
+        if (CURRENT_TOPIC_IDS.has(mappedId)) {
+          result.add(mappedId);
+        }
+      } else {
+        const mappedId = (LEGACY_ONLY_IDS.has(id) && OLD_TO_NEW_TOPIC_MAP[id]) ? OLD_TO_NEW_TOPIC_MAP[id] : id;
+        if (CURRENT_TOPIC_IDS.has(mappedId)) {
+          result.add(mappedId);
+        }
+      }
+    }
+    return Array.from(result);
+  };
+
+  const migratedCompleted = migrateList(rawCompleted);
+  const migratedSaved = migrateList(rawSaved);
+
+  return {
+    ...profile,
+    schemaVersion: 2,
+    completedTopics: migratedCompleted,
+    completedCount: migratedCompleted.length,
+    savedTopics: migratedSaved,
+    certificateUnlocked: migratedCompleted.length === ALL_TOPICS.length
+  };
+}
 
 export function resolveTopic(identifier: string): TopicDetail | undefined {
   if (!identifier) return undefined;

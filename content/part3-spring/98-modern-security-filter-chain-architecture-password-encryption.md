@@ -5,14 +5,14 @@ topicNumber: 98
 title: Modern SecurityFilterChain Architecture & Password Encryption
 part: 'Part 3: Spring Boot & Production Stack'
 sectionNumber: 28
-sectionTitle: Enterprise Security with Spring Security 6
-versionBadge: Spring Security 6.x / Boot 3.x
+sectionTitle: Enterprise Security with Spring Security 7
+versionBadge: Spring Security 7.x / Boot 4.1
 difficulty: Intermediate
 readingTime: 16 min read
 shortDescription: >-
-  Understand the component-based security architecture in Spring Security 6:
+  Understand the modern security architecture in Spring Security 7 (Spring Boot 4.1):
   declarative SecurityFilterChain bean configuration, URL authorization
-  matchers, stateless CSRF semantics, and production password hashing with
+  matchers, lambda DSL, stateless CSRF semantics, and production password hashing with
   BCrypt and Argon2.
 prerequisites:
   - 'Topic 71: Servlet Filters & Filter Chains'
@@ -26,11 +26,12 @@ relevanceLevel: MUST-KNOW / CORE
 
 ## 1. What It Is and Why It Exists
 
-Enterprise backend systems must enforce defense-in-depth security to protect resources, authenticate clients, and authorize access. Historically in Spring Security, developers inherited from `WebSecurityConfigurerAdapter` and overrode protected `configure()` methods. This legacy pattern led to brittle inheritance hierarchies, configuration leaks across modular test suites, and hidden global state.
+Enterprise backend systems must enforce defense-in-depth security to protect resources, authenticate clients, and authorize access. Historically in Spring Security, developers inherited from `WebSecurityConfigurerAdapter` and used `.and()` chaining. This legacy pattern led to brittle inheritance hierarchies, configuration leaks across modular test suites, and hidden global state.
 
-With **Spring Security 6** (the baseline in Spring Boot 3), the framework underwent a complete architectural overhaul:
-- **Component-Based Configuration:** Replaces class inheritance with modular, declarative `@Bean` methods exposing `SecurityFilterChain`.
-- **Lambda DSL:** Enforces clean, fluent lambda expressions (`http -> ...`) that eliminate ambiguity and prevent nested builder pollution.
+With **Spring Security 7** (the baseline in Spring Boot 4.1):
+- **Component-Based Configuration:** Uses modular, declarative `@Bean` methods exposing `SecurityFilterChain`.
+- **Pure Lambda DSL:** Enforces functional lambda customizers (`http -> ...`). Legacy `.and()` method chaining is permanently removed.
+- **Jakarta EE 11 Baseline & Jackson 3:** Native integration with Jakarta 11 and Jackson 3 (`SecurityJacksonModules`).
 - **Modern Adaptive Password Encryption:** Mandates cryptographically secure, salted, multi-round adaptive hashing algorithms (BCrypt, Argon2id, PBKDF2) that thwart GPU-accelerated brute force and precomputed rainbow table attacks.
 
 ### The Security Filter Chain Architecture

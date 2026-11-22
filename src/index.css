@@ -296,6 +296,217 @@
 .dark .markdown-body blockquote {
   background-color: #1f1f23;
 }
+
+/* Progressive Disclosure: Collapsible Details / Summary */
+.markdown-body details {
+  margin: 0.75rem 0 1rem 0;
+  border-radius: 0.75rem;
+  border: 1px solid var(--border-color);
+  background-color: #f8fafc;
+  overflow: hidden;
+  transition: all 0.2s ease;
+}
+.dark .markdown-body details {
+  background-color: #141416;
+  border-color: #27272a;
+}
+.markdown-body details summary {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 0.625rem 1rem;
+  min-height: 44px; /* 44px tap target */
+  font-size: 0.8125rem;
+  font-weight: 600;
+  cursor: pointer;
+  user-select: none;
+  color: var(--text-primary);
+  background: transparent;
+  transition: background-color 0.15s ease;
+  list-style: none;
+}
+.markdown-body details summary::-webkit-details-marker {
+  display: none;
+}
+.markdown-body details summary:hover {
+  background-color: rgba(234, 88, 12, 0.05);
+}
+.dark .markdown-body details summary:hover {
+  background-color: rgba(249, 115, 22, 0.08);
+}
+.markdown-body details[open] summary {
+  border-bottom: 1px solid var(--border-color);
+}
+.markdown-body details summary::before {
+  content: '▸';
+  display: inline-block;
+  font-size: 0.875rem;
+  color: var(--accent-orange);
+  transition: transform 0.2s ease;
+}
+.markdown-body details[open] summary::before {
+  transform: rotate(90deg);
+}
+.markdown-body details > :not(summary) {
+  padding: 0.75rem 1rem;
+}
+.markdown-body details > pre:first-of-type,
+.markdown-body details > :not(summary) > pre {
+  margin: 0.5rem 0;
+}
+
+/* Neutral Progressive Disclosure & Collapsible Details */
+.markdown-body details {
+  background-color: rgba(244, 244, 245, 0.4);
+  border: 1px solid var(--border-color);
+  border-radius: 0.75rem;
+  padding: 0.5rem 1rem;
+  margin: 1.25rem 0;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+.dark .markdown-body details {
+  background-color: rgba(24, 24, 27, 0.4);
+  border-color: #27272a;
+}
+.markdown-body details[open] {
+  background-color: rgba(244, 244, 245, 0.7);
+  border-color: #d4d4d8;
+}
+.dark .markdown-body details[open] {
+  background-color: rgba(24, 24, 27, 0.7);
+  border-color: #3f3f46;
+}
+
+.markdown-body summary {
+  cursor: pointer;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  user-select: none;
+  outline: none;
+  padding: 0.25rem 0;
+}
+.markdown-body summary:focus-visible {
+  outline: 2px solid #71717a;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.markdown-body details > :not(summary) {
+  padding: 0.75rem 0.25rem 0.25rem 0.25rem;
+}
+.markdown-body details > pre:first-of-type,
+.markdown-body details > :not(summary) > pre {
+  margin: 0.5rem 0;
+}
+
+/* Specific styling for Solutions: Clean Neutral Slate/Zinc */
+.markdown-body details[data-type="solution"] {
+  border-color: #e4e4e7;
+  background-color: #fafafa;
+}
+.dark .markdown-body details[data-type="solution"] {
+  background-color: #18181b;
+  border-color: #27272a;
+}
+.markdown-body details[data-type="solution"] summary {
+  color: #3f3f46;
+}
+.dark .markdown-body details[data-type="solution"] summary {
+  color: #e4e4e7;
+}
+
+/* Output attached to code blocks fallback */
+.markdown-body pre + details[data-type="output"],
+.markdown-body pre + details[data-type="trace"] {
+  margin-top: -0.75rem;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-top: 1px dashed var(--border-color);
+}
+
+/* Dual-Tab Code Blocks */
+.code-tab-container {
+  margin: 1.25rem 0;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  border: 1px solid #27272a;
+  background-color: #1e1e1e;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  text-align: left;
+}
+.code-tab-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0.75rem;
+  background-color: #252526;
+  border-bottom: 1px solid #2e2e32;
+  user-select: none;
+  gap: 0.5rem;
+}
+.tab-btn {
+  font-family: inherit;
+  border: none;
+  outline: none;
+}
+.tab-btn:focus-visible {
+  outline: 2px solid #a1a1aa;
+}
+
+/* Print styling: Expand everything automatically */
+@media print {
+  .code-tab-container {
+    border: 1px solid #ccc !important;
+    background: white !important;
+    box-shadow: none !important;
+    page-break-inside: avoid !important;
+    margin: 1rem 0 !important;
+  }
+  .code-tab-header {
+    display: none !important;
+  }
+  .tab-pane-code {
+    display: block !important;
+    color: black !important;
+    padding: 0.5rem !important;
+  }
+  .tab-pane-code::before {
+    content: "Source Code:" !important;
+    display: block !important;
+    font-weight: bold !important;
+    margin-bottom: 0.25rem !important;
+    color: #333 !important;
+  }
+  .tab-pane-output {
+    display: block !important;
+    background: #f8f8f8 !important;
+    color: #111 !important;
+    border-top: 1px dashed #ccc !important;
+    padding: 0.5rem !important;
+  }
+  .markdown-body details {
+    display: block !important;
+    border: 1px solid #ccc !important;
+    background: white !important;
+    page-break-inside: avoid !important;
+    margin: 1rem 0 !important;
+    padding: 0.5rem 1rem !important;
+  }
+  .markdown-body details > * {
+    display: block !important;
+  }
+  .markdown-body details summary {
+    font-weight: bold !important;
+    color: black !important;
+    border-bottom: 1px solid #eee !important;
+    margin-bottom: 0.5rem !important;
+  }
+}
+
 .markdown-body pre {
   background-color: var(--code-bg);
   border: 1px solid var(--border-color);
@@ -319,19 +530,4 @@
 }
 .markdown-body a:hover {
   text-decoration: underline;
-}
-.markdown-body details {
-  background-color: rgba(0, 0, 0, 0.02);
-  border: 1px solid var(--border-color);
-  border-radius: 0.5rem;
-  padding: 0.75rem 1rem;
-  margin: 1rem 0;
-}
-.dark .markdown-body details {
-  background-color: rgba(255, 255, 255, 0.03);
-}
-.markdown-body summary {
-  cursor: pointer;
-  font-weight: 600;
-  color: var(--accent-orange);
 }

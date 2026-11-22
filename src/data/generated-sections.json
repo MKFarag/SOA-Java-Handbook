@@ -310,9 +310,9 @@
   },
   {
     "sectionNumber": 28,
-    "title": "Enterprise Security with Spring Security 6",
+    "title": "Enterprise Security with Spring Security 7",
     "part": "Part 3: Spring Boot & Production Stack",
-    "description": "Understand the component-based security architecture in Spring Security 6: declarative SecurityFilterChain bean configuration, URL authorization matchers, stateless CSRF semantics, and production password hashing with BCrypt and Argon2.",
+    "description": "Understand the modern security architecture in Spring Security 7 (Spring Boot 4.1): declarative SecurityFilterChain bean configuration, URL authorization matchers, lambda DSL, stateless CSRF semantics, and production password hashing with BCrypt and Argon2.",
     "topicIds": [
       "topic-98",
       "topic-99"

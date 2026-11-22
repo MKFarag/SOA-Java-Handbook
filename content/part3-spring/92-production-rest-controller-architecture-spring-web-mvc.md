@@ -6,7 +6,7 @@ title: Production REST Controller Architecture with Spring Web MVC
 part: 'Part 3: Spring Boot & Production Stack'
 sectionNumber: 26
 sectionTitle: RESTful Web Services & Global Error Handling
-versionBadge: Spring Boot 3.x / Java 21+
+versionBadge: Spring Boot 4.1 / Java 21+
 difficulty: Intermediate
 readingTime: 16 min read
 shortDescription: >-
@@ -28,7 +28,7 @@ relevanceLevel: MUST-KNOW / CORE
 
 ## 1. What It Is and Why It Exists
 
-Modern enterprise backends predominantly expose **RESTful (Representational State Transfer)** APIs over HTTP to power mobile applications, React/Vue/Angular frontends, and inter-service microservice meshes. In Spring Boot, the foundation for building HTTP services is **Spring Web MVC**, driven by the **Front Controller** pattern (implemented via `org.springframework.web.servlet.DispatcherServlet`).
+Modern enterprise backends predominantly expose **RESTful (Representational State Transfer)** APIs over HTTP to power mobile applications, React/Vue/Angular frontends, and inter-service microservice meshes. In Spring Boot 4.1 (built on Spring Framework 7 and Jakarta EE 11 / Servlet 6.1), the foundational starter is the modular **`spring-boot-starter-webmvc`**, driven by the **Front Controller** pattern (implemented via `org.springframework.web.servlet.DispatcherServlet`).
 
 ```
 ┌────────────────────────────────────────────────────────────────────────┐

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { Header } from './components/Header';
 import { Sidebar } from './components/Sidebar';
 import { TopicView } from './components/TopicView';
@@ -13,7 +13,7 @@ import { CertificateGateModal } from './components/CertificateGateModal';
 import { AdminDashboardModal } from './components/AdminDashboardModal';
 import { BroadcastsModal } from './components/BroadcastsModal';
 import { MobileNav } from './components/MobileNav';
-import { ALL_TOPICS, getTopicById, resolveTopic } from './data/topics';
+import { ALL_TOPICS, getTopicById, resolveTopic, migrateProfileData, CURRENT_TOPIC_IDS } from './data/topics';
 import type { ChallengeStatus, PartType, StudentProfile, BroadcastItem } from './types';
 import { saveStudentProfile, getBroadcasts } from './services/firebaseService';
 
@@ -62,21 +62,42 @@ export function App() {
   const [savedTopicIds, setSavedTopicIds] = useState<string[]>(() => {
     try {
       const saved = localStorage.getItem('java_handbook_saved');
-      return saved ? JSON.parse(saved) : ['topic-03', 'topic-66'];
+      const parsed = saved ? JSON.parse(saved) : ['topic-03', 'topic-66'];
+      return Array.isArray(parsed) ? parsed.filter((id: string) => CURRENT_TOPIC_IDS.has(id)) : ['topic-03', 'topic-66'];
     } catch {
       return ['topic-03', 'topic-66'];
     }
   });
 
-  // Completed topics
+  // Completed topics with versioned migration
   const [completedTopicIds, setCompletedTopicIds] = useState<Set<string>>(() => {
     try {
       const saved = localStorage.getItem('java_handbook_completed');
-      return saved ? new Set(JSON.parse(saved)) : new Set(['topic-03']);
+      const studentRaw = localStorage.getItem('soa_student_profile');
+      const student = studentRaw ? JSON.parse(studentRaw) : null;
+      const initialList = saved ? JSON.parse(saved) : (student?.completedTopics || ['topic-03']);
+      const currentSchemaVer = localStorage.getItem('soa_data_schema_version') ? parseInt(localStorage.getItem('soa_data_schema_version')!, 10) : 1;
+      const migrated = migrateProfileData({
+        completedTopics: initialList,
+        lastActive: student?.lastActive,
+        schemaVersion: currentSchemaVer
+      });
+      localStorage.setItem('soa_data_schema_version', '2');
+      localStorage.setItem('java_handbook_completed', JSON.stringify(migrated.completedTopics));
+      return new Set(migrated.completedTopics);
     } catch {
       return new Set(['topic-03']);
     }
   });
+
+  // Valid completed count: counts ONLY topics that exist in the modern curriculum
+  const validCompletedCount = useMemo(() => {
+    let count = 0;
+    for (const id of completedTopicIds) {
+      if (CURRENT_TOPIC_IDS.has(id)) count++;
+    }
+    return count;
+  }, [completedTopicIds]);
 
   // Challenge assessment states: record of challengeId -> ChallengeStatus
   const [challengeStates, setChallengeStates] = useState<Record<string, ChallengeStatus>>(() => {
@@ -298,7 +319,7 @@ export function App() {
 
   // Certificate Open Gate Check
   const handleOpenCertificate = () => {
-    const isLocalComplete = completedTopicIds.size >= ALL_TOPICS.length;
+    const isLocalComplete = validCompletedCount >= ALL_TOPICS.length;
     if (isCertificateUnlocked || isLocalComplete) {
       handleNavigateView('certificate');
     } else {
@@ -468,7 +489,7 @@ export function App() {
         onOpenBroadcasts={handleOpenBroadcasts}
         onOpenAdmin={() => setIsAdminModalOpen(true)}
         savedCount={savedTopicIds.length}
-        completedCount={completedTopicIds.size}
+        completedCount={validCompletedCount}
         totalTopics={ALL_TOPICS.length}
         isDark={isDark}
         onToggleTheme={() => setIsDark(prev => !prev)}
@@ -477,7 +498,7 @@ export function App() {
         onToggleMobileSidebar={() => setIsMobileSidebarOpen(prev => !prev)}
         currentStudent={currentStudent}
         unreadBroadcastsCount={unreadBroadcastsCount}
-        isCertificateUnlocked={isCertificateUnlocked || completedTopicIds.size >= ALL_TOPICS.length}
+        isCertificateUnlocked={isCertificateUnlocked || validCompletedCount >= ALL_TOPICS.length}
       />
 
       <div className="flex-1 flex w-full pt-14 sm:pt-16">
@@ -499,7 +520,7 @@ export function App() {
           savedTopicIds={new Set(savedTopicIds)}
           isOpenMobile={isMobileSidebarOpen}
           onCloseMobile={() => setIsMobileSidebarOpen(false)}
-          isCertificateUnlocked={isCertificateUnlocked || completedTopicIds.size >= ALL_TOPICS.length}
+          isCertificateUnlocked={isCertificateUnlocked || validCompletedCount >= ALL_TOPICS.length}
           unreadBroadcastsCount={unreadBroadcastsCount}
         />
 
@@ -561,7 +582,7 @@ export function App() {
 
           {currentView === 'certificate' && (
             <CertificateView
-              completedCount={completedTopicIds.size}
+              completedCount={validCompletedCount}
               totalTopics={ALL_TOPICS.length}
               onGoBack={() => handleNavigateView('home')}
               onGoToProgress={() => handleNavigateView('progress')}
@@ -597,7 +618,7 @@ export function App() {
         onSyncNow={forceSyncToCloud}
         isSyncing={isSyncing}
         lastSyncTime={lastSyncTime}
-        currentCompletedCount={completedTopicIds.size}
+        currentCompletedCount={validCompletedCount}
         currentSavedCount={savedTopicIds.length}
       />
 
@@ -606,7 +627,7 @@ export function App() {
         isOpen={isCertGateOpen}
         onClose={() => setIsCertGateOpen(false)}
         onUnlockSuccess={handleUnlockCertificateSuccess}
-        completedCount={completedTopicIds.size}
+        completedCount={validCompletedCount}
         totalTopics={ALL_TOPICS.length}
         currentStudent={currentStudent}
         onOpenSyncModal={() => setIsSyncModalOpen(true)}
@@ -639,7 +660,7 @@ export function App() {
         onOpenSaved={() => handleNavigateView('saved')}
         onOpenProgress={() => handleNavigateView('progress')}
         savedCount={savedTopicIds.length}
-        percentComplete={Math.min(100, Math.round((completedTopicIds.size / Math.max(ALL_TOPICS.length, 1)) * 100))}
+        percentComplete={Math.min(100, Math.round((validCompletedCount / Math.max(ALL_TOPICS.length, 1)) * 100))}
       />
     </div>
   );

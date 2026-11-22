@@ -167,8 +167,10 @@ public class GreetingApp {
 }
 ```
 
-#### Expected Terminal Output
-```
+<details data-type="output">
+<summary>⚡ View Terminal Output</summary>
+
+```text
 ==========================================
  Welcome to Modern Java Engineering!     
 ==========================================
@@ -176,12 +178,16 @@ Learner: DevMaster
 Weekly Target: 10 hours
 Status: Ready to compile and build.
 ```
+</details>
 
-#### Step-by-Step Execution
+<details data-type="trace">
+<summary>🔍 Step-by-Step Execution Analysis</summary>
+
 1. The JVM parses the terminal launch arguments and packages them into the `String[] args` array.
 2. The ternary condition checks `args.length > 0` to prevent `ArrayIndexOutOfBoundsException`.
 3. `System.out.printf()` formats the string and decimal integers with platform-independent `%n` newlines.
 4. Clean execution finishes, writing all bytes to stdout and releasing resources.
+</details>
 
 ---
 
@@ -275,7 +281,9 @@ public class TestProgram {
 }
 ```
 
-#### Hidden Solution & Explanation
+<details data-type="solution">
+<summary>👁 Reveal Solution & Explanation</summary>
+
 ```java
 public class TestProgram {
     public static void main(String[] args) {
@@ -283,9 +291,11 @@ public class TestProgram {
     }
 }
 ```
+
 > **Explanation:**  
 > 1. `string` must be capitalized as `String` because `String` is a class in `java.lang`.  
 > 2. The `println` statement was missing its trailing semicolon (`;`).
+</details>
 
 ---
 
@@ -301,7 +311,9 @@ public class SystemCheck {
 }
 ```
 
-#### Hidden Solution & Explanation
+<details data-type="solution">
+<summary>👁 Reveal Solution & Explanation</summary>
+
 ```java
 public class SystemCheck {
     public static void main(String[] args) {
@@ -311,14 +323,18 @@ public class SystemCheck {
     }
 }
 ```
+
 > **Explanation:** `System.getProperty()` retrieves fundamental runtime environment keys from the host operating system and JVM specification.
+</details>
 
 ---
 
 ### Exercise 3: Real-World Edge Case: Command-Line Index Guarding
 **Prompt:** What happens when someone runs `java GreetingApp` without any arguments if the code does `String name = args[0];`? How do you fix it?
 
-#### Hidden Solution & Explanation
+<details data-type="solution">
+<summary>👁 Reveal Solution & Explanation</summary>
+
 ```java
 // Problematic:
 // String name = args[0]; -> Throws ArrayIndexOutOfBoundsException: Index 0 out of bounds for length 0
@@ -326,7 +342,9 @@ public class SystemCheck {
 // Robust Fix:
 String name = (args.length > 0) ? args[0] : "Guest";
 ```
+
 > **Explanation:** When no arguments are supplied on the command line, `args` is initialized as a zero-length array (`args.length == 0`). Accessing index 0 immediately triggers an unchecked `ArrayIndexOutOfBoundsException` at runtime.
+</details>
 
 ---
 

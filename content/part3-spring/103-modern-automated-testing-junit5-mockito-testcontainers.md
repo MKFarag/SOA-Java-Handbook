@@ -6,12 +6,12 @@ title: 'Modern Automated Testing: JUnit 5, Mockito & Testcontainers'
 part: 'Part 3: Spring Boot & Production Stack'
 sectionNumber: 30
 sectionTitle: Production Libraries & Distributed Systems
-versionBadge: Spring Boot 3.x / JUnit 5 / Testcontainers 1.19+
+versionBadge: Spring Boot 4.1 / JUnit 5 / Spring Framework 7
 difficulty: Advanced
 readingTime: 18 min read
 shortDescription: >-
   Build robust enterprise test suites using the Testing Pyramid: unit tests with
-  JUnit 5 and Mockito, slice tests with @WebMvcTest and @DataJpaTest, and real
+  JUnit 5 and Mockito, slice tests with @WebMvcTest and @MockitoBean, and real
   containerized integration tests with Testcontainers.
 prerequisites:
   - 'Topic 88: Spring Framework Core: BeanFactory vs ApplicationContext'
@@ -92,7 +92,7 @@ Instead of loading the entire heavy `@SpringBootTest` context, Spring Boot provi
 
 | Slice Annotation | Layer Loaded | Mocks Required | Typical Execution Speed |
 | :--- | :--- | :--- | :---: |
-| `@WebMvcTest(OrderController.class)` | Controller, Filters, JSON serialization, Security | `@MockBean` for Services | $\sim 500\text{ ms}$ |
+| `@WebMvcTest(OrderController.class)` | Controller, Filters, JSON serialization, Security | `@MockitoBean` for Services | $\sim 500\text{ ms}$ |
 | `@DataJpaTest` | Repositories, EntityManager, Flyway schema | Mocks web controllers | $\sim 1\text{ s}$ |
 | `@JsonTest` | Jackson ObjectMapper serializers/deserializers | Standalone | $\sim 200\text{ ms}$ |
 | `@SpringBootTest` | Full Application Context, All Beans | None (or integration mocks) | $\sim 5\text{--}15\text{ s}$ |
@@ -186,8 +186,8 @@ import com.handbook.spring.service.CustomerService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -205,7 +205,8 @@ class CustomerControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-    @MockBean
+    // Spring Boot 4.1 / Spring Framework 7 official Mockito bean replacement (replaces removed @MockBean)
+    @MockitoBean
     private CustomerService customerService;
 
     @Test
@@ -296,10 +297,10 @@ when(mockList.get(0)).thenReturn("Mocked");
 ```
 **The Architectural Rule:** Never mock data objects, Java Records, Collections, or DTOs. Only mock **collaborating service boundaries, network boundaries, and external I/O** (e.g. HTTP clients, payment gateways, repositories).
 
-### Pitfall 2: Context Cache Pollution with `@MockBean`
-**The Hazard:** Placing different `@MockBean` declarations across 30 separate test classes.
-**Why it fails:** Spring caches the `ApplicationContext` across test classes to keep test runs fast. When Spring encounters a new `@MockBean` variation, it considers the context modified ("dirty"), shuts down the running context, and spins up a brand-new application context. A test suite that should take 20 seconds ends up taking 12 minutes!
-**The Fix:** Group `@MockBean` declarations in a shared abstract base test configuration class, or use pure unit tests with `@ExtendWith(MockitoExtension.class)` without Spring.
+### Pitfall 2: Context Cache Pollution with `@MockitoBean` (replaces removed `@MockBean`)
+**The Hazard:** Placing different `@MockitoBean` declarations across 30 separate test classes.
+**Why it fails:** Spring caches the `ApplicationContext` across test classes to keep test runs fast. When Spring encounters a new `@MockitoBean` variation, it considers the context modified ("dirty"), shuts down the running context, and spins up a brand-new application context. A test suite that should take 20 seconds ends up taking 12 minutes!
+**The Fix:** Group `@MockitoBean` declarations in a shared abstract base test configuration class, or use pure unit tests with `@ExtendWith(MockitoExtension.class)` without Spring. (Note: in Spring Boot 4.0+, the legacy `@MockBean` annotation has been officially removed in favor of Spring Framework's `@MockitoBean`).
 
 ### Pitfall 3: False Confidence from In-Memory Databases (H2)
 **The Hazard:** Running integration tests against an in-memory H2 database while production uses PostgreSQL.
@@ -424,8 +425,8 @@ import com.handbook.spring.service.OrderService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -445,7 +446,8 @@ class OrderControllerValidationTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-    @MockBean
+    // Spring Boot 4.1 / Spring Framework 7 official Mockito bean replacement (replaces removed @MockBean)
+    @MockitoBean
     private OrderService orderService;
 
     @Test

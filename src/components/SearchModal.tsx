@@ -23,10 +23,20 @@ export const SearchModal: React.FC<SearchModalProps> = ({
     const ms = new MiniSearch({
       fields: ['id', 'title', 'shortDescription', 'sectionTitle', 'keywords', 'tokens', 'searchableTerms', 'cheatSheetText'],
       storeFields: ['id', 'title', 'slug', 'part', 'sectionTitle', 'shortDescription', 'versionBadge', 'difficulty'],
+      tokenize: (text) => text.split(/[\s,;:!?"'()[\]{}<>/\\+=*&|~^`]+/),
+      processTerm: (term, fieldName) => {
+        const lower = term.toLowerCase().replace(/^[^\w@]+|[^\w]+$/g, '');
+        if (!lower) return null;
+        if (fieldName !== undefined) {
+          const parts = lower.split(/[@.]/).filter(p => p.length > 0);
+          return Array.from(new Set([lower, ...parts]));
+        }
+        return lower;
+      },
       searchOptions: {
         boost: { id: 6, title: 3, searchableTerms: 2.5, cheatSheetText: 2, sectionTitle: 1.5, tokens: 2, keywords: 1.5 },
         prefix: true,
-        fuzzy: 0.2
+        fuzzy: (term) => term.length > 3 ? 0.2 : false
       }
     });
 

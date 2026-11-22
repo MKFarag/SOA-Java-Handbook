@@ -252,8 +252,10 @@ public class OperatorMechanics {
 }
 ```
 
-#### Expected Terminal Output
-```
+<details data-type="output">
+<summary>⚡ View Terminal Output</summary>
+
+```text
 === 1. Prefix vs Postfix ===
 Prefix  : a=6, result=6
 Postfix : b=6, result=5
@@ -266,6 +268,7 @@ Postfix : b=6, result=5
 === 3. Short-Circuit Evaluation ===
 Safely checked null string without crash: false
 ```
+</details>
 
 ---
 
@@ -311,22 +314,24 @@ public class SecurityPermissions {
 }
 ```
 
-#### Expected Terminal Output
-```
-=============================================="
+<details data-type="output">
+<summary>⚡ View Terminal Output</summary>
+
+```text
+==============================================
           BITMASK ACCESS CONTROL              
-=============================================="
+==============================================
 User Role Mask Binary: 11
 Has READ Access   : true
 Has DELETE Access : false
 After Grant -> Has EXECUTE Access: true
 After Revoke -> Has WRITE Access : false
-=============================================="
+==============================================
 ```
+</details>
 
----
-
-## 5. Step-by-Step: What Happens When This Runs
+<details data-type="trace">
+<summary>🔍 Step-by-Step Execution Analysis</summary>
 
 1. **Prefix Evaluation (`++a`):**
    - The variable `a` is fetched from stack slot 1.
@@ -340,6 +345,7 @@ After Revoke -> Has WRITE Access : false
    - The expression `(username != null)` evaluates to `false`.
    - The bytecode contains a conditional jump instruction (`ifeq`). Because the condition is already false, the CPU branches immediately past the second operand, skipping `username.length()` completely.
    - This prevents a fatal `NullPointerException`.
+</details>
 
 ---
 
@@ -423,9 +429,12 @@ if (x > 5 || ++x > 10) {
 }
 ```
 
-#### Hidden Solution & Explanation
+<details data-type="solution">
+<summary>👁 Reveal Solution & Explanation</summary>
+
 > **Output:** `x is 10`  
 > **Explanation:** Because of short-circuit evaluation, the left side `(x > 5)` evaluates to `true`. Because the operator is `||` (OR), the entire condition is already satisfied. The right side `(++x > 10)` is **never executed**, so `x` remains `10`.
+</details>
 
 ---
 
@@ -442,7 +451,9 @@ public class EvenOddChecker {
 }
 ```
 
-#### Hidden Solution & Explanation
+<details data-type="solution">
+<summary>👁 Reveal Solution & Explanation</summary>
+
 ```java
 public class EvenOddChecker {
     public static void main(String[] args) {
@@ -452,18 +463,23 @@ public class EvenOddChecker {
     }
 }
 ```
+
 > **Explanation:** The modulus operator `n % 2` returns `0` for even numbers and `1` (or `-1` for negative numbers) for odd numbers. The ternary operator evaluates the condition and returns the corresponding string.
+</details>
 
 ---
 
 ### Exercise 3: Real-World Architecture Challenge: Unsigned Right Shift (`>>>`)
 **Prompt:** What is the difference between the arithmetic right shift (`>>`) and the unsigned right shift (`>>>`) in Java? Why does this matter for network protocol parsers?
 
-#### Hidden Solution & Explanation
+<details data-type="solution">
+<summary>👁 Reveal Solution & Explanation</summary>
+
 > **Explanation:**  
 > - **Arithmetic Right Shift (`>>`):** Preserves the sign bit. If the number is negative, it fills the newly opened left bits with `1`s.  
 > - **Unsigned Right Shift (`>>>`):** Always fills the left bits with `0`s, regardless of whether the number is positive or negative.  
 > **Why it matters:** In network protocols and cryptography (e.g. parsing raw IPv4 packet headers or SHA-256 hashes), bytes represent unsigned raw binary values. If an engineer uses `>>` on an unsigned byte with the top bit set, sign extension corrupts the packet data. Using `>>>` guarantees clean zero-filled bit shifting.
+</details>
 
 ---
 
