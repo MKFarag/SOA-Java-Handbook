@@ -89,8 +89,8 @@ async function runComprehensiveQA() {
     const pageTitle = await page.title();
     console.log(`[QA]    Page Title: "${pageTitle}"`);
 
-    // 2. Iterate all 127 topics
-    console.log('[QA] 2. Verifying all 127 topics for zero console/runtime errors & syntax highlighting...');
+    // 2. Iterate all 130 topics
+    console.log(`[QA] 2. Verifying all ${topicIds.length} topics for zero console/runtime errors & syntax highlighting...`);
     let highlightedBlocks = 0;
     for (let i = 0; i < topicIds.length; i++) {
       const id = topicIds[i];
@@ -101,7 +101,7 @@ async function runComprehensiveQA() {
         console.log(`[QA]    Verified ${i + 1}/${topicIds.length} topics...`);
       }
     }
-    console.log(`[QA]    Total code blocks highlighted across 127 topics: ${highlightedBlocks}`);
+    console.log(`[QA]    Total code blocks highlighted across ${topicIds.length} topics: ${highlightedBlocks}`);
 
     // 3. Search 20 key terms
     console.log('[QA] 3. Testing Search index with 20 critical enterprise terms...');
@@ -146,7 +146,7 @@ async function runComprehensiveQA() {
     // 5. Check error tally
     console.log('------------------------------------------------------------');
     console.log(`[QA] Verification Summary:`);
-    console.log(`     Topics Loaded: 127/127`);
+    console.log(`     Topics Loaded: ${topicIds.length}/${topicIds.length}`);
     console.log(`     Code Blocks Highlighted: ${highlightedBlocks}`);
     console.log(`     Search Queries Evaluated: ${searchReport.filter(r => r.Hits > 0).length}/${SEARCH_TERMS.length}`);
     console.log(`     Total Console/Page Errors: ${caughtErrors.length}`);
@@ -157,12 +157,12 @@ async function runComprehensiveQA() {
       process.exit(1);
     }
 
-    console.log('[QA] SUCCESS: All 127 topics, search queries, and responsive viewports passed with 0 errors.');
+    console.log(`[QA] SUCCESS: All ${topicIds.length} topics, search queries, and responsive viewports passed with 0 errors.`);
     await browser.close();
     previewProcess.kill();
     process.exit(0);
   } finally {
-    try { previewProcess.kill(); } catch (_) {}
+    try { previewProcess.kill(); } catch {}
   }
 }
 

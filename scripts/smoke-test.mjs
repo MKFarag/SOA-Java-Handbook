@@ -103,9 +103,9 @@ async function runSmokeTest() {
     const navTests = [
       { path: '#saved', expectedTitleSubstr: '' },
       { path: '#progress', expectedTitleSubstr: '' },
-      { path: '#topic-134', expectedTitleSubstr: 'Persistence' }, // redirects to topic-131
-      { path: '#topic-76', expectedTitleSubstr: 'JSP' },         // redirects to topic-74
-      { path: '#topic-81', expectedTitleSubstr: 'Form' }          // redirects to topic-80
+      { path: '#topic-134', expectedTitleSubstr: 'Persistence' }, // redirects to topic-130
+      { path: '#topic-76', expectedTitleSubstr: 'Security' },    // topic-76: Jakarta Web Security Essentials
+      { path: '#topic-81', expectedTitleSubstr: 'Pool' }         // topic-81: JDBC Connection Pooling
     ];
 
     for (const t of navTests) {

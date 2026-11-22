@@ -252,19 +252,29 @@
 .markdown-body li {
   margin-bottom: 0.25rem;
 }
+.table-scroll-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  margin: 1.5rem auto;
+  display: flex;
+  justify-content: center;
+  border-radius: 0.75rem;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-card);
+}
+
 .markdown-body table {
   width: 100%;
   border-collapse: collapse;
-  margin: 1.5rem 0;
+  margin: 0 auto;
   font-size: 0.875rem;
-  overflow-x: auto;
-  display: block;
+  display: table;
 }
 .markdown-body th {
   background-color: #f1f5f9;
   color: var(--text-primary);
   font-weight: 700;
-  text-align: left;
+  text-align: center;
   padding: 0.75rem 1rem;
   border: 1px solid var(--border-color);
 }
@@ -275,6 +285,15 @@
   padding: 0.625rem 1rem;
   border: 1px solid var(--border-color);
   color: var(--text-secondary);
+  text-align: center;
+}
+.markdown-body th:first-child,
+.markdown-body td:first-child {
+  text-align: left;
+}
+.markdown-body th:last-child,
+.markdown-body td:last-child {
+  text-align: left;
 }
 .markdown-body tr:nth-child(even) {
   background-color: rgba(0, 0, 0, 0.02);
@@ -419,6 +438,156 @@
   color: #e4e4e7;
 }
 
+/* Specific styling for Bug Fix Details */
+.markdown-body details[data-type="bug-fix"] {
+  border-color: rgba(244, 63, 94, 0.35);
+  background-color: rgba(244, 63, 94, 0.04);
+}
+.dark .markdown-body details[data-type="bug-fix"] {
+  background-color: rgba(244, 63, 94, 0.08);
+  border-color: rgba(244, 63, 94, 0.35);
+}
+.markdown-body details[data-type="bug-fix"] summary {
+  color: #e11d48;
+}
+.dark .markdown-body details[data-type="bug-fix"] summary {
+  color: #fb7185;
+}
+
+/* Specific styling for Trace / Deep-Dive Details */
+.markdown-body details[data-type="trace"] {
+  border-color: rgba(14, 165, 233, 0.35);
+  background-color: rgba(14, 165, 233, 0.04);
+}
+.dark .markdown-body details[data-type="trace"] {
+  background-color: rgba(14, 165, 233, 0.08);
+  border-color: rgba(14, 165, 233, 0.35);
+}
+.markdown-body details[data-type="trace"] summary {
+  color: #0284c7;
+}
+.dark .markdown-body details[data-type="trace"] summary {
+  color: #38bdf8;
+}
+
+/* GitHub Style Developer Callouts */
+.markdown-body blockquote.callout {
+  border-left-width: 4px;
+  border-radius: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  margin: 1.25rem 0;
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+.markdown-body blockquote.callout-tip {
+  border-left-color: #10b981;
+  background-color: rgba(16, 185, 129, 0.07);
+  border-top-color: rgba(16, 185, 129, 0.2);
+  border-right-color: rgba(16, 185, 129, 0.2);
+  border-bottom-color: rgba(16, 185, 129, 0.2);
+}
+.dark .markdown-body blockquote.callout-tip {
+  background-color: rgba(16, 185, 129, 0.12);
+  border-color: rgba(16, 185, 129, 0.3);
+}
+.markdown-body blockquote.callout-note {
+  border-left-color: #0284c7;
+  background-color: rgba(2, 132, 199, 0.07);
+  border-top-color: rgba(2, 132, 199, 0.2);
+  border-right-color: rgba(2, 132, 199, 0.2);
+  border-bottom-color: rgba(2, 132, 199, 0.2);
+}
+.dark .markdown-body blockquote.callout-note {
+  background-color: rgba(2, 132, 199, 0.12);
+  border-color: rgba(2, 132, 199, 0.3);
+}
+.markdown-body blockquote.callout-warning {
+  border-left-color: #f59e0b;
+  background-color: rgba(245, 158, 11, 0.07);
+  border-top-color: rgba(245, 158, 11, 0.2);
+  border-right-color: rgba(245, 158, 11, 0.2);
+  border-bottom-color: rgba(245, 158, 11, 0.2);
+}
+.dark .markdown-body blockquote.callout-warning {
+  background-color: rgba(245, 158, 11, 0.12);
+  border-color: rgba(245, 158, 11, 0.3);
+}
+.markdown-body blockquote.callout-caution {
+  border-left-color: #f43f5e;
+  background-color: rgba(244, 63, 94, 0.07);
+  border-top-color: rgba(244, 63, 94, 0.2);
+  border-right-color: rgba(244, 63, 94, 0.2);
+  border-bottom-color: rgba(244, 63, 94, 0.2);
+}
+.dark .markdown-body blockquote.callout-caution {
+  background-color: rgba(244, 63, 94, 0.12);
+  border-color: rgba(244, 63, 94, 0.3);
+}
+.markdown-body blockquote.callout-important {
+  border-left-color: #8b5cf6;
+  background-color: rgba(139, 92, 246, 0.07);
+  border-top-color: rgba(139, 92, 246, 0.2);
+  border-right-color: rgba(139, 92, 246, 0.2);
+  border-bottom-color: rgba(139, 92, 246, 0.2);
+}
+.dark .markdown-body blockquote.callout-important {
+  background-color: rgba(139, 92, 246, 0.12);
+  border-color: rgba(139, 92, 246, 0.3);
+}
+
+.markdown-body blockquote.callout::before {
+  display: block;
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.35rem;
+}
+.markdown-body blockquote.callout-tip::before {
+  content: 'TIP';
+  color: #059669;
+}
+.dark .markdown-body blockquote.callout-tip::before {
+  color: #34d399;
+}
+.markdown-body blockquote.callout-note::before {
+  content: 'NOTE';
+  color: #0284c7;
+}
+.dark .markdown-body blockquote.callout-note::before {
+  color: #38bdf8;
+}
+.markdown-body blockquote.callout-warning::before {
+  content: 'WARNING';
+  color: #d97706;
+}
+.dark .markdown-body blockquote.callout-warning::before {
+  color: #fbbf24;
+}
+.markdown-body blockquote.callout-caution::before {
+  content: 'CAUTION';
+  color: #e11d48;
+}
+.dark .markdown-body blockquote.callout-caution::before {
+  color: #fb7185;
+}
+.markdown-body blockquote.callout-important::before {
+  content: 'IMPORTANT';
+  color: #7c3aed;
+}
+.dark .markdown-body blockquote.callout-important::before {
+  color: #a78bfa;
+}
+.dark .markdown-body blockquote.callout-caution::before {
+  color: #fb7185;
+}
+.markdown-body blockquote.callout-important::before {
+  content: '📌 IMPORTANT';
+  color: #7c3aed;
+}
+.dark .markdown-body blockquote.callout-important::before {
+  color: #a78bfa;
+}
+
 /* Output attached to code blocks fallback */
 .markdown-body pre + details[data-type="output"],
 .markdown-body pre + details[data-type="trace"] {
@@ -428,8 +597,9 @@
   border-top: 1px dashed var(--border-color);
 }
 
-/* Dual-Tab Code Blocks */
-.code-tab-container {
+/* Dual-Tab Code Blocks & Standalone Code Blocks */
+.code-tab-container,
+.standalone-code-container {
   margin: 1.25rem 0;
   border-radius: 0.75rem;
   overflow: hidden;

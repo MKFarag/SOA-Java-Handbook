@@ -21,66 +21,54 @@ export const CURRENT_TOPIC_IDS = new Set(ALL_TOPICS.map(t => t.id));
 
 export const REBUILD_TIMESTAMP_MS = new Date('2026-11-21T19:32:50.000Z').getTime();
 
-// Unambiguous legacy IDs that never exist in the 127-topic curriculum
+// Unambiguous legacy IDs that never exist in the 130-topic curriculum
 export const LEGACY_ONLY_IDS = new Set([
-  'topic-76', 'topic-77', 'topic-78', 'topic-81',
-  'topic-132', 'topic-133', 'topic-134'
+  'topic-131-legacy', 'topic-132', 'topic-133', 'topic-134'
 ]);
 
-// Single-pass, unchained old -> new mapping
+// Single-pass, unchained old -> new mapping for stored profile bookmarks
 export const OLD_TO_NEW_TOPIC_MAP: Record<string, string> = {
-  'topic-75': 'topic-74',
-  'topic-76': 'topic-74',
-  'topic-77': 'topic-75',
-  'topic-78': 'topic-75',
-  'topic-81': 'topic-80',
-  'topic-130': 'topic-129',
-  'topic-131': 'topic-121',
-  'topic-132': 'topic-131',
-  'topic-133': 'topic-130',
-  'topic-134': 'topic-131'
+  'topic-131-legacy': 'topic-120',
+  'topic-132': 'topic-130',
+  'topic-133': 'topic-129',
+  'topic-134': 'topic-130'
 };
 
 export const RETIRED_MICROSERVICE_IDS = new Set([
-  'topic-120', 'topic-121', 'topic-122', 'topic-123', 'topic-124',
-  'topic-125', 'topic-126', 'topic-127', 'topic-128', 'topic-129'
+  'topic-120-legacy', 'topic-121-legacy', 'topic-122-legacy', 'topic-123-legacy', 'topic-124-legacy',
+  'topic-125-legacy', 'topic-126-legacy', 'topic-127-legacy', 'topic-128-legacy', 'topic-129-legacy'
 ]);
 
 export const LEGACY_TOPIC_ALIASES: Record<string, string> = {
-  // Merged JSP & Presentation topics (unambiguous old IDs)
-  'topic-75-legacy': 'topic-74',
-  'topic-76': 'topic-74',
-  'jsp-implicit-objects-and-standard-actions': 'topic-74',
-  'jsp-syntax-elements': 'topic-74',
-  'topic-77': 'topic-75',
-  'topic-78': 'topic-75',
-  'custom-jsp-tag-libraries': 'topic-75',
-  'topic-81': 'topic-80',
+  // Merged JSP & Presentation topics
+  'jsp-implicit-objects-and-standard-actions': 'topic-77',
+  'jsp-syntax-elements': 'topic-77',
+  'custom-jsp-tag-libraries': 'topic-78',
   'error-pages-and-exception-handling': 'topic-80',
 
-  // Database 134-era unambiguous mappings
+  // Database 134-era mappings
   'topic-130-legacy': 'topic-129',
-  'topic-131-legacy': 'topic-121',
-  'topic-132': 'topic-131',
-  'topic-133': 'topic-130',
-  'topic-134': 'topic-131',
-  'java-mongodb-persistence-spring-data-properties': 'topic-131',
-  'mongodb-document-store-compass-queries': 'topic-130',
-  'java-mysql-persistence-spring-data-properties': 'topic-131',
-  'mysql-fundamentals-queries-xampp': 'topic-121',
-  'sql-vs-nosql-architecture-tradeoffs': 'topic-129',
+  'topic-131-legacy': 'topic-120',
+  'topic-132': 'topic-130',
+  'topic-133': 'topic-129',
+  'topic-134': 'topic-130',
+  'java-mongodb-persistence-spring-data-properties': 'topic-130',
+  'mongodb-document-store-compass-queries': 'topic-129',
+  'java-mysql-persistence-spring-data-properties': 'topic-130',
+  'mysql-fundamentals-queries-xampp': 'topic-120',
+  'sql-vs-nosql-architecture-tradeoffs': 'topic-128',
 
   // Pruned Cloud/Microservices slugs (gracefully redirected to relevant core backend topics)
-  'service-discovery-registration-eureka-consul': 'topic-88',
-  'api-gateway-spring-cloud-gateway': 'topic-92',
-  'centralized-configuration-spring-cloud-config': 'topic-91',
-  'declarative-rest-clients-feign-restclient': 'topic-92',
-  'distributed-tracing-micrometer-opentelemetry-zipkin': 'topic-104',
-  'kafka-resilience-retryable-topics-dlt': 'topic-108',
-  'transactional-outbox-pattern-cdc-debezium': 'topic-97',
-  'distributed-transactions-saga-pattern': 'topic-97',
-  'production-dockerization-layered-jars': 'topic-90',
-  'graalvm-native-image-aot-compilation': 'topic-90'
+  'service-discovery-registration-eureka-consul': 'topic-87',
+  'api-gateway-spring-cloud-gateway': 'topic-91',
+  'centralized-configuration-spring-cloud-config': 'topic-90',
+  'declarative-rest-clients-feign-restclient': 'topic-91',
+  'distributed-tracing-micrometer-opentelemetry-zipkin': 'topic-103',
+  'kafka-resilience-retryable-topics-dlt': 'topic-107',
+  'transactional-outbox-pattern-cdc-debezium': 'topic-96',
+  'distributed-transactions-saga-pattern': 'topic-96',
+  'production-dockerization-layered-jars': 'topic-89',
+  'graalvm-native-image-aot-compilation': 'topic-89'
 };
 
 /**

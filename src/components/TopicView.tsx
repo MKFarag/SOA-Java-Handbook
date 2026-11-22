@@ -209,7 +209,87 @@ export const TopicView: React.FC<TopicViewProps> = ({
       detailsEl.replaceWith(tabContainer);
     });
 
-    // 2. Enhance Solution cards with interactive Reveal / Hide toggle
+    // 2. Enhance Standalone Code blocks with Language tag, Wrap toggle, and Copy button
+    const standalonePres = container.querySelectorAll('pre');
+    standalonePres.forEach((preEl) => {
+      if (preEl.closest('.code-tab-container') || preEl.closest('.standalone-code-container')) return;
+      if (preEl.closest('td') || preEl.closest('th') || preEl.closest('summary')) return;
+
+      const codeEl = preEl.querySelector('code');
+      const codeText = (codeEl ? codeEl.textContent : preEl.textContent) || '';
+      if (!codeText.trim()) return;
+
+      const langClass = Array.from(codeEl?.classList || []).find(c => c.startsWith('language-'));
+      const langName = langClass ? langClass.replace('language-', '').toUpperCase() : 'CODE';
+
+      const codeContainer = document.createElement('div');
+      codeContainer.className = 'standalone-code-container my-4 sm:my-6 rounded-xl overflow-hidden border border-zinc-200/80 dark:border-[#2e2e32] bg-[#1e1e1e] shadow-lg text-left';
+
+      const header = document.createElement('div');
+      header.className = 'code-tab-header flex items-center justify-between px-2.5 sm:px-4 py-2 bg-[#252526] border-b border-[#2e2e32] select-none gap-2';
+
+      const titleGroup = document.createElement('div');
+      titleGroup.className = 'flex items-center gap-1.5 text-xs font-mono text-zinc-400';
+      titleGroup.innerHTML = `<span class="px-2 py-0.5 rounded bg-zinc-800 text-[10px] sm:text-xs font-bold text-orange-400 font-mono border border-zinc-700">${langName}</span>`;
+      header.appendChild(titleGroup);
+
+      const actionsGroup = document.createElement('div');
+      actionsGroup.className = 'flex items-center gap-1.5 shrink-0';
+
+      const wrapBtn = document.createElement('button');
+      wrapBtn.type = 'button';
+      wrapBtn.className = 'wrap-btn flex items-center gap-1 px-2 py-1 text-[11px] sm:text-xs font-medium rounded-md border text-zinc-400 hover:text-zinc-200 bg-[#2d2d30] hover:bg-[#3e3e42] border-[#3f3f46] transition-all cursor-pointer';
+      wrapBtn.innerHTML = '<svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"></line><path d="M3 12h15a3 3 0 1 1 0 6h-4"></path><polyline points="16 16 14 18 16 20"></polyline><line x1="3" y1="18" x2="10" y2="18"></line></svg> <span class="hidden sm:inline">Wrap</span>';
+
+      const copyBtn = document.createElement('button');
+      copyBtn.type = 'button';
+      copyBtn.className = 'copy-btn flex items-center gap-1 sm:gap-1.5 px-2 sm:px-2.5 py-1 text-[11px] sm:text-xs font-medium rounded-md text-zinc-300 hover:text-white bg-[#2d2d30] hover:bg-[#3e3e42] border border-[#3f3f46] transition-all cursor-pointer';
+      copyBtn.innerHTML = '<svg class="w-3.5 h-3.5 text-zinc-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> <span class="hidden sm:inline">Copy</span>';
+
+      actionsGroup.appendChild(wrapBtn);
+      actionsGroup.appendChild(copyBtn);
+      header.appendChild(actionsGroup);
+
+      const codePane = document.createElement('div');
+      codePane.className = 'p-3 sm:p-4 text-xs sm:text-sm font-mono overflow-x-auto';
+      preEl.style.margin = '0';
+      preEl.style.border = 'none';
+      preEl.style.backgroundColor = 'transparent';
+      preEl.style.padding = '0';
+
+      let isWrapped = false;
+      wrapBtn.onclick = () => {
+        isWrapped = !isWrapped;
+        if (isWrapped) {
+          wrapBtn.classList.add('bg-zinc-600', 'text-white');
+          wrapBtn.classList.remove('text-zinc-400', 'bg-[#2d2d30]');
+          codePane.classList.add('whitespace-pre-wrap', 'break-words');
+          preEl.classList.add('whitespace-pre-wrap', 'break-words');
+          codeEl?.classList.add('whitespace-pre-wrap', 'break-words');
+        } else {
+          wrapBtn.classList.remove('bg-zinc-600', 'text-white');
+          wrapBtn.classList.add('text-zinc-400', 'bg-[#2d2d30]');
+          codePane.classList.remove('whitespace-pre-wrap', 'break-words');
+          preEl.classList.remove('whitespace-pre-wrap', 'break-words');
+          codeEl?.classList.remove('whitespace-pre-wrap', 'break-words');
+        }
+      };
+
+      copyBtn.onclick = () => {
+        navigator.clipboard.writeText(codeText);
+        copyBtn.innerHTML = '<svg class="w-3.5 h-3.5 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg> <span class="text-emerald-400 font-semibold hidden sm:inline">Copied!</span>';
+        setTimeout(() => {
+          copyBtn.innerHTML = '<svg class="w-3.5 h-3.5 text-zinc-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> <span class="hidden sm:inline">Copy</span>';
+        }, 2000);
+      };
+
+      preEl.parentNode?.insertBefore(codeContainer, preEl);
+      codePane.appendChild(preEl);
+      codeContainer.appendChild(header);
+      codeContainer.appendChild(codePane);
+    });
+
+    // 3. Enhance Solution cards with interactive Reveal / Hide toggle
     const solutionDetails = container.querySelectorAll('details[data-type="solution"]');
     solutionDetails.forEach((detailsEl) => {
       const summary = detailsEl.querySelector('summary');
@@ -230,7 +310,29 @@ export const TopicView: React.FC<TopicViewProps> = ({
       detailsEl.addEventListener('toggle', updateSummary);
     });
 
-    // 3. Highlight code syntax with Prism
+    // 3.5 Ensure tables are wrapped in a horizontally scrollable container for responsive containment
+    container.querySelectorAll('table').forEach((table) => {
+      if (table.parentElement?.classList.contains('table-scroll-wrapper')) return;
+      const wrapper = document.createElement('div');
+      wrapper.className = 'table-scroll-wrapper w-full overflow-x-auto my-4 rounded-lg border border-zinc-200 dark:border-zinc-800';
+      table.parentNode?.insertBefore(wrapper, table);
+      wrapper.appendChild(table);
+    });
+
+    // 4. Transform blockquotes with [!NOTE], [!TIP], etc. into GitHub-style callouts
+    container.querySelectorAll('blockquote').forEach((bq) => {
+      const p = bq.querySelector('p');
+      if (!p) return;
+      const text = p.textContent || '';
+      const match = text.match(/^\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]/i);
+      if (match) {
+        const type = match[1].toUpperCase();
+        bq.classList.add('callout', `callout-${type.toLowerCase()}`);
+        p.innerHTML = p.innerHTML.replace(/^\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]\s*(?:<br\s*\/?>)?/i, '');
+      }
+    });
+
+    // 5. Highlight code syntax with Prism
     container.querySelectorAll('pre code').forEach((block) => {
       Prism.highlightElement(block);
     });
@@ -247,7 +349,7 @@ export const TopicView: React.FC<TopicViewProps> = ({
           const parentDetails = target.closest('details');
           if (parentDetails) parentDetails.open = true;
         }
-      } catch (_) {}
+      } catch {}
     }
   }, [topic.id, renderedHtml]);
 
@@ -271,16 +373,14 @@ export const TopicView: React.FC<TopicViewProps> = ({
   };
 
   return (
-    <div className="max-w-4xl mx-auto pt-3 sm:pt-8 pb-8 px-3 sm:px-6 lg:px-8 space-y-6 sm:space-y-10 text-left">
+    <div className="max-w-5xl xl:max-w-6xl 2xl:max-w-7xl mx-auto pt-3 sm:pt-8 pb-8 px-4 sm:px-6 lg:px-8 space-y-6 sm:space-y-8 text-left">
       
       {/* 1. Header & Breadcrumbs */}
       <div className="space-y-3 sm:space-y-4">
         <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 text-[11px] sm:text-xs text-zinc-500 dark:text-zinc-400 font-sans leading-normal">
-          <span className="truncate max-w-[120px] sm:max-w-none">{topic.part}</span>
+          <span>{topic.part}</span>
           <span>/</span>
-          <span className="truncate max-w-[140px] sm:max-w-none">{topic.sectionTitle}</span>
-          <span>/</span>
-          <span className="text-zinc-900 dark:text-zinc-200 font-medium truncate max-w-[160px] sm:max-w-none">{topic.title}</span>
+          <span className="text-zinc-900 dark:text-zinc-200 font-medium truncate">{topic.title}</span>
         </div>
 
         {/* Action Controls & Chips Row */}
@@ -292,20 +392,6 @@ export const TopicView: React.FC<TopicViewProps> = ({
             <span className="px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md text-[11px] sm:text-xs font-semibold bg-zinc-200 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300">
               {topic.difficulty}
             </span>
-            {topic.relevanceLevel && (
-              <span className={`px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md text-[11px] sm:text-xs font-semibold border ${
-                topic.relevanceLevel === 'MUST-KNOW / CORE'
-                  ? 'bg-emerald-500/10 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 border-emerald-500/30'
-                  : topic.relevanceLevel === 'ADVANCED / DEEP-DIVE'
-                  ? 'bg-indigo-500/10 dark:bg-indigo-500/20 text-indigo-700 dark:text-indigo-300 border-indigo-500/30'
-                  : 'bg-amber-500/10 dark:bg-amber-500/20 text-amber-700 dark:text-amber-300 border-amber-500/30'
-              }`}>
-                {topic.relevanceLevel === 'MUST-KNOW / CORE' && '🎯 '}
-                {topic.relevanceLevel === 'ADVANCED / DEEP-DIVE' && '🚀 '}
-                {topic.relevanceLevel === 'OPTIONAL / LEGACY' && '🏛️ '}
-                {topic.relevanceLevel}
-              </span>
-            )}
             <span className="flex items-center gap-1 text-[11px] sm:text-xs text-zinc-500 dark:text-zinc-400">
               <Clock className="w-3.5 h-3.5" />
               {topic.readingTime}

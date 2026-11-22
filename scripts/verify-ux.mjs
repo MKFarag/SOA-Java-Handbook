@@ -8,26 +8,6 @@ if (!existsSync(SCREENSHOT_DIR)) {
   mkdirSync(SCREENSHOT_DIR, { recursive: true });
 }
 
-function calculateContrastRatio(rgb1, rgb2) {
-  function getLuminance(r, g, b) {
-    const a = [r, g, b].map(v => {
-      v /= 255;
-      return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
-    });
-    return a[0] * 0.2126 + a[1] * 0.7152 + a[2] * 0.0722;
-  }
-  const l1 = getLuminance(rgb1[0], rgb1[1], rgb1[2]);
-  const l2 = getLuminance(rgb2[0], rgb2[1], rgb2[2]);
-  const brightest = Math.max(l1, l2);
-  const darkest = Math.min(l1, l2);
-  return (brightest + 0.05) / (darkest + 0.05);
-}
-
-function parseRgb(colorStr) {
-  const m = colorStr.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/);
-  if (m) return [parseInt(m[1]), parseInt(m[2]), parseInt(m[3])];
-  return [0, 0, 0];
-}
 
 async function main() {
   console.log('Starting preview server...');

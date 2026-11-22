@@ -3,7 +3,7 @@
     "sectionNumber": 1,
     "title": "Foundations & Architecture",
     "part": "Part 1: Java Core",
-    "description": "Discover how human-readable source code transforms into machine-executable instructions through compilation, bytecode, and the Java Virtual Machine.",
+    "description": "Execution pipeline: compilation, bytecode (.class), JVM runtime mechanics, and the JIT compiler.",
     "topicIds": [
       "topic-01",
       "topic-02",
@@ -14,30 +14,22 @@
     "sectionNumber": 2,
     "title": "Language Basics & Data Types",
     "part": "Part 1: Java Core",
-    "description": "Explore the 8 primitive data types in Java, memory allocation on the stack, byte sizes, range limits, variable identifiers, and reading console input via Scanner.",
+    "description": "Reference for the 8 Java primitives, memory sizes, value ranges, identifier rules, and type inference with var.",
     "topicIds": [
       "topic-04",
       "topic-05",
       "topic-06",
-      "topic-07"
-    ]
-  },
-  {
-    "sectionNumber": 3,
-    "title": "Control Flow & Logic",
-    "part": "Part 1: Java Core",
-    "description": "Direct program execution dynamically using if, else if, else, nested logic, and boolean expressions without logic flaws.",
-    "topicIds": [
+      "topic-07",
       "topic-08",
       "topic-09",
       "topic-10"
     ]
   },
   {
-    "sectionNumber": 4,
-    "title": "Methods & Modular Code",
+    "sectionNumber": 3,
+    "title": "Control Flow & Logic",
     "part": "Part 1: Java Core",
-    "description": "Decompose programs into modular, reusable blocks. Master method signatures, the call stack, stack frames, and pass-by-value semantics.",
+    "description": "Reference: Dynamic runtime branching with if, else if, else, ternary expressions, short-circuit evaluation, and control flow guarantees.",
     "topicIds": [
       "topic-11",
       "topic-12",
@@ -45,134 +37,134 @@
     ]
   },
   {
+    "sectionNumber": 4,
+    "title": "Methods & Modular Code",
+    "part": "Part 1: Java Core",
+    "description": "Reference: Method declaration anatomy, Call Stack frames, return semantics, and Java strict Pass-By-Value evaluation model.",
+    "topicIds": [
+      "topic-14",
+      "topic-15",
+      "topic-16"
+    ]
+  },
+  {
     "sectionNumber": 5,
     "title": "Arrays & Memory Structure",
     "part": "Part 1: Java Core",
-    "description": "Understand fixed-size indexed memory buffers on the JVM Heap. Master default values, bounds checking, cache locality, and enhanced for-each traversal.",
+    "description": "Reference: Fixed-size indexed contiguous heap buffers, memory layout (header, length, elements), default initialization, bounds checking, and O(1) random access.",
     "topicIds": [
-      "topic-14",
-      "topic-15"
+      "topic-17",
+      "topic-18"
     ]
   },
   {
     "sectionNumber": 6,
     "title": "Object-Oriented Programming (OOP) Essentials",
     "part": "Part 1: Java Core",
-    "description": "Master the foundation of Object-Oriented Programming: classes as architectural blueprints, objects as heap instances, reference variables on the stack, and Garbage Collection eligibility.",
+    "description": "Reference: Class definitions, heap object allocation, stack reference pointers, Compressed OOPs, static vs instance fields, and GC eligibility.",
     "topicIds": [
-      "topic-16",
-      "topic-17",
-      "topic-18",
-      "topic-19"
+      "topic-19",
+      "topic-20",
+      "topic-21",
+      "topic-22"
     ]
   },
   {
     "sectionNumber": 7,
     "title": "OOP Inheritance, Polymorphism & Abstraction",
     "part": "Part 1: Java Core",
-    "description": "Establish IS-A hierarchies with the extends keyword. Master super() constructor chaining, method overriding rules, covariant returns, and final class/method locks.",
+    "description": "Reference: IS-A inheritance hierarchies via extends, super() chaining, method overriding rules, covariant return types, and final modifiers.",
     "topicIds": [
-      "topic-20",
-      "topic-21",
-      "topic-22",
       "topic-23",
       "topic-24",
-      "topic-25"
+      "topic-25",
+      "topic-26",
+      "topic-27"
     ]
   },
   {
     "sectionNumber": 8,
-    "title": "Modern Java Data Modeling",
+    "title": "Modern Java Language Features",
     "part": "Part 1: Java Core",
-    "description": "Eliminate boilerplate for immutable data carrier classes. Master records, component accessors, synthesized equals/hashCode, compact constructors, and invariant validation.",
+    "description": "Reference: Type-safe constant singletons, java.lang.Enum class hierarchy, constant-specific method bodies, and high-performance EnumSet/EnumMap bit vectors.",
     "topicIds": [
-      "topic-26",
-      "topic-27",
-      "topic-28"
+      "topic-28",
+      "topic-29",
+      "topic-30",
+      "topic-31"
     ]
   },
   {
     "sectionNumber": 9,
     "title": "Exception Handling",
     "part": "Part 1: Java Core",
-    "description": "Understand the Java error taxonomy rooted at java.lang.Throwable. Contrast fatal JVM Errors (OutOfMemoryError) with recoverable Exceptions and traverse stack traces.",
+    "description": "Reference: The Throwable class tree, distinction between fatal JVM Errors and recoverable Exceptions, stack trace unwinding, and printStackTrace mechanics.",
     "topicIds": [
-      "topic-29",
-      "topic-30",
-      "topic-31",
-      "topic-32"
+      "topic-32",
+      "topic-33",
+      "topic-34",
+      "topic-35"
     ]
   },
   {
     "sectionNumber": 10,
     "title": "Generics & Collections Framework",
     "part": "Part 1: Java Core",
-    "description": "Master compile-time type safety with generic classes, methods, bounded type parameters, and type erasure mechanics.",
+    "description": "Reference: Compile-time type parameterization (<T>), diamond operator (<>), bounded type parameters (T extends Number), and JVM type erasure mechanics.",
     "topicIds": [
-      "topic-33",
-      "topic-34",
-      "topic-35",
       "topic-36",
       "topic-37",
       "topic-38",
-      "topic-39"
+      "topic-39",
+      "topic-40",
+      "topic-41",
+      "topic-42"
     ]
   },
   {
     "sectionNumber": 11,
     "title": "Functional Programming & Streams",
     "part": "Part 1: Java Core",
-    "description": "Master lambda expressions, Single Abstract Method (SAM) interfaces, @FunctionalInterface, and standard functional types in java.util.function.",
+    "description": "Reference: Anonymous function syntax (->), Single Abstract Method (SAM) contracts, @FunctionalInterface, invokedynamic bytecode execution, and java.util.function taxonomy.",
     "topicIds": [
-      "topic-40",
-      "topic-41",
-      "topic-42",
       "topic-43",
-      "topic-44"
-    ]
-  },
-  {
-    "sectionNumber": 12,
-    "title": "File I/O, NIO.2 & Date/Time",
-    "part": "Part 1: Java Core",
-    "description": "Master byte vs character streams, BufferedReader / BufferedWriter, UTF-8 character encoding, buffer flushing, and stream resource closing.",
-    "topicIds": [
+      "topic-44",
       "topic-45",
       "topic-46",
       "topic-47"
     ]
   },
   {
-    "sectionNumber": 13,
-    "title": "Concurrency & Multithreading",
+    "sectionNumber": 12,
+    "title": "File I/O, NIO.2 & Date/Time",
     "part": "Part 1: Java Core",
-    "description": "Master the operating system thread abstraction, the six thread states, daemon threads, joining, and interruption mechanics.",
+    "description": "Reference: Java classic I/O (java.io), Byte Streams vs Character Streams, 8KB buffer decorators (BufferedReader/BufferedWriter), explicit UTF-8 encodings, and flush/close lifecycle.",
     "topicIds": [
       "topic-48",
       "topic-49",
-      "topic-50",
-      "topic-51",
-      "topic-52",
-      "topic-53",
-      "topic-54"
+      "topic-50"
     ]
   },
   {
-    "sectionNumber": 14,
-    "title": "JVM Internals & Memory Architecture",
+    "sectionNumber": 13,
+    "title": "Concurrency & Multithreading",
     "part": "Part 1: Java Core",
-    "description": "Explore the internal memory layout of the JVM: Heap, Metaspace, Thread Stacks, PC Registers, and JMM happens-before rules.",
+    "description": "Reference: Operating system platform threads (1:1 kernel mapping), the six Thread.State lifecycle stages, daemon threads, joining, and cooperative interruption.",
     "topicIds": [
+      "topic-51",
+      "topic-52",
+      "topic-53",
+      "topic-54",
       "topic-55",
       "topic-56",
       "topic-57"
     ]
   },
   {
-    "sectionNumber": 15,
-    "title": "Reflection, Annotations & JPMS",
+    "sectionNumber": 14,
+    "title": "JVM Internals & Memory Architecture",
     "part": "Part 1: Java Core",
-    "description": "Master declarative metadata with custom annotations, meta-annotations (@Retention, @Target), and runtime reflection processing.",
+    "description": "Reference: JVM memory architecture (Heap, Metaspace, Stack Frames, PC Register, Native Stack), Stack vs Heap mechanics, and JSR-133 Happens-Before formal invariants.",
     "topicIds": [
       "topic-58",
       "topic-59",
@@ -180,90 +172,93 @@
     ]
   },
   {
+    "sectionNumber": 15,
+    "title": "Reflection, Annotations & JPMS",
+    "part": "Part 1: Java Core",
+    "description": "Reference: Declarative metadata via @interface, meta-annotations (@Retention, @Target, @Inherited, @Repeatable), permitted element types, and reflection parsing.",
+    "topicIds": [
+      "topic-61",
+      "topic-62",
+      "topic-63"
+    ]
+  },
+  {
     "sectionNumber": 16,
     "title": "Data Access & Build Tools",
     "part": "Part 1: Java Core",
-    "description": "Master relational database connectivity, SQL injection defense with PreparedStatement, ResultSet cursor traversal, and ACID transactions.",
+    "description": "Reference: java.sql architecture (Connection, PreparedStatement, ResultSet), SQL injection mitigation via parameterized placeholders, transaction boundaries (setAutoCommit), and batch execution.",
     "topicIds": [
-      "topic-61",
-      "topic-62"
+      "topic-64",
+      "topic-65"
     ]
   },
   {
     "sectionNumber": 17,
     "title": "Web Architecture & The Jakarta EE Evolution",
     "part": "Part 2: Java EE & Jakarta EE",
-    "description": "Understand the historic evolution from Sun J2EE and Oracle Java EE to Eclipse Jakarta EE, package namespace migration from javax.* to jakarta.*, and server compatibility matrices.",
+    "description": "Reference: Historic evolution from J2EE/Java EE to Eclipse Jakarta EE, package namespace migration from javax.* to jakarta.*, and application server runtime compatibility matrices.",
     "topicIds": [
-      "topic-63",
-      "topic-64"
+      "topic-66",
+      "topic-67",
+      "topic-68"
     ]
   },
   {
     "sectionNumber": 18,
-    "title": "Web Containers & Packaging",
+    "title": "Servlet API Architecture & Request Handling",
     "part": "Part 2: Java EE & Jakarta EE",
-    "description": "Explore the Web Archive (WAR) anatomy, the protected WEB-INF boundary, web.xml vs annotations, Catalina container hierarchy, and Tomcat deployment pipelines.",
+    "description": "Reference: jakarta.servlet.Servlet interface lifecycle phases (init, service, destroy), container thread-pooling model, and instance-variable concurrency hazards.",
     "topicIds": [
-      "topic-65"
+      "topic-69",
+      "topic-70",
+      "topic-71",
+      "topic-72"
     ]
   },
   {
     "sectionNumber": 19,
-    "title": "Servlets Deep Dive",
+    "title": "State Management, Filtering & Security",
     "part": "Part 2: Java EE & Jakarta EE",
-    "description": "Deep dive into how Jakarta Servlets work: the container lifecycle (init, service, destroy), multithreaded request dispatching, and thread-safety fundamentals.",
+    "description": "Reference: HTTP statelessness mitigation, HttpSession lifecycle, JSESSIONID tracking mechanics, secure cookie flags (HttpOnly, Secure, SameSite), and session concurrency.",
     "topicIds": [
-      "topic-66",
-      "topic-67",
-      "topic-68",
-      "topic-69"
+      "topic-73",
+      "topic-74",
+      "topic-75",
+      "topic-76"
     ]
   },
   {
     "sectionNumber": 20,
-    "title": "State Management, Filters & Security",
+    "title": "Server-Side Rendering with JSP & JSTL",
     "part": "Part 2: Java EE & Jakarta EE",
-    "description": "Bridge stateless HTTP with stateful web interactions: master server-side HttpSession memory, JSESSIONID tracking, secure Cookie flags, and session invalidation.",
+    "description": "Reference: JavaServer Pages translation lifecycle into HttpJspPage servlets, directive syntax, scriptlet elimination, and the 9 implicit runtime objects.",
     "topicIds": [
-      "topic-70",
-      "topic-71",
-      "topic-72",
-      "topic-73"
+      "topic-77",
+      "topic-78"
     ]
   },
   {
     "sectionNumber": 21,
-    "title": "JavaServer Pages (JSP) & Templating",
+    "title": "Enterprise Web Applications & Data Flow",
     "part": "Part 2: Java EE & Jakarta EE",
-    "description": "Master legacy JSP architecture: understand the Jasper translation lifecycle into _jspService(), directives, scriptlets vs expressions, the 9 implicit objects, and standard actions.",
+    "description": "Reference: Model-View-Controller architectural separation in server-side Java, Front Controller dispatching, and request-scoped model binding.",
     "topicIds": [
-      "topic-74",
-      "topic-75"
+      "topic-79",
+      "topic-80",
+      "topic-81"
     ]
   },
   {
     "sectionNumber": 22,
-    "title": "Production Web Development",
+    "title": "Modern Jakarta EE Specifications",
     "part": "Part 2: Java EE & Jakarta EE",
-    "description": "Architect production web applications by separating concerns into Model (POJOs), View (JSP templates in WEB-INF), and Controller (Jakarta Servlets).",
+    "description": "Reference: Object-Relational Mapping (ORM) fundamentals, EntityManager lifecycle states (Transient, Managed, Detached, Removed), dirty checking, and 1st-level cache.",
     "topicIds": [
-      "topic-79",
-      "topic-80",
-      "topic-82"
-    ]
-  },
-  {
-    "sectionNumber": 23,
-    "title": "Jakarta EE Enterprise Stack Overview",
-    "part": "Part 2: Java EE & Jakarta EE",
-    "description": "Bridge the object-relational impedance mismatch using Jakarta Persistence (JPA), Hibernate, @Entity mappings, and JPQL queries.",
-    "topicIds": [
+      "topic-82",
       "topic-83",
       "topic-84",
       "topic-85",
-      "topic-86",
-      "topic-87"
+      "topic-86"
     ]
   },
   {
@@ -272,8 +267,8 @@
     "part": "Part 3: Spring Boot & Production Stack",
     "description": "Explore the architectural foundation of the Spring Inversion of Control (IoC) container, comparing the lightweight BeanFactory with the enterprise-ready ApplicationContext, lazy vs eager instantiation, and contextual infrastructure.",
     "topicIds": [
-      "topic-88",
-      "topic-89"
+      "topic-87",
+      "topic-88"
     ]
   },
   {
@@ -282,8 +277,8 @@
     "part": "Part 3: Spring Boot & Production Stack",
     "description": "Deconstruct Spring Boot's opinionated architecture: condition evaluation algorithms, starter dependencies, META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports, and embedded web servers (Tomcat/Jetty/Undertow).",
     "topicIds": [
-      "topic-90",
-      "topic-91"
+      "topic-89",
+      "topic-90"
     ]
   },
   {
@@ -292,9 +287,9 @@
     "part": "Part 3: Spring Boot & Production Stack",
     "description": "Architect resilient, production-grade REST APIs using Spring Web MVC: HTTP method mappings (@GetMapping to @DeleteMapping), URI template variables (@PathVariable), query parameters (@RequestParam), payload deserialization (@RequestBody), and explicit HTTP status code semantics via ResponseEntity<T>.",
     "topicIds": [
+      "topic-91",
       "topic-92",
-      "topic-93",
-      "topic-94"
+      "topic-93"
     ]
   },
   {
@@ -303,9 +298,9 @@
     "part": "Part 3: Spring Boot & Production Stack",
     "description": "Explore the architectural foundation of Spring Data JPA, covering the cohesive repository interface hierarchy, dynamic runtime proxy generation, entity lifecycle states, and automated snapshot-based dirty checking.",
     "topicIds": [
+      "topic-94",
       "topic-95",
-      "topic-96",
-      "topic-97"
+      "topic-96"
     ]
   },
   {
@@ -314,8 +309,8 @@
     "part": "Part 3: Spring Boot & Production Stack",
     "description": "Understand the modern security architecture in Spring Security 7 (Spring Boot 4.1): declarative SecurityFilterChain bean configuration, URL authorization matchers, lambda DSL, stateless CSRF semantics, and production password hashing with BCrypt and Argon2.",
     "topicIds": [
-      "topic-98",
-      "topic-99"
+      "topic-97",
+      "topic-98"
     ]
   },
   {
@@ -324,7 +319,7 @@
     "part": "Part 3: Spring Boot & Production Stack",
     "description": "The definitive, cross-referenced architectural dictionary categorizing and comparing core annotations across Java SE Core, Jakarta EE enterprise specifications, and the Spring Boot production ecosystem.",
     "topicIds": [
-      "topic-100"
+      "topic-99"
     ]
   },
   {
@@ -333,14 +328,14 @@
     "part": "Part 3: Spring Boot & Production Stack",
     "description": "Eliminate repetitive boilerplate in enterprise Java applications using Project Lombok's annotation processor and MapStruct's compile-time, type-safe bean mapping engine.",
     "topicIds": [
+      "topic-100",
       "topic-101",
       "topic-102",
       "topic-103",
       "topic-104",
       "topic-105",
       "topic-106",
-      "topic-107",
-      "topic-108"
+      "topic-107"
     ]
   },
   {
@@ -349,9 +344,9 @@
     "part": "Part 3: Spring Boot & Production Stack",
     "description": "Build type-safe, dynamic search queries in Spring Data JPA using JpaSpecificationExecutor and Specification<T>, composing complex multi-criteria boolean expressions without string concatenation.",
     "topicIds": [
+      "topic-108",
       "topic-109",
-      "topic-110",
-      "topic-111"
+      "topic-110"
     ]
   },
   {
@@ -360,9 +355,9 @@
     "part": "Part 3: Spring Boot & Production Stack",
     "description": "Configure Spring Security 6 as a stateless OAuth2 Resource Server: asymmetric RS256 token validation using remote JWK Sets (JWKS), custom JwtAuthenticationConverter for role extraction, and realm claim mapping.",
     "topicIds": [
+      "topic-111",
       "topic-112",
-      "topic-113",
-      "topic-114"
+      "topic-113"
     ]
   },
   {
@@ -371,9 +366,9 @@
     "part": "Part 3: Spring Boot & Production Stack",
     "description": "Decouple long-running operations from HTTP threads in Spring Boot: @EnableAsync, custom ThreadPoolTaskExecutor tuning, saturation policies, CompletableFuture aggregation, and AsyncUncaughtExceptionHandler.",
     "topicIds": [
+      "topic-114",
       "topic-115",
-      "topic-116",
-      "topic-117"
+      "topic-116"
     ]
   },
   {
@@ -382,16 +377,17 @@
     "part": "Part 3: Spring Boot & Production Stack",
     "description": "Build real-time full-duplex communication in Spring Boot: WebSocket handshake, STOMP sub-protocol messaging, in-memory and external message brokers (RabbitMQ/ActiveMQ), @MessageMapping, and SimpMessagingTemplate.",
     "topicIds": [
-      "topic-118",
-      "topic-119"
+      "topic-117",
+      "topic-118"
     ]
   },
   {
-    "sectionNumber": 38,
+    "sectionNumber": 35,
     "title": "Relational Database Essentials & SQL",
     "part": "Part 4: Database Systems & Persistence",
     "description": "Master core relational concepts: tables, columns, rows, primary keys, foreign keys, relationships (1:1, 1:N, M:N), and normalization.",
     "topicIds": [
+      "topic-119",
       "topic-120",
       "topic-121",
       "topic-122",
@@ -399,19 +395,18 @@
       "topic-124",
       "topic-125",
       "topic-126",
-      "topic-127",
-      "topic-128"
+      "topic-127"
     ]
   },
   {
-    "sectionNumber": 39,
+    "sectionNumber": 36,
     "title": "Polyglot Persistence & NoSQL Systems",
     "part": "Part 4: Database Systems & Persistence",
     "description": "Compare relational and non-relational database architectures: tabular models vs document stores, ACID vs BASE, and CAP theorem trade-offs in distributed systems.",
     "topicIds": [
+      "topic-128",
       "topic-129",
-      "topic-130",
-      "topic-131"
+      "topic-130"
     ]
   }
 ]

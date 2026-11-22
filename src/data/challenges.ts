@@ -1334,11 +1334,11 @@ public class EnterpriseMicroserviceChallengeDemo {
     "solutionArchitectureNotes": "Combines full-duplex STOMP over WebSockets for interactive trade placement with lightweight Server-Sent Events (SSE) for unidirectional price tickers."
   },
   {
-    "id": "challenge-38",
-    "sectionNumber": 38,
-    "sectionTitle": "Database Fundamentals & Relational Systems (MySQL & SQL)",
+    "id": "challenge-35",
+    "sectionNumber": 35,
+    "sectionTitle": "Relational Database Essentials & SQL",
     "part": "Part 4: Database Systems & Persistence",
-    "title": "Milestone Challenge 38: Relational SQL Schema & Transactional Banking Engine",
+    "title": "Milestone Challenge 35: Relational SQL Schema & Transactional Banking Engine",
     "scenario": "Architect a production-grade relational banking persistence layer in MySQL: enforce DDL foreign key constraints and check validations, tune HikariCP connection pool bounds in application.properties, author an optimized composite B-Tree index eliminating full table scans, and execute an ACID funds transfer transaction with guaranteed rollback on constraint failure.",
     "architecturalConstraints": [
       "Enforce DECIMAL(12, 2) monetary data types with CHECK constraints.",
@@ -1346,7 +1346,7 @@ public class EnterpriseMicroserviceChallengeDemo {
       "Tune HikariCP max-lifetime to be at least 30-60s shorter than MySQL wait_timeout.",
       "Execute transactions under @Transactional with atomic rollback on RuntimeException."
     ],
-    "expectedOutput": "[MYSQL PERSISTENCE] Connecting to MySQL on Port 3306...\n - HikariCP Pool: 10 connections pre-allocated (Max Lifetime: 1200000ms)\n - Schema: 'customers' & 'accounts' tables created with InnoDB foreign key constraints\n - Index: Composite B-Tree index 'idx_accounts_tenant_status' created (0 hops)\n - Transaction: Atomic funds transfer $250.00 from Acct 101 to Acct 102 COMMITTED\n[CHALLENGE 38] Relational SQL & MySQL Persistence: PASSED [COMPLIANT]",
+    "expectedOutput": "[MYSQL PERSISTENCE] Connecting to MySQL on Port 3306...\n - HikariCP Pool: 10 connections pre-allocated (Max Lifetime: 1200000ms)\n - Schema: 'customers' & 'accounts' tables created with InnoDB foreign key constraints\n - Index: Composite B-Tree index 'idx_accounts_tenant_status' created (0 hops)\n - Transaction: Atomic funds transfer $250.00 from Acct 101 to Acct 102 COMMITTED\n[CHALLENGE 35] Relational SQL & MySQL Persistence: PASSED [COMPLIANT]",
     "diagnosticHints": [
       "Always use DECIMAL rather than FLOAT/DOUBLE for financial currency values.",
       "Include serverTimezone=UTC and allowPublicKeyRetrieval=true in MySQL 8 JDBC URLs."
@@ -1362,15 +1362,15 @@ public class EnterpriseMicroserviceChallengeDemo {
       "topic-127",
       "topic-128"
     ],
-    "referenceSolutionCode": "import java.util.*;\n\npublic class RelationalBankingChallengeDemo {\n    public record Account(long id, String email, double balance) {}\n\n    public static void main(String[] args) {\n        System.out.println(\"[MYSQL PERSISTENCE] Connecting to MySQL on Port 3306...\");\n        System.out.println(\" - HikariCP Pool: 10 connections pre-allocated (Max Lifetime: 1200000ms)\");\n        System.out.println(\" - Schema: 'customers' & 'accounts' tables created with InnoDB foreign key constraints\");\n        System.out.println(\" - Index: Composite B-Tree index 'idx_accounts_tenant_status' created (0 hops)\");\n        System.out.println(\" - Transaction: Atomic funds transfer $250.00 from Acct 101 to Acct 102 COMMITTED\");\n        System.out.println(\"[CHALLENGE 38] Relational SQL & MySQL Persistence: PASSED [COMPLIANT]\");\n    }\n}",
+    "referenceSolutionCode": "import java.util.*;\n\npublic class RelationalBankingChallengeDemo {\n    public record Account(long id, String email, double balance) {}\n\n    public static void main(String[] args) {\n        System.out.println(\"[MYSQL PERSISTENCE] Connecting to MySQL on Port 3306...\");\n        System.out.println(\" - HikariCP Pool: 10 connections pre-allocated (Max Lifetime: 1200000ms)\");\n        System.out.println(\" - Schema: 'customers' & 'accounts' tables created with InnoDB foreign key constraints\");\n        System.out.println(\" - Index: Composite B-Tree index 'idx_accounts_tenant_status' created (0 hops)\");\n        System.out.println(\" - Transaction: Atomic funds transfer $250.00 from Acct 101 to Acct 102 COMMITTED\");\n        System.out.println(\"[CHALLENGE 35] Relational SQL & MySQL Persistence: PASSED [COMPLIANT]\");\n    }\n}",
     "solutionArchitectureNotes": "Validates relational schema integrity, HikariCP connection pool tuning, B-Tree index optimization, and ACID transactional boundary management."
   },
   {
-    "id": "challenge-39",
-    "sectionNumber": 39,
-    "sectionTitle": "Document Databases & NoSQL Systems (MongoDB)",
+    "id": "challenge-36",
+    "sectionNumber": 36,
+    "sectionTitle": "Polyglot Persistence & NoSQL Systems",
     "part": "Part 4: Database Systems & Persistence",
-    "title": "Milestone Challenge 39: Polyglot Persistence & MongoDB Document Analytics Store",
+    "title": "Milestone Challenge 36: Polyglot Persistence & MongoDB Document Analytics Store",
     "scenario": "Architect a high-velocity NoSQL document analytics store using Spring Data MongoDB: design polymorphic BSON documents with 12-byte ObjectIds, configure production replica set connection URIs with write concern w=majority and pool bounds, enforce atomic in-place inventory decrement operations, and author a multi-stage Aggregation Pipeline ($match -> $group -> $project -> $sort) calculating category inventory metrics.",
     "architecturalConstraints": [
       "Store primary keys as 12-byte hex BSON ObjectIds.",
@@ -1378,7 +1378,7 @@ public class EnterpriseMicroserviceChallengeDemo {
       "Perform in-place atomic numeric updates using $inc / MongoTemplate to prevent race conditions.",
       "Construct multi-stage Aggregation Pipeline placing $match at the first stage."
     ],
-    "expectedOutput": "[MONGODB STORE] Connecting to MongoDB Replica Set on Port 27017...\n - Connection URI: mongodb://cluster0.mongodb.net/shop?authSource=admin&w=majority\n - ODM Mapping: @Document 'products' mapped with 12-byte BSON ObjectId and @CompoundIndex\n - Atomic Update: Decremented stock for SKU 'LAPTOP-X1' via MongoTemplate ($inc -1)\n - Aggregation Pipeline: Executed $match -> $group -> $project -> $sort across collections\n[CHALLENGE 39] MongoDB Document Analytics Store: PASSED [COMPLIANT]",
+    "expectedOutput": "[MONGODB STORE] Connecting to MongoDB Replica Set on Port 27017...\n - Connection URI: mongodb://cluster0.mongodb.net/shop?authSource=admin&w=majority\n - ODM Mapping: @Document 'products' mapped with 12-byte BSON ObjectId and @CompoundIndex\n - Atomic Update: Decremented stock for SKU 'LAPTOP-X1' via MongoTemplate ($inc -1)\n - Aggregation Pipeline: Executed $match -> $group -> $project -> $sort across collections\n[CHALLENGE 36] MongoDB Document Analytics Store: PASSED [COMPLIANT]",
     "diagnosticHints": [
       "Disable auto-index-creation in large production deployments to avoid boot latency.",
       "Use BigDecimal (Decimal128) for monetary amounts in MongoDB documents."
@@ -1388,15 +1388,16 @@ public class EnterpriseMicroserviceChallengeDemo {
       "Omitting $set in update operations, resulting in document overwrite."
     ],
     "prerequisiteTopicIds": [
+      "topic-128",
       "topic-129",
-      "topic-130",
-      "topic-131"
+      "topic-130"
     ],
-    "referenceSolutionCode": "import java.util.*;\n\npublic class MongoDbAnalyticsChallengeDemo {\n    public static void main(String[] args) {\n        System.out.println(\"[MONGODB STORE] Connecting to MongoDB Replica Set on Port 27017...\");\n        System.out.println(\" - Connection URI: mongodb://cluster0.mongodb.net/shop?authSource=admin&w=majority\");\n        System.out.println(\" - ODM Mapping: @Document 'products' mapped with 12-byte BSON ObjectId and @CompoundIndex\");\n        System.out.println(\" - Atomic Update: Decremented stock for SKU 'LAPTOP-X1' via MongoTemplate ($inc -1)\");\n        System.out.println(\" - Aggregation Pipeline: Executed $match -> $group -> $project -> $sort across collections\");\n        System.out.println(\"[CHALLENGE 39] MongoDB Document Analytics Store: PASSED [COMPLIANT]\");\n    }\n}",
+    "referenceSolutionCode": "import java.util.*;\n\npublic class MongoDbAnalyticsChallengeDemo {\n    public static void main(String[] args) {\n        System.out.println(\"[MONGODB STORE] Connecting to MongoDB Replica Set on Port 27017...\");\n        System.out.println(\" - Connection URI: mongodb://cluster0.mongodb.net/shop?authSource=admin&w=majority\");\n        System.out.println(\" - ODM Mapping: @Document 'products' mapped with 12-byte BSON ObjectId and @CompoundIndex\");\n        System.out.println(\" - Atomic Update: Decremented stock for SKU 'LAPTOP-X1' via MongoTemplate ($inc -1)\");\n        System.out.println(\" - Aggregation Pipeline: Executed $match -> $group -> $project -> $sort across collections\");\n        System.out.println(\"[CHALLENGE 36] MongoDB Document Analytics Store: PASSED [COMPLIANT]\");\n    }\n}",
     "solutionArchitectureNotes": "Validates MongoDB BSON document modeling, replica set write concern consensus, in-place atomic mutations, and multi-stage aggregation pipeline analysis."
   }
 ];
 
 export function getChallengeBySection(sectionNumber: number): SectionMilestoneChallenge | undefined {
-  return SECTION_CHALLENGES.find(c => c.sectionNumber === sectionNumber);
+  const normalizedSec = sectionNumber === 38 ? 35 : sectionNumber === 39 ? 36 : sectionNumber;
+  return SECTION_CHALLENGES.find(c => c.sectionNumber === normalizedSec);
 }
