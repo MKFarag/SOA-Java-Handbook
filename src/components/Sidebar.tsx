@@ -16,7 +16,9 @@ import {
   Lock,
   Cloud,
   Bell,
-  X
+  X,
+  ChevronsUpDown,
+  ListCollapse
 } from 'lucide-react';
 import { ALL_TOPICS, SECTIONS } from '../data/topics';
 import type { TopicDetail, PartType } from '../types';
@@ -183,6 +185,24 @@ export const Sidebar: React.FC<SidebarProps> = ({
       ...prev,
       [sectionNumber]: !prev[sectionNumber]
     }));
+  };
+
+  const expandAll = () => {
+    const allSecs: Record<number, boolean> = {};
+    SECTIONS.forEach(s => {
+      allSecs[s.sectionNumber] = true;
+    });
+    setExpandedSections(allSecs);
+    setExpandedParts({
+      'Part 1: Java Core': true,
+      'Part 2: Java EE & Jakarta EE': true,
+      'Part 3: Spring Boot & Production Stack': true,
+      'Part 4: Database Systems & Persistence': true
+    });
+  };
+
+  const collapseAll = () => {
+    setExpandedSections({});
   };
 
   const filterTopic = (topic: TopicDetail) => {
@@ -391,6 +411,33 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 Clear
               </button>
             )}
+          </div>
+
+          {/* Section Expansion Controls (Expand All / Collapse All) */}
+          <div className="flex items-center justify-between text-xs px-1 pt-0.5">
+            <span className="text-[10px] font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider font-mono">
+              Sections ({SECTIONS.length})
+            </span>
+            <div className="flex items-center gap-1.5">
+              <button
+                type="button"
+                onClick={expandAll}
+                className="flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-medium bg-zinc-200/70 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 transition-colors cursor-pointer"
+                title="Expand all sections to view all topics"
+              >
+                <ChevronsUpDown className="w-3 h-3 text-orange-500 shrink-0" />
+                <span>Expand All</span>
+              </button>
+              <button
+                type="button"
+                onClick={collapseAll}
+                className="flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-medium bg-zinc-200/70 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 transition-colors cursor-pointer"
+                title="Collapse topics back into sections"
+              >
+                <ListCollapse className="w-3 h-3 text-zinc-400 shrink-0" />
+                <span>Collapse All</span>
+              </button>
+            </div>
           </div>
 
           {/* Multi-Level Tri-Part Accordion Structure */}
