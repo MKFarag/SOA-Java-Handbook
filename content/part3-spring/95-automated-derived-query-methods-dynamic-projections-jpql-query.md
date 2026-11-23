@@ -41,10 +41,44 @@ find Distinct By Department And Salary GreaterThanEqual OrderBy HireDate Desc
 - `exists...By`: Returns a `boolean` executing an optimized `SELECT 1 ... WHERE ...` query.
 - `delete...By` / `remove...By`: Deletes matching rows within an active transaction.
 
-#### Query Criteria Keywords
+#### Complete Spring Data Derived Query Keywords Reference Matrix
 
-| Keyword | Derived JPQL Equivalent | Example Method Signature |
+Spring Data parses method names against the target entity's property graph. Below is the comprehensive directory of all supported query creation keywords, their derived JPQL equivalents, and sample repository method declarations.
+
+| Keyword | Derived JPQL / SQL Equivalent | Example Repository Method Signature |
 | :--- | :--- | :--- |
+| **`Is` / `Equals`** | `WHERE e.status = ?1` | `findByStatus(Status s)` or `findByStatusEquals(Status s)` |
+| **`Not`** | `WHERE e.status != ?1` | `findByStatusNot(Status s)` |
+| **`IsNull`** | `WHERE e.endDate IS NULL` | `findByEndDateIsNull()` |
+| **`IsNotNull` / `NotNull`** | `WHERE e.endDate IS NOT NULL` | `findByEndDateIsNotNull()` |
+| **`True`** | `WHERE e.active = true` | `findByActiveTrue()` |
+| **`False`** | `WHERE e.active = false` | `findByActiveFalse()` |
+| **`StartingWith`** | `WHERE e.sku LIKE ?1 || '%'` | `findBySkuStartingWith(String prefix)` |
+| **`EndingWith`** | `WHERE e.sku LIKE '%' || ?1` | `findBySkuEndingWith(String suffix)` |
+| **`Containing`** | `WHERE e.title LIKE '%' || ?1 || '%'` | `findByTitleContaining(String keyword)` |
+| **`Like`** | `WHERE e.name LIKE ?1` | `findByNameLike(String customLikePattern)` |
+| **`NotLike`** | `WHERE e.name NOT LIKE ?1` | `findByNameNotLike(String pattern)` |
+| **`IgnoreCase`** | `WHERE UPPER(e.email) = UPPER(?1)` | `findByEmailIgnoreCase(String email)` |
+| **`AllIgnoreCase`** | `WHERE UPPER(e.fn) = UPPER(?1) AND UPPER(e.ln) = UPPER(?2)` | `findByFirstNameAndLastNameAllIgnoreCase(String fn, String ln)` |
+| **`Between`** | `WHERE e.price BETWEEN ?1 AND ?2` | `findByPriceBetween(BigDecimal min, BigDecimal max)` |
+| **`LessThan`** | `WHERE e.age < ?1` | `findByAgeLessThan(int maxAge)` |
+| **`LessThanEqual`** | `WHERE e.age <= ?1` | `findByAgeLessThanEqual(int maxAge)` |
+| **`GreaterThan`** | `WHERE e.salary > ?1` | `findBySalaryGreaterThan(double minSalary)` |
+| **`GreaterThanEqual`** | `WHERE e.salary >= ?1` | `findBySalaryGreaterThanEqual(double minSalary)` |
+| **`Before`** | `WHERE e.createdAt < ?1` | `findByCreatedAtBefore(Instant cutoff)` |
+| **`After`** | `WHERE e.createdAt > ?1` | `findByCreatedAtAfter(Instant cutoff)` |
+| **`In`** | `WHERE e.countryCode IN (?1)` | `findByCountryCodeIn(Collection<String> countries)` |
+| **`NotIn`** | `WHERE e.countryCode NOT IN (?1)` | `findByCountryCodeNotIn(Collection<String> countries)` |
+| **`And`** | `WHERE e.dept = ?1 AND e.salary >= ?2` | `findByDepartmentAndSalaryGreaterThanEqual(String d, double s)` |
+| **`Or`** | `WHERE e.role = ?1 OR e.vip = true` | `findByRoleOrVipTrue(String role)` |
+| **`OrderBy`** | `ORDER BY e.createdDate DESC` | `findByDepartmentOrderByCreatedDateDesc(String dept)` |
+| **`Top` / `First`** | `LIMIT 5` / `LIMIT 1` | `findTop5ByOrderByScoreDesc()` or `findFirstByEmail(String email)` |
+| **`Distinct`** | `SELECT DISTINCT e FROM ...` | `findDistinctByLastName(String lastName)` |
+| **`ExistsBy`** | `SELECT 1 FROM ... WHERE ...` | `boolean existsByEmail(String email)` |
+| **`CountBy`** | `SELECT COUNT(e) FROM ... WHERE ...` | `long countByDepartment(String dept)` |
+| **`DeleteBy` / `RemoveBy`** | `DELETE FROM ... WHERE ...` | `long deleteByStatus(Status s)` |
+
+--- | :--- | :--- |
 | `And` | `WHERE e.dept = ?1 AND e.active = ?2` | `findByDepartmentAndActive(String d, boolean a)` |
 | `Between` | `WHERE e.salary BETWEEN ?1 AND ?2` | `findBySalaryBetween(double min, double max)` |
 | `LessThanEqual` | `WHERE e.age <= ?1` | `findByAgeLessThanEqual(int maxAge)` |

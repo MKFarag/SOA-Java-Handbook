@@ -54,7 +54,7 @@ export const BroadcastsModal: React.FC<BroadcastsModalProps> = ({
         return <FileText className="w-4 h-4 text-purple-500" />;
       case 'announcement':
       default:
-        return <Megaphone className="w-4 h-4 text-orange-500" />;
+        return <Megaphone className="w-4 h-4 text-blue-500" />;
     }
   };
 
@@ -68,7 +68,7 @@ export const BroadcastsModal: React.FC<BroadcastsModalProps> = ({
         return 'bg-purple-500/10 text-purple-600 dark:text-purple-400 border-purple-500/20';
       case 'announcement':
       default:
-        return 'bg-orange-500/10 text-orange-600 dark:text-orange-400 border-orange-500/20';
+        return 'bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/20';
     }
   };
 
@@ -81,13 +81,13 @@ export const BroadcastsModal: React.FC<BroadcastsModalProps> = ({
         {/* Header */}
         <div className="p-5 border-b border-zinc-200 dark:border-zinc-800 flex items-center justify-between bg-zinc-50 dark:bg-zinc-900/50">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-orange-500/10 dark:bg-orange-500/20 text-orange-600 dark:text-orange-400 border border-orange-500/30 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-xl bg-blue-500/10 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400 border border-blue-500/30 flex items-center justify-center">
               <Bell className="w-5 h-5" />
             </div>
             <div>
               <h2 className="text-base sm:text-lg font-bold text-zinc-900 dark:text-zinc-100 flex items-center gap-2">
                 <span>Announcements & Shared Resources</span>
-                <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-orange-500/10 text-orange-600 dark:text-orange-400 border border-orange-500/20 font-bold">
+                <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20 font-bold">
                   {broadcasts.length}
                 </span>
               </h2>
@@ -159,7 +159,7 @@ export const BroadcastsModal: React.FC<BroadcastsModalProps> = ({
             onClick={() => setSelectedFilter('announcement')}
             className={`px-3 py-1.5 rounded-lg font-medium transition-all flex items-center gap-1.5 ${
               selectedFilter === 'announcement'
-                ? 'bg-orange-600 text-white font-bold'
+                ? 'bg-blue-600 text-white font-bold'
                 : 'text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800'
             }`}
           >
@@ -235,7 +235,7 @@ export const BroadcastsModal: React.FC<BroadcastsModalProps> = ({
                       href={item.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-orange-500 hover:bg-orange-600 text-white text-xs font-semibold shadow-xs transition-colors"
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold shadow-xs transition-colors"
                     >
                       <span>Open Link</span>
                       <ExternalLink className="w-3.5 h-3.5" />

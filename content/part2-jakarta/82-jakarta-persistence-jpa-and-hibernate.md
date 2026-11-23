@@ -59,6 +59,91 @@ Jakarta Persistence (JPA) is the standard specification for Object-Relational Ma
 
 ---
 
+## Master JPA & Hibernate Annotations Reference Directory
+
+Below is the definitive, categorized reference guide for Jakarta Persistence (JPA) and Hibernate ORM annotations, their attributes, and production usage semantics.
+
+### 1. Entity & Table Mapping Annotations
+
+| Annotation | Target | Key Attributes | Purpose & Architectural Notes | Example |
+| :--- | :--- | :--- | :--- | :--- |
+| **`@Entity`** | Class | `name` | Designates a POJO as a persistent JPA domain entity managed by `EntityManager`. Must have a no-arg constructor and not be `final`. | `@Entity(name = "Customer")` |
+| **`@Table`** | Class | `name`, `schema`, `catalog`, `uniqueConstraints`, `indexes` | Specifies the primary database table name, schema, and composite unique keys or index definitions. | `@Table(name = "customers", indexes = {@Index(columnList = "email")})` |
+| **`@SecondaryTable`** | Class | `name`, `pkJoinColumns` | Maps a single entity across multiple relational database tables using a shared primary key join. | `@SecondaryTable(name = "customer_profiles")` |
+| **`@MappedSuperclass`** | Class | N/A | Designates a base class whose persistent properties are inherited by concrete child entity tables (does not generate a separate table). | `@MappedSuperclass public abstract class BaseEntity` |
+
+### 2. Primary Keys & Identity Generation
+
+| Annotation | Target | Key Attributes | Purpose & Architectural Notes | Example |
+| :--- | :--- | :--- | :--- | :--- |
+| **`@Id`** | Field / Method | N/A | Declares the primary key attribute of the entity. | `@Id private Long id;` |
+| **`@GeneratedValue`** | Field / Method | `strategy`, `generator` | Configures automated ID generation: `IDENTITY` (DB auto-increment), `SEQUENCE` (DB sequence), `TABLE`, or `AUTO`. | `@GeneratedValue(strategy = GenerationType.IDENTITY)` |
+| **`@SequenceGenerator`** | Class / Field | `name`, `sequenceName`, `initialValue`, `allocationSize` | Defines a custom database sequence for batched ID allocations (set `allocationSize = 50` for high-throughput batching). | `@SequenceGenerator(name = "order_seq", sequenceName = "seq_orders", allocationSize = 50)` |
+| **`@EmbeddedId`** | Field / Method | N/A | Maps a composite primary key encapsulated inside a dedicated `@Embeddable` class implementing `Serializable`. | `@EmbeddedId private OrderItemId id;` |
+| **`@IdClass`** | Class | `value` | Designates a separate composite key class whose property names match multiple `@Id` fields in the entity. | `@IdClass(OrderItemPk.class)` |
+
+### 3. Property & Column Mapping Annotations
+
+| Annotation | Target | Key Attributes | Purpose & Architectural Notes | Example |
+| :--- | :--- | :--- | :--- | :--- |
+| **`@Column`** | Field / Method | `name`, `nullable`, `unique`, `length`, `precision`, `scale`, `updatable`, `insertable` | Customizes column name, nullability constraints, string length (default 255), and numeric precision. | `@Column(name = "tax_rate", nullable = false, precision = 5, scale = 2)` |
+| **`@Basic`** | Field / Method | `optional`, `fetch` | Explicitly maps standard primitive/wrapper property (defaults to `FetchType.EAGER`). Set `fetch = FetchType.LAZY` for heavy fields. | `@Basic(optional = false)` |
+| **`@Transient`** | Field / Method | N/A | Instructs JPA and Hibernate to ignore the field during persistence (not mapped to any DB column). | `@Transient private BigDecimal calculatedTotal;` |
+| **`@Enumerated`** | Field / Method | `value` (`EnumType.STRING`, `EnumType.ORDINAL`) | Maps Java enums. **Always prefer `EnumType.STRING`** in enterprise code to prevent database corruption when enum order changes. | `@Enumerated(EnumType.STRING) private OrderStatus status;` |
+| **`@Temporal`** | Field / Method | `value` (`DATE`, `TIME`, `TIMESTAMP`) | Specifies date/time precision for legacy `java.util.Date` and `Calendar` (modern `java.time.*` handles this automatically). | `@Temporal(TemporalType.TIMESTAMP) private Date creationDate;` |
+| **`@Lob`** | Field / Method | N/A | Maps Large Objects: String/char[] to `CLOB`/`TEXT`; byte[] to `BLOB`/`BYTEA`. | `@Lob private String largeXmlPayload;` |
+| **`@Formula`** *(Hibernate)* | Field / Method | `value` (Native SQL) | Read-only derived property calculated on the fly by the database engine via a subquery or expression. | `@Formula("(SELECT count(*) FROM items i WHERE i.order_id = id)") private int itemCount;` |
+
+### 4. Entity Relationships & Association Mappings
+
+| Annotation | Target | Key Attributes | Purpose & Architectural Notes | Example |
+| :--- | :--- | :--- | :--- | :--- |
+| **`@ManyToOne`** | Field / Method | `fetch`, `cascade`, `optional` | Maps a Many-to-One association. **Always explicitly set `fetch = FetchType.LAZY`** (defaults to `EAGER`, which causes N+1 queries). | `@ManyToOne(fetch = FetchType.LAZY, optional = false)` |
+| **`@OneToMany`** | Field / Method | `mappedBy`, `fetch`, `cascade`, `orphanRemoval` | Maps a One-to-Many collection. `mappedBy` designates the inverse owning side. Defaults to `LAZY`. | `@OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)` |
+| **`@OneToOne`** | Field / Method | `mappedBy`, `fetch`, `cascade`, `optional` | Maps a One-to-One relationship. Remember: non-owning bidirectional `@OneToOne` cannot be lazy-loaded in default JPA proxies. | `@OneToOne(fetch = FetchType.LAZY) @JoinColumn(name = "profile_id")` |
+| **`@ManyToMany`** | Field / Method | `mappedBy`, `fetch`, `cascade` | Maps Many-to-Many associations via a bridge join table. Avoid bidirectional cascade delete on `@ManyToMany`. | `@ManyToMany @JoinTable(...) private Set<Role> roles;` |
+| **`@JoinColumn`** | Field / Method | `name`, `referencedColumnName`, `nullable`, `foreignKey` | Specifies the physical foreign key column on the owning entity table. | `@JoinColumn(name = "customer_id", referencedColumnName = "id")` |
+| **`@JoinTable`** | Field / Method | `name`, `joinColumns`, `inverseJoinColumns` | Customizes the join table name and foreign keys for `@ManyToMany` or unidirectional `@OneToMany` relationships. | `@JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))` |
+| **`@OrderBy`** | Field / Method | `value` | Orders elements of a collection relationship using SQL `ORDER BY` syntax when fetched. | `@OrderBy("createdDate DESC") private List<Comment> comments;` |
+
+### 5. Value Objects & Embeddables
+
+| Annotation | Target | Key Attributes | Purpose & Architectural Notes | Example |
+| :--- | :--- | :--- | :--- | :--- |
+| **`@Embeddable`** | Class | N/A | Declares a value object whose fields are flattened and stored directly in the owning entity's database table. | `@Embeddable public class Address { ... }` |
+| **`@Embedded`** | Field / Method | N/A | Injects an `@Embeddable` value object into an entity. | `@Embedded private Address shippingAddress;` |
+| **`@AttributeOverride`** | Class / Field | `name`, `column` | Overrides the column name or properties of an embedded attribute (enables embedding the same value object multiple times). | `@AttributeOverride(name = "zipCode", column = @Column(name = "billing_zip"))` |
+
+### 6. Inheritance Mapping Strategies
+
+| Annotation | Target | Key Attributes | Purpose & Architectural Notes | Example |
+| :--- | :--- | :--- | :--- | :--- |
+| **`@Inheritance`** | Base Class | `strategy` | Defines polymorphic mapping: `SINGLE_TABLE` (default, fast joins), `JOINED` (normalized tables), or `TABLE_PER_CLASS`. | `@Inheritance(strategy = InheritanceType.JOINED)` |
+| **`@DiscriminatorColumn`**| Base Class | `name`, `discriminatorType`, `length` | Identifies the column storing type information in `SINGLE_TABLE` or `JOINED` inheritance. | `@DiscriminatorColumn(name = "account_type", length = 20)` |
+| **`@DiscriminatorValue`** | Subclass | `value` | Specifies the concrete discriminator string or value representing this subclass in the database. | `@DiscriminatorValue("SAVINGS")` |
+
+### 7. Auditing, Versioning & Lifecycle Callbacks
+
+| Annotation | Target | Key Attributes | Purpose & Architectural Notes | Example |
+| :--- | :--- | :--- | :--- | :--- |
+| **`@Version`** | Field / Method | N/A | Enables **Optimistic Concurrency Control**. Incremented automatically on every update; throws `OptimisticLockException` on concurrent collision. | `@Version private Long version;` |
+| **`@CreationTimestamp`** *(Hibernate)* | Field | N/A | Automatically populates timestamp upon initial `INSERT` in database. | `@CreationTimestamp private Instant createdAt;` |
+| **`@UpdateTimestamp`** *(Hibernate)* | Field | N/A | Automatically updates timestamp on every SQL `UPDATE`. | `@UpdateTimestamp private Instant updatedAt;` |
+| **`@PrePersist` / `@PostPersist`** | Method | N/A | Entity lifecycle callback triggered right before / after initial database insertion. | `@PrePersist void onPrePersist() { ... }` |
+| **`@PreUpdate` / `@PostUpdate`** | Method | N/A | Lifecycle callback triggered right before / after database update execution. | `@PreUpdate void onPreUpdate() { ... }` |
+| **`@PreRemove` / `@PostRemove`** | Method | N/A | Lifecycle callback executed before / after deletion of entity from database. | `@PreRemove void onPreRemove() { ... }` |
+| **`@PostLoad`** | Method | N/A | Lifecycle callback executed immediately after entity data has been read and loaded from database. | `@PostLoad void onPostLoad() { ... }` |
+
+### 8. Cascade & Fetching Rules Matrix
+
+| Property | Options | Default Semantics | Enterprise Production Recommendation |
+| :--- | :--- | :--- | :--- |
+| **`FetchType`** | `LAZY`, `EAGER` | `@ManyToOne`, `@OneToOne` = `EAGER`<br>`@OneToMany`, `@ManyToMany` = `LAZY` | **Always use `FetchType.LAZY` everywhere**. Fetch associations explicitly using `JOIN FETCH` or `@EntityGraph` to eliminate N+1 queries. |
+| **`CascadeType`** | `ALL`, `PERSIST`, `MERGE`, `REMOVE`, `REFRESH`, `DETACH` | None | Use `CascadeType.ALL` or `CascadeType.PERSIST, CascadeType.MERGE` for strict Parent-Child aggregate roots (e.g. `Order` -> `OrderItem`). Never cascade delete on shared lookup tables (`User` -> `Role`). |
+| **`orphanRemoval`** | `true`, `false` | `false` | When `true`, removing a child entity from the parent's collection automatically deletes the child row from the database table. |
+
+---
+
 ## Production Implementation: Standard JPA Entity & Persistence Logic
 
 ```java

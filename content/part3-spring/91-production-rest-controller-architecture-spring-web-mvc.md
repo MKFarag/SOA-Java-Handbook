@@ -40,7 +40,38 @@ Spring Web MVC provides declarative REST controllers combining @Controller and @
 | `@PatchMapping` | `PATCH` | **No** | Partial update of specific resource fields | `200 OK` |
 | `@DeleteMapping`| `DELETE` | **Yes** | Remove resource from server storage | `204 No Content` / `200 OK` |
 
-### Parameter Resolution Annotations
+### Master Spring Web MVC & REST Annotations Reference Directory
+
+Spring Web MVC provides declarative routing, parameter parsing, content negotiation, and exception interception annotations. Below is the full directory categorized across routing and parameter handling.
+
+#### 1. Controller Stereotypes & HTTP Mapping Annotations
+
+| Annotation | Target | Key Attributes | RFC 9110 Semantics & Purpose | Production Example |
+| :--- | :--- | :--- | :--- | :--- |
+| **`@RestController`** | `TYPE` | `value` | Meta-annotation combining `@Controller` and `@ResponseBody`. Every handler method serializes return values directly to HTTP response payload. | `@RestController @RequestMapping("/api/v1/orders")` |
+| **`@Controller`** | `TYPE` | `value` | Spring MVC stereotype for traditional MVC view-resolving controllers returning template names. | `@Controller public class WebViewController` |
+| **`@ResponseBody`** | `TYPE`, `METHOD` | None | Signals Spring to serialize method return value via registered `HttpMessageConverter` (e.g. Jackson). | `public @ResponseBody UserDto getUser()` |
+| **`@RequestMapping`** | `TYPE`, `METHOD` | `path`, `method`, `consumes`, `produces`, `params`, `headers` | General-purpose URL mapping declaring base URL paths, media types, and HTTP verb constraints. | `@RequestMapping(path = "/orders", consumes = "application/json")` |
+| **`@GetMapping`** | `METHOD` | `path`, `produces` | Specialization for HTTP `GET` (Read). Idempotent & safe. | `@GetMapping("/{id}") public OrderDto getOrder(@PathVariable Long id)` |
+| **`@PostMapping`** | `METHOD` | `path`, `consumes` | Specialization for HTTP `POST` (Create / action). Non-idempotent. Returns `201 Created` or `200 OK`. | `@PostMapping public ResponseEntity<OrderDto> create(@RequestBody OrderDto dto)` |
+| **`@PutMapping`** | `METHOD` | `path`, `consumes` | Specialization for HTTP `PUT` (Full Replacement). Idempotent. Returns `200 OK` or `204 No Content`. | `@PutMapping("/{id}") public OrderDto replace(@PathVariable Long id, @RequestBody OrderDto d)` |
+| **`@PatchMapping`** | `METHOD` | `path`, `consumes` | Specialization for HTTP `PATCH` (Partial Update). Non-idempotent. | `@PatchMapping("/{id}") public OrderDto patch(@PathVariable Long id, @RequestBody JsonMergePatch p)` |
+| **`@DeleteMapping`** | `METHOD` | `path` | Specialization for HTTP `DELETE` (Remove). Idempotent. Returns `204 No Content`. | `@DeleteMapping("/{id}") public ResponseEntity<Void> delete(@PathVariable Long id)` |
+
+#### 2. Request Parameter Resolution, Binding & Interception
+
+| Annotation | Target | Key Attributes | Operational Mechanics | Production Example |
+| :--- | :--- | :--- | :--- | :--- |
+| **`@PathVariable`** | `PARAMETER` | `name` / `value`, `required = true` | Extracts URI template variable tokens from matching URL patterns (e.g. `/users/{userId}`). | `@GetMapping("/{id}") public UserDto get(@PathVariable("id") UUID id)` |
+| **`@RequestParam`** | `PARAMETER` | `name`, `required = true`, `defaultValue` | Extracts query string parameters (`?page=0&size=20`) or multipart form fields. | `@GetMapping public Page<User> list(@RequestParam(defaultValue = "0") int page)` |
+| **`@RequestBody`** | `PARAMETER` | `required = true` | Deserializes incoming HTTP request body directly into Java POJO / record via `HttpMessageConverter`. | `@PostMapping public User create(@Valid @RequestBody CreateUserDto dto)` |
+| **`@RequestHeader`** | `PARAMETER` | `name`, `required = true`, `defaultValue` | Extracts specific HTTP header values from the request context. | `public User authenticate(@RequestHeader("Authorization") String token)` |
+| **`@CookieValue`** | `PARAMETER` | `name`, `required = true`, `defaultValue` | Extracts HTTP cookie values by cookie name. | `public User profile(@CookieValue("SESSION_ID") String sessionId)` |
+| **`@ModelAttribute`** | `PARAMETER`, `METHOD` | `name`, `binding = true` | Binds query parameters or form fields directly to bean properties / record components. | `@GetMapping("/search") public Result search(@ModelAttribute FilterDto filter)` |
+| **`@ResponseStatus`** | `TYPE`, `METHOD` | `code` (`HttpStatus`), `reason` | Sets explicit HTTP response status code without needing a `ResponseEntity` wrapper. | `@ResponseStatus(HttpStatus.NO_CONTENT) @DeleteMapping("/{id}")` |
+| **`@CrossOrigin`** | `TYPE`, `METHOD` | `origins`, `methods`, `maxAge` | Configures Cross-Origin Resource Sharing (CORS) headers for browsers. | `@CrossOrigin(origins = "https://app.enterprise.com")` |
+| **`@RestControllerAdvice`** | `TYPE` | `basePackages`, `assignableTypes` | Global interceptor combining `@ControllerAdvice` + `@ResponseBody` for centralized error handling. | `@RestControllerAdvice public class GlobalExceptionHandler` |
+| **`@ExceptionHandler`** | `METHOD` | `value = Class<? extends Throwable>[]` | Intercepts declared exceptions thrown across controllers and builds structured error responses. | `@ExceptionHandler(EntityNotFoundException.class) public ProblemDetail handle()`
 
 ```java
 @RestController

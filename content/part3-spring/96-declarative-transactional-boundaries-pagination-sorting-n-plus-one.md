@@ -28,27 +28,42 @@ Declarative transaction management via @Transactional establishes ACID database 
 
 ## Architecture & Core Mechanics
 
-### Transaction Propagation & Attributes
+### Master Spring Transaction Management Reference Directory
 
-```java
-@Transactional(
-    propagation = Propagation.REQUIRED,
-    isolation = Isolation.READ_COMMITTED,
-    readOnly = false,
-    timeout = 30,
-    rollbackFor = { OrderProcessingException.class }
-)
-public void executeOrder(Order order) { ... }
-```
+Declarative transaction boundaries in Spring are intercepted by AOP proxies using `@Transactional`. The following authoritative reference tables outline all configurable attributes, the 7 propagation behaviors, and transaction isolation levels.
 
-| Attribute | Type | Default | Operational Purpose |
-|---|---|---|---|
-| `propagation` | `Propagation` | `REQUIRED` | Joins existing transaction or creates a new one |
-| `isolation` | `Isolation` | `DEFAULT` | Engine default (`REPEATABLE READ` in MySQL) |
-| `readOnly` | `boolean` | `false` | Skips Hibernate dirty-check snapshots when `true` |
-| `timeout` | `int` | `-1` (unlimited) | Max execution seconds before aborting |
-| `rollbackFor` | `Class[]` | `RuntimeException, Error` | Exceptions triggering rollback (add `Exception.class` for checked) |
-| `noRollbackFor` | `Class[]` | `{}` | Exceptions that should commit despite throwing |
+#### 1. `@Transactional` Attributes Reference
+
+| Attribute | Type | Default | Operational Purpose & Architectural Mechanics |
+| :--- | :--- | :--- | :--- |
+| **`propagation`** | `Propagation` | `REQUIRED` | Defines how the method participates in an existing or creates a new transactional context. |
+| **`isolation`** | `Isolation` | `DEFAULT` | Defines database concurrency isolation level (governing dirty reads, non-repeatable reads, phantom reads). |
+| **`readOnly`** | `boolean` | `false` | Skips Hibernate memory snapshots and dirty checking flush when `true`, dramatically cutting CPU and memory overhead. |
+| **`timeout`** | `int` (seconds) | `-1` (unlimited) | Max transaction execution duration before auto-rollback and `TransactionTimedOutException`. |
+| **`rollbackFor`** | `Class<? extends Throwable>[]` | `RuntimeException.class`, `Error.class` | Specifies exception types that trigger rollback. By default, **checked exceptions do NOT roll back** unless declared here! |
+| **`noRollbackFor`** | `Class<? extends Throwable>[]` | `{}` | Specifies exceptions that must NOT trigger rollback, allowing transaction to commit despite throwing. |
+| **`transactionManager`** | `String` | `""` | Selects specific `PlatformTransactionManager` qualifier in multi-datasource configurations. |
+
+#### 2. The 7 Transaction Propagation Behaviors Matrix
+
+| Propagation Level | Active Transaction Already Exists | No Active Transaction Exists | Typical Enterprise Use Case |
+| :--- | :--- | :--- | :--- |
+| **`REQUIRED`** (Default) | **Joins** existing transaction. | **Creates** a brand new transaction. | Default for standard service business methods. All operations share same commit/rollback fate. |
+| **`REQUIRES_NEW`** | **Suspends** outer transaction; creates isolated new transaction. Outer resumes after inner finishes. | **Creates** a brand new transaction. | Audit logging, notification publishing, or billing ledger updates that must persist even if outer business flow fails. |
+| **`SUPPORTS`** | **Joins** existing transaction. | Executes **non-transactionally** (no transaction context). | Read-only lookup methods that can benefit from active transaction if caller opened one. |
+| **`NOT_SUPPORTED`** | **Suspends** outer transaction; executes non-transactionally. | Executes **non-transactionally**. | Long-running operations, external HTTP calls, or file uploads that should avoid locking database connections. |
+| **`MANDATORY`** | **Joins** existing transaction. | **Throws** `IllegalTransactionStateException`. | Critical subordinate methods that cannot safely execute outside a caller-managed transaction boundary. |
+| **`NEVER`** | **Throws** `IllegalTransactionStateException`. | Executes **non-transactionally**. | Batch processes or operations that strictly forbid database transaction locks. |
+| **`NESTED`** | Creates a **JDBC Savepoint** within existing transaction. | **Creates** a brand new transaction (like `REQUIRED`). | Sub-workflows that can roll back to a savepoint on failure without causing entire outer transaction to roll back. |
+
+#### 3. Database Isolation Levels & Anomaly Prevention
+
+| Isolation Level | Dirty Read Prevention | Non-Repeatable Read Prevention | Phantom Read Prevention | Performance Overhead | Standard DB Default |
+| :--- | :---: | :---: | :---: | :---: | :--- |
+| **`READ_UNCOMMITTED`** | ❌ No | ❌ No | ❌ No | Lowest | Rarely used in OLTP |
+| **`READ_COMMITTED`** | ✅ **Prevented** | ❌ No | ❌ No | Low | **PostgreSQL, Oracle, SQL Server** |
+| **`REPEATABLE_READ`** | ✅ **Prevented** | ✅ **Prevented** | ❌ No (Yes in MySQL InnoDB) | Medium | **MySQL / MariaDB Default** |
+| **`SERIALIZABLE`** | ✅ **Prevented** | ✅ **Prevented** | ✅ **Prevented** | Highest (Table Locks) | High-concurrency financial balance locks |
 
 1. **Propagation Behaviors:**
    - `REQUIRED` (Default): Joins an existing active transaction; creates a new one if none exists.

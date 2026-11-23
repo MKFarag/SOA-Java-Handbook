@@ -191,3 +191,17 @@ export interface SiteAccessConfig {
   updatedAt?: string;
 }
 
+export interface KnowledgeNote {
+  id: string;
+  ownerCode: string; // The authenticated student code, or 'GUEST'
+  title: string;
+  description?: string;
+  category: string; // e.g. 'Java', 'Spring Boot', 'ASP.NET Core', 'Database', 'General'
+  language?: string; // e.g. 'java', 'csharp', 'sql', 'javascript', 'typescript', 'python', 'bash', 'json', etc.
+  content: string; // Personal written notes and technical explanation
+  codeSnippet?: string; // Optional code snippet
+  createdAt: string; // ISO 8601
+  updatedAt: string; // ISO 8601
+}
+
+

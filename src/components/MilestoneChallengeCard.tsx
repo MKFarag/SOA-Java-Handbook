@@ -53,7 +53,7 @@ export const MilestoneChallengeCard: React.FC<MilestoneChallengeCardProps> = ({
               ? 'bg-emerald-500 text-white shadow-md shadow-emerald-500/20'
               : needsReview
               ? 'bg-amber-500 text-white shadow-md shadow-amber-500/20'
-              : 'bg-orange-500/10 text-orange-600 dark:text-orange-400 border border-orange-500/20'
+              : 'bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20'
           }`}>
             <Trophy className="w-5 h-5" />
           </div>
@@ -109,7 +109,7 @@ export const MilestoneChallengeCard: React.FC<MilestoneChallengeCardProps> = ({
             <ul className="space-y-1.5">
               {challenge.architecturalConstraints.map((constraint, idx) => (
                 <li key={idx} className="flex items-start gap-2 text-xs text-zinc-600 dark:text-zinc-400">
-                  <ShieldCheck className="w-3.5 h-3.5 text-orange-500 shrink-0 mt-0.5" />
+                  <ShieldCheck className="w-3.5 h-3.5 text-blue-500 shrink-0 mt-0.5" />
                   <span>{constraint}</span>
                 </li>
               ))}

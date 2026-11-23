@@ -12,6 +12,7 @@
     "build": "tsc -b && vite build",
     "test:verify": "node scripts/verify-examples.mjs",
     "test:smoke": "npm run build && node scripts/smoke-test.mjs",
+    "test:redesign": "npm run build && node scripts/verify-redesign.mjs",
     "lint": "oxlint",
     "preview": "vite preview"
   },

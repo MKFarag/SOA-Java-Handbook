@@ -110,10 +110,10 @@ export const SavedView: React.FC<SavedViewProps> = ({
                 onClick={() => onSelectTopic(topic.id)}
               >
                 <div className="flex items-center gap-2">
-                  <span className="text-xs font-mono font-bold text-orange-600 dark:text-orange-400 px-1.5 py-0.2 rounded bg-orange-500/10">
+                  <span className="text-xs font-mono font-bold text-blue-600 dark:text-blue-400 px-1.5 py-0.5 rounded bg-blue-500/10">
                     {topic.versionBadge}
                   </span>
-                  <h3 className="text-sm sm:text-base font-bold text-zinc-900 dark:text-zinc-100 group-hover:text-amber-500 transition-colors truncate">
+                  <h3 className="text-sm sm:text-base font-bold text-zinc-900 dark:text-zinc-100 group-hover:text-blue-500 transition-colors truncate">
                     {topic.title}
                   </h3>
                 </div>

@@ -46,31 +46,53 @@ Automated testing in Spring Boot implements the testing pyramid: fast isolated u
               /-------------------\
 ```
 
-### JUnit 5 (Jupiter Engine) Syntax
-JUnit 5 decomposes tests into distinct lifecycle phases:
-- `@Test`: Marks a method as a test case.
-- `@BeforeEach` / `@AfterEach`: Setup and teardown hooks executed before and after every test method.
-- `@Nested`: Groups tests hierarchically by feature, enabling readable Behavior-Driven Development (BDD).
-- `@ParameterizedTest` + `@ValueSource` / `@CsvSource`: Runs the same test logic across multiple input data sets.
-- `assertAll(...)`: Executes multiple assertions simultaneously, reporting all failures rather than aborting on the first failure.
-- `assertThrows(ExpectedException.class, () -> executable)`: Verifies that a code block throws the expected exception type.
+### Master Enterprise Automated Testing Annotations Directory
 
-### Mockito Test Double Syntax
-- `@Mock`: Generates a dynamic proxy mock instance of a class or interface with zero real implementation logic.
-- `@InjectMocks`: Instantiates the real class under test and injects declared `@Mock` fields into its constructor.
-- `when(mock.method(arg)).thenReturn(val)`: Configures canned behavior (stubbing).
-- `verify(mock, times(1)).method(arg)`: Asserts that a method was invoked with exact parameter arguments.
-- `ArgumentCaptor<T>`: Captures method arguments passed into mocks for detailed field assertion.
+Modern testing in Spring Boot spans JUnit 5 for unit execution, Mockito for test doubles, Spring Boot test slices for targeted integration, and Testcontainers for real disposable infrastructure.
 
-### Spring Boot Test Slices
-Instead of loading the entire heavy `@SpringBootTest` context, Spring Boot provides isolated layer slices:
+#### 1. JUnit 5 Jupiter Lifecycle & Parameterized Annotations
 
-| Slice Annotation | Layer Loaded | Mocks Required | Typical Execution Speed |
-| :--- | :--- | :--- | :---: |
-| `@WebMvcTest(OrderController.class)` | Controller, Filters, JSON serialization, Security | `@MockitoBean` for Services | $\sim 500\text{ ms}$ |
-| `@DataJpaTest` | Repositories, EntityManager, Flyway schema | Mocks web controllers | $\sim 1\text{ s}$ |
-| `@JsonTest` | Jackson ObjectMapper serializers/deserializers | Standalone | $\sim 200\text{ ms}$ |
-| `@SpringBootTest` | Full Application Context, All Beans | None (or integration mocks) | $\sim 5\text{--}15\text{ s}$ |
+| Annotation | Target | Purpose & Execution Phase | Production Example |
+| :--- | :--- | :--- | :--- |
+| **`@Test`** | `METHOD` | Declares standard test method executed by the Jupiter engine. | `@Test void shouldCalculateOrderTotal()` |
+| **`@BeforeEach`** | `METHOD` | Executed before **every** individual `@Test` method in current class. | `@BeforeEach void setUp() { service = new OrderService(); }` |
+| **`@AfterEach`** | `METHOD` | Executed after **every** individual `@Test` method (teardown/cleanup). | `@AfterEach void tearDown() { repository.deleteAll(); }` |
+| **`@BeforeAll`** | `METHOD` (static) | Executed once before **all** tests in class (static or per-class lifecycle). | `@BeforeAll static void initContainer() { pg.start(); }` |
+| **`@AfterAll`** | `METHOD` (static) | Executed once after **all** tests in class finish. | `@AfterAll static void stopContainer() { pg.stop(); }` |
+| **`@Nested`** | `TYPE` (Inner Class) | Groups related test scenarios into hierarchical BDD structures. | `@Nested class WhenUserIsAdmin { ... }` |
+| **`@DisplayName`** | `TYPE`, `METHOD` | Defines readable, expressive human title for test reports. | `@DisplayName("Should return 404 when user does not exist")` |
+| **`@Disabled`** | `TYPE`, `METHOD` | Temporarily ignores/skips test execution with optional reason. | `@Disabled("Bug #882 pending fix")` |
+| **`@Timeout`** | `TYPE`, `METHOD` | Fails test if execution duration exceeds specified threshold. | `@Timeout(value = 5, unit = TimeUnit.SECONDS)` |
+| **`@Tag`** | `TYPE`, `METHOD` | Filters test execution in Maven/Gradle builds (e.g. `fast`, `smoke`, `slow`). | `@Tag("integration")` |
+| **`@ParameterizedTest`** | `METHOD` | Executes same test logic repeatedly across parameterized arguments. | `@ParameterizedTest @ValueSource(strings = {"a", "b"})` |
+| **`@ValueSource`** | `METHOD` | Supplies array of primitive/string literals to parameterized test. | `@ValueSource(ints = {1, 2, 3})` |
+| **`@CsvSource`** | `METHOD` | Supplies comma-delimited tabular rows to parameterized test. | `@CsvSource({"10, 2, 5", "20, 4, 5"})` |
+| **`@MethodSource`** | `METHOD` | Delegates input generation to a static factory method returning `Stream<Arguments>`. | `@MethodSource("provideTestData")` |
+| **`@TempDir`** | `FIELD`, `PARAM` | Injects a temporary directory on disk, automatically deleted after test. | `@TempDir Path tempDir;` |
+
+#### 2. Mockito Test Double Annotations
+
+| Annotation | Target | Purpose & Behavioral Mechanics | Production Example |
+| :--- | :--- | :--- | :--- |
+| **`@Mock`** | `FIELD`, `PARAM` | Generates dynamic proxy mock instance with zero real implementation logic. | `@Mock private PaymentGateway paymentGateway;` |
+| **`@Spy`** | `FIELD` | Wraps a real object instance, allowing selective method stubbing while delegating rest to real code. | `@Spy private ObjectMapper mapper = new ObjectMapper();` |
+| **`@Captor`** | `FIELD` | Creates `ArgumentCaptor<T>` instance to capture and inspect arguments passed into mock invocations. | `@Captor private ArgumentCaptor<Order> orderCaptor;` |
+| **`@InjectMocks`** | `FIELD` | Instantiates class under test and injects declared `@Mock` / `@Spy` fields into constructor. | `@InjectMocks private OrderService orderService;` |
+| **`@ExtendWith`** | `TYPE` | Registers Jupiter extensions, such as `MockitoExtension.class` to process Mockito annotations. | `@ExtendWith(MockitoExtension.class) class ServiceTest` |
+
+#### 3. Spring Boot Test Slices & Integration Annotations
+
+| Annotation | Target | Scope & Architectural Focus | Production Example |
+| :--- | :--- | :--- | :--- |
+| **`@SpringBootTest`** | `TYPE` | Boots **complete** `ApplicationContext`. Used for end-to-end integration tests. | `@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)` |
+| **`@WebMvcTest`** | `TYPE` | Slices **web layer only** (controllers, filters, converters). Disables services and JPA repositories. | `@WebMvcTest(OrderController.class)` |
+| **`@DataJpaTest`** | `TYPE` | Slices **JPA persistence layer only** (repositories, entities, Flyway/H2). Uses transactional rollback by default. | `@DataJpaTest class OrderRepositoryTest` |
+| **`@JsonTest`** | `TYPE` | Slices **JSON serialization / deserialization** testing Jackson `Tester<T>`. | `@JsonTest class OrderJsonTest` |
+| **`@AutoConfigureMockMvc`** | `TYPE` | Configures non-server `MockMvc` client for mocking HTTP dispatching. | `@SpringBootTest @AutoConfigureMockMvc` |
+| **`@MockitoBean`** / **`@MockBean`** | `FIELD` | Injects mock into the Spring ApplicationContext, replacing any real bean. | `@MockitoBean private PaymentGateway paymentGateway;` |
+| **`@DynamicPropertySource`** | `METHOD` (static) | Dynamically registers properties into Spring Environment (e.g. Testcontainers JDBC URL). | `@DynamicPropertySource static void props(DynamicPropertyRegistry r) { r.add("spring.datasource.url", pg::getJdbcUrl); }` |
+| **`@Testcontainers`** | `TYPE` | Enables JUnit 5 Testcontainers extension to manage Docker container lifecycles. | `@Testcontainers @SpringBootTest class EndToEndTest` |
+| **`@Container`** | `FIELD` | Declares managed container instance (static = shared across test class; non-static = fresh per test). | `@Container static PostgreSQLContainer<?> pg = new PostgreSQLContainer<>("postgres:16");`
 
 ---
 

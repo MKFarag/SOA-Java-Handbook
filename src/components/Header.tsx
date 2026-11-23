@@ -1,30 +1,40 @@
 import React, { useRef } from 'react';
-import { 
-  Coffee, 
-  Search, 
-  Bookmark, 
-  CheckCircle2, 
-  Sun, 
-  Moon, 
-  ZoomIn, 
-  ZoomOut, 
-  Menu,
-  Award,
-  Lock,
+import {
+  Search,
   Cloud,
-  Bell
+  Check,
+  AlertCircle,
+  Loader2,
+  Menu,
+  PanelLeftClose,
+  PanelLeft,
+  Sun,
+  Moon
 } from 'lucide-react';
-import type { StudentProfile } from '../types';
+import { Logo } from './Logo';
+import { PersonalUtilitiesMenu } from './PersonalUtilitiesMenu';
+import type { StudentProfile, PartType } from '../types';
+import { MAIN_SECTIONS } from '../data/topics';
+
+export type SyncVisualState = 'idle' | 'syncing' | 'success' | 'error';
 
 interface HeaderProps {
+  selectedPart: PartType;
+  onSelectPart: (part: PartType) => void;
+  isSidebarCollapsed: boolean;
+  onToggleDesktopSidebar: () => void;
+  onToggleMobileSidebar: () => void;
   onOpenSearch: () => void;
   onOpenSaved: () => void;
   onOpenProgress: () => void;
+  onOpenKnowledgeBase?: () => void;
+  knowledgeNotesCount?: number;
   onOpenCertificate: () => void;
   onGoHome: () => void;
   onOpenSync: () => void;
   onOpenBroadcasts: () => void;
   onOpenAdmin: () => void;
+  onOpenCapstone: () => void;
   savedCount: number;
   completedCount: number;
   totalTopics: number;
@@ -32,21 +42,31 @@ interface HeaderProps {
   onToggleTheme: () => void;
   fontScale: number;
   onChangeFontScale: (delta: number) => void;
-  onToggleMobileSidebar: () => void;
   currentStudent: StudentProfile | null;
   unreadBroadcastsCount: number;
   isCertificateUnlocked: boolean;
+  syncStatus: SyncVisualState;
+  onLogoutStudent?: () => void;
 }
 
+
 export const Header: React.FC<HeaderProps> = ({
+  selectedPart,
+  onSelectPart,
+  isSidebarCollapsed,
+  onToggleDesktopSidebar,
+  onToggleMobileSidebar,
   onOpenSearch,
   onOpenSaved,
   onOpenProgress,
+  onOpenKnowledgeBase,
+  knowledgeNotesCount = 0,
   onOpenCertificate,
   onGoHome,
   onOpenSync,
   onOpenBroadcasts,
   onOpenAdmin,
+  onOpenCapstone,
   savedCount,
   completedCount,
   totalTopics,
@@ -54,14 +74,13 @@ export const Header: React.FC<HeaderProps> = ({
   onToggleTheme,
   fontScale,
   onChangeFontScale,
-  onToggleMobileSidebar,
   currentStudent,
   unreadBroadcastsCount,
-  isCertificateUnlocked
+  isCertificateUnlocked,
+  syncStatus,
+  onLogoutStudent
 }) => {
-  const percentComplete = Math.round((completedCount / Math.max(totalTopics, 1)) * 100);
-
-  // Hidden 5-tap counter on logo to open secret Admin Dashboard on mobile / desktop
+  // Hidden 5-tap counter on logo to open secret Admin Dashboard
   const logoTapsRef = useRef(0);
   const resetTapsTimerRef = useRef<number | null>(null);
 
@@ -75,7 +94,6 @@ export const Header: React.FC<HeaderProps> = ({
       return;
     }
 
-    // Auto reset after 2.5s
     resetTapsTimerRef.current = window.setTimeout(() => {
       logoTapsRef.current = 0;
     }, 2500);
@@ -84,184 +102,137 @@ export const Header: React.FC<HeaderProps> = ({
   };
 
   return (
-    <header className="fixed top-0 inset-x-0 z-40 w-full border-b border-zinc-200 dark:border-zinc-800 bg-white/95 dark:bg-[#18181b]/95 backdrop-blur-md transition-colors shadow-xs">
-      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-14 sm:h-16 flex items-center justify-between gap-2 sm:gap-3">
+    <header className="fixed top-0 inset-x-0 z-40 w-full border-b border-zinc-200/80 dark:border-zinc-800/80 bg-white/95 dark:bg-[#141416]/95 backdrop-blur-md transition-colors shadow-xs">
+      
+      {/* Top Primary Bar */}
+      <div className="w-full px-3 sm:px-5 lg:px-6 h-14 sm:h-16 flex items-center justify-between gap-2 sm:gap-4">
         
-        {/* Left: Hamburger (mobile) + Branding */}
-        <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
+        {/* Left Section: Controls + Brand */}
+        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+          {/* Mobile Navigation Drawer Trigger */}
           <button
             type="button"
             onClick={onToggleMobileSidebar}
             className="lg:hidden p-1.5 sm:p-2 rounded-lg text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800 cursor-pointer"
-            title="Toggle navigation"
+            title="Toggle topics drawer"
           >
             <Menu className="w-5 h-5" />
           </button>
 
-          <div 
-            onClick={handleLogoClick}
-            className="flex items-center gap-2 sm:gap-2.5 cursor-pointer group select-none"
-            title="SOA & Java Handbook (Click to go Home)"
+          {/* Desktop Sidebar Collapse Toggle */}
+          <button
+            type="button"
+            onClick={onToggleDesktopSidebar}
+            className="hidden lg:flex p-1.5 rounded-lg text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors cursor-pointer"
+            title={isSidebarCollapsed ? "Expand sidebar" : "Collapse sidebar for wider reading"}
           >
-            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center text-white shadow-md shadow-orange-500/20 group-hover:scale-105 transition-transform shrink-0">
-              <Coffee className="w-4 h-4 sm:w-5 sm:h-5" />
-            </div>
-            <div>
-              <div className="flex items-center gap-1.5 sm:gap-2">
-                <span className="font-bold text-sm sm:text-base tracking-tight text-zinc-900 dark:text-zinc-100 whitespace-nowrap">
-                  SOA
-                </span>
-                <span className="hidden sm:inline-block font-bold text-sm sm:text-base tracking-tight text-zinc-900 dark:text-zinc-100">
-                  &amp; Java
-                </span>
-                <span className="hidden md:inline-block text-[10px] uppercase font-mono font-bold px-1.5 py-0.5 rounded bg-orange-500/10 dark:bg-orange-500/20 text-orange-600 dark:text-orange-400 border border-orange-500/30">
-                  Java 8–26
-                </span>
-              </div>
-              <p className="hidden sm:block text-[11px] text-zinc-500 dark:text-zinc-400 truncate max-w-[200px] lg:max-w-none">
-                Architecture Handbook · Mohamed Khaled Farag
-              </p>
-            </div>
+            {isSidebarCollapsed ? (
+              <PanelLeft className="w-4 h-4" />
+            ) : (
+              <PanelLeftClose className="w-4 h-4" />
+            )}
+          </button>
+
+          {/* New Modern Vector Logo */}
+          <div className="group cursor-pointer">
+            <Logo
+              variant="desktop"
+              onClick={handleLogoClick}
+              className="group-hover:opacity-90 transition-opacity"
+            />
           </div>
         </div>
 
-        {/* Center: Search Trigger Button */}
-        <div className="flex-1 max-w-[200px] sm:max-w-md mx-1 sm:mx-2 min-w-0">
+        {/* Center: Main Section Navigation (Desktop / Tablet) */}
+        <nav 
+          aria-label="Main Section Tabs" 
+          className="hidden md:flex items-center p-1 rounded-xl bg-zinc-100/90 dark:bg-zinc-800/70 border border-zinc-200/70 dark:border-zinc-700/60 shrink-0"
+        >
+          {MAIN_SECTIONS.map((sec) => {
+            const isSelected = selectedPart === sec.part;
+            return (
+              <button
+                key={sec.part}
+                type="button"
+                onClick={() => onSelectPart(sec.part)}
+                className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer whitespace-nowrap ${
+                  isSelected
+                    ? 'bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 font-semibold shadow-xs'
+                    : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-200/50 dark:hover:bg-zinc-700/40'
+                }`}
+              >
+                <span className="hidden lg:inline">{sec.label}</span>
+                <span className="lg:hidden">{sec.shortLabel}</span>
+              </button>
+            );
+          })}
+        </nav>
+
+        {/* Right Section: Global Search, Cloud Sync, Appearance, Profile */}
+        <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+          
+          {/* Global Search Button */}
           <button
             type="button"
             onClick={onOpenSearch}
-            className="w-full flex items-center justify-between px-2.5 sm:px-3 py-1.5 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-[#1e1e1e] hover:border-orange-500/50 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 text-xs sm:text-sm transition-all shadow-inner cursor-pointer"
+            className="flex items-center justify-between px-2.5 sm:px-3 py-1.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-[#1e1e22] hover:border-sky-500/50 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 text-xs transition-all shadow-2xs cursor-pointer min-w-[36px] sm:min-w-[140px] md:min-w-[180px]"
+            title="Search documentation (Ctrl+K)"
           >
-            <div className="flex items-center gap-1.5 sm:gap-2 truncate">
-              <Search className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-orange-500 shrink-0" />
-              <span className="truncate text-xs">Search...</span>
+            <div className="flex items-center gap-2 truncate">
+              <Search className="w-3.5 h-3.5 text-sky-500 shrink-0" />
+              <span className="hidden sm:inline text-xs truncate">Search topics...</span>
             </div>
-            <kbd className="hidden sm:inline-block px-1.5 py-0.5 rounded text-[10px] sm:text-[11px] font-mono bg-zinc-200 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400 shrink-0">
+            <kbd className="hidden sm:inline-block px-1.5 py-0.5 rounded text-[10px] font-mono bg-zinc-200/80 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400 shrink-0">
               Ctrl K
             </kbd>
           </button>
-        </div>
 
-        {/* Right: Controls & Actions */}
-        <div className="flex items-center gap-1 sm:gap-1.5 shrink-0">
-          
-          {/* Notification Bell (Broadcasts & Drive Links) */}
-          <button
-            type="button"
-            onClick={onOpenBroadcasts}
-            className="relative p-1.5 sm:p-2 rounded-lg text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors cursor-pointer"
-            title="View Course Announcements & Drive Links"
-          >
-            <Bell className="w-4 h-4 text-orange-500" />
-            {unreadBroadcastsCount > 0 && (
-              <span className="absolute top-1 right-1 flex h-4 w-4 items-center justify-center rounded-full bg-orange-500 text-[9px] font-bold text-white shadow-xs animate-pulse">
-                {unreadBroadcastsCount}
-              </span>
-            )}
-          </button>
-
-          {/* Student Profile / Sync Button (hidden on mobile, visible from sm up) */}
+          {/* Cloud Sync Status Indicator */}
           <button
             type="button"
             onClick={onOpenSync}
-            className={`hidden sm:flex items-center gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
-              currentStudent
-                ? 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30 hover:bg-emerald-500/20'
-                : 'bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-200 dark:hover:bg-zinc-700 border border-zinc-200 dark:border-zinc-700'
+            className={`relative p-2 rounded-xl transition-all cursor-pointer border ${
+              syncStatus === 'success'
+                ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/30 hover:bg-emerald-500/20'
+                : syncStatus === 'syncing'
+                ? 'bg-sky-500/10 text-sky-600 dark:text-sky-400 border-sky-500/30'
+                : syncStatus === 'error'
+                ? 'bg-rose-500/10 text-rose-600 dark:text-rose-400 border-rose-500/30 hover:bg-rose-500/20'
+                : 'bg-zinc-100 dark:bg-zinc-800/80 text-zinc-500 dark:text-zinc-400 border-zinc-200 dark:border-zinc-700/80 hover:text-zinc-900 dark:hover:text-zinc-100'
             }`}
-            title={currentStudent ? `Logged in as ${currentStudent.name} (${currentStudent.code})` : 'Sync Progress with Your Code'}
+            title={
+              syncStatus === 'success'
+                ? 'Cloud Sync: Synchronized'
+                : syncStatus === 'syncing'
+                ? 'Cloud Sync: Synchronizing...'
+                : syncStatus === 'error'
+                ? 'Cloud Sync: Failed (click to inspect)'
+                : 'Cloud Sync: Idle (click to configure)'
+            }
           >
-            {currentStudent ? (
-              <>
-                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                <span className="hidden md:inline truncate max-w-[80px]">{currentStudent.name}</span>
-                <span className="font-mono text-[10px] bg-emerald-500/20 px-1 rounded">{currentStudent.code}</span>
-              </>
+            {syncStatus === 'syncing' ? (
+              <Loader2 className="w-4 h-4 animate-spin text-sky-500" />
+            ) : syncStatus === 'success' ? (
+              <div className="relative">
+                <Cloud className="w-4 h-4 text-emerald-500" />
+                <Check className="w-2.5 h-2.5 text-emerald-500 absolute -bottom-1 -right-1 font-bold" />
+              </div>
+            ) : syncStatus === 'error' ? (
+              <div className="relative">
+                <Cloud className="w-4 h-4 text-rose-500" />
+                <AlertCircle className="w-2.5 h-2.5 text-rose-500 absolute -bottom-1 -right-1 font-bold" />
+              </div>
             ) : (
-              <>
-                <Cloud className="w-3.5 h-3.5 text-orange-500" />
-                <span className="hidden sm:inline">Sync Code</span>
-              </>
+              <Cloud className="w-4 h-4 text-zinc-400" />
             )}
           </button>
 
-          {/* Font Scale Adjuster */}
-          <div className="hidden lg:flex items-center bg-zinc-100 dark:bg-[#252526] rounded-lg p-0.5 border border-zinc-200 dark:border-zinc-800 text-xs">
-            <button
-              type="button"
-              onClick={() => onChangeFontScale(-5)}
-              className="p-1 hover:text-orange-500 text-zinc-500 dark:text-zinc-400 cursor-pointer"
-              title="Decrease font size"
-            >
-              <ZoomOut className="w-3.5 h-3.5" />
-            </button>
-            <span className="px-1.5 font-mono text-[11px] text-zinc-700 dark:text-zinc-300 min-w-8 text-center">
-              {fontScale}%
-            </span>
-            <button
-              type="button"
-              onClick={() => onChangeFontScale(5)}
-              className="p-1 hover:text-orange-500 text-zinc-500 dark:text-zinc-400 cursor-pointer"
-              title="Increase font size"
-            >
-              <ZoomIn className="w-3.5 h-3.5" />
-            </button>
-          </div>
-
-          {/* Bookmarks / Saved Button (hidden on mobile, visible on sm+) */}
-          <button
-            type="button"
-            onClick={onOpenSaved}
-            className="hidden sm:flex relative items-center gap-1.5 px-2 py-1.5 rounded-lg text-xs font-medium text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors cursor-pointer"
-            title="View bookmarked topics"
-          >
-            <Bookmark className={`w-4 h-4 ${savedCount > 0 ? 'text-orange-500 fill-orange-500' : 'text-zinc-400'}`} />
-            <span className="hidden xl:inline">Saved</span>
-            {savedCount > 0 && (
-              <span className="inline-flex items-center justify-center px-1.5 py-0.2 rounded-full bg-orange-500 text-white text-[10px] font-bold">
-                {savedCount}
-              </span>
-            )}
-          </button>
-
-          {/* Progress Tracker Button (hidden on mobile, visible on sm+) */}
-          <button
-            type="button"
-            onClick={onOpenProgress}
-            className="hidden sm:flex items-center gap-1.5 px-2 py-1.5 rounded-lg text-xs font-medium text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors cursor-pointer"
-            title="View learning progress"
-          >
-            <CheckCircle2 className={`w-4 h-4 ${percentComplete > 0 ? 'text-emerald-500' : 'text-zinc-400'}`} />
-            <span className="hidden sm:inline font-mono">{percentComplete}%</span>
-          </button>
-
-          {/* Certificate of Mastery Button (Shows Lock if locked) */}
-          <button
-            type="button"
-            onClick={onOpenCertificate}
-            className={`hidden md:flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-semibold transition-all shadow-xs cursor-pointer ${
-              isCertificateUnlocked
-                ? 'text-amber-700 dark:text-amber-400 bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30'
-                : 'text-zinc-600 dark:text-zinc-400 bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 border border-zinc-200 dark:border-zinc-700'
-            }`}
-            title={isCertificateUnlocked ? "View Verified Certificate" : "Official Certificate (Locked 🔒)"}
-          >
-            {isCertificateUnlocked ? (
-              <Award className="w-4 h-4 text-amber-500" />
-            ) : (
-              <Lock className="w-3.5 h-3.5 text-zinc-400" />
-            )}
-            <span className="hidden lg:inline">
-              {isCertificateUnlocked ? 'Certificate' : 'Cert (Locked)'}
-            </span>
-          </button>
-
-          {/* Dark / Light Mode Switch */}
+          {/* Theme Switcher Button */}
           <button
             type="button"
             onClick={onToggleTheme}
-            className="p-1.5 sm:p-2 rounded-lg text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors flex items-center gap-1 cursor-pointer"
-            title={isDark ? "Theme: Dark" : "Theme: Light"}
+            className="p-2 rounded-xl text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors cursor-pointer border border-transparent hover:border-zinc-200 dark:hover:border-zinc-700/80"
+            title={isDark ? "Switch to light theme" : "Switch to dark theme"}
             aria-label="Toggle theme"
           >
             {isDark ? (
@@ -270,9 +241,54 @@ export const Header: React.FC<HeaderProps> = ({
               <Moon className="w-4 h-4 text-zinc-600" />
             )}
           </button>
-        </div>
 
+          {/* Personal Utilities Menu Dropdown */}
+          <PersonalUtilitiesMenu
+            currentStudent={currentStudent}
+            savedCount={savedCount}
+            completedCount={completedCount}
+            totalTopics={totalTopics}
+            isCertificateUnlocked={isCertificateUnlocked}
+            unreadBroadcastsCount={unreadBroadcastsCount}
+            fontScale={fontScale}
+            onChangeFontScale={onChangeFontScale}
+            isDark={isDark}
+            onToggleTheme={onToggleTheme}
+            onOpenSaved={onOpenSaved}
+            onOpenProgress={onOpenProgress}
+            onOpenKnowledgeBase={onOpenKnowledgeBase}
+            knowledgeNotesCount={knowledgeNotesCount}
+            onOpenCertificate={onOpenCertificate}
+            onOpenBroadcasts={onOpenBroadcasts}
+            onOpenSync={onOpenSync}
+            onOpenCapstone={onOpenCapstone}
+            onLogoutStudent={onLogoutStudent}
+          />
+
+        </div>
       </div>
+
+      {/* Mobile Horizontal Section Tabs Strip (Visible only below md breakpoint) */}
+      <div className="md:hidden flex items-center px-3 py-1.5 border-t border-zinc-200/60 dark:border-zinc-800/60 overflow-x-auto no-scrollbar gap-1.5 bg-zinc-50/50 dark:bg-[#18181b]/50">
+        {MAIN_SECTIONS.map((sec) => {
+          const isSelected = selectedPart === sec.part;
+          return (
+            <button
+              key={sec.part}
+              type="button"
+              onClick={() => onSelectPart(sec.part)}
+              className={`px-3 py-1 rounded-lg text-xs font-medium whitespace-nowrap shrink-0 transition-all cursor-pointer ${
+                isSelected
+                  ? 'bg-zinc-900 text-white dark:bg-white dark:text-zinc-900 font-semibold shadow-xs'
+                  : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-200/50 dark:hover:bg-zinc-800/50'
+              }`}
+            >
+              {sec.shortLabel}
+            </button>
+          );
+        })}
+      </div>
+
     </header>
   );
 };

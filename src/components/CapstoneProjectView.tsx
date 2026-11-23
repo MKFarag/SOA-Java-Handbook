@@ -68,9 +68,9 @@ export const CapstoneProjectView: React.FC<CapstoneProjectViewProps> = ({
       case 'Part 1: Java Core':
         return {
           icon: Layers,
-          color: 'text-orange-500',
-          bg: 'bg-orange-500/10 border-orange-500/30 text-orange-500',
-          accent: 'border-orange-500'
+          color: 'text-sky-500',
+          bg: 'bg-sky-500/10 border-sky-500/30 text-sky-500',
+          accent: 'border-sky-500'
         };
       case 'Part 2: Java EE & Jakarta EE':
         return {
@@ -220,7 +220,7 @@ export const CapstoneProjectView: React.FC<CapstoneProjectViewProps> = ({
                     className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono font-medium border transition-colors cursor-pointer ${
                       isDone
                         ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-700 dark:text-emerald-300'
-                        : 'bg-zinc-100 dark:bg-zinc-800 border-zinc-200 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 hover:border-orange-500/50'
+                        : 'bg-zinc-100 dark:bg-zinc-800 border-zinc-200 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 hover:border-blue-500/50'
                     }`}
                   >
                     <CheckCircle2 className={`w-3.5 h-3.5 ${isDone ? 'text-emerald-500' : 'text-zinc-400'}`} />

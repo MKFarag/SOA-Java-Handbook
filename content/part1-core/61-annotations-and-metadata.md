@@ -21,6 +21,33 @@ Annotations (`@interface`, introduced in Java 5) attach declarative metadata to 
 
 ---
 
+## Master Java SE Built-in & Meta-Annotations Directory
+
+The Java programming language includes a core set of standard annotations in `java.lang` and standard meta-annotations in `java.lang.annotation`.
+
+### 1. Standard Built-in Annotations (`java.lang`)
+
+| Annotation | Target Element | Retention | Compiler & Runtime Enforcement | Production Example |
+| :--- | :--- | :--- | :--- | :--- |
+| **`@Override`** | `METHOD` | `SOURCE` | Instructs the compiler to verify that the method actually overrides a superclass method or implements an interface contract. Generates compilation error if method signature does not match! | `@Override public String toString() { return "User"; }` |
+| **`@Deprecated`** | All Elements | `RUNTIME` | Flags a program element as obsolete or dangerous. Emits compiler warnings when referenced. Attributes: `since` (version string) and `forRemoval` (boolean). | `@Deprecated(since = "2.0", forRemoval = true) public void oldMethod() {}` |
+| **`@SuppressWarnings`** | All Elements | `SOURCE` | Suppresses compiler warnings within the annotated scope. Values include `"unchecked"`, `"deprecation"`, `"rawtypes"`, `"serial"`, `"all"`. | `@SuppressWarnings("unchecked") List<String> list = (List<String>) obj;` |
+| **`@SafeVarargs`** | `CONSTRUCTOR`, `METHOD` (static/final/private) | `RUNTIME` | Asserts that the method body performs safe operations on its generic varargs parameter array, suppressing compiler heap pollution warnings. | `@SafeVarargs public static <T> List<T> asList(T... elements) {}` |
+| **`@FunctionalInterface`** | `TYPE` (Interface) | `RUNTIME` | Enforces that an interface contains exactly **one abstract method (SAM)**, guaranteeing compatibility with lambda expressions and method references. | `@FunctionalInterface public interface Transformer<T, R> { R transform(T t); }` |
+| **`@Native`** | `FIELD` | `SOURCE` | Indicates that a constant field may be referenced from native code and serves as a hint to header-generation tools (e.g. `javac -h`). | `@Native public static final int MAX_BUFFER_SIZE = 4096;` |
+
+### 2. Standard Meta-Annotations (`java.lang.annotation`)
+
+| Meta-Annotation | Target Element | Key Attributes | Architectural Purpose & Compiler Effect |
+| :--- | :--- | :--- | :--- |
+| **`@Retention`** | `ANNOTATION_TYPE` | `value` (`RetentionPolicy`) | Dictates annotation lifecycle: `SOURCE` (discarded by compiler), `CLASS` (saved in `.class` bytecode, discarded by JVM loader), `RUNTIME` (retained in JVM heap Metaspace for reflection). |
+| **`@Target`** | `ANNOTATION_TYPE` | `value = ElementType[]` | Restricts language locations where annotation can be applied: `TYPE`, `FIELD`, `METHOD`, `PARAMETER`, `CONSTRUCTOR`, `LOCAL_VARIABLE`, `ANNOTATION_TYPE`, `PACKAGE`, `TYPE_PARAMETER`, `TYPE_USE`, `RECORD_COMPONENT`. |
+| **`@Documented`** | `ANNOTATION_TYPE` | None | Causes the annotation to be included in Javadoc API documentation for annotated elements. |
+| **`@Inherited`** | `ANNOTATION_TYPE` | None | Automatically causes subclasses to inherit the annotation when applied to a class (does not apply to interfaces or methods). |
+| **`@Repeatable`** | `ANNOTATION_TYPE` | `value` (Containing annotation class) | Allows declaring the same annotation multiple times on the same target element (introduced in Java 8). |
+
+---
+
 ## Meta-Annotations Taxonomy
 
 ```

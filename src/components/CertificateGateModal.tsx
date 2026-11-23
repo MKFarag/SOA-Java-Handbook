@@ -164,7 +164,7 @@ export const CertificateGateModal: React.FC<CertificateGateModalProps> = ({
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 active:scale-[0.98] text-white text-sm font-bold flex items-center justify-center gap-2 shadow-md shadow-amber-500/25 transition-all disabled:opacity-50 cursor-pointer"
+              className="w-full py-2.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 active:scale-[0.98] text-white text-sm font-bold flex items-center justify-center gap-2 shadow-xs transition-all disabled:opacity-50 cursor-pointer"
             >
               {loading ? (
                 <span>Verifying credentials...</span>
@@ -192,7 +192,7 @@ export const CertificateGateModal: React.FC<CertificateGateModalProps> = ({
                 onClose();
                 onOpenSyncModal();
               }}
-              className="w-full py-2 text-xs font-medium text-center text-orange-500 hover:text-orange-600 transition-colors"
+              className="w-full py-2 text-xs font-medium text-center text-blue-500 hover:text-blue-600 transition-colors"
             >
               Don't have a code yet? Register your student code &rarr;
             </button>

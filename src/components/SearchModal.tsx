@@ -125,7 +125,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({
       >
         {/* Search Input Bar */}
         <div className="flex items-center px-4 py-3 border-b border-zinc-200 dark:border-zinc-800">
-          <Search className="w-5 h-5 text-orange-500 mr-3 shrink-0" />
+          <Search className="w-5 h-5 text-blue-500 mr-3 shrink-0" />
           <input
             id="search-modal-title"
             ref={inputRef}
@@ -149,7 +149,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({
         <div className="max-h-96 overflow-y-auto p-2">
           {searchResults.length === 0 ? (
             <div className="py-12 text-center text-zinc-500 dark:text-zinc-400 text-sm">
-              <BookOpen className="w-8 h-8 mx-auto mb-2 opacity-40 text-orange-400" />
+              <BookOpen className="w-8 h-8 mx-auto mb-2 opacity-40 text-blue-400" />
               <p>No handbook topics matching "{query}"</p>
               <p className="text-xs text-zinc-400 mt-1">Try searching for "javac", "main", "lifecycle", "servlet", or "threads"</p>
             </div>
@@ -165,7 +165,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({
                   }}
                   className={`p-3 rounded-lg cursor-pointer transition-all flex items-start justify-between gap-3 ${
                     isSelected
-                      ? 'bg-orange-500/10 dark:bg-orange-500/20 border border-orange-500/30'
+                      ? 'bg-blue-500/10 dark:bg-blue-500/20 border border-blue-500/30'
                       : 'hover:bg-zinc-100 dark:hover:bg-zinc-800/60 border border-transparent'
                   }`}
                 >
@@ -188,7 +188,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({
                     </div>
                   </div>
 
-                  <ArrowRight className={`w-4 h-4 mt-1 shrink-0 ${isSelected ? 'text-orange-500' : 'text-zinc-400 opacity-40'}`} />
+                  <ArrowRight className={`w-4 h-4 mt-1 shrink-0 ${isSelected ? 'text-blue-500' : 'text-zinc-400 opacity-40'}`} />
                 </div>
               );
             })
@@ -203,7 +203,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({
             <span><kbd className="px-1 py-0.5 rounded bg-zinc-200 dark:bg-zinc-700 font-mono">Esc</kbd> Close</span>
           </div>
           <span className="sm:hidden text-zinc-400">Tap topic to open</span>
-          <span className="text-orange-600 dark:text-orange-400 font-medium">100% Offline Search</span>
+          <span className="text-blue-600 dark:text-blue-400 font-medium">100% Offline Search</span>
         </div>
       </div>
     </div>

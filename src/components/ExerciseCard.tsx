@@ -42,7 +42,7 @@ export const ExerciseCard: React.FC<ExerciseCardProps> = ({ exercise, index }) =
       {/* Header */}
       <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-zinc-100 dark:border-zinc-800/80">
         <div className="flex items-center gap-2">
-          <span className="flex items-center justify-center w-6 h-6 rounded-full bg-orange-500/10 dark:bg-orange-500/20 text-orange-600 dark:text-orange-400 text-xs font-bold font-mono shrink-0">
+          <span className="flex items-center justify-center w-6 h-6 rounded-full bg-blue-500/10 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400 text-xs font-bold font-mono shrink-0">
             {index + 1}
           </span>
           <h4 className="text-sm sm:text-base font-semibold text-zinc-900 dark:text-zinc-100">
@@ -69,7 +69,7 @@ export const ExerciseCard: React.FC<ExerciseCardProps> = ({ exercise, index }) =
         <button
           type="button"
           onClick={() => setShowSolution(!showSolution)}
-          className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-zinc-100 dark:bg-zinc-800 hover:bg-orange-500/10 dark:hover:bg-orange-500/20 text-zinc-700 dark:text-zinc-300 hover:text-orange-600 dark:hover:text-orange-400 transition-colors border border-zinc-200 dark:border-zinc-700 cursor-pointer"
+          className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-zinc-100 dark:bg-zinc-800 hover:bg-blue-500/10 dark:hover:bg-blue-500/20 text-zinc-700 dark:text-zinc-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors border border-zinc-200 dark:border-zinc-700 cursor-pointer"
         >
           {showSolution ? (
             <>
@@ -96,8 +96,8 @@ export const ExerciseCard: React.FC<ExerciseCardProps> = ({ exercise, index }) =
 
       {/* Solution Section */}
       {showSolution && (
-        <div className="mt-3 p-3 sm:p-4 rounded-xl bg-zinc-50 dark:bg-[#141416] border border-orange-500/20">
-          <h5 className="text-xs font-bold uppercase tracking-wider text-orange-600 dark:text-orange-400 mb-2">
+        <div className="mt-3 p-3 sm:p-4 rounded-xl bg-zinc-50 dark:bg-[#141416] border border-blue-500/20">
+          <h5 className="text-xs font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400 mb-2">
             Correct Solution:
           </h5>
           <CodeBlock code={exercise.solution} />

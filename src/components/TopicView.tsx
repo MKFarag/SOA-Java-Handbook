@@ -12,7 +12,8 @@ import {
   Info, 
   Layers, 
   BookMarked,
-  ChevronsUpDown
+  ChevronsUpDown,
+  Home
 } from 'lucide-react';
 import { marked } from 'marked';
 import Prism from '../lib/prism';
@@ -20,10 +21,12 @@ import type { TopicDetail } from '../types';
 import { ALL_TOPICS, resolveTopic } from '../data/topics';
 import { CodeBlock } from './CodeBlock';
 import { ExerciseCard } from './ExerciseCard';
+import { highlightCodeLines } from '../lib/codeHighlight';
 
 interface TopicViewProps {
   topic: TopicDetail;
   onSelectTopic: (topicId: string) => void;
+  onGoHome?: () => void;
   isSaved: boolean;
   onToggleSaved: (topicId: string) => void;
   isCompleted: boolean;
@@ -33,6 +36,7 @@ interface TopicViewProps {
 export const TopicView: React.FC<TopicViewProps> = ({
   topic,
   onSelectTopic,
+  onGoHome,
   isSaved,
   onToggleSaved,
   isCompleted,
@@ -59,13 +63,13 @@ export const TopicView: React.FC<TopicViewProps> = ({
   const renderedHtml = useMemo(() => {
     if (!topic.markdownContent) return '';
     try {
-      // Clean up internal links (file:///, drive letters, relative ../ or ./) to #topic-id (supporting 2 and 3 digit topics)
+      // Clean up internal links (file:///, drive letters, relative ../ or ./) to #topic-id
       let text = topic.markdownContent.replace(
         /(?:[^\s()]*?[\\/])?([0-9]{2,3})-[a-z0-9-]+\.md/gi,
         (_match, num) => `#topic-${num}`
       );
 
-      // Clean up any remaining file:///c: links
+      // Clean up any remaining file:/// links
       text = text.replace(/file:\/\/\/[^\s)]+/gi, '#');
 
       return marked.parse(text, { gfm: true, breaks: false }) as string;
@@ -75,10 +79,41 @@ export const TopicView: React.FC<TopicViewProps> = ({
     }
   }, [topic.markdownContent]);
 
-  // Enhance rendered markdown: Dual-Tabs for Code/Output, Solutions, and Prism syntax highlighting
+  // Enhance rendered markdown: Dual-Tabs for Code/Output, Line Numbers, Proper Line Wrapping, and Solutions
   useEffect(() => {
     const container = contentRef.current;
     if (!container) return;
+
+    // Helper to build line-numbered DOM elements
+    const renderCodeLinesIntoPane = (codeText: string, lang: string, targetPane: HTMLElement) => {
+      const lines = highlightCodeLines(codeText, lang);
+      const padDigits = lines.length >= 100 ? 3 : 2;
+
+      const linesWrapper = document.createElement('div');
+      linesWrapper.className = 'code-lines-wrapper min-w-full font-mono';
+
+      lines.forEach((l) => {
+        const lineDiv = document.createElement('div');
+        lineDiv.className = 'code-line flex items-start hover:bg-white/[0.03] transition-colors';
+
+        const lineNum = document.createElement('span');
+        lineNum.className = 'line-num select-none text-zinc-500/70 font-mono text-[11px] sm:text-xs text-right pr-3.5 sm:pr-4 shrink-0 tabular-nums leading-relaxed';
+        lineNum.style.width = `${padDigits * 0.75 + 1.25}rem`;
+        lineNum.setAttribute('aria-hidden', 'true');
+        lineNum.textContent = String(l.lineNumber).padStart(padDigits, '0');
+
+        const lineContent = document.createElement('span');
+        lineContent.className = 'line-content flex-1 text-[#d4d4d4] font-mono leading-relaxed whitespace-pre';
+        lineContent.innerHTML = l.html;
+
+        lineDiv.appendChild(lineNum);
+        lineDiv.appendChild(lineContent);
+        linesWrapper.appendChild(lineDiv);
+      });
+
+      targetPane.innerHTML = '';
+      targetPane.appendChild(linesWrapper);
+    };
 
     // 1. Process Code + Output pairs into Dual-Tab blocks
     const outputDetails = container.querySelectorAll('details[data-type="output"]');
@@ -97,31 +132,51 @@ export const TopicView: React.FC<TopicViewProps> = ({
       const outputText = (outputPre ? outputPre.textContent : detailsEl.textContent) || '';
       const codeText = preEl.textContent || '';
 
+      const codeEl = preEl.querySelector('code');
+      const langClass = Array.from(codeEl?.classList || []).find(c => c.startsWith('language-'));
+      const langName = langClass ? langClass.replace('language-', '') : 'java';
+
       // Create tab container
       const tabContainer = document.createElement('div');
-      tabContainer.className = 'code-tab-container my-4 sm:my-6 rounded-xl overflow-hidden border border-zinc-200/80 dark:border-[#2e2e32] bg-[#1e1e1e] shadow-lg text-left';
+      tabContainer.className = 'code-tab-container code-scrollable my-4 sm:my-6 rounded-xl overflow-hidden border border-zinc-200/80 dark:border-[#2e2e34] bg-[#1e1e1e] shadow-lg text-left';
 
-      // Header bar
-      const header = document.createElement('div');
-      header.className = 'code-tab-header flex items-center justify-between px-2.5 sm:px-4 py-2 bg-[#252526] border-b border-[#2e2e32] select-none gap-2';
+      // Example Title & Language derivation
+      const classMatch = codeText.match(/(?:public\s+)?(?:class|interface|record|enum)\s+([A-Za-z0-9_]+)/);
+      const exampleTitle = classMatch ? `Example: ${classMatch[1]}` : (topic.title ? `Example: ${topic.title}` : 'Code Example');
+      const displayLang = langName.toLowerCase() === 'java' ? 'Java' : langName.toUpperCase();
+
+      // Header Top Bar: Title & Language Badge
+      const topBar = document.createElement('div');
+      topBar.className = 'code-tab-topbar flex items-center justify-between px-3.5 sm:px-4 py-2 bg-[#252528] border-b border-[#2e2e34] select-none gap-2';
+      topBar.innerHTML = `
+        <div class="flex items-center gap-2 min-w-0">
+          <svg class="w-4 h-4 text-sky-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+          <span class="font-semibold text-xs sm:text-sm text-zinc-100 font-mono truncate">${exampleTitle}</span>
+        </div>
+        <span class="px-2.5 py-0.5 rounded-full text-[11px] font-mono font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 shrink-0">${displayLang}</span>
+      `;
+
+      // Tabs & Actions Toolbar
+      const toolbar = document.createElement('div');
+      toolbar.className = 'code-tab-toolbar flex items-center justify-between px-3 sm:px-4 py-1.5 bg-[#1e1e22] border-b border-[#2a2a30] select-none gap-2';
 
       // Tabs group
       const tabsGroup = document.createElement('div');
-      tabsGroup.className = 'flex items-center bg-[#18181b] p-0.5 rounded-lg border border-[#3f3f46]';
+      tabsGroup.className = 'flex items-center gap-1';
 
       const codeBtn = document.createElement('button');
       codeBtn.type = 'button';
-      codeBtn.className = 'tab-btn active flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1 rounded-md text-[11px] sm:text-xs font-medium transition-all cursor-pointer bg-zinc-700 text-white';
+      codeBtn.className = 'tab-btn active flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer bg-[#24344d] text-blue-400 border border-blue-500/30 shadow-xs';
       codeBtn.innerHTML = '<svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg> <span>Code</span>';
 
       const outputBtn = document.createElement('button');
       outputBtn.type = 'button';
-      outputBtn.className = 'tab-btn flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1 rounded-md text-[11px] sm:text-xs font-medium transition-all cursor-pointer text-zinc-400 hover:text-zinc-200';
+      outputBtn.className = 'tab-btn flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer text-zinc-400 hover:text-zinc-200 border border-transparent';
       outputBtn.innerHTML = '<svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg> <span>Output</span>';
 
       tabsGroup.appendChild(codeBtn);
       tabsGroup.appendChild(outputBtn);
-      header.appendChild(tabsGroup);
+      toolbar.appendChild(tabsGroup);
 
       // Actions group (Wrap + Copy)
       const actionsGroup = document.createElement('div');
@@ -129,37 +184,33 @@ export const TopicView: React.FC<TopicViewProps> = ({
 
       const wrapBtn = document.createElement('button');
       wrapBtn.type = 'button';
-      wrapBtn.className = 'wrap-btn flex items-center gap-1 px-2 py-1 text-[11px] sm:text-xs font-medium rounded-md border text-zinc-400 hover:text-zinc-200 bg-[#2d2d30] hover:bg-[#3e3e42] border-[#3f3f46] transition-all cursor-pointer';
-      wrapBtn.innerHTML = '<svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"></line><path d="M3 12h15a3 3 0 1 1 0 6h-4"></path><polyline points="16 16 14 18 16 20"></polyline><line x1="3" y1="18" x2="10" y2="18"></line></svg> <span class="hidden sm:inline">Wrap</span>';
+      wrapBtn.className = 'wrap-btn flex items-center gap-1 px-2.5 py-1 text-xs font-medium rounded-lg border text-zinc-400 hover:text-zinc-200 bg-[#2d2d30] hover:bg-[#3e3e42] border-[#3f3f46] transition-all cursor-pointer';
+      wrapBtn.innerHTML = '<svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"></line><path d="M3 12h15a3 3 0 1 1 0 6h-4"></path><polyline points="16 16 14 18 16 20"></polyline><line x1="3" y1="18" x2="10" y2="18"></line></svg> <span class="hidden sm:inline">Wrap</span>';
 
       const copyBtn = document.createElement('button');
       copyBtn.type = 'button';
-      copyBtn.className = 'copy-btn flex items-center gap-1 sm:gap-1.5 px-2 sm:px-2.5 py-1 text-[11px] sm:text-xs font-medium rounded-md text-zinc-300 hover:text-white bg-[#2d2d30] hover:bg-[#3e3e42] border border-[#3f3f46] transition-all cursor-pointer';
-      copyBtn.innerHTML = '<svg class="w-3.5 h-3.5 text-zinc-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> <span class="hidden sm:inline">Copy</span>';
+      copyBtn.className = 'copy-btn flex items-center gap-1.5 px-3 py-1 text-xs font-medium rounded-lg text-zinc-300 hover:text-white bg-[#2d2d30] hover:bg-[#3e3e42] border border-[#3f3f46] transition-all cursor-pointer';
+      copyBtn.innerHTML = '<svg class="w-3.5 h-3.5 text-zinc-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> <span class="hidden sm:inline">Copy</span>';
 
       actionsGroup.appendChild(wrapBtn);
       actionsGroup.appendChild(copyBtn);
-      header.appendChild(actionsGroup);
+      toolbar.appendChild(actionsGroup);
 
       // Panes
       const codePane = document.createElement('div');
       codePane.className = 'tab-pane-code p-3 sm:p-4 text-xs sm:text-sm font-mono overflow-x-auto';
-      preEl.style.margin = '0';
-      preEl.style.border = 'none';
-      preEl.style.backgroundColor = 'transparent';
-      preEl.style.padding = '0';
-      preEl.parentNode?.removeChild(preEl);
-      codePane.appendChild(preEl);
+      renderCodeLinesIntoPane(codeText, langName, codePane);
 
       const outputPane = document.createElement('div');
-      outputPane.className = 'tab-pane-output hidden p-3 sm:p-4 text-xs sm:text-sm font-mono bg-[#141416] text-emerald-400 overflow-x-auto';
+      outputPane.className = 'tab-pane-output hidden p-3 sm:p-4 text-xs sm:text-sm font-mono bg-[#141416] text-emerald-400';
       outputPane.innerHTML = `<div class="flex items-center gap-2 pb-2 mb-2 border-b border-zinc-800 text-xs text-zinc-400">
-        <svg class="w-3.5 h-3.5 text-zinc-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
+        <svg class="w-3.5 h-3.5 text-emerald-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
         <span>Expected Terminal Output:</span>
       </div>
-      <pre class="text-zinc-200 m-0 font-mono text-[11px] sm:text-xs leading-5 whitespace-pre">${outputText.trim()}</pre>`;
+      <pre class="text-zinc-200 m-0 font-mono text-[11px] sm:text-xs leading-5 whitespace-pre overflow-x-auto">${outputText.trim()}</pre>`;
 
-      tabContainer.appendChild(header);
+      tabContainer.appendChild(topBar);
+      tabContainer.appendChild(toolbar);
       tabContainer.appendChild(codePane);
       tabContainer.appendChild(outputPane);
 
@@ -168,48 +219,85 @@ export const TopicView: React.FC<TopicViewProps> = ({
 
       codeBtn.onclick = () => {
         activeTab = 'code';
-        codeBtn.className = 'tab-btn active flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1 rounded-md text-[11px] sm:text-xs font-medium transition-all cursor-pointer bg-zinc-700 text-white';
-        outputBtn.className = 'tab-btn flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1 rounded-md text-[11px] sm:text-xs font-medium transition-all cursor-pointer text-zinc-400 hover:text-zinc-200';
+        codeBtn.className = 'tab-btn active flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer bg-[#24344d] text-blue-400 border border-blue-500/30 shadow-xs';
+        outputBtn.className = 'tab-btn flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer text-zinc-400 hover:text-zinc-200 border border-transparent';
         codePane.classList.remove('hidden');
         outputPane.classList.add('hidden');
       };
 
       outputBtn.onclick = () => {
         activeTab = 'output';
-        outputBtn.className = 'tab-btn active flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1 rounded-md text-[11px] sm:text-xs font-medium transition-all cursor-pointer bg-zinc-700 text-white';
-        codeBtn.className = 'tab-btn flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1 rounded-md text-[11px] sm:text-xs font-medium transition-all cursor-pointer text-zinc-400 hover:text-zinc-200';
+        outputBtn.className = 'tab-btn active flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer bg-[#24344d] text-blue-400 border border-blue-500/30 shadow-xs';
+        codeBtn.className = 'tab-btn flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer text-zinc-400 hover:text-zinc-200 border border-transparent';
         outputPane.classList.remove('hidden');
         codePane.classList.add('hidden');
       };
 
       wrapBtn.onclick = () => {
         isWrapped = !isWrapped;
+        tabContainer.classList.toggle('code-wrapped', isWrapped);
+        tabContainer.classList.toggle('code-scrollable', !isWrapped);
+
+        const outPre = outputPane.querySelector('pre');
+        const codeLinesWrapper = codePane.querySelector('.code-lines-wrapper');
+
         if (isWrapped) {
-          wrapBtn.classList.add('bg-zinc-600', 'text-white');
-          wrapBtn.classList.remove('text-zinc-400', 'bg-[#2d2d30]');
-          codePane.classList.add('whitespace-pre-wrap', 'break-words');
-          outputPane.querySelector('pre')?.classList.add('whitespace-pre-wrap', 'break-words');
+          wrapBtn.className = 'wrap-btn flex items-center gap-1 px-2.5 py-1 text-[11px] sm:text-xs font-medium rounded-md border transition-all cursor-pointer bg-sky-500/20 text-sky-400 border-sky-500/40 shadow-xs';
+          const span = wrapBtn.querySelector('span');
+          if (span) span.textContent = 'Wrapped';
+
+          codePane.classList.remove('overflow-x-auto');
+          codePane.classList.add('overflow-x-hidden');
+          if (codeLinesWrapper) {
+            codeLinesWrapper.classList.remove('min-w-fit', 'w-max');
+            codeLinesWrapper.classList.add('w-full', 'max-w-full', 'min-w-0');
+          }
+          codePane.querySelectorAll('.line-content').forEach((el) => {
+            el.classList.remove('whitespace-pre');
+            el.classList.add('whitespace-pre-wrap', 'break-words', 'overflow-hidden');
+          });
+
+          if (outPre) {
+            outPre.classList.remove('whitespace-pre', 'overflow-x-auto');
+            outPre.classList.add('whitespace-pre-wrap', 'break-words', 'overflow-x-hidden');
+          }
         } else {
-          wrapBtn.classList.remove('bg-zinc-600', 'text-white');
-          wrapBtn.classList.add('text-zinc-400', 'bg-[#2d2d30]');
-          codePane.classList.remove('whitespace-pre-wrap', 'break-words');
-          outputPane.querySelector('pre')?.classList.remove('whitespace-pre-wrap', 'break-words');
+          wrapBtn.className = 'wrap-btn flex items-center gap-1 px-2.5 py-1 text-[11px] sm:text-xs font-medium rounded-md border transition-all cursor-pointer text-zinc-400 hover:text-zinc-200 bg-[#2d2d30] hover:bg-[#3e3e42] border-[#3f3f46]';
+          const span = wrapBtn.querySelector('span');
+          if (span) span.textContent = 'Wrap';
+
+          codePane.classList.add('overflow-x-auto');
+          codePane.classList.remove('overflow-x-hidden');
+          if (codeLinesWrapper) {
+            codeLinesWrapper.classList.remove('w-full', 'max-w-full', 'min-w-0');
+            codeLinesWrapper.classList.add('min-w-full', 'w-max');
+          }
+          codePane.querySelectorAll('.line-content').forEach((el) => {
+            el.classList.add('whitespace-pre');
+            el.classList.remove('whitespace-pre-wrap', 'break-words', 'overflow-hidden');
+          });
+
+          if (outPre) {
+            outPre.classList.add('whitespace-pre', 'overflow-x-auto');
+            outPre.classList.remove('whitespace-pre-wrap', 'break-words', 'overflow-x-hidden');
+          }
         }
       };
 
       copyBtn.onclick = () => {
-        const textToCopy = activeTab === 'code' ? codeText : outputText;
+        const textToCopy = activeTab === 'code' ? codeText.trim() : outputText.trim();
         navigator.clipboard.writeText(textToCopy);
-        copyBtn.innerHTML = '<svg class="w-3.5 h-3.5 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg> <span class="text-emerald-400 font-semibold hidden sm:inline">Copied!</span>';
+        copyBtn.innerHTML = '<svg class="w-3.5 h-3.5 text-emerald-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg> <span class="text-emerald-400 font-semibold hidden sm:inline">Copied!</span>';
         setTimeout(() => {
-          copyBtn.innerHTML = '<svg class="w-3.5 h-3.5 text-zinc-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> <span class="hidden sm:inline">Copy</span>';
+          copyBtn.innerHTML = '<svg class="w-3.5 h-3.5 text-zinc-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> <span class="hidden sm:inline">Copy</span>';
         }, 2000);
       };
 
+      preEl.remove();
       detailsEl.replaceWith(tabContainer);
     });
 
-    // 2. Enhance Standalone Code blocks with Language tag, Wrap toggle, and Copy button
+    // 2. Enhance Standalone Code blocks with Language tag, Wrap toggle, Line numbers, and Copy button
     const standalonePres = container.querySelectorAll('pre');
     standalonePres.forEach((preEl) => {
       if (preEl.closest('.code-tab-container') || preEl.closest('.standalone-code-container')) return;
@@ -220,31 +308,43 @@ export const TopicView: React.FC<TopicViewProps> = ({
       if (!codeText.trim()) return;
 
       const langClass = Array.from(codeEl?.classList || []).find(c => c.startsWith('language-'));
-      const langName = langClass ? langClass.replace('language-', '').toUpperCase() : 'CODE';
+      const langName = langClass ? langClass.replace('language-', '') : 'java';
 
       const codeContainer = document.createElement('div');
-      codeContainer.className = 'standalone-code-container my-4 sm:my-6 rounded-xl overflow-hidden border border-zinc-200/80 dark:border-[#2e2e32] bg-[#1e1e1e] shadow-lg text-left';
+      codeContainer.className = 'standalone-code-container code-scrollable my-4 sm:my-6 rounded-xl overflow-hidden border border-zinc-200/80 dark:border-[#2e2e34] bg-[#1e1e1e] shadow-lg text-left';
+
+      const classMatch = codeText.match(/(?:public\s+)?(?:class|interface|record|enum)\s+([A-Za-z0-9_]+)/);
+      const exampleTitle = classMatch ? `Example: ${classMatch[1]}` : (topic.title ? `Example: ${topic.title}` : 'Code Example');
+      const displayLang = langName.toLowerCase() === 'java' ? 'Java' : langName.toUpperCase();
 
       const header = document.createElement('div');
-      header.className = 'code-tab-header flex items-center justify-between px-2.5 sm:px-4 py-2 bg-[#252526] border-b border-[#2e2e32] select-none gap-2';
+      header.className = 'code-tab-header flex items-center justify-between px-3.5 sm:px-4 py-2 bg-[#252528] border-b border-[#2e2e34] select-none gap-2';
 
       const titleGroup = document.createElement('div');
-      titleGroup.className = 'flex items-center gap-1.5 text-xs font-mono text-zinc-400';
-      titleGroup.innerHTML = `<span class="px-2 py-0.5 rounded bg-zinc-800 text-[10px] sm:text-xs font-bold text-orange-400 font-mono border border-zinc-700">${langName}</span>`;
+      titleGroup.className = 'flex items-center gap-2 min-w-0';
+      titleGroup.innerHTML = `
+        <svg class="w-4 h-4 text-sky-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+        <span class="font-semibold text-xs sm:text-sm text-zinc-100 font-mono truncate">${exampleTitle}</span>
+      `;
       header.appendChild(titleGroup);
 
       const actionsGroup = document.createElement('div');
-      actionsGroup.className = 'flex items-center gap-1.5 shrink-0';
+      actionsGroup.className = 'flex items-center gap-2 shrink-0';
+
+      const langBadge = document.createElement('span');
+      langBadge.className = 'px-2.5 py-0.5 rounded-full text-[11px] font-mono font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 shrink-0';
+      langBadge.textContent = displayLang;
+      actionsGroup.appendChild(langBadge);
 
       const wrapBtn = document.createElement('button');
       wrapBtn.type = 'button';
-      wrapBtn.className = 'wrap-btn flex items-center gap-1 px-2 py-1 text-[11px] sm:text-xs font-medium rounded-md border text-zinc-400 hover:text-zinc-200 bg-[#2d2d30] hover:bg-[#3e3e42] border-[#3f3f46] transition-all cursor-pointer';
-      wrapBtn.innerHTML = '<svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"></line><path d="M3 12h15a3 3 0 1 1 0 6h-4"></path><polyline points="16 16 14 18 16 20"></polyline><line x1="3" y1="18" x2="10" y2="18"></line></svg> <span class="hidden sm:inline">Wrap</span>';
+      wrapBtn.className = 'wrap-btn flex items-center gap-1 px-2.5 py-1 text-[11px] sm:text-xs font-medium rounded-md border text-zinc-400 hover:text-zinc-200 bg-[#2d2d30] hover:bg-[#3e3e42] border-[#3f3f46] transition-all cursor-pointer';
+      wrapBtn.innerHTML = '<svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"></line><path d="M3 12h15a3 3 0 1 1 0 6h-4"></path><polyline points="16 16 14 18 16 20"></polyline><line x1="3" y1="18" x2="10" y2="18"></line></svg> <span class="hidden sm:inline">Wrap</span>';
 
       const copyBtn = document.createElement('button');
       copyBtn.type = 'button';
-      copyBtn.className = 'copy-btn flex items-center gap-1 sm:gap-1.5 px-2 sm:px-2.5 py-1 text-[11px] sm:text-xs font-medium rounded-md text-zinc-300 hover:text-white bg-[#2d2d30] hover:bg-[#3e3e42] border border-[#3f3f46] transition-all cursor-pointer';
-      copyBtn.innerHTML = '<svg class="w-3.5 h-3.5 text-zinc-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> <span class="hidden sm:inline">Copy</span>';
+      copyBtn.className = 'copy-btn flex items-center gap-1 sm:gap-1.5 px-2.5 py-1 text-[11px] sm:text-xs font-medium rounded-md text-zinc-300 hover:text-white bg-[#2d2d30] hover:bg-[#3e3e42] border border-[#3f3f46] transition-all cursor-pointer';
+      copyBtn.innerHTML = '<svg class="w-3.5 h-3.5 text-zinc-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> <span class="hidden sm:inline">Copy</span>';
 
       actionsGroup.appendChild(wrapBtn);
       actionsGroup.appendChild(copyBtn);
@@ -252,39 +352,58 @@ export const TopicView: React.FC<TopicViewProps> = ({
 
       const codePane = document.createElement('div');
       codePane.className = 'p-3 sm:p-4 text-xs sm:text-sm font-mono overflow-x-auto';
-      preEl.style.margin = '0';
-      preEl.style.border = 'none';
-      preEl.style.backgroundColor = 'transparent';
-      preEl.style.padding = '0';
+      renderCodeLinesIntoPane(codeText, langName, codePane);
 
       let isWrapped = false;
       wrapBtn.onclick = () => {
         isWrapped = !isWrapped;
+        codeContainer.classList.toggle('code-wrapped', isWrapped);
+        codeContainer.classList.toggle('code-scrollable', !isWrapped);
+
+        const codeLinesWrapper = codePane.querySelector('.code-lines-wrapper');
+
         if (isWrapped) {
-          wrapBtn.classList.add('bg-zinc-600', 'text-white');
-          wrapBtn.classList.remove('text-zinc-400', 'bg-[#2d2d30]');
-          codePane.classList.add('whitespace-pre-wrap', 'break-words');
-          preEl.classList.add('whitespace-pre-wrap', 'break-words');
-          codeEl?.classList.add('whitespace-pre-wrap', 'break-words');
+          wrapBtn.className = 'wrap-btn flex items-center gap-1 px-2.5 py-1 text-[11px] sm:text-xs font-medium rounded-md border transition-all cursor-pointer bg-sky-500/20 text-sky-400 border-sky-500/40 shadow-xs';
+          const span = wrapBtn.querySelector('span');
+          if (span) span.textContent = 'Wrapped';
+
+          codePane.classList.remove('overflow-x-auto');
+          codePane.classList.add('overflow-x-hidden');
+          if (codeLinesWrapper) {
+            codeLinesWrapper.classList.remove('min-w-fit', 'w-max');
+            codeLinesWrapper.classList.add('w-full', 'max-w-full', 'min-w-0');
+          }
+          codePane.querySelectorAll('.line-content').forEach((el) => {
+            el.classList.remove('whitespace-pre');
+            el.classList.add('whitespace-pre-wrap', 'break-words', 'overflow-hidden');
+          });
         } else {
-          wrapBtn.classList.remove('bg-zinc-600', 'text-white');
-          wrapBtn.classList.add('text-zinc-400', 'bg-[#2d2d30]');
-          codePane.classList.remove('whitespace-pre-wrap', 'break-words');
-          preEl.classList.remove('whitespace-pre-wrap', 'break-words');
-          codeEl?.classList.remove('whitespace-pre-wrap', 'break-words');
+          wrapBtn.className = 'wrap-btn flex items-center gap-1 px-2.5 py-1 text-[11px] sm:text-xs font-medium rounded-md border transition-all cursor-pointer text-zinc-400 hover:text-zinc-200 bg-[#2d2d30] hover:bg-[#3e3e42] border-[#3f3f46]';
+          const span = wrapBtn.querySelector('span');
+          if (span) span.textContent = 'Wrap';
+
+          codePane.classList.add('overflow-x-auto');
+          codePane.classList.remove('overflow-x-hidden');
+          if (codeLinesWrapper) {
+            codeLinesWrapper.classList.remove('w-full', 'max-w-full', 'min-w-0');
+            codeLinesWrapper.classList.add('min-w-full', 'w-max');
+          }
+          codePane.querySelectorAll('.line-content').forEach((el) => {
+            el.classList.add('whitespace-pre');
+            el.classList.remove('whitespace-pre-wrap', 'break-words', 'overflow-hidden');
+          });
         }
       };
 
       copyBtn.onclick = () => {
-        navigator.clipboard.writeText(codeText);
-        copyBtn.innerHTML = '<svg class="w-3.5 h-3.5 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg> <span class="text-emerald-400 font-semibold hidden sm:inline">Copied!</span>';
+        navigator.clipboard.writeText(codeText.trim());
+        copyBtn.innerHTML = '<svg class="w-3.5 h-3.5 text-emerald-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg> <span class="text-emerald-400 font-semibold hidden sm:inline">Copied!</span>';
         setTimeout(() => {
-          copyBtn.innerHTML = '<svg class="w-3.5 h-3.5 text-zinc-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> <span class="hidden sm:inline">Copy</span>';
+          copyBtn.innerHTML = '<svg class="w-3.5 h-3.5 text-zinc-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> <span class="hidden sm:inline">Copy</span>';
         }, 2000);
       };
 
-      preEl.parentNode?.insertBefore(codeContainer, preEl);
-      codePane.appendChild(preEl);
+      preEl.replaceWith(codeContainer);
       codeContainer.appendChild(header);
       codeContainer.appendChild(codePane);
     });
@@ -310,7 +429,7 @@ export const TopicView: React.FC<TopicViewProps> = ({
       detailsEl.addEventListener('toggle', updateSummary);
     });
 
-    // 3.5 Ensure tables are wrapped in a horizontally scrollable container for responsive containment
+    // 4. Ensure tables are wrapped in a horizontally scrollable container
     container.querySelectorAll('table').forEach((table) => {
       if (table.parentElement?.classList.contains('table-scroll-wrapper')) return;
       const wrapper = document.createElement('div');
@@ -319,7 +438,7 @@ export const TopicView: React.FC<TopicViewProps> = ({
       wrapper.appendChild(table);
     });
 
-    // 4. Transform blockquotes with [!NOTE], [!TIP], etc. into GitHub-style callouts
+    // 5. Transform blockquotes with [!NOTE], [!TIP], etc. into GitHub-style callouts
     container.querySelectorAll('blockquote').forEach((bq) => {
       const p = bq.querySelector('p');
       if (!p) return;
@@ -332,26 +451,13 @@ export const TopicView: React.FC<TopicViewProps> = ({
       }
     });
 
-    // 5. Highlight code syntax with Prism
+    // 6. Highlight any remaining code syntax with Prism
     container.querySelectorAll('pre code').forEach((block) => {
-      Prism.highlightElement(block);
+      if (!block.closest('.code-tab-container') && !block.closest('.standalone-code-container')) {
+        Prism.highlightElement(block);
+      }
     });
   }, [renderedHtml, topic.id]);
-
-  // Auto-open collapsed details if targeted by anchor or search deep link
-  useEffect(() => {
-    if (!contentRef.current) return;
-    const hash = window.location.hash;
-    if (hash && hash.length > 1) {
-      try {
-        const target = contentRef.current.querySelector(hash);
-        if (target) {
-          const parentDetails = target.closest('details');
-          if (parentDetails) parentDetails.open = true;
-        }
-      } catch {}
-    }
-  }, [topic.id, renderedHtml]);
 
   // Intercept hash navigation clicks in rendered markdown
   const handleContentClick = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -365,7 +471,6 @@ export const TopicView: React.FC<TopicViewProps> = ({
         e.preventDefault();
         onSelectTopic(targetTopic.id);
       }
-      // If not a recognized topic, allow native in-page anchor jump
     } else if (href && (href.startsWith('http://') || href.startsWith('https://'))) {
       target.setAttribute('target', '_blank');
       target.setAttribute('rel', 'noopener noreferrer');
@@ -373,27 +478,50 @@ export const TopicView: React.FC<TopicViewProps> = ({
   };
 
   return (
-    <div className="max-w-5xl xl:max-w-6xl 2xl:max-w-7xl mx-auto pt-3 sm:pt-8 pb-8 px-4 sm:px-6 lg:px-8 space-y-6 sm:space-y-8 text-left">
+    <div className="max-w-4xl xl:max-w-5xl 2xl:max-w-6xl mx-auto pt-4 sm:pt-6 pb-12 px-4 sm:px-6 lg:px-8 space-y-6 sm:space-y-8 text-left">
       
-      {/* 1. Header & Breadcrumbs */}
+      {/* 1. Header & Breadcrumbs & Annotation Trigger */}
       <div className="space-y-3 sm:space-y-4">
-        <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 text-[11px] sm:text-xs text-zinc-500 dark:text-zinc-400 font-sans leading-normal">
-          <span>{topic.part}</span>
-          <span>/</span>
-          <span className="text-zinc-900 dark:text-zinc-200 font-medium truncate">{topic.title}</span>
+        
+        {/* Breadcrumb Row + Annotation Action */}
+        <div className="flex items-center justify-between gap-3 border-b border-zinc-200/60 dark:border-zinc-800/60 pb-3">
+          <nav 
+            aria-label="Breadcrumb Navigation"
+            className="flex flex-wrap items-center gap-1.5 text-xs text-zinc-500 dark:text-zinc-400 font-sans min-w-0"
+          >
+            {onGoHome && (
+              <button
+                type="button"
+                onClick={onGoHome}
+                className="hover:text-zinc-900 dark:hover:text-zinc-100 flex items-center gap-1 cursor-pointer"
+                title="Handbook Home"
+              >
+                <Home className="w-3.5 h-3.5 text-sky-500" />
+                <span className="hidden sm:inline">Home</span>
+              </button>
+            )}
+            <span>/</span>
+            <span className="hover:text-zinc-700 dark:hover:text-zinc-300 truncate max-w-[140px] sm:max-w-none">
+              {topic.part.split(':')[1]?.trim() || topic.part}
+            </span>
+            <span>/</span>
+            <span className="text-zinc-900 dark:text-zinc-200 font-semibold truncate max-w-[160px] sm:max-w-none">
+              {topic.title}
+            </span>
+          </nav>
         </div>
 
         {/* Action Controls & Chips Row */}
         <div className="flex flex-wrap items-center justify-between gap-2.5 pt-1">
           <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
-            <span className="px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md text-[11px] sm:text-xs font-mono font-bold bg-orange-500/10 dark:bg-orange-500/20 text-orange-600 dark:text-orange-400 border border-orange-500/30">
+            <span className="px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md text-[11px] sm:text-xs font-mono font-bold bg-sky-500/10 dark:bg-sky-500/20 text-sky-600 dark:text-sky-400 border border-sky-500/30">
               {topic.versionBadge}
             </span>
             <span className="px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md text-[11px] sm:text-xs font-semibold bg-zinc-200 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300">
               {topic.difficulty}
             </span>
             <span className="flex items-center gap-1 text-[11px] sm:text-xs text-zinc-500 dark:text-zinc-400">
-              <Clock className="w-3.5 h-3.5" />
+              <Clock className="w-3.5 h-3.5 text-zinc-400" />
               {topic.readingTime}
             </span>
           </div>
@@ -402,8 +530,8 @@ export const TopicView: React.FC<TopicViewProps> = ({
             <button
               type="button"
               onClick={toggleExpandAll}
-              className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-medium border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-[#1e1e1e] text-zinc-600 dark:text-zinc-300 hover:border-orange-500 hover:text-orange-500 transition-all cursor-pointer"
-              title="Expand or collapse all secondary blocks, solutions, and outputs"
+              className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-medium border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-[#1e1e22] text-zinc-700 dark:text-zinc-300 hover:border-sky-500 hover:text-sky-500 transition-all cursor-pointer shadow-2xs"
+              title="Expand or collapse all solutions and secondary panels"
             >
               <ChevronsUpDown className="w-3.5 h-3.5" />
               <span>{isAllExpanded ? 'Collapse All' : 'Expand All'}</span>
@@ -412,23 +540,23 @@ export const TopicView: React.FC<TopicViewProps> = ({
             <button
               type="button"
               onClick={() => onToggleSaved(topic.id)}
-              className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-medium border transition-all cursor-pointer ${
+              className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-medium border transition-all cursor-pointer shadow-2xs ${
                 isSaved
                   ? 'bg-amber-500/15 border-amber-500 text-amber-500'
-                  : 'bg-white dark:bg-[#1e1e1e] border-zinc-300 dark:border-zinc-700 text-zinc-600 dark:text-zinc-300 hover:border-amber-500'
+                  : 'bg-white dark:bg-[#1e1e22] border-zinc-200 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 hover:border-amber-500'
               }`}
             >
               <Bookmark className={`w-3.5 h-3.5 ${isSaved ? 'fill-amber-500' : ''}`} />
-              <span>{isSaved ? 'Saved' : 'Bookmark'}</span>
+              <span>{isSaved ? 'Saved' : 'Save'}</span>
             </button>
 
             <button
               type="button"
               onClick={() => onToggleCompleted(topic.id)}
-              className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-medium border transition-all cursor-pointer ${
+              className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-medium border transition-all cursor-pointer shadow-2xs ${
                 isCompleted
                   ? 'bg-emerald-500/15 border-emerald-500 text-emerald-500'
-                  : 'bg-white dark:bg-[#1e1e1e] border-zinc-300 dark:border-zinc-700 text-zinc-600 dark:text-zinc-300 hover:border-emerald-500'
+                  : 'bg-white dark:bg-[#1e1e22] border-zinc-200 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 hover:border-emerald-500'
               }`}
             >
               <CheckCircle2 className={`w-3.5 h-3.5 ${isCompleted ? 'fill-emerald-500' : ''}`} />
@@ -438,10 +566,10 @@ export const TopicView: React.FC<TopicViewProps> = ({
         </div>
 
         {/* H1 Title & Summary */}
-        <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-zinc-900 dark:text-zinc-100 font-sans break-words">
+        <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-zinc-900 dark:text-zinc-50 font-sans break-words pt-1">
           {topic.title}
         </h1>
-        <p className="text-sm sm:text-lg text-zinc-600 dark:text-zinc-300 leading-relaxed font-sans">
+        <p className="text-sm sm:text-base lg:text-lg text-zinc-600 dark:text-zinc-300 leading-relaxed font-sans">
           {topic.shortDescription}
         </p>
       </div>
@@ -488,11 +616,11 @@ export const TopicView: React.FC<TopicViewProps> = ({
         />
       ) : (
         <div className="space-y-8">
-          {/* Structured: What and Why */}
+          {/* Structured Fallback: What and Why */}
           {topic.whatAndWhy && (
             <section className="space-y-3 sm:space-y-4">
               <h2 className="text-lg sm:text-2xl font-bold text-zinc-900 dark:text-zinc-100 flex items-center gap-2 border-b border-zinc-200 dark:border-zinc-800 pb-2">
-                <BookMarked className="w-5 h-5 text-orange-500 shrink-0" />
+                <BookMarked className="w-5 h-5 text-sky-500 shrink-0" />
                 <span>1. What It Is and Why It Exists</span>
               </h2>
               <div className="text-zinc-700 dark:text-zinc-300 text-sm sm:text-base leading-relaxed">
@@ -528,7 +656,7 @@ export const TopicView: React.FC<TopicViewProps> = ({
           {topic.syntaxBreakdown && (
             <section className="space-y-3 sm:space-y-4">
               <h2 className="text-lg sm:text-2xl font-bold text-zinc-900 dark:text-zinc-100 flex items-center gap-2 border-b border-zinc-200 dark:border-zinc-800 pb-2">
-                <Layers className="w-5 h-5 text-orange-500 shrink-0" />
+                <Layers className="w-5 h-5 text-sky-500 shrink-0" />
                 <span>2. Syntax Breakdown</span>
               </h2>
               {topic.syntaxBreakdown.explanation && (
@@ -544,9 +672,9 @@ export const TopicView: React.FC<TopicViewProps> = ({
                   {topic.syntaxBreakdown.tokens.map((tok, idx) => (
                     <div
                       key={idx}
-                      className="p-2.5 sm:p-3 rounded-lg bg-white dark:bg-[#1e1e1e] border border-zinc-200 dark:border-zinc-800 shadow-xs"
+                      className="p-2.5 sm:p-3 rounded-lg bg-white dark:bg-[#1e1e22] border border-zinc-200 dark:border-zinc-800 shadow-2xs"
                     >
-                      <div className="text-xs font-mono font-bold text-orange-600 dark:text-orange-400 pb-1">
+                      <div className="text-xs font-mono font-bold text-sky-600 dark:text-sky-400 pb-1">
                         <code>{tok.token}</code>
                       </div>
                       <div className="text-xs text-zinc-600 dark:text-zinc-300 leading-relaxed font-sans">
@@ -563,7 +691,7 @@ export const TopicView: React.FC<TopicViewProps> = ({
           {topic.examples && topic.examples.length > 0 && (
             <section className="space-y-4 sm:space-y-6">
               <h2 className="text-lg sm:text-2xl font-bold text-zinc-900 dark:text-zinc-100 flex items-center gap-2 border-b border-zinc-200 dark:border-zinc-800 pb-2">
-                <Award className="w-5 h-5 text-orange-500 shrink-0" />
+                <Award className="w-5 h-5 text-sky-500 shrink-0" />
                 <span>3. Runnable Code Examples</span>
               </h2>
 
@@ -589,7 +717,7 @@ export const TopicView: React.FC<TopicViewProps> = ({
                   />
                   {ex.stepByStep && ex.stepByStep.length > 0 && (
                     <div className="mt-3 pt-3 border-t border-zinc-200 dark:border-zinc-800 space-y-1">
-                      <h4 className="text-xs font-bold uppercase tracking-wider text-orange-600 dark:text-orange-400">
+                      <h4 className="text-xs font-bold uppercase tracking-wider text-sky-600 dark:text-sky-400">
                         Execution Order:
                       </h4>
                       <ol className="space-y-1 pl-4 text-xs sm:text-sm text-zinc-700 dark:text-zinc-300 font-sans list-decimal">
@@ -613,7 +741,7 @@ export const TopicView: React.FC<TopicViewProps> = ({
               </h2>
               <div className="space-y-3">
                 {topic.commonMistakes.map((mistake, idx) => (
-                  <div key={idx} className="p-3.5 sm:p-5 rounded-xl bg-white dark:bg-[#1e1e1e] border border-rose-500/20 space-y-2">
+                  <div key={idx} className="p-3.5 sm:p-5 rounded-xl bg-white dark:bg-[#1e1e22] border border-rose-500/20 space-y-2">
                     <div className="flex items-center gap-2 text-rose-600 dark:text-rose-400 font-bold text-sm sm:text-base">
                       <AlertOctagon className="w-4 h-4 shrink-0" />
                       <span>{mistake.title}</span>
@@ -644,7 +772,7 @@ export const TopicView: React.FC<TopicViewProps> = ({
           {topic.cheatSheet && (
             <section className="space-y-3 sm:space-y-4">
               <h2 className="text-lg sm:text-2xl font-bold text-zinc-900 dark:text-zinc-100 flex items-center gap-2 border-b border-zinc-200 dark:border-zinc-800 pb-2">
-                <Layers className="w-5 h-5 text-orange-500 shrink-0" />
+                <Layers className="w-5 h-5 text-sky-500 shrink-0" />
                 <span>{topic.cheatSheet.title || 'Summary Cheat Sheet'}</span>
               </h2>
               <div className="overflow-x-auto rounded-xl border border-zinc-200 dark:border-zinc-800">
@@ -656,7 +784,7 @@ export const TopicView: React.FC<TopicViewProps> = ({
                       ))}
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800 bg-white dark:bg-[#1e1e1e]">
+                  <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800 bg-white dark:bg-[#1e1e22]">
                     {topic.cheatSheet.rows.map((row, rIdx) => (
                       <tr key={rIdx} className="hover:bg-zinc-50 dark:hover:bg-zinc-800/40">
                         {row.map((cell, cIdx) => (
@@ -678,7 +806,7 @@ export const TopicView: React.FC<TopicViewProps> = ({
       {topic.exercises && topic.exercises.length > 0 && (
         <section className="space-y-3 sm:space-y-4 pt-4 border-t border-zinc-200 dark:border-zinc-800">
           <h2 className="text-lg sm:text-2xl font-bold text-zinc-900 dark:text-zinc-100 flex items-center gap-2">
-            <Award className="w-5 h-5 text-orange-500 shrink-0" />
+            <Award className="w-5 h-5 text-sky-500 shrink-0" />
             <span>Practice Exercises</span>
           </h2>
           <div className="space-y-3 sm:space-y-4">
@@ -693,7 +821,7 @@ export const TopicView: React.FC<TopicViewProps> = ({
       {topic.officialSources && topic.officialSources.length > 0 && (
         <section className="space-y-3 sm:space-y-4 pt-4 border-t border-zinc-200 dark:border-zinc-800">
           <h2 className="text-base sm:text-lg font-bold text-zinc-900 dark:text-zinc-100 flex items-center gap-2">
-            <ExternalLink className="w-4 h-4 text-orange-500 shrink-0" />
+            <ExternalLink className="w-4 h-4 text-sky-500 shrink-0" />
             <span>Verified Sources</span>
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
@@ -703,7 +831,7 @@ export const TopicView: React.FC<TopicViewProps> = ({
                 href={source.url}
                 target="_blank"
                 rel="noreferrer"
-                className="p-2.5 sm:p-3 rounded-lg bg-zinc-50 dark:bg-[#1e1e1e] border border-zinc-200 dark:border-zinc-800 hover:border-orange-500/50 flex items-center justify-between text-xs text-zinc-700 dark:text-zinc-300 hover:text-orange-500 transition-colors"
+                className="p-2.5 sm:p-3 rounded-lg bg-zinc-50 dark:bg-[#1e1e22] border border-zinc-200 dark:border-zinc-800 hover:border-sky-500/50 flex items-center justify-between text-xs text-zinc-700 dark:text-zinc-300 hover:text-sky-500 transition-colors"
               >
                 <div className="truncate pr-2">
                   <span className="font-semibold block truncate">{source.title}</span>
@@ -716,15 +844,15 @@ export const TopicView: React.FC<TopicViewProps> = ({
         </section>
       )}
 
-      {/* Prev / Next Navigation Cards */}
+      {/* 6. Prev / Next Navigation Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 pt-6 sm:pt-8 border-t border-zinc-200 dark:border-zinc-800">
         {prevTopic ? (
           <button
             type="button"
             onClick={() => onSelectTopic(prevTopic.id)}
-            className="p-3.5 sm:p-4 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#1e1e1e] hover:border-orange-500/50 text-left transition-all group cursor-pointer"
+            className="p-3.5 sm:p-4 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#1e1e22] hover:border-sky-500/50 text-left transition-all group cursor-pointer shadow-2xs"
           >
-            <div className="flex items-center gap-1.5 text-xs text-zinc-400 group-hover:text-orange-500 mb-1">
+            <div className="flex items-center gap-1.5 text-xs text-zinc-400 group-hover:text-sky-500 mb-1">
               <ArrowLeft className="w-3.5 h-3.5 shrink-0" />
               <span>Previous Topic</span>
             </div>
@@ -738,9 +866,9 @@ export const TopicView: React.FC<TopicViewProps> = ({
           <button
             type="button"
             onClick={() => onSelectTopic(nextTopic.id)}
-            className="p-3.5 sm:p-4 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#1e1e1e] hover:border-orange-500/50 text-right transition-all group cursor-pointer"
+            className="p-3.5 sm:p-4 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#1e1e22] hover:border-sky-500/50 text-right transition-all group cursor-pointer shadow-2xs"
           >
-            <div className="flex items-center justify-end gap-1.5 text-xs text-zinc-400 group-hover:text-orange-500 mb-1">
+            <div className="flex items-center justify-end gap-1.5 text-xs text-zinc-400 group-hover:text-sky-500 mb-1">
               <span>Next Topic</span>
               <ArrowRight className="w-3.5 h-3.5 shrink-0" />
             </div>

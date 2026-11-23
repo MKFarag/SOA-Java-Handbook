@@ -18,6 +18,13 @@ service cloud.firestore {
       allow read: if true;
       allow create, update: if request.resource.data.code == studentCode;
       allow delete: if true;
+
+      // 1.1 Private Knowledge Base (Notes & Code Snippets) Security
+      match /knowledge_notes/{noteId} {
+        allow read, delete: if resource.data.ownerCode == studentCode;
+        allow create: if request.resource.data.ownerCode == studentCode;
+        allow update: if request.resource.data.ownerCode == studentCode && resource.data.ownerCode == studentCode;
+      }
     }
     
     // 2. Broadcasts & Shared Resources Security

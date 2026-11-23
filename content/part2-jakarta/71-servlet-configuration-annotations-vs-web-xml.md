@@ -23,6 +23,23 @@ Servlets can be declared and configured either declaratively using the `@WebServ
 
 ---
 
+## Master Jakarta Servlet Component Annotations Directory
+
+Modern Jakarta Servlet 6.0 allows declarative configuration of all web components via annotations in package `jakarta.servlet.annotation`. Below is the complete reference matrix of all servlet component annotations.
+
+| Annotation | Applicable Target | Key Attributes | Specification Purpose & Lifecycle Role | Production Example |
+| :--- | :--- | :--- | :--- | :--- |
+| **`@WebServlet`** | `TYPE` | `name`, `urlPatterns`, `loadOnStartup`, `initParams`, `asyncSupported` | Declares an `HttpServlet` component and binds it to URL patterns with optional initialization parameters. | `@WebServlet(name = "UserServlet", urlPatterns = {"/users/*"}, loadOnStartup = 1)` |
+| **`@WebFilter`** | `TYPE` | `filterName`, `urlPatterns`, `servletNames`, `dispatcherTypes`, `asyncSupported` | Declares a `Filter` component intercepting incoming requests or responses before/after servlet execution. | `@WebFilter(urlPatterns = {"/api/*"}, dispatcherTypes = {DispatcherType.REQUEST})` |
+| **`@WebListener`** | `TYPE` | `value` | Declares an application lifecycle event listener (e.g. `ServletContextListener`, `HttpSessionListener`). | `@WebListener public class AppBootstrapListener implements ServletContextListener {}` |
+| **`@WebInitParam`** | *(Nested in annotations)* | `name`, `value`, `description` | Declares initialization name-value pairs inside `@WebServlet` or `@WebFilter`. | `initParams = {@WebInitParam(name = "timeout", value = "30")}` |
+| **`@MultipartConfig`** | `TYPE` | `location`, `maxFileSize`, `maxRequestSize`, `fileSizeThreshold` | Enables multipart/form-data payload parsing on the annotated servlet via `request.getPart(...)`. | `@MultipartConfig(maxFileSize = 10485760L, maxRequestSize = 20971520L)` |
+| **`@ServletSecurity`** | `TYPE` | `value` (`@HttpConstraint`), `httpMethodConstraints` | Enforces declarative security constraints, roles, and transport guarantees (SSL/TLS) on servlet paths. | `@ServletSecurity(@HttpConstraint(rolesAllowed = {"ADMIN"}))` |
+| **`@HttpConstraint`** | *(Nested in security)* | `value`, `rolesAllowed`, `transportGuarantee` | Defines security constraint applied to all HTTP methods not explicitly overridden. | `@HttpConstraint(transportGuarantee = TransportGuarantee.CONFIDENTIAL)` |
+| **`@HttpMethodConstraint`** | *(Nested in security)* | `value` (HTTP verb), `rolesAllowed`, `emptyRoleSemantic` | Enforces distinct role constraints per specific HTTP method (e.g. restrict `POST` to `MANAGER`). | `@HttpMethodConstraint(value = "POST", rolesAllowed = {"MANAGER"})` |
+
+---
+
 ## Configuration Comparison Matrix
 
 | Property | `@WebServlet` Annotation | `web.xml` Deployment Descriptor | Precedence Rule |

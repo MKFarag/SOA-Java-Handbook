@@ -183,7 +183,7 @@ Issue Date: ${issueDate}`;
             <button
               type="button"
               onClick={handlePrint}
-              className="flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-bold bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white shadow-md shadow-orange-500/20 transition-all transform hover:scale-[1.02] active:scale-[0.98]"
+              className="flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-bold bg-blue-600 hover:bg-blue-700 text-white shadow-xs transition-all transform hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
             >
               <Printer className="w-4 h-4" />
               <span>Print / Save as PDF</span>
@@ -196,7 +196,7 @@ Issue Date: ${issueDate}`;
           
           {/* Name Input Field */}
           <div className="flex items-center gap-2.5 flex-1 min-w-[260px] max-w-md">
-            <User className="w-5 h-5 text-orange-500 shrink-0" />
+            <User className="w-5 h-5 text-blue-500 shrink-0" />
             <div className="w-full">
               <label htmlFor="recipient-name" className="block text-[11px] font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 mb-1">
                 Recipient Full Name:
@@ -210,7 +210,7 @@ Issue Date: ${issueDate}`;
                   localStorage.setItem('java_handbook_custom_name', e.target.value);
                 }}
                 placeholder="Enter your name..."
-                className="w-full px-3 py-1.5 rounded-lg border border-zinc-300 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800/60 text-sm font-bold text-zinc-900 dark:text-zinc-100 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-all"
+                className="w-full px-3 py-1.5 rounded-lg border border-zinc-300 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800/60 text-sm font-bold text-zinc-900 dark:text-zinc-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
               />
             </div>
           </div>

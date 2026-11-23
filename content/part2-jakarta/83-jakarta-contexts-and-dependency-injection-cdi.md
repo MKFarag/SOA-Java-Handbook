@@ -23,6 +23,26 @@ Jakarta Contexts and Dependency Injection (CDI) is the standard dependency injec
 
 ---
 
+## Master Jakarta CDI Annotations Reference Directory
+
+Jakarta Contexts and Dependency Injection (CDI 4.0) provides a standard, type-safe dependency injection and component lifecycle architecture across the Jakarta EE stack.
+
+| Annotation | Target Element | Category | Architectural Purpose & Container Behavior | Production Example |
+| :--- | :--- | :--- | :--- | :--- |
+| **`@Inject`** | `CONSTRUCTOR`, `METHOD`, `FIELD` | Injection | Identifies injectable constructors, methods, and fields for type-safe contextual dependency resolution. | `@Inject private PaymentGateway paymentGateway;` |
+| **`@Named`** | `TYPE`, `METHOD`, `FIELD`, `PARAM` | Resolution | Assigns EL-accessible string identifier to a CDI bean for Jakarta Expression Language / JSF / MVC binding. | `@Named("userManager") @RequestScoped public class UserManager {}` |
+| **`@Produces`** | `METHOD`, `FIELD` | Producer | Declares a producer method or field turning non-CDI third-party objects or dynamic instances into injectable CDI beans. | `@Produces @ApplicationScoped public DataSource createDataSource() { ... }` |
+| **`@Disposes`** | `PARAMETER` | Producer | Declares a cleanup destructor method automatically invoked when a produced bean is destroyed. | `public void close(@Disposes Connection conn) { conn.close(); }` |
+| **`@Observes`** | `PARAMETER` | Events | Marks parameter as synchronous event observer method receiving dispatched events via `Event<T>.fire()`. | `public void onOrderCreated(@Observes OrderEvent event) { ... }` |
+| **`@ObservesAsync`** | `PARAMETER` | Events | Marks parameter as asynchronous event observer receiving events fired via `Event<T>.fireAsync()`. | `public void onOrderCreated(@ObservesAsync OrderEvent event) { ... }` |
+| **`@Alternative`** | `TYPE` | Selection | Declares a bean as a pluggable alternative disabled by default unless explicitly activated via `beans.xml` or `@Priority`. | `@Alternative @Priority(1) @ApplicationScoped public class MockPaymentGateway {}` |
+| **`@Priority`** | `TYPE` | Selection | Assigns integer priority to alternatives or interceptors (higher integer = higher precedence). | `@Priority(Interceptor.Priority.APPLICATION + 10)` |
+| **`@Qualifier`** | `ANNOTATION_TYPE` | Resolution | Meta-annotation defining custom typesafe qualifiers to distinguish multiple implementations of the same interface. | `@Qualifier @Retention(RUNTIME) public @interface Stripe {}` |
+| **`@Stereotype`** | `ANNOTATION_TYPE` | Meta | Composes multiple CDI annotations (scope, interceptor bindings, qualifiers) into a single reusable meta-annotation. | `@Stereotype @ApplicationScoped @Transactional public @interface ServiceBean {}` |
+| **`@AroundInvoke`** | `METHOD` | Interception | Declares an AOP interceptor method intercepting business invocations with `InvocationContext.proceed()`. | `@AroundInvoke public Object log(InvocationContext ctx) throws Exception { ... }` |
+
+---
+
 ## CDI Contextual Scopes Hierarchy
 
 | Scope Annotation | Lifecycle Duration | Concurrency & Threading | Best Used For |

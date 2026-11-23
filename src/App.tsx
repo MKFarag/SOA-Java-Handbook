@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
-import { Header } from './components/Header';
+import { Header, type SyncVisualState } from './components/Header';
 import { Sidebar } from './components/Sidebar';
 import { TopicView } from './components/TopicView';
 import { HomeView } from './components/HomeView';
@@ -13,11 +13,19 @@ import { CertificateGateModal } from './components/CertificateGateModal';
 import { AdminDashboardModal } from './components/AdminDashboardModal';
 import { BroadcastsModal } from './components/BroadcastsModal';
 import { MobileNav } from './components/MobileNav';
+import { KnowledgeBaseView } from './components/KnowledgeBaseView';
 import { ALL_TOPICS, getTopicById, resolveTopic, migrateProfileData, CURRENT_TOPIC_IDS } from './data/topics';
-import type { ChallengeStatus, PartType, StudentProfile, BroadcastItem } from './types';
-import { saveStudentProfile, getBroadcasts } from './services/firebaseService';
+import type { ChallengeStatus, PartType, StudentProfile, BroadcastItem, KnowledgeNote } from './types';
+import {
+  saveStudentProfile,
+  getBroadcasts,
+  getKnowledgeNotes,
+  saveKnowledgeNote,
+  deleteKnowledgeNote,
+  syncGuestNotesToCloud
+} from './services/firebaseService';
 
-type ViewType = 'home' | 'topic' | 'saved' | 'progress' | 'certificate' | 'capstone';
+type ViewType = 'home' | 'topic' | 'saved' | 'progress' | 'certificate' | 'capstone' | 'knowledge-base';
 
 const parseInitialNav = (): { view: ViewType; topicId: string } => {
   const fallbackTopicId = ALL_TOPICS[0]?.id || 'topic-01';
@@ -30,6 +38,9 @@ const parseInitialNav = (): { view: ViewType; topicId: string } => {
   if (rawHash === 'progress') return { view: 'progress', topicId: fallbackTopicId };
   if (rawHash === 'certificate') return { view: 'certificate', topicId: fallbackTopicId };
   if (rawHash === 'capstone') return { view: 'capstone', topicId: fallbackTopicId };
+  if (rawHash === 'knowledge-base' || rawHash === 'notes' || rawHash === 'kb') {
+    return { view: 'knowledge-base', topicId: fallbackTopicId };
+  }
 
   const matched = resolveTopic(rawHash);
   if (matched) {
@@ -57,6 +68,30 @@ export function App() {
   const [currentView, setCurrentView] = useState<ViewType>(initialNav.view);
   const [selectedCapstonePart, setSelectedCapstonePart] = useState<PartType>('Part 1: Java Core');
   const [activeTopicId, setActiveTopicId] = useState<string | null>(initialNav.topicId);
+
+  // Selected Main Section (Dynamic Sidebar Navigation)
+  const [selectedSectionPart, setSelectedSectionPart] = useState<PartType>(() => {
+    if (initialNav.topicId) {
+      const t = getTopicById(initialNav.topicId);
+      if (t) return t.part;
+    }
+    return 'Part 1: Java Core';
+  });
+
+  // Desktop Sidebar Collapse state (persisted)
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState<boolean>(() => {
+    try {
+      return localStorage.getItem('java_handbook_sidebar_collapsed') === 'true';
+    } catch {
+      return false;
+    }
+  });
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('java_handbook_sidebar_collapsed', isSidebarCollapsed ? 'true' : 'false');
+    } catch {}
+  }, [isSidebarCollapsed]);
 
   // Bookmarked topics
   const [savedTopicIds, setSavedTopicIds] = useState<string[]>(() => {
@@ -146,14 +181,144 @@ export function App() {
   const [isAdminModalOpen, setIsAdminModalOpen] = useState(false);
   const [isBroadcastsModalOpen, setIsBroadcastsModalOpen] = useState(false);
 
-  // Syncing state
+  // Syncing state & confirmed status
   const [isSyncing, setIsSyncing] = useState(false);
-  const [lastSyncTime, setLastSyncTime] = useState<Date | null>(null);
+  const [syncError, setSyncError] = useState(false);
+  const [lastSyncTime, setLastSyncTime] = useState<Date | null>(() => {
+    const profile = localStorage.getItem('soa_student_profile');
+    return profile ? new Date() : null;
+  });
+
+  // Cloud Sync Visual State
+  const syncStatus: SyncVisualState = useMemo(() => {
+    if (isSyncing) return 'syncing';
+    if (syncError) return 'error';
+    if (currentStudent && lastSyncTime) return 'success';
+    return 'idle';
+  }, [isSyncing, syncError, currentStudent, lastSyncTime]);
 
   // Broadcasts & Notifications
   const [broadcasts, setBroadcasts] = useState<BroadcastItem[]>([]);
   const [unreadBroadcastsCount, setUnreadBroadcastsCount] = useState<number>(0);
   const [loadingBroadcasts, setLoadingBroadcasts] = useState(false);
+
+  // --- Personal Knowledge Base State ---
+  const [knowledgeNotes, setKnowledgeNotes] = useState<KnowledgeNote[]>(() => {
+    try {
+      const savedStudent = localStorage.getItem('soa_student_profile');
+      if (savedStudent) {
+        const student = JSON.parse(savedStudent);
+        if (student?.code) {
+          const cachedNotes = localStorage.getItem(`soa_student_notes_${student.code.trim().toUpperCase()}`);
+          if (cachedNotes) return JSON.parse(cachedNotes);
+        }
+      }
+      const guestNotes = localStorage.getItem('soa_guest_knowledge_notes');
+      return guestNotes ? JSON.parse(guestNotes) : [];
+    } catch {
+      return [];
+    }
+  });
+
+  // Synchronize Knowledge Notes whenever student profile changes or mounts
+  useEffect(() => {
+    let isCancelled = false;
+
+    const loadNotes = async () => {
+      if (currentStudent && currentStudent.code) {
+        const cleanCode = currentStudent.code.trim().toUpperCase();
+        try {
+          // Check if there are local guest notes to migrate to the user's cloud account
+          const guestRaw = localStorage.getItem('soa_guest_knowledge_notes');
+          const guestNotes: KnowledgeNote[] = guestRaw ? JSON.parse(guestRaw) : [];
+          if (guestNotes.length > 0) {
+            await syncGuestNotesToCloud(cleanCode, guestNotes);
+            localStorage.removeItem('soa_guest_knowledge_notes');
+          }
+
+          const remoteNotes = await getKnowledgeNotes(cleanCode);
+          if (!isCancelled) {
+            setKnowledgeNotes(remoteNotes);
+            localStorage.setItem(`soa_student_notes_${cleanCode}`, JSON.stringify(remoteNotes));
+          }
+        } catch (err) {
+          console.warn('[KnowledgeBase] Remote notes fetch failed, using local cache:', err);
+          const cached = localStorage.getItem(`soa_student_notes_${cleanCode}`);
+          if (cached && !isCancelled) {
+            setKnowledgeNotes(JSON.parse(cached));
+          }
+        }
+      } else {
+        // Guest session
+        const guestNotes = localStorage.getItem('soa_guest_knowledge_notes');
+        if (!isCancelled) {
+          setKnowledgeNotes(guestNotes ? JSON.parse(guestNotes) : []);
+        }
+      }
+    };
+
+    loadNotes();
+
+    return () => {
+      isCancelled = true;
+    };
+  }, [currentStudent]);
+
+  const handleSaveKnowledgeNote = useCallback(async (
+    noteData: Omit<KnowledgeNote, 'id' | 'ownerCode'> & { id?: string; ownerCode?: string }
+  ) => {
+    if (currentStudent && currentStudent.code) {
+      const cleanCode = currentStudent.code.trim().toUpperCase();
+      const saved = await saveKnowledgeNote(cleanCode, noteData);
+      setKnowledgeNotes(prev => {
+        const filtered = prev.filter(n => n.id !== saved.id);
+        const updated = [saved, ...filtered];
+        localStorage.setItem(`soa_student_notes_${cleanCode}`, JSON.stringify(updated));
+        return updated;
+      });
+    } else {
+      // Guest local storage
+      const nowIso = new Date().toISOString();
+      const noteId = noteData.id || `note_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
+      const existing = knowledgeNotes.find(n => n.id === noteId);
+      const saved: KnowledgeNote = {
+        id: noteId,
+        ownerCode: 'GUEST',
+        title: noteData.title,
+        description: noteData.description || '',
+        category: noteData.category || 'General',
+        language: noteData.language || 'java',
+        content: noteData.content || '',
+        codeSnippet: noteData.codeSnippet || '',
+        createdAt: existing?.createdAt || noteData.createdAt || nowIso,
+        updatedAt: nowIso
+      };
+      setKnowledgeNotes(prev => {
+        const filtered = prev.filter(n => n.id !== noteId);
+        const updated = [saved, ...filtered];
+        localStorage.setItem('soa_guest_knowledge_notes', JSON.stringify(updated));
+        return updated;
+      });
+    }
+  }, [currentStudent, knowledgeNotes]);
+
+  const handleDeleteKnowledgeNote = useCallback(async (noteId: string) => {
+    if (currentStudent && currentStudent.code) {
+      const cleanCode = currentStudent.code.trim().toUpperCase();
+      await deleteKnowledgeNote(cleanCode, noteId);
+      setKnowledgeNotes(prev => {
+        const updated = prev.filter(n => n.id !== noteId);
+        localStorage.setItem(`soa_student_notes_${cleanCode}`, JSON.stringify(updated));
+        return updated;
+      });
+    } else {
+      setKnowledgeNotes(prev => {
+        const updated = prev.filter(n => n.id !== noteId);
+        localStorage.setItem('soa_guest_knowledge_notes', JSON.stringify(updated));
+        return updated;
+      });
+    }
+  }, [currentStudent]);
 
   // Sync dark class on documentElement
   useEffect(() => {
@@ -244,6 +409,7 @@ export function App() {
   const forceSyncToCloud = useCallback(async () => {
     if (!currentStudent) return;
     setIsSyncing(true);
+    setSyncError(false);
     try {
       await saveStudentProfile({
         code: currentStudent.code,
@@ -255,8 +421,10 @@ export function App() {
         certificateUnlocked: isCertificateUnlocked
       });
       setLastSyncTime(new Date());
+      setSyncError(false);
     } catch (err) {
       console.error('Auto-sync failed:', err);
+      setSyncError(true);
     } finally {
       setIsSyncing(false);
     }
@@ -301,6 +469,7 @@ export function App() {
       setIsCertificateUnlocked(true);
     }
     setLastSyncTime(new Date());
+    setSyncError(false);
   };
 
   // Student Logout callback
@@ -309,6 +478,8 @@ export function App() {
     setIsCertificateUnlocked(false);
     localStorage.removeItem('soa_student_profile');
     localStorage.removeItem('soa_certificate_unlocked');
+    setLastSyncTime(null);
+    setSyncError(false);
   };
 
   const handleNavigateView = (view: ViewType) => {
@@ -382,10 +553,15 @@ export function App() {
         setCurrentView('capstone');
         return;
       }
+      if (rawHash === 'knowledge-base' || rawHash === 'notes' || rawHash === 'kb') {
+        setCurrentView('knowledge-base');
+        return;
+      }
 
       const matched = resolveTopic(rawHash);
       if (matched) {
         setActiveTopicId(matched.id);
+        setSelectedSectionPart(matched.part);
         setCurrentView('topic');
       }
     };
@@ -444,6 +620,9 @@ export function App() {
     const topic = getTopicById(topicId) || resolveTopic(topicId);
     const targetId = topic ? topic.id : topicId;
     setActiveTopicId(targetId);
+    if (topic) {
+      setSelectedSectionPart(topic.part);
+    }
     setCurrentView('topic');
     if (topic) {
       window.location.hash = topic.slug || topic.id;
@@ -451,6 +630,17 @@ export function App() {
       window.location.hash = topicId;
     }
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleSelectSectionPart = (part: PartType) => {
+    setSelectedSectionPart(part);
+    const currentActive = activeTopicId ? getTopicById(activeTopicId) : null;
+    if (currentView !== 'topic' || !currentActive || currentActive.part !== part) {
+      const firstTopicInPart = ALL_TOPICS.find(t => t.part === part);
+      if (firstTopicInPart) {
+        handleSelectTopic(firstTopicInPart.id);
+      }
+    }
   };
 
   const handleToggleSaved = (topicId: string) => {
@@ -476,18 +666,26 @@ export function App() {
   const activeTopic = activeTopicId ? getTopicById(activeTopicId) : ALL_TOPICS[0];
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-[#18181b] text-zinc-900 dark:text-zinc-100 flex flex-col transition-colors selection:bg-orange-500/20 selection:text-orange-500">
+    <div className="min-h-screen bg-slate-50 dark:bg-[#141416] text-zinc-900 dark:text-zinc-100 flex flex-col transition-colors selection:bg-sky-500/20 selection:text-sky-500">
       
-      {/* Global Header */}
+      {/* Global Space-Efficient Top Navigation */}
       <Header
+        selectedPart={selectedSectionPart}
+        onSelectPart={handleSelectSectionPart}
+        isSidebarCollapsed={isSidebarCollapsed}
+        onToggleDesktopSidebar={() => setIsSidebarCollapsed(prev => !prev)}
+        onToggleMobileSidebar={() => setIsMobileSidebarOpen(prev => !prev)}
         onOpenSearch={() => setIsSearchOpen(true)}
         onOpenSaved={() => handleNavigateView('saved')}
         onOpenProgress={() => handleNavigateView('progress')}
+        onOpenKnowledgeBase={() => handleNavigateView('knowledge-base')}
+        knowledgeNotesCount={knowledgeNotes.length}
         onOpenCertificate={handleOpenCertificate}
         onGoHome={() => handleNavigateView('home')}
         onOpenSync={() => setIsSyncModalOpen(true)}
         onOpenBroadcasts={handleOpenBroadcasts}
         onOpenAdmin={() => setIsAdminModalOpen(true)}
+        onOpenCapstone={() => handleNavigateView('capstone')}
         savedCount={savedTopicIds.length}
         completedCount={validCompletedCount}
         totalTopics={ALL_TOPICS.length}
@@ -495,37 +693,34 @@ export function App() {
         onToggleTheme={() => setIsDark(prev => !prev)}
         fontScale={fontScale}
         onChangeFontScale={(delta) => setFontScale(prev => Math.min(130, Math.max(85, prev + delta)))}
-        onToggleMobileSidebar={() => setIsMobileSidebarOpen(prev => !prev)}
         currentStudent={currentStudent}
         unreadBroadcastsCount={unreadBroadcastsCount}
         isCertificateUnlocked={isCertificateUnlocked || validCompletedCount >= ALL_TOPICS.length}
+        syncStatus={syncStatus}
+        onLogoutStudent={handleStudentLogout}
       />
 
-      <div className="flex-1 flex w-full pt-14 sm:pt-16">
-        {/* Sticky Sidebar Navigation */}
+      {/* Main Layout Area */}
+      <div className="flex-1 flex w-full pt-20 md:pt-16">
+        {/* Dynamic Curriculum Sidebar Navigation */}
         <Sidebar
+          selectedPart={selectedSectionPart}
           activeTopicId={currentView === 'topic' ? activeTopicId : null}
           onSelectTopic={handleSelectTopic}
           onGoHome={() => handleNavigateView('home')}
-          onOpenSaved={() => handleNavigateView('saved')}
-          onOpenProgress={() => handleNavigateView('progress')}
-          onOpenCertificate={handleOpenCertificate}
-          onOpenCapstone={(part) => {
-            if (part) setSelectedCapstonePart(part);
-            handleNavigateView('capstone');
-          }}
-          onOpenSync={() => setIsSyncModalOpen(true)}
-          onOpenBroadcasts={handleOpenBroadcasts}
           completedTopicIds={completedTopicIds}
           savedTopicIds={new Set(savedTopicIds)}
           isOpenMobile={isMobileSidebarOpen}
           onCloseMobile={() => setIsMobileSidebarOpen(false)}
-          isCertificateUnlocked={isCertificateUnlocked || validCompletedCount >= ALL_TOPICS.length}
-          unreadBroadcastsCount={unreadBroadcastsCount}
+          isSidebarCollapsed={isSidebarCollapsed}
         />
 
-        {/* Main Workspace Panel */}
-        <main className="flex-1 lg:pl-72 xl:pl-80 w-full min-h-[calc(100vh-3.5rem)] sm:min-h-[calc(100vh-4rem)] pb-20 lg:pb-8">
+        {/* Main Content Pane */}
+        <main
+          className={`flex-1 ${
+            isSidebarCollapsed ? 'lg:pl-0' : 'lg:pl-72 xl:pl-80'
+          } w-full min-h-[calc(100vh-4rem)] pb-20 lg:pb-10 transition-all duration-200`}
+        >
           {currentView === 'home' && (
             <HomeView
               onSelectTopic={handleSelectTopic}
@@ -537,6 +732,7 @@ export function App() {
               }}
               broadcasts={broadcasts}
               onOpenBroadcasts={handleOpenBroadcasts}
+              onOpenKnowledgeBase={() => handleNavigateView('knowledge-base')}
             />
           )}
 
@@ -544,6 +740,7 @@ export function App() {
             <TopicView
               topic={activeTopic}
               onSelectTopic={handleSelectTopic}
+              onGoHome={() => handleNavigateView('home')}
               isSaved={savedTopicIds.includes(activeTopic.id)}
               onToggleSaved={handleToggleSaved}
               isCompleted={completedTopicIds.has(activeTopic.id)}
@@ -598,10 +795,20 @@ export function App() {
               onGoHome={() => handleNavigateView('home')}
             />
           )}
+
+          {currentView === 'knowledge-base' && (
+            <KnowledgeBaseView
+              currentStudent={currentStudent}
+              notes={knowledgeNotes}
+              onSaveNote={handleSaveKnowledgeNote}
+              onDeleteNote={handleDeleteKnowledgeNote}
+              onOpenSyncModal={() => setIsSyncModalOpen(true)}
+            />
+          )}
         </main>
       </div>
 
-      {/* Global Offline Search Modal */}
+      {/* Global Search Modal */}
       <SearchModal
         isOpen={isSearchOpen}
         onClose={() => setIsSearchOpen(false)}
@@ -649,7 +856,6 @@ export function App() {
         totalHandbookTopics={ALL_TOPICS.length}
         onBroadcastsUpdated={refreshBroadcasts}
       />
-
 
       {/* Mobile Bottom Navigation Bar */}
       <MobileNav

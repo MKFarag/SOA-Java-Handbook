@@ -41,43 +41,63 @@ Meta-annotations are annotations applied to other annotation declarations:
 
 ---
 
-### The Master Tri-Part Classification Matrix
+### The Master Tri-Domain Architectural Classification Directory
 
-#### A. Domain 1: Java SE Core Annotations (`java.lang.*`)
-- **`@Override`:** Instructs the compiler that the annotated method must override a declaration in a superclass or interface.
-- **`@Deprecated`:** Marks program elements as obsolete, emitting compiler warnings during compilation.
-- **`@SuppressWarnings`:** Suppresses specific compiler warnings (e.g. `unchecked`, `rawtypes`, `deprecation`).
-- **`@FunctionalInterface`:** Enforces that an interface contains exactly one abstract method, ensuring lambda compatibility.
-- **`@SafeVarargs`:** Asserts that a method body does not perform unsafe operations on its varargs parameter array.
+The enterprise Java ecosystem relies on three foundational annotation domains: **Java SE Core**, **Jakarta EE Standards**, and the **Spring Framework Ecosystem**. The matrices below provide an authoritative, cross-referenced catalog detailing specification packages, retention policies, runtime targets, and production code usage.
 
-#### B. Domain 2: Jakarta EE Standards Annotations (`jakarta.*`)
-- **Persistence (`jakarta.persistence.*`):**
-  - `@Entity`, `@Table`, `@Id`, `@GeneratedValue`: Declares relational mapping and primary key strategies.
-  - `@Column`, `@Enumerated`, `@Lob`, `@Temporal`: Attribute-level database mappings.
-  - `@OneToMany`, `@ManyToOne`, `@ManyToMany`, `@JoinColumn`: Relational associations and foreign keys.
-- **Validation (`jakarta.validation.constraints.*`):**
-  - `@NotNull`, `@NotBlank`, `@NotEmpty`: Null and empty checks on fields.
-  - `@Size`, `@Min`, `@Max`, `@Pattern`, `@Email`: Boundary and format validations.
-  - `@Valid`: Cascades recursive validation on nested objects.
-- **Dependency Injection (`jakarta.inject.*`):**
-  - `@Inject`: Identifies injectable constructors, methods, and fields.
-  - `@Named`: Qualifies injection candidates by string identifier.
+#### 1. Domain 1: Java SE Core Annotations (`java.lang.*` & `java.lang.annotation.*`)
 
-#### C. Domain 3: Spring Framework & Spring Boot Annotations (`org.springframework.*`)
-- **Stereotypes & IoC:**
-  - `@SpringBootApplication`: Composed meta-annotation (`@Configuration` + `@EnableAutoConfiguration` + `@ComponentScan`).
-  - `@Component`, `@Service`, `@Repository`, `@Controller`, `@RestController`: Bean stereotypes.
-  - `@Configuration`, `@Bean`, `@Scope`, `@Lazy`, `@Primary`, `@Qualifier`: Factory methods and bean wiring.
-- **Web MVC & HTTP Semantics:**
-  - `@RequestMapping`, `@GetMapping`, `@PostMapping`, `@PutMapping`, `@DeleteMapping`: HTTP routing.
-  - `@PathVariable`, `@RequestParam`, `@RequestBody`, `@RequestHeader`: Parameter binding.
-  - `@RestControllerAdvice`, `@ExceptionHandler`, `@ResponseStatus`: Global exception interception.
-- **Data & Transactions:**
-  - `@Transactional`: Declarative ACID boundaries with propagation and rollback rules.
-  - `@Query`, `@Modifying`, `@EntityGraph`: Custom repository queries and fetch optimizations.
-- **Security:**
-  - `@EnableWebSecurity`, `@EnableMethodSecurity`: Security engine activation.
-  - `@PreAuthorize`, `@PostAuthorize`, `@Secured`: Method-level authorization rules.
+| Annotation | Package | Target Element | Retention | Core Purpose & Production Behavior | Production Example |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **`@Override`** | `java.lang` | `METHOD` | `SOURCE` | Enforces compiler check that method matches a superclass/interface signature. | `@Override public String toString()` |
+| **`@Deprecated`** | `java.lang` | All Elements | `RUNTIME` | Warns callers against using obsolete or scheduled-for-removal APIs. | `@Deprecated(since = "3.1", forRemoval = true)` |
+| **`@SuppressWarnings`** | `java.lang` | All Elements | `SOURCE` | Suppresses specified compiler warnings (`"unchecked"`, `"rawtypes"`). | `@SuppressWarnings("unchecked")` |
+| **`@FunctionalInterface`** | `java.lang` | `TYPE` | `RUNTIME` | Validates interface has exactly one abstract method for lambda compatibility. | `@FunctionalInterface public interface Processor<T>` |
+| **`@SafeVarargs`** | `java.lang` | `CONSTRUCTOR`, `METHOD` | `RUNTIME` | Suppresses compiler warnings when manipulating generic varargs array elements. | `@SafeVarargs public static <T> List<T> of(T... items)` |
+| **`@Retention`** | `java.lang.annotation` | `ANNOTATION_TYPE` | `RUNTIME` | Defines bytecode retention: `SOURCE`, `CLASS`, or reflection-accessible `RUNTIME`. | `@Retention(RetentionPolicy.RUNTIME)` |
+| **`@Target`** | `java.lang.annotation` | `ANNOTATION_TYPE` | `RUNTIME` | Restricts language target elements (`TYPE`, `METHOD`, `FIELD`, `PARAMETER`). | `@Target({ElementType.METHOD, ElementType.TYPE})` |
+| **`@Inherited`** | `java.lang.annotation` | `ANNOTATION_TYPE` | `RUNTIME` | Subclasses automatically inherit the annotation from annotated superclasses. | `@Inherited public @interface Auditable {}` |
+| **`@Repeatable`** | `java.lang.annotation` | `ANNOTATION_TYPE` | `RUNTIME` | Enables multiple declarations of the same annotation on a single element. | `@Repeatable(Schedules.class)` |
+
+#### 2. Domain 2: Jakarta EE Standards Annotations (`jakarta.*`)
+
+| Annotation | Specification Package | Applicable Target | Architectural Semantic & Container Role | Production Example |
+| :--- | :--- | :--- | :--- | :--- |
+| **`@Entity`** | `jakarta.persistence` | `TYPE` | Declares a JPA managed entity class mapped to a relational database table. | `@Entity @Table(name = "users") public class User` |
+| **`@Id`** | `jakarta.persistence` | `FIELD`, `METHOD` | Marks the primary key attribute of the relational entity. | `@Id @GeneratedValue(strategy = GenerationType.IDENTITY) Long id;` |
+| **`@Column`** | `jakarta.persistence` | `FIELD`, `METHOD` | Maps property to database column with constraints (`name`, `nullable`, `unique`, `length`). | `@Column(name = "email_address", nullable = false, unique = true)` |
+| **`@OneToMany`** | `jakarta.persistence` | `FIELD`, `METHOD` | Configures 1-to-N relational association with `mappedBy`, cascade, and fetch rules. | `@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)` |
+| **`@ManyToOne`** | `jakarta.persistence` | `FIELD`, `METHOD` | Configures N-to-1 association with foreign key column (always defaults to `FetchType.LAZY` in production!). | `@ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "customer_id")` |
+| **`@Version`** | `jakarta.persistence` | `FIELD`, `METHOD` | Enables optimistic concurrency control via integer/timestamp column. | `@Version private Long version;` |
+| **`@NotNull`** | `jakarta.validation.constraints` | `FIELD`, `PARAM` | Enforces non-null data integrity validation across layers. | `@NotNull(message = "ID required") Long id;` |
+| **`@NotBlank`** | `jakarta.validation.constraints` | `FIELD`, `PARAM` | Value must be non-null and contain at least one non-whitespace character. | `@NotBlank(message = "Username cannot be empty") String username;` |
+| **`@Size`** | `jakarta.validation.constraints` | `FIELD`, `PARAM` | Validates string length or collection element bounds within inclusive min/max. | `@Size(min = 8, max = 32) String password;` |
+| **`@Valid`** | `jakarta.validation` | `FIELD`, `PARAM` | Triggers recursive cascading validation on nested objects or collections. | `@Valid @NotNull Address billingAddress;` |
+| **`@Inject`** | `jakarta.inject` | `CONSTRUCTOR`, `METHOD`, `FIELD` | Identifies injectable dependencies for type-safe CDI / Spring injection. | `@Inject public OrderService(PaymentGateway gw)` |
+| **`@WebServlet`** | `jakarta.servlet.annotation` | `TYPE` | Declares an `HttpServlet` component with URL mapping and loadOnStartup ordering. | `@WebServlet(urlPatterns = {"/api/*"}, loadOnStartup = 1)` |
+| **`@Path`** | `jakarta.ws.rs` | `TYPE`, `METHOD` | Declares URI template routing in JAX-RS REST endpoints. | `@Path("/orders/{id}") public class OrderResource` |
+
+#### 3. Domain 3: Spring Framework & Spring Boot Ecosystem (`org.springframework.*`)
+
+| Annotation | Module / Package | Applicable Target | Container Mechanics & Best Practices | Production Example |
+| :--- | :--- | :--- | :--- | :--- |
+| **`@SpringBootApplication`** | `org.springframework.boot` | `TYPE` | Composed meta-annotation combining `@Configuration`, `@EnableAutoConfiguration`, and `@ComponentScan`. | `@SpringBootApplication public class Application { public static void main(String[] a) { SpringApplication.run(Application.class, a); } }` |
+| **`@Component`** | `org.springframework.stereotype` | `TYPE` | Base stereotype marking class as candidate for automatic component scanning. | `@Component public class OrderValidator {}` |
+| **`@Service`** | `org.springframework.stereotype` | `TYPE` | Business service stereotype orchestrating transactions and workflows. | `@Service public class OrderServiceImpl implements OrderService {}` |
+| **`@Repository`** | `org.springframework.stereotype` | `TYPE` | Persistence layer stereotype with automatic `DataAccessException` translation. | `@Repository public class UserDaoImpl implements UserDao {}` |
+| **`@RestController`** | `org.springframework.web.bind.annotation` | `TYPE` | Meta-annotation combining `@Controller` + `@ResponseBody` for REST APIs. | `@RestController @RequestMapping("/api/orders")` |
+| **`@Configuration`** | `org.springframework.context.annotation` | `TYPE` | Declares Java-based bean factory class with CGLIB proxying. | `@Configuration public class AppConfig {}` |
+| **`@Bean`** | `org.springframework.context.annotation` | `METHOD` | Declares factory method returning a container-managed bean singleton. | `@Bean public ObjectMapper mapper() { return new ObjectMapper(); }` |
+| **`@Autowired`** | `org.springframework.beans.factory.annotation` | `CONSTRUCTOR`, `FIELD` | Injects dependency by type. Optional in single-constructor classes. | `@Autowired public OrderService(PaymentGateway gw)` |
+| **`@Qualifier`** | `org.springframework.beans.factory.annotation` | `FIELD`, `PARAM` | Resolves autowiring ambiguity by matching candidate bean name. | `@Qualifier("stripeGateway") PaymentGateway gw` |
+| **`@Value`** | `org.springframework.beans.factory.annotation` | `FIELD`, `PARAM` | Injects property value from externalized YAML/properties or SpEL. | `@Value("${server.port:8080}") int port;` |
+| **`@GetMapping`** | `org.springframework.web.bind.annotation` | `METHOD` | Maps HTTP `GET` requests with optional path and produces rules. | `@GetMapping("/{id}") public OrderDto getOrder(@PathVariable Long id)` |
+| **`@PostMapping`** | `org.springframework.web.bind.annotation` | `METHOD` | Maps HTTP `POST` requests for resource creation. | `@PostMapping public ResponseEntity<OrderDto> create(@RequestBody OrderDto dto)` |
+| **`@PathVariable`** | `org.springframework.web.bind.annotation` | `PARAMETER` | Extracts URI template variable tokens from matching URL patterns. | `public OrderDto get(@PathVariable("id") Long id)` |
+| **`@RequestParam`** | `org.springframework.web.bind.annotation` | `PARAMETER` | Extracts query parameters (`?page=0&size=20`) with optional defaults. | `public Page<Order> list(@RequestParam(defaultValue = "0") int page)` |
+| **`@RequestBody`** | `org.springframework.web.bind.annotation` | `PARAMETER` | Deserializes HTTP request JSON payload into Java record / POJO. | `public Order create(@Valid @RequestBody OrderRequest req)` |
+| **`@RestControllerAdvice`** | `org.springframework.web.bind.annotation` | `TYPE` | Centralized global exception handler combining advice and response body. | `@RestControllerAdvice public class GlobalExceptionHandler` |
+| **`@ExceptionHandler`** | `org.springframework.web.bind.annotation` | `METHOD` | Handles declared exception types thrown across all REST controllers. | `@ExceptionHandler(OrderNotFoundException.class) public ProblemDetail handle()`
 
 ---
 

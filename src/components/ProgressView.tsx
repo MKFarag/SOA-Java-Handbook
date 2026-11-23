@@ -118,10 +118,10 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
         {/* Java Core Progress */}
         <div className="p-4 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#1e1e1e] shadow-xs space-y-2.5">
           <div className="flex items-center justify-between">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-orange-600 dark:text-orange-400">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-sky-600 dark:text-sky-400">
               Java Core
             </span>
-            <Layers className="w-4 h-4 text-orange-500" />
+            <Layers className="w-4 h-4 text-sky-500" />
           </div>
           <div className="flex items-baseline justify-between">
             <span className="text-2xl sm:text-3xl font-extrabold text-zinc-900 dark:text-zinc-100 font-mono">
@@ -133,7 +133,7 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
           </div>
           <div className="w-full bg-zinc-100 dark:bg-zinc-800 rounded-full h-1.5 overflow-hidden">
             <div
-              className="bg-orange-500 h-1.5 rounded-full transition-all duration-500"
+              className="bg-sky-500 h-1.5 rounded-full transition-all duration-500"
               style={{ width: `${corePercent}%` }}
             />
           </div>
@@ -246,7 +246,7 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
                     <span className="text-[11px] font-mono text-zinc-400">
                       #{topic.topicNumber.toString().padStart(2, '0')}
                     </span>
-                    <h4 className="text-xs font-bold text-zinc-900 dark:text-zinc-100 hover:text-orange-500 truncate">
+                    <h4 className="text-xs font-bold text-zinc-900 dark:text-zinc-100 hover:text-blue-500 truncate">
                       {topic.title}
                     </h4>
                   </div>
@@ -259,7 +259,7 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
                   <button
                     type="button"
                     onClick={() => onSelectTopic(topic.id)}
-                    className="p-1 rounded text-orange-500 hover:bg-orange-500/10 transition-colors"
+                    className="p-1 rounded text-blue-500 hover:bg-blue-500/10 transition-colors"
                     title="Review module"
                   >
                     <BookOpen className="w-4 h-4" />
@@ -281,15 +281,15 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
 
       {/* Completion Certificate Banner */}
       {onOpenCertificate && (
-        <div className="p-6 rounded-2xl bg-gradient-to-r from-amber-500/10 via-orange-500/10 to-amber-500/5 border border-amber-500/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-xs">
+        <div className="p-6 rounded-2xl bg-white dark:bg-zinc-800/80 border border-zinc-200 dark:border-zinc-700/80 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-xs">
           <div className="flex items-start sm:items-center gap-3.5">
-            <div className="w-11 h-11 rounded-xl bg-amber-500/20 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0 border border-amber-500/30">
+            <div className="w-11 h-11 rounded-xl bg-blue-500/10 text-blue-600 dark:text-blue-400 flex items-center justify-center shrink-0 border border-blue-500/20">
               <Award className="w-6 h-6" />
             </div>
             <div className="space-y-1">
               <h3 className="text-base font-bold text-zinc-900 dark:text-zinc-100 flex items-center gap-2">
                 <span>Official Completion Certificate</span>
-                <span className="text-[10px] uppercase font-mono px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-600 dark:text-amber-400 font-bold">
+                <span className="text-[10px] uppercase font-mono px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 font-bold border border-blue-500/20">
                   Mohamed Khaled Farag
                 </span>
               </h3>
@@ -302,7 +302,7 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
           <button
             type="button"
             onClick={onOpenCertificate}
-            className="flex items-center gap-2 px-4 py-2.5 rounded-lg text-xs font-bold bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white shadow-md shadow-orange-500/20 transition-all shrink-0 hover:scale-[1.02] cursor-pointer"
+            className="flex items-center gap-2 px-4 py-2.5 rounded-lg text-xs font-bold bg-blue-600 hover:bg-blue-700 text-white shadow-xs transition-all shrink-0 hover:scale-[1.02] cursor-pointer"
           >
             <span>View Certificate</span>
             <ArrowRight className="w-4 h-4" />
@@ -315,13 +315,13 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
         <div className="p-6 rounded-2xl bg-zinc-900 text-white border border-zinc-800 space-y-5 shadow-lg">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-zinc-800">
             <div className="flex items-center gap-2.5">
-              <div className="w-9 h-9 rounded-lg bg-orange-500/20 text-orange-400 flex items-center justify-center shrink-0 border border-orange-500/30">
+              <div className="w-9 h-9 rounded-lg bg-sky-500/20 text-sky-400 flex items-center justify-center shrink-0 border border-sky-500/30">
                 <Trophy className="w-5 h-5" />
               </div>
               <div>
                 <h3 className="text-base font-bold text-zinc-100 flex items-center gap-2">
                   <span>Tri-Part Capstone Projects</span>
-                  <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-orange-500/20 text-orange-400 font-bold">
+                  <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-sky-500/20 text-sky-400 font-bold border border-sky-500/30">
                     3 Real-World Systems
                   </span>
                 </h3>
@@ -343,13 +343,13 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5">
             <div
               onClick={() => onOpenCapstone('Part 1: Java Core')}
-              className="p-4 rounded-xl bg-zinc-800/60 hover:bg-zinc-800 border border-zinc-700/60 hover:border-orange-500/50 cursor-pointer transition-all space-y-2 group"
+              className="p-4 rounded-xl bg-zinc-800/60 hover:bg-zinc-800 border border-zinc-700/60 hover:border-sky-500/50 cursor-pointer transition-all space-y-2 group"
             >
               <div className="flex items-center justify-between">
-                <span className="text-[10px] font-mono font-bold uppercase text-orange-400">Part 1 Capstone</span>
-                <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-orange-500/10 text-orange-300">Java SE</span>
+                <span className="text-[10px] font-mono font-bold uppercase text-sky-400">Part 1 Capstone</span>
+                <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-sky-500/10 text-sky-300">Java SE</span>
               </div>
-              <h4 className="text-xs font-bold text-zinc-100 group-hover:text-orange-400 transition-colors">
+              <h4 className="text-xs font-bold text-zinc-100 group-hover:text-sky-400 transition-colors">
                 Financial Transaction Engine
               </h4>
               <p className="text-[11px] text-zinc-400 line-clamp-2">
@@ -396,7 +396,7 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
       <div className="space-y-4">
         <div className="flex items-center justify-between pb-2 border-b border-zinc-200 dark:border-zinc-800">
           <div className="flex items-center gap-2">
-            <Target className="w-5 h-5 text-orange-500" />
+            <Target className="w-5 h-5 text-blue-500" />
             <h2 className="text-lg font-bold text-zinc-900 dark:text-zinc-100">
               Section Milestone Challenges
             </h2>
@@ -465,7 +465,7 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
                       <h4 className={`text-sm font-semibold truncate ${
                         isDone
                           ? 'text-zinc-600 dark:text-zinc-400 line-through'
-                          : 'text-zinc-900 dark:text-zinc-100 hover:text-orange-500'
+                          : 'text-zinc-900 dark:text-zinc-100 hover:text-blue-500'
                       }`}>
                         {topic.title}
                       </h4>
@@ -484,7 +484,7 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
                   <button
                     type="button"
                     onClick={() => onSelectTopic(topic.id)}
-                    className="p-1.5 rounded-md text-zinc-400 hover:text-orange-500 hover:bg-orange-500/10 transition-colors cursor-pointer"
+                    className="p-1.5 rounded-md text-zinc-400 hover:text-blue-500 hover:bg-blue-500/10 transition-colors cursor-pointer"
                     title="View topic"
                   >
                     <ArrowRight className="w-4 h-4" />

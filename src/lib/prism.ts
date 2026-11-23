@@ -21,5 +21,8 @@ import 'prismjs/components/prism-http';
 import 'prismjs/components/prism-diff';
 import 'prismjs/components/prism-kotlin';
 import 'prismjs/components/prism-powershell';
+import 'prismjs/components/prism-csharp';
+import 'prismjs/components/prism-typescript';
+import 'prismjs/components/prism-python';
 
 export default Prism;

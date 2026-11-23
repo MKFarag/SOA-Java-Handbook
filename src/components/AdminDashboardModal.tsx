@@ -373,13 +373,13 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fadeIn">
       <div 
-        className="w-full max-w-5xl max-h-[90vh] bg-white dark:bg-[#18181b] border border-orange-500/30 rounded-2xl shadow-2xl flex flex-col overflow-hidden text-left"
+        className="w-full max-w-5xl max-h-[90vh] bg-white dark:bg-[#18181b] border border-blue-500/30 rounded-2xl shadow-2xl flex flex-col overflow-hidden text-left"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Top Bar */}
         <div className="px-6 py-4 border-b border-zinc-200 dark:border-zinc-800 flex items-center justify-between bg-zinc-900 text-white">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-orange-500 text-white flex items-center justify-center shadow-md">
+            <div className="w-9 h-9 rounded-xl bg-blue-600 text-white flex items-center justify-center shadow-md">
               <ShieldCheck className="w-5 h-5" />
             </div>
             <div>
@@ -387,7 +387,7 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
                 <h2 className="font-extrabold text-base sm:text-lg tracking-tight">
                   Instructor & Admin Command Center
                 </h2>
-                <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-orange-500/20 text-orange-400 border border-orange-500/30 font-bold uppercase">
+                <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-blue-500/20 text-blue-400 border border-blue-500/30 font-bold uppercase">
                   Confidential
                 </span>
               </div>
@@ -410,7 +410,7 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
         {!isAuthenticated ? (
           /* Password Authentication Gate */
           <div className="p-8 sm:p-12 flex flex-col items-center justify-center space-y-5 max-w-md mx-auto text-center">
-            <div className="w-16 h-16 rounded-2xl bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center text-orange-500 shadow-inner">
+            <div className="w-16 h-16 rounded-2xl bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center text-blue-500 shadow-inner">
               <Key className="w-8 h-8" />
             </div>
             <div className="space-y-1">
@@ -429,7 +429,7 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
                 onChange={(e) => setPasswordInput(e.target.value)}
                 placeholder="Enter Master Passcode"
                 autoFocus
-                className="w-full px-4 py-2.5 text-center text-sm font-mono tracking-widest rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-orange-500/40"
+                className="w-full px-4 py-2.5 text-center text-sm font-mono tracking-widest rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-blue-500/40"
               />
 
               {authError && (
@@ -442,7 +442,7 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
               <button
                 type="submit"
                 disabled={isVerifying}
-                className="w-full py-2.5 px-4 rounded-xl bg-orange-500 hover:bg-orange-600 active:scale-[0.98] text-white font-bold text-sm shadow-md shadow-orange-500/25 transition-all cursor-pointer disabled:opacity-50"
+                className="w-full py-2.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 active:scale-[0.98] text-white font-bold text-sm shadow-md shadow-blue-500/25 transition-all cursor-pointer disabled:opacity-50"
               >
                 {isVerifying ? 'Authenticating...' : 'Authenticate & Enter'}
               </button>
@@ -520,7 +520,7 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
                   onClick={() => setActiveTab('students')}
                   className={`py-3.5 text-xs sm:text-sm font-bold border-b-2 flex items-center gap-2 transition-colors cursor-pointer ${
                     activeTab === 'students'
-                      ? 'border-orange-500 text-orange-600 dark:text-orange-400'
+                      ? 'border-blue-500 text-blue-600 dark:text-blue-400'
                       : 'border-transparent text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200'
                   }`}
                 >
@@ -533,7 +533,7 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
                   onClick={() => setActiveTab('broadcasts')}
                   className={`py-3.5 text-xs sm:text-sm font-bold border-b-2 flex items-center gap-2 transition-colors cursor-pointer ${
                     activeTab === 'broadcasts'
-                      ? 'border-orange-500 text-orange-600 dark:text-orange-400'
+                      ? 'border-blue-500 text-blue-600 dark:text-blue-400'
                       : 'border-transparent text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200'
                   }`}
                 >
@@ -546,7 +546,7 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
                   onClick={() => setActiveTab('security')}
                   className={`py-3.5 text-xs sm:text-sm font-bold border-b-2 flex items-center gap-2 transition-colors cursor-pointer ${
                     activeTab === 'security'
-                      ? 'border-orange-500 text-orange-600 dark:text-orange-400'
+                      ? 'border-blue-500 text-blue-600 dark:text-blue-400'
                       : 'border-transparent text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200'
                   }`}
                 >
@@ -591,7 +591,7 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder="Search by student name or unique code..."
-                    className="w-full pl-9 pr-3 py-2 text-xs sm:text-sm rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/50 text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-orange-500/40"
+                    className="w-full pl-9 pr-3 py-2 text-xs sm:text-sm rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/50 text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-blue-500/40"
                   />
                 </div>
 
@@ -624,7 +624,7 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
                                 {student.name}
                               </td>
                               <td className="py-3 px-3">
-                                <span className="font-mono font-bold text-orange-600 dark:text-orange-400 bg-orange-500/10 px-2 py-0.5 rounded">
+                                <span className="font-mono font-bold text-blue-600 dark:text-blue-400 bg-blue-500/10 px-2 py-0.5 rounded">
                                   {student.code}
                                 </span>
                               </td>
@@ -636,7 +636,7 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
                                   </div>
                                   <div className="w-full h-1.5 rounded-full bg-zinc-200 dark:bg-zinc-700 overflow-hidden">
                                     <div 
-                                      className="h-full bg-gradient-to-r from-orange-500 to-emerald-500 rounded-full"
+                                      className="h-full bg-gradient-to-r from-blue-500 to-emerald-500 rounded-full"
                                       style={{ width: `${Math.min(pct, 100)}%` }}
                                     />
                                   </div>
@@ -696,7 +696,7 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
                 <div className="space-y-4">
                   <div className="border-b border-zinc-200 dark:border-zinc-800 pb-3">
                     <h3 className="text-sm font-bold text-zinc-900 dark:text-zinc-100 flex items-center gap-2">
-                      <Plus className="w-4 h-4 text-orange-500" />
+                      <Plus className="w-4 h-4 text-blue-500" />
                       <span>Publish New Announcement or Resource</span>
                     </h3>
                     <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">
@@ -714,7 +714,7 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
                         value={newTitle}
                         onChange={(e) => setNewTitle(e.target.value)}
                         placeholder="e.g. Capstone Project Assets (Google Drive)"
-                        className="w-full px-3 py-2 text-xs rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-orange-500/40"
+                        className="w-full px-3 py-2 text-xs rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-blue-500/40"
                         required
                       />
                     </div>
@@ -727,7 +727,7 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
                         <select
                           value={newType}
                           onChange={(e) => setNewType(e.target.value as BroadcastType)}
-                          className="w-full px-3 py-2 text-xs rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-orange-500/40"
+                          className="w-full px-3 py-2 text-xs rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-blue-500/40"
                         >
                           <option value="link">Link (Google Drive / GitHub / URL)</option>
                           <option value="task">Task / Assignment</option>
@@ -745,7 +745,7 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
                           value={newBadge}
                           onChange={(e) => setNewBadge(e.target.value)}
                           placeholder="e.g. Drive, HW #1, Urgent"
-                          className="w-full px-3 py-2 text-xs rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-orange-500/40"
+                          className="w-full px-3 py-2 text-xs rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-blue-500/40"
                         />
                       </div>
                     </div>
@@ -759,7 +759,7 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
                         value={newUrl}
                         onChange={(e) => setNewUrl(e.target.value)}
                         placeholder="https://drive.google.com/..."
-                        className="w-full px-3 py-2 text-xs rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-orange-500/40"
+                        className="w-full px-3 py-2 text-xs rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-blue-500/40"
                       />
                     </div>
 
@@ -772,7 +772,7 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
                         onChange={(e) => setNewContent(e.target.value)}
                         rows={3}
                         placeholder="Write detailed instructions or context for students..."
-                        className="w-full px-3 py-2 text-xs rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-orange-500/40"
+                        className="w-full px-3 py-2 text-xs rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-blue-500/40"
                       />
                     </div>
 
@@ -791,7 +791,7 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
                     <button
                       type="submit"
                       disabled={submittingBroadcast}
-                      className="w-full py-2.5 px-4 rounded-xl bg-orange-500 hover:bg-orange-600 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-md shadow-orange-500/20 transition-all cursor-pointer"
+                      className="w-full py-2.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-md shadow-blue-500/20 transition-all cursor-pointer"
                     >
                       <Plus className="w-4 h-4" />
                       <span>{submittingBroadcast ? 'Publishing...' : 'Publish to All Students'}</span>
@@ -838,7 +838,7 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
                                   {item.type}
                                 </span>
                                 {item.badgeLabel && (
-                                  <span className="font-bold text-[9px] px-1.5 py-0.5 rounded bg-orange-500/10 text-orange-600 dark:text-orange-400">
+                                  <span className="font-bold text-[9px] px-1.5 py-0.5 rounded bg-blue-500/10 text-blue-600 dark:text-blue-400">
                                     {item.badgeLabel}
                                   </span>
                                 )}
@@ -870,7 +870,7 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
                                 href={item.url}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="inline-flex items-center gap-1 text-orange-500 hover:underline font-medium text-[11px]"
+                                className="inline-flex items-center gap-1 text-blue-500 hover:underline font-medium text-[11px]"
                               >
                                 <span>{item.url}</span>
                                 <ExternalLink className="w-3 h-3" />
@@ -895,7 +895,7 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
                 {/* Audit Information Card */}
                 <div className="p-4 rounded-xl bg-zinc-50 dark:bg-zinc-900/60 border border-zinc-200 dark:border-zinc-800 space-y-3">
                   <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-700 dark:text-zinc-300 flex items-center gap-2">
-                    <Clock className="w-4 h-4 text-orange-500" />
+                    <Clock className="w-4 h-4 text-blue-500" />
                     <span>Security Audit & Access History</span>
                   </h3>
                   
@@ -930,7 +930,7 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
                   <div className="flex items-center justify-between border-b border-zinc-200 dark:border-zinc-800 pb-3">
                     <div>
                       <h3 className="text-sm font-bold text-zinc-900 dark:text-zinc-100 flex items-center gap-2">
-                        <Lock className="w-4 h-4 text-orange-500" />
+                        <Lock className="w-4 h-4 text-blue-500" />
                         <span>Course Access Passcode (Site-Wide Lock)</span>
                       </h3>
                       <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">
@@ -955,7 +955,7 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
                         type="checkbox"
                         checked={siteProtected}
                         onChange={(e) => setSiteProtected(e.target.checked)}
-                        className="w-4 h-4 text-orange-500 rounded border-zinc-300 dark:border-zinc-700 focus:ring-orange-500"
+                        className="w-4 h-4 text-blue-500 rounded border-zinc-300 dark:border-zinc-700 focus:ring-blue-500"
                       />
                       <div>
                         <span className="font-semibold text-zinc-900 dark:text-zinc-100 block">
@@ -976,7 +976,7 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
                         value={sitePasscode}
                         onChange={(e) => setSitePasscode(e.target.value)}
                         placeholder="e.g. SOA-2026"
-                        className="w-full px-3 py-2 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 font-mono text-sm tracking-wider uppercase focus:outline-none focus:ring-2 focus:ring-orange-500/40"
+                        className="w-full px-3 py-2 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 font-mono text-sm tracking-wider uppercase focus:outline-none focus:ring-2 focus:ring-blue-500/40"
                         required
                       />
                       <p className="text-[11px] text-zinc-400 mt-1">
@@ -1001,7 +1001,7 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
                     <button
                       type="submit"
                       disabled={isSavingSiteAccess}
-                      className="w-full py-2.5 px-4 rounded-xl bg-orange-500 hover:bg-orange-600 active:scale-[0.98] text-white font-bold text-xs flex items-center justify-center gap-2 shadow-md shadow-orange-500/20 transition-all cursor-pointer disabled:opacity-50"
+                      className="w-full py-2.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 active:scale-[0.98] text-white font-bold text-xs flex items-center justify-center gap-2 shadow-md shadow-blue-500/20 transition-all cursor-pointer disabled:opacity-50"
                     >
                       <Lock className="w-4 h-4" />
                       <span>{isSavingSiteAccess ? 'Saving Settings...' : 'Save Site Gate Settings'}</span>
@@ -1014,7 +1014,7 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-zinc-200 dark:border-zinc-800 pb-3">
                     <div className="space-y-0.5">
                       <h3 className="text-sm font-bold text-zinc-900 dark:text-zinc-100 flex items-center gap-2">
-                        <KeyRound className="w-4 h-4 text-orange-500 shrink-0" />
+                        <KeyRound className="w-4 h-4 text-blue-500 shrink-0" />
                         <span>Change Master Admin Password</span>
                       </h3>
                       <p className="text-xs text-zinc-500 dark:text-zinc-400">
@@ -1025,10 +1025,10 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
                     <button
                       type="button"
                       onClick={generateComplexPassword}
-                      className="shrink-0 px-3 py-1.5 rounded-lg bg-orange-500/10 hover:bg-orange-500/20 text-orange-600 dark:text-orange-400 border border-orange-500/30 text-xs font-semibold flex items-center gap-2 transition-colors cursor-pointer whitespace-nowrap self-start sm:self-center"
+                      className="shrink-0 px-3 py-1.5 rounded-lg bg-blue-500/10 hover:bg-blue-500/20 text-blue-600 dark:text-blue-400 border border-blue-500/30 text-xs font-semibold flex items-center gap-2 transition-colors cursor-pointer whitespace-nowrap self-start sm:self-center"
                       title="Generate a 16-character high-entropy secure passcode"
                     >
-                      <Sparkles className="w-4 h-4 text-orange-500 shrink-0" />
+                      <Sparkles className="w-4 h-4 text-blue-500 shrink-0" />
                       <span>Generate Ultra-Secure</span>
                     </button>
                   </div>
@@ -1043,7 +1043,7 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
                         value={currentPassInput}
                         onChange={(e) => setCurrentPassInput(e.target.value)}
                         placeholder="Enter current password"
-                        className="w-full px-3 py-2 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 font-mono focus:outline-none focus:ring-2 focus:ring-orange-500/40"
+                        className="w-full px-3 py-2 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 font-mono focus:outline-none focus:ring-2 focus:ring-blue-500/40"
                         required
                       />
                     </div>
@@ -1068,7 +1068,7 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
                           value={newPassInput}
                           onChange={(e) => setNewPassInput(e.target.value)}
                           placeholder="At least 8 complex characters"
-                          className="w-full px-3 py-2 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 font-mono focus:outline-none focus:ring-2 focus:ring-orange-500/40"
+                          className="w-full px-3 py-2 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 font-mono focus:outline-none focus:ring-2 focus:ring-blue-500/40"
                           required
                         />
                       </div>
@@ -1082,7 +1082,7 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
                           value={confirmPassInput}
                           onChange={(e) => setConfirmPassInput(e.target.value)}
                           placeholder="Re-type new passcode"
-                          className="w-full px-3 py-2 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 font-mono focus:outline-none focus:ring-2 focus:ring-orange-500/40"
+                          className="w-full px-3 py-2 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 font-mono focus:outline-none focus:ring-2 focus:ring-blue-500/40"
                           required
                         />
                       </div>
@@ -1091,7 +1091,7 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
                     {newPassInput && (
                       <div className="flex items-center gap-2">
                         <span className="text-[11px] text-zinc-400 font-mono">
-                          Selected: <strong className="text-orange-500">{newPassInput}</strong>
+                          Selected: <strong className="text-blue-500">{newPassInput}</strong>
                         </span>
                         <button
                           type="button"
@@ -1125,7 +1125,7 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
                     <button
                       type="submit"
                       disabled={isSavingPass}
-                      className="w-full py-2.5 px-4 rounded-xl bg-orange-500 hover:bg-orange-600 active:scale-[0.98] text-white font-bold text-xs flex items-center justify-center gap-2 shadow-md shadow-orange-500/20 transition-all cursor-pointer disabled:opacity-50"
+                      className="w-full py-2.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 active:scale-[0.98] text-white font-bold text-xs flex items-center justify-center gap-2 shadow-md shadow-blue-500/20 transition-all cursor-pointer disabled:opacity-50"
                     >
                       <KeyRound className="w-4 h-4 shrink-0" />
                       <span>{isSavingPass ? 'Updating Password...' : 'Save & Protect New Password'}</span>

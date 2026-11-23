@@ -1,9 +1,16 @@
-import type { TopicDetail, SectionMeta } from '../types';
+import type { TopicDetail, SectionMeta, PartType } from '../types';
 import rawTopics from './generated-topics.json';
 import rawSections from './generated-sections.json';
 
 export const ALL_TOPICS: TopicDetail[] = rawTopics as unknown as TopicDetail[];
 export const SECTIONS: SectionMeta[] = rawSections as unknown as SectionMeta[];
+
+export const MAIN_SECTIONS: { part: PartType; label: string; shortLabel: string }[] = [
+  { part: 'Part 1: Java Core', label: 'Java Core', shortLabel: 'Java' },
+  { part: 'Part 2: Java EE & Jakarta EE', label: 'Jakarta EE', shortLabel: 'EE' },
+  { part: 'Part 3: Spring Boot & Production Stack', label: 'Spring Boot', shortLabel: 'Spring' },
+  { part: 'Part 4: Database Systems & Persistence', label: 'Database Systems', shortLabel: 'Database' }
+];
 
 export function getTopicById(id: string): TopicDetail | undefined {
   return ALL_TOPICS.find(t => t.id === id);

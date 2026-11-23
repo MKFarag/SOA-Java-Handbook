@@ -27,6 +27,30 @@ Spring Data JPA reduces boilerplate persistence code by generating dynamic repos
 
 ---
 
+## Master Spring Data JPA Annotations Reference Directory
+
+Spring Data JPA relies on a specialized set of annotations to configure repository scanning, orchestrate entity auditing, optimize query execution plans, and enforce transaction locks.
+
+| Annotation | Target Element | Key Attributes | Architectural Purpose & Operational Mechanics | Production Example |
+| :--- | :--- | :--- | :--- | :--- |
+| **`@Repository`** | `TYPE` (Interface/Class) | `value` (Bean name) | Optional on Spring Data interfaces. Automatically registers bean and activates **PersistenceExceptionTranslationPostProcessor** to translate low-level Hibernate exceptions into Spring's unified `DataAccessException` hierarchy. | `@Repository public interface UserRepository extends JpaRepository<User, Long> {}` |
+| **`@EnableJpaRepositories`** | `TYPE` (Configuration) | `basePackages`, `repositoryFactoryBeanClass` | Activates Spring Data JPA repository scanning and runtime dynamic proxy generation across specified base packages. | `@Configuration @EnableJpaRepositories(basePackages = "com.enterprise.repo") public class JpaConfig {}` |
+| **`@NoRepositoryBean`** | `TYPE` (Interface) | None | Excludes intermediate custom base repository interfaces from direct runtime proxy instantiation by Spring Data scanners. | `@NoRepositoryBean public interface BaseRepository<T, ID> extends JpaRepository<T, ID> {}` |
+| **`@EntityScan`** | `TYPE` (Configuration) | `basePackages`, `basePackageClasses` | Configures scanning packages for JPA `@Entity` classes when they reside outside the root Spring Boot application package. | `@EntityScan("com.enterprise.domain")` |
+| **`@EnableJpaAuditing`** | `TYPE` (Configuration) | `auditorAwareRef`, `dateTimeProviderRef` | Activates automated entity auditing lifecycle listeners (`AuditingEntityListener`) for timestamps and user tracking. | `@EnableJpaAuditing(auditorAwareRef = "springSecurityAuditor")` |
+| **`@CreatedDate`** | `FIELD`, `METHOD` | None | Automatically captures and persists creation timestamp using system clock or `DateTimeProvider`. | `@CreatedDate @Column(nullable = false, updatable = false) private Instant createdAt;` |
+| **`@LastModifiedDate`** | `FIELD`, `METHOD` | None | Automatically updates timestamp whenever the entity changes and is flushed to the database. | `@LastModifiedDate private Instant updatedAt;` |
+| **`@CreatedBy`** | `FIELD`, `METHOD` | None | Injects user identity returned by registered `AuditorAware<T>` bean upon entity insert. | `@CreatedBy @Column(updatable = false) private String createdBy;` |
+| **`@LastModifiedBy`** | `FIELD`, `METHOD` | None | Injects user identity returned by registered `AuditorAware<T>` bean upon entity update. | `@LastModifiedBy private String updatedBy;` |
+| **`@Query`** | `METHOD` | `value`, `nativeQuery = false`, `countQuery` | Binds custom JPQL or native SQL expressions directly to repository methods, bypassing automatic derivation rules. | `@Query("SELECT u FROM User u WHERE u.active = true") List<User> findAllActive();` |
+| **`@Modifying`** | `METHOD` | `clearAutomatically = false`, `flushAutomatically = false` | Marks `@Query` as a DML statement (`UPDATE` / `DELETE`). When `clearAutomatically = true`, clears persistence context to avoid stale cache. | `@Modifying(clearAutomatically = true) @Query("UPDATE User u SET u.active = false") int deactivateAll();` |
+| **`@Param`** | `PARAMETER` | `value` (String, required) | Binds method parameter explicitly to named JPQL/SQL query parameters (`:paramName`). | `@Query("SELECT u FROM User u WHERE u.dept = :d") List<User> findByDept(@Param("d") String dept);` |
+| **`@EntityGraph`** | `METHOD` | `value`, `attributePaths`, `type = EntityGraphType.FETCH` | Solves the **N+1 Select Problem** by generating SQL `LEFT JOIN` to eagerly fetch declared relationships in a single query. | `@EntityGraph(attributePaths = {"orders", "orders.items"}) Optional<Customer> findById(Long id);` |
+| **`@Lock`** | `METHOD` | `value` (`LockModeType`) | Enforces pessimistic or optimistic database lock on queried rows (`PESSIMISTIC_WRITE`, `PESSIMISTIC_READ`, `OPTIMISTIC`). | `@Lock(LockModeType.PESSIMISTIC_WRITE) Optional<Account> findById(Long id);` |
+| **`@QueryHints`** | `METHOD` | `value = @QueryHint[]` | Passes vendor-specific JPA/Hibernate optimization hints (e.g. query cache, fetch size, comments). | `@QueryHints(@QueryHint(name = "org.hibernate.readOnly", value = "true")) List<Report> findReports();` |
+
+---
+
 ## Architecture & Core Mechanics
 
 ### The Cohesive Interface Hierarchy

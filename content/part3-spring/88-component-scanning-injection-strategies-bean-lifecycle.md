@@ -27,6 +27,40 @@ Classpath component scanning discovers and registers Spring-managed beans automa
 
 ---
 
+## Master Spring Core Stereotypes & IoC Annotations Reference Directory
+
+Spring Core Inversion of Control (IoC) container utilizes declarative stereotype annotations to discover, wire, configure, and orchestrate the lifecycles of managed singleton and prototype beans.
+
+### 1. Component Stereotypes & Bean Definitions
+
+| Annotation | Target Element | Key Attributes | Architectural Purpose & Container Mechanics | Production Example |
+| :--- | :--- | :--- | :--- | :--- |
+| **`@Component`** | `TYPE` | `value` (Bean name) | Generic stereotype marker declaring any class as a Spring-managed bean candidate for classpath scanning. | `@Component public class EmailSanitizer {}` |
+| **`@Service`** | `TYPE` | `value` | Semantic specialization of `@Component` indicating business service layer logic (transactions, validations, workflows). | `@Service public class OrderServiceImpl implements OrderService {}` |
+| **`@Repository`** | `TYPE` | `value` | Semantic specialization of `@Component` for persistence DAOs. Activates automatic exception translation into `DataAccessException`. | `@Repository public class UserDaoImpl implements UserDao {}` |
+| **`@Controller`** | `TYPE` | `value` | Presentation layer stereotype declaring MVC web controllers for handling HTTP requests and view resolution. | `@Controller public class HomeController {}` |
+| **`@Configuration`** | `TYPE` | `value`, `proxyBeanMethods = true` | Declares a Java-based configuration class defining one or more `@Bean` factory methods with CGLIB proxying for singleton guarantees. | `@Configuration public class SecurityConfig {}` |
+| **`@Bean`** | `METHOD` | `name`, `initMethod`, `destroyMethod` | Declares a factory method returning an instantiated object managed directly by the Spring container. | `@Bean public ObjectMapper objectMapper() { return new ObjectMapper(); }` |
+| **`@Scope`** | `TYPE`, `METHOD` | `value` (`singleton`, `prototype`, etc.) | Defines bean lifecycle scope: default `singleton` (one per container), `prototype` (new instance per injection), or web scopes. | `@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)` |
+| **`@Primary`** | `TYPE`, `METHOD` | None | Designates high-priority bean when multiple beans of the same type exist, resolving autowiring ambiguity without qualifiers. | `@Primary @Service public class DefaultPaymentGateway implements PaymentGateway {}` |
+| **`@Qualifier`** | `FIELD`, `PARAM`, `TYPE` | `value` (String, required) | Resolves dependency injection ambiguity by matching bean names or custom qualifier labels explicitly. | `@Autowired public OrderService(@Qualifier("stripePaymentGateway") PaymentGateway gw)` |
+| **`@Lazy`** | `TYPE`, `METHOD`, `PARAM` | `value = true` | Defers bean initialization until it is first requested rather than eager container bootstrap creation. Breaks circular dependencies. | `@Lazy @Service public class HeavyReportingEngine {}` |
+| **`@Profile`** | `TYPE`, `METHOD` | `value = String[]` | Conditional registration based on active Spring profiles (`dev`, `prod`, `test`). | `@Profile("prod") @Configuration public class ProductionConfig {}` |
+| **`@DependsOn`** | `TYPE`, `METHOD` | `value = String[]` | Enforces explicit bean initialization ordering when beans do not have direct injection relationships. | `@DependsOn("databaseMigrator") @Bean public DataSource dataSource()` |
+| **`@Order`** | `TYPE`, `METHOD` | `value` (int) | Defines sorting priority when injecting a `List<T>` of beans or configuring filter/interceptor chains (lower values = higher priority). | `@Order(Ordered.HIGHEST_PRECEDENCE) @Component public class AuthFilter` |
+
+### 2. Dependency Injection, Configuration Properties & Lifecycle Callbacks
+
+| Annotation | Target Element | Key Attributes | Container Mechanics & Best Practices | Production Example |
+| :--- | :--- | :--- | :--- | :--- |
+| **`@Autowired`** | `CONSTRUCTOR`, `METHOD`, `FIELD` | `required = true` | Instructs container to inject matching dependency by type. In Spring 4.3+, optional if the class has a single constructor! | `@Autowired public OrderService(PaymentGateway gw) { this.gw = gw; }` |
+| **`@Value`** | `FIELD`, `PARAM`, `METHOD` | `value` (SpEL / `${property}`) | Injects externalized configuration properties or SpEL evaluation results directly into fields/constructors. | `@Value("${app.jwt.secret:defaultSecret}") private String jwtSecret;` |
+| **`@PostConstruct`** | `METHOD` | None | Standard Jakarta EE callback executed exactly once after dependency injection is complete and bean is ready. | `@PostConstruct public void initCache() { cache.warmUp(); }` |
+| **`@PreDestroy`** | `METHOD` | None | Standard Jakarta EE callback executed during container graceful shutdown before bean instance is evicted from memory. | `@PreDestroy public void closeConnections() { client.shutdown(); }` |
+| **`@EventListener`** | `METHOD` | `classes`, `condition` | Declares an application event listener subscribing to asynchronous or synchronous Spring application events. | `@EventListener public void onOrderCreated(OrderCreatedEvent event) {}` |
+
+---
+
 ## Architecture & Core Mechanics
 
 ### The Three Injection Strategies Side-by-Side

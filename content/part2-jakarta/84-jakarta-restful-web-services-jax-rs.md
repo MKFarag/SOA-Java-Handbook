@@ -23,18 +23,41 @@ Jakarta RESTful Web Services (JAX-RS) is the standard Java specification for bui
 
 ---
 
-## Core JAX-RS Annotations Reference
+## Master Jakarta RESTful Web Services (JAX-RS) Annotations Directory
 
-| Annotation | Target | Description |
-| :--- | :--- | :--- |
-| **`@ApplicationPath`** | Class | Defines base URI path prefix for all REST resources in the application |
-| **`@Path`** | Class / Method | Specifies relative URI template matching (e.g., `@Path("/users/{id}")`) |
-| **`@GET / @POST / @PUT / @DELETE`** | Method | Maps standard HTTP verbs to Java methods |
-| **`@Produces`** | Class / Method | Specifies MIME types generated in response (`MediaType.APPLICATION_JSON`) |
-| **`@Consumes`** | Class / Method | Specifies accepted MIME types in request body |
-| **`@PathParam`** | Parameter | Binds URI template path variable (e.g., `{id}`) to method parameter |
-| **`@QueryParam`** | Parameter | Extracts URL query parameter (`?page=2`) |
-| **`@HeaderParam`** | Parameter | Extracts HTTP request header value |
+Jakarta RESTful Web Services (JAX-RS 3.1) standardizes HTTP service routing, parameter extraction, content negotiation, and filter interception. Below is the comprehensive directory categorized by architectural role.
+
+### 1. HTTP Verbs, Routing & Content Negotiation
+
+| Annotation | Target Element | Key Attributes | Specification Purpose & RFC Semantics | Production Example |
+| :--- | :--- | :--- | :--- | :--- |
+| **`@ApplicationPath`** | `TYPE` | `value` (String, required) | Declares the base application URI context path for all REST resources in the application. | `@ApplicationPath("/api/v1") public class RestApp extends Application {}` |
+| **`@Path`** | `TYPE`, `METHOD` | `value` (String, required) | Specifies URI template path matching with optional path variables (e.g. `@Path("/users/{id:[0-9]+}")`). | `@Path("/orders") public class OrderResource {}` |
+| **`@GET`** | `METHOD` | None | Maps HTTP `GET` requests (safe, idempotent resource retrieval). | `@GET @Path("/{id}") public Response get(@PathParam("id") Long id)` |
+| **`@POST`** | `METHOD` | None | Maps HTTP `POST` requests (create subordinate resource or trigger action). | `@POST public Response create(OrderDto dto)` |
+| **`@PUT`** | `METHOD` | None | Maps HTTP `PUT` requests (full resource replacement, idempotent). | `@PUT @Path("/{id}") public Response replace(@PathParam("id") Long id, OrderDto dto)` |
+| **`@DELETE`** | `METHOD` | None | Maps HTTP `DELETE` requests (resource removal, idempotent). | `@DELETE @Path("/{id}") public Response delete(@PathParam("id") Long id)` |
+| **`@PATCH`** | `METHOD` | None | Maps HTTP `PATCH` requests (partial resource modification). | `@PATCH @Path("/{id}") public Response patch(@PathParam("id") Long id, PatchDto p)` |
+| **`@HEAD`** | `METHOD` | None | Maps HTTP `HEAD` requests (returns HTTP headers identical to `GET` without message body). | `@HEAD @Path("/{id}") public Response checkHeader(@PathParam("id") Long id)` |
+| **`@OPTIONS`** | `METHOD` | None | Maps HTTP `OPTIONS` requests (returns supported HTTP communication methods). | `@OPTIONS public Response getOptions()` |
+| **`@Produces`** | `TYPE`, `METHOD` | `value = String[]` | Declares MIME media types serialized into response body (`MediaType.APPLICATION_JSON`). | `@Produces(MediaType.APPLICATION_JSON)` |
+| **`@Consumes`** | `TYPE`, `METHOD` | `value = String[]` | Declares accepted MIME media types expected in request body. | `@Consumes(MediaType.APPLICATION_JSON)` |
+
+### 2. Parameter Resolution, Context Injection & Providers
+
+| Annotation | Target Element | Key Attributes | Parameter Source & Operational Mechanics | Production Example |
+| :--- | :--- | :--- | :--- | :--- |
+| **`@PathParam`** | `PARAMETER`, `FIELD` | `value` (variable name) | Extracts URI path template variable declared in `@Path` matching. | `public Response get(@PathParam("orderId") String orderId)` |
+| **`@QueryParam`** | `PARAMETER`, `FIELD` | `value` (query key) | Extracts URL query parameter from query string (`?page=2&size=10`). | `public Response list(@QueryParam("page") @DefaultValue("0") int page)` |
+| **`@HeaderParam`** | `PARAMETER`, `FIELD` | `value` (header name) | Extracts HTTP request header value. | `public Response auth(@HeaderParam("Authorization") String token)` |
+| **`@CookieParam`** | `PARAMETER`, `FIELD` | `value` (cookie name) | Extracts HTTP cookie value by cookie name. | `public Response session(@CookieParam("JSESSIONID") String session)` |
+| **`@MatrixParam`** | `PARAMETER`, `FIELD` | `value` (matrix key) | Extracts matrix URI parameter separated by semicolons (`/items;color=red`). | `public Response filter(@MatrixParam("color") String color)` |
+| **`@FormParam`** | `PARAMETER`, `FIELD` | `value` (form field) | Extracts form field value from `application/x-www-form-urlencoded` payload. | `public Response submit(@FormParam("username") String username)` |
+| **`@BeanParam`** | `PARAMETER` | None | Aggregates multiple parameter annotations into properties of a single POJO. | `public Response search(@BeanParam FilterParams params)` |
+| **`@DefaultValue`** | `PARAMETER`, `FIELD` | `value` (String) | Sets fallback default string value if parameter is absent from request. | `@QueryParam("limit") @DefaultValue("25") int limit` |
+| **`@Context`** | `FIELD`, `PARAMETER` | None | Injects contextual runtime instances (`UriInfo`, `HttpHeaders`, `Request`, `SecurityContext`, `HttpServletRequest`). | `public Response info(@Context UriInfo uriInfo, @Context SecurityContext sec)` |
+| **`@Provider`** | `TYPE` | None | Marks class as a JAX-RS extension provider (`ContainerRequestFilter`, `ExceptionMapper`, `MessageBodyReader`). | `@Provider public class GlobalExceptionMapper implements ExceptionMapper<Throwable>` |
+| **`@NameBinding`** | `ANNOTATION_TYPE` | None | Meta-annotation defining custom binding annotation to bind filters to specific resource methods. | `@NameBinding @Retention(RUNTIME) public @interface Logged {}`
 
 ---
 

@@ -55,6 +55,17 @@ export const StudentSyncModal: React.FC<StudentSyncModalProps> = ({
   const [success, setSuccess] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
 
+  // Close on Escape key
+  React.useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isOpen) {
+        onClose();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
+
   if (!isOpen) return null;
 
   const generateRandomCode = () => {
@@ -148,15 +159,18 @@ export const StudentSyncModal: React.FC<StudentSyncModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm animate-fadeIn">
+    <div 
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm animate-fadeIn"
+      onClick={onClose}
+    >
       <div 
         className="w-full max-w-lg bg-white dark:bg-[#18181b] border border-zinc-200 dark:border-zinc-800 rounded-2xl shadow-2xl overflow-hidden transition-all text-left"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Modal Header */}
-        <div className="relative px-6 py-5 border-b border-zinc-200 dark:border-zinc-800 bg-gradient-to-r from-orange-500/10 via-amber-500/5 to-transparent flex items-center justify-between">
+        <div className="relative px-6 py-5 border-b border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-850 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-orange-500/10 dark:bg-orange-500/20 text-orange-600 dark:text-orange-400 border border-orange-500/30 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20 flex items-center justify-center">
               <Cloud className="w-5 h-5" />
             </div>
             <div>
@@ -188,7 +202,7 @@ export const StudentSyncModal: React.FC<StudentSyncModalProps> = ({
               <div className="p-4 rounded-xl bg-gradient-to-br from-zinc-50 to-zinc-100 dark:from-[#202023] dark:to-[#1a1a1c] border border-zinc-200 dark:border-zinc-800 space-y-4">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="w-11 h-11 rounded-full bg-gradient-to-tr from-orange-500 to-amber-500 text-white font-bold text-lg flex items-center justify-center shadow-md">
+                    <div className="w-11 h-11 rounded-full bg-blue-600 text-white font-bold text-lg flex items-center justify-center shadow-xs">
                       {currentStudent.name.charAt(0).toUpperCase()}
                     </div>
                     <div>
@@ -196,7 +210,7 @@ export const StudentSyncModal: React.FC<StudentSyncModalProps> = ({
                         {currentStudent.name}
                       </h3>
                       <div className="flex items-center gap-2 mt-0.5">
-                        <span className="text-xs font-mono font-bold text-orange-600 dark:text-orange-400 bg-orange-500/10 px-2 py-0.5 rounded">
+                        <span className="text-xs font-mono font-bold text-blue-600 dark:text-blue-400 bg-blue-500/10 px-2 py-0.5 rounded">
                           {currentStudent.code}
                         </span>
                         <button
@@ -264,7 +278,7 @@ export const StudentSyncModal: React.FC<StudentSyncModalProps> = ({
                   type="button"
                   onClick={onSyncNow}
                   disabled={isSyncing}
-                  className="w-full sm:flex-1 py-2.5 px-4 rounded-xl bg-orange-500 hover:bg-orange-600 active:scale-[0.98] text-white text-xs sm:text-sm font-bold flex items-center justify-center gap-2 shadow-md shadow-orange-500/20 transition-all disabled:opacity-50 cursor-pointer"
+                  className="w-full sm:flex-1 py-2.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 active:scale-[0.98] text-white text-xs sm:text-sm font-bold flex items-center justify-center gap-2 shadow-xs transition-all disabled:opacity-50 cursor-pointer"
                 >
                   <RefreshCw className={`w-4 h-4 ${isSyncing ? 'animate-spin' : ''}`} />
                   <span>{isSyncing ? 'Syncing to Cloud...' : 'Sync Now (Force Save)'}</span>
@@ -340,7 +354,7 @@ export const StudentSyncModal: React.FC<StudentSyncModalProps> = ({
                       value={name}
                       onChange={(e) => setName(e.target.value)}
                       placeholder="e.g. Ahmed Ali"
-                      className="w-full pl-9 pr-3 py-2 text-sm rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/50 text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-orange-500/40 focus:border-orange-500 transition-all"
+                      className="w-full pl-9 pr-3 py-2 text-sm rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/50 text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-blue-500/40 focus:border-blue-500 transition-all"
                       required={mode === 'register'}
                     />
                   </div>
@@ -357,7 +371,7 @@ export const StudentSyncModal: React.FC<StudentSyncModalProps> = ({
                     <button
                       type="button"
                       onClick={generateRandomCode}
-                      className="text-[11px] font-medium text-orange-500 hover:text-orange-600 flex items-center gap-1"
+                      className="text-[11px] font-medium text-blue-500 hover:text-blue-600 flex items-center gap-1 cursor-pointer"
                     >
                       <Sparkles className="w-3 h-3" />
                       <span>Auto-Generate</span>
@@ -373,7 +387,7 @@ export const StudentSyncModal: React.FC<StudentSyncModalProps> = ({
                     value={code}
                     onChange={(e) => setCode(e.target.value.toUpperCase())}
                     placeholder="e.g. SOA-8291 or AHMED-JAVA"
-                    className="w-full pl-9 pr-3 py-2 text-sm font-mono uppercase tracking-wider rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/50 text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-orange-500/40 focus:border-orange-500 transition-all"
+                    className="w-full pl-9 pr-3 py-2 text-sm font-mono uppercase tracking-wider rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/50 text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-blue-500/40 focus:border-blue-500 transition-all"
                     required
                   />
                 </div>
@@ -403,7 +417,7 @@ export const StudentSyncModal: React.FC<StudentSyncModalProps> = ({
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 active:scale-[0.98] text-white text-sm font-bold flex items-center justify-center gap-2 shadow-md shadow-orange-500/25 transition-all disabled:opacity-50 cursor-pointer"
+                className="w-full py-2.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 active:scale-[0.98] text-white text-sm font-bold flex items-center justify-center gap-2 shadow-xs transition-all disabled:opacity-50 cursor-pointer"
               >
                 {loading ? (
                   <RefreshCw className="w-4 h-4 animate-spin" />

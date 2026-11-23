@@ -36,14 +36,14 @@ export const MobileNav: React.FC<MobileNavProps> = ({
           onClick={onGoHome}
           className={`flex flex-col items-center justify-center flex-1 py-1 px-1 rounded-xl transition-all cursor-pointer ${
             currentView === 'home'
-              ? 'text-orange-600 dark:text-orange-400 font-semibold'
+              ? 'text-sky-600 dark:text-sky-400 font-semibold'
               : 'text-zinc-500 dark:text-zinc-400 hover:text-zinc-800 dark:hover:text-zinc-200'
           }`}
         >
           <div className="relative">
             <Home className="w-5 h-5 transition-transform active:scale-90" />
             {currentView === 'home' && (
-              <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-orange-500" />
+              <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-sky-500" />
             )}
           </div>
           <span className="text-[10px] mt-1 tracking-tight">Home</span>
@@ -55,14 +55,14 @@ export const MobileNav: React.FC<MobileNavProps> = ({
           onClick={onToggleSidebar}
           className={`flex flex-col items-center justify-center flex-1 py-1 px-1 rounded-xl transition-all cursor-pointer ${
             currentView === 'topic'
-              ? 'text-orange-600 dark:text-orange-400 font-semibold'
+              ? 'text-sky-600 dark:text-sky-400 font-semibold'
               : 'text-zinc-500 dark:text-zinc-400 hover:text-zinc-800 dark:hover:text-zinc-200'
           }`}
         >
           <div className="relative">
             <Layers className="w-5 h-5 transition-transform active:scale-90" />
             {currentView === 'topic' && (
-              <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-orange-500" />
+              <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-sky-500" />
             )}
           </div>
           <span className="text-[10px] mt-1 tracking-tight">Topics</span>
@@ -74,7 +74,7 @@ export const MobileNav: React.FC<MobileNavProps> = ({
           onClick={onOpenSearch}
           className="flex flex-col items-center justify-center flex-1 py-1 px-1 rounded-xl text-zinc-500 dark:text-zinc-400 hover:text-zinc-800 dark:hover:text-zinc-200 transition-all cursor-pointer"
         >
-          <div className="w-9 h-7 rounded-lg bg-orange-500/10 dark:bg-orange-500/20 text-orange-600 dark:text-orange-400 flex items-center justify-center border border-orange-500/25">
+          <div className="w-9 h-7 rounded-lg bg-sky-500/10 dark:bg-sky-500/20 text-sky-600 dark:text-sky-400 flex items-center justify-center border border-sky-500/25">
             <Search className="w-4 h-4" />
           </div>
           <span className="text-[10px] mt-0.5 tracking-tight">Search</span>
@@ -86,14 +86,14 @@ export const MobileNav: React.FC<MobileNavProps> = ({
           onClick={onOpenSaved}
           className={`flex flex-col items-center justify-center flex-1 py-1 px-1 rounded-xl transition-all cursor-pointer ${
             currentView === 'saved'
-              ? 'text-orange-600 dark:text-orange-400 font-semibold'
+              ? 'text-amber-600 dark:text-amber-400 font-semibold'
               : 'text-zinc-500 dark:text-zinc-400 hover:text-zinc-800 dark:hover:text-zinc-200'
           }`}
         >
           <div className="relative">
-            <Bookmark className={`w-5 h-5 transition-transform active:scale-90 ${currentView === 'saved' ? 'fill-orange-500' : ''}`} />
+            <Bookmark className={`w-5 h-5 transition-transform active:scale-90 ${currentView === 'saved' ? 'fill-amber-500 text-amber-500' : ''}`} />
             {savedCount > 0 && (
-              <span className="absolute -top-1 -right-2 flex h-3.5 min-w-3.5 px-1 items-center justify-center rounded-full bg-orange-500 text-[8px] font-bold text-white shadow-xs">
+              <span className="absolute -top-1 -right-2 flex h-3.5 min-w-3.5 px-1 items-center justify-center rounded-full bg-amber-500 text-[8px] font-bold text-white shadow-xs">
                 {savedCount}
               </span>
             )}

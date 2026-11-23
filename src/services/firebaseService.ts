@@ -10,7 +10,7 @@ import {
   serverTimestamp 
 } from "firebase/firestore";
 import { db } from "../lib/firebase";
-import type { StudentProfile, BroadcastItem, ChallengeStatus, SiteAccessConfig } from "../types";
+import type { StudentProfile, BroadcastItem, ChallengeStatus, SiteAccessConfig, KnowledgeNote } from "../types";
 
 // Master admin passcodes (Default fallback passwords)
 export const DEFAULT_MASTER_PASSWORD = "MKF#SOA2026!SecOps$99";
@@ -475,4 +475,195 @@ export async function verifySiteAccessPasscode(input: string): Promise<{
 
   return { valid: false, role: 'passcode' };
 }
+
+/**
+ * ============================================================================
+ * MY KNOWLEDGE BASE — PERSISTENCE & STRICT OWNERSHIP ENFORCEMENT
+ * ============================================================================
+ */
+
+/**
+ * Fetch all private knowledge notes owned by a specific student.
+ * Scoped strictly to the subcollection `students/{cleanCode}/knowledge_notes`.
+ * Validates ownership on every retrieved note to ensure cross-user isolation.
+ */
+export async function getKnowledgeNotes(studentCode: string): Promise<KnowledgeNote[]> {
+  const cleanCode = normalizeStudentCode(studentCode);
+  if (!cleanCode) return [];
+
+  try {
+    const notesCol = collection(db, "students", cleanCode, "knowledge_notes");
+    const snap = await getDocs(notesCol);
+    const results: KnowledgeNote[] = [];
+
+    snap.forEach((docSnap) => {
+      const data = docSnap.data();
+      // Strict backend/service ownership check: ignore any mismatched owner
+      if (data.ownerCode && data.ownerCode !== cleanCode) {
+        console.warn(`[getKnowledgeNotes] Rejected note ${docSnap.id}: owner mismatch.`);
+        return;
+      }
+
+      results.push({
+        id: docSnap.id,
+        ownerCode: cleanCode,
+        title: data.title || "Untitled Note",
+        description: data.description || "",
+        category: data.category || "General",
+        language: data.language || "java",
+        content: data.content || "",
+        codeSnippet: data.codeSnippet || "",
+        createdAt: data.createdAt || new Date().toISOString(),
+        updatedAt: data.updatedAt || data.createdAt || new Date().toISOString()
+      });
+    });
+
+    // Sort by recently updated descending
+    return results.sort((a, b) => {
+      const timeA = new Date(a.updatedAt || a.createdAt || 0).getTime();
+      const timeB = new Date(b.updatedAt || b.createdAt || 0).getTime();
+      return timeB - timeA;
+    });
+  } catch (err) {
+    console.error(`[getKnowledgeNotes] Failed to fetch notes for ${cleanCode}:`, err);
+    throw err;
+  }
+}
+
+/**
+ * Save or update a private knowledge note in Firestore.
+ * Strictly associates note with authenticated student code.
+ */
+export async function saveKnowledgeNote(
+  studentCode: string,
+  note: Omit<KnowledgeNote, "id" | "ownerCode"> & { id?: string; ownerCode?: string }
+): Promise<KnowledgeNote> {
+  const cleanCode = normalizeStudentCode(studentCode);
+  if (!cleanCode) {
+    throw new Error("Cannot save note: Invalid or missing student identity.");
+  }
+
+  const cleanTitle = (note.title || "").trim();
+  if (!cleanTitle) {
+    throw new Error("Note title is required.");
+  }
+
+  const hasContent = Boolean(note.content && note.content.trim().length > 0);
+  const hasCode = Boolean(note.codeSnippet && note.codeSnippet.trim().length > 0);
+  if (!hasContent && !hasCode) {
+    throw new Error("Note must contain written content, a code snippet, or both.");
+  }
+
+  const nowIso = new Date().toISOString();
+  const noteId = note.id && note.id.trim().length > 0
+    ? note.id.trim()
+    : `note_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
+
+  const noteRef = doc(db, "students", cleanCode, "knowledge_notes", noteId);
+
+  // Preserve createdAt if existing; otherwise set to now
+  let createdAt = note.createdAt || nowIso;
+  try {
+    const existingSnap = await getDoc(noteRef);
+    if (existingSnap.exists()) {
+      const existingData = existingSnap.data();
+      // Ownership protection: reject overwrite if owner does not match
+      if (existingData.ownerCode && existingData.ownerCode !== cleanCode) {
+        throw new Error("Unauthorized: You do not own this note.");
+      }
+      if (existingData.createdAt) {
+        createdAt = existingData.createdAt;
+      }
+    }
+  } catch (err) {
+    // If permission or fetch error occurs, continue with given createdAt
+    console.warn("[saveKnowledgeNote] Notice on existing doc check:", err);
+  }
+
+  const payload: KnowledgeNote = {
+    id: noteId,
+    ownerCode: cleanCode, // Strictly bound to current student
+    title: cleanTitle,
+    description: (note.description || "").trim(),
+    category: (note.category || "General").trim(),
+    language: (note.language || "java").trim(),
+    content: note.content || "",
+    codeSnippet: note.codeSnippet || "",
+    createdAt,
+    updatedAt: nowIso
+  };
+
+  try {
+    await setDoc(noteRef, payload, { merge: true });
+    return payload;
+  } catch (err) {
+    console.error(`[saveKnowledgeNote] Error saving note ${noteId} to Firestore:`, err);
+    throw err;
+  }
+}
+
+/**
+ * Delete a private knowledge note from Firestore.
+ * Strictly verifies ownership before deleting.
+ */
+export async function deleteKnowledgeNote(
+  studentCode: string,
+  noteId: string
+): Promise<void> {
+  const cleanCode = normalizeStudentCode(studentCode);
+  if (!cleanCode) {
+    throw new Error("Cannot delete note: Invalid student identity.");
+  }
+  if (!noteId) {
+    throw new Error("Cannot delete note: Missing note ID.");
+  }
+
+  const noteRef = doc(db, "students", cleanCode, "knowledge_notes", noteId);
+
+  // Verify ownership before deleting
+  try {
+    const snap = await getDoc(noteRef);
+    if (snap.exists()) {
+      const data = snap.data();
+      if (data.ownerCode && data.ownerCode !== cleanCode) {
+        throw new Error("Unauthorized: You do not own this note.");
+      }
+    }
+  } catch (err) {
+    console.warn("[deleteKnowledgeNote] Pre-delete verification check:", err);
+  }
+
+  try {
+    await deleteDoc(noteRef);
+  } catch (err) {
+    console.error(`[deleteKnowledgeNote] Failed to delete note ${noteId}:`, err);
+    throw err;
+  }
+}
+
+/**
+ * Sync guest notes into the newly authenticated student account.
+ */
+export async function syncGuestNotesToCloud(
+  studentCode: string,
+  guestNotes: KnowledgeNote[]
+): Promise<KnowledgeNote[]> {
+  const cleanCode = normalizeStudentCode(studentCode);
+  if (!cleanCode || !guestNotes || guestNotes.length === 0) return [];
+
+  const synced: KnowledgeNote[] = [];
+  for (const note of guestNotes) {
+    try {
+      const saved = await saveKnowledgeNote(cleanCode, {
+        ...note,
+        ownerCode: cleanCode
+      });
+      synced.push(saved);
+    } catch (err) {
+      console.warn(`[syncGuestNotesToCloud] Could not sync note "${note.title}":`, err);
+    }
+  }
+  return synced;
+}
+
 
