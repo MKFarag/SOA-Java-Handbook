@@ -8,38 +8,37 @@ import Prism from './prism';
 export function splitPrismHtmlIntoLines(html: string): string[] {
   const rawLines = html.split('\n');
   const result: string[] = [];
-  const openTags: string[] = [];
+  const openTagStack: string[] = [];
 
   for (let i = 0; i < rawLines.length; i++) {
-    let line = rawLines[i];
+    const rawLine = rawLines[i];
 
-    // Prepend any tags that were left open from the previous line
-    if (openTags.length > 0) {
-      line = openTags.join('') + line;
-    }
+    // Prepend any tags that were active before this line
+    const prefix = openTagStack.join('');
 
-    // Scan for tags in this line to maintain the openTags stack
+    // Scan ONLY rawLine (unadulterated) to maintain the open tags stack
     const tagRegex = /<\/?([a-zA-Z0-9-]+)(?:\s+[^>]*)?>/g;
     let match: RegExpExecArray | null;
-    while ((match = tagRegex.exec(line)) !== null) {
+    while ((match = tagRegex.exec(rawLine)) !== null) {
       const fullTag = match[0];
       const isClosing = fullTag.startsWith('</');
       if (isClosing) {
-        openTags.pop();
+        openTagStack.pop();
       } else if (!fullTag.endsWith('/>')) {
-        openTags.push(fullTag);
+        openTagStack.push(fullTag);
       }
     }
 
     // Append closing tags for any tags currently open at the end of this line
-    for (let j = openTags.length - 1; j >= 0; j--) {
-      const tagNameMatch = openTags[j].match(/<([a-zA-Z0-9-]+)/);
+    let suffix = '';
+    for (let j = openTagStack.length - 1; j >= 0; j--) {
+      const tagNameMatch = openTagStack[j].match(/<([a-zA-Z0-9-]+)/);
       if (tagNameMatch) {
-        line += `</${tagNameMatch[1]}>`;
+        suffix += `</${tagNameMatch[1]}>`;
       }
     }
 
-    result.push(line);
+    result.push(prefix + rawLine + suffix);
   }
 
   return result;
@@ -60,7 +59,14 @@ export function highlightCodeLines(
   try {
     const langKey = language.toLowerCase();
     const grammar = Prism.languages[langKey] || Prism.languages.java || Prism.languages.javascript;
-    highlightedHtml = Prism.highlight(cleanCode, grammar, langKey);
+    if (grammar) {
+      highlightedHtml = Prism.highlight(cleanCode, grammar, langKey);
+    } else {
+      highlightedHtml = cleanCode
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+    }
   } catch {
     highlightedHtml = cleanCode
       .replace(/&/g, '&amp;')
