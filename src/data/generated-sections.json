@@ -540,5 +540,20 @@
     "topicIds": [
       "topic-206"
     ]
+  },
+  {
+    "sectionNumber": 43,
+    "title": "Message Flow Patterns & Node Selection",
+    "part": "Part 5: ACE & MQ",
+    "description": "Decision guide: choose between Compute (ESQL), JavaCompute (Java), and Mapping Node (Graphical Data Map) in ACE.",
+    "topicIds": [
+      "topic-207",
+      "topic-208",
+      "topic-209",
+      "topic-210",
+      "topic-211",
+      "topic-212",
+      "topic-213"
+    ]
   }
 ]

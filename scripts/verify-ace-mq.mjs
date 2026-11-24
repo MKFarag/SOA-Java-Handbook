@@ -86,7 +86,14 @@ async function runMobileAudit() {
       'topic-192', // Start Integration Node
       'topic-199', // Deploy BAR File
       'topic-205', // Commands Cheat Sheet
-      'topic-206'  // BIP Codes Reference
+      'topic-206', // BIP Codes Reference
+      'topic-207', // Which Transformation Node
+      'topic-208', // Which Transport Protocol
+      'topic-209', // Route vs Filter
+      'topic-210', // FlowOrder Node
+      'topic-211', // Error Handling
+      'topic-212', // Subflows
+      'topic-213'  // Flow Patterns Cheat Sheet
     ];
 
     let anyOverflowFailed = false;
