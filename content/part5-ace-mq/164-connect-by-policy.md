@@ -20,6 +20,9 @@ synonyms:
   - "mq endpoint policy"
   - "policy project"
   - "decouple connection"
+  - "how to link policy to queue"
+  - "specify queue in policy"
+  - "project references policy"
 ---
 
 Connects MQ nodes via an MQEndpoint Policy to separate queue connection details from message flow code.
@@ -47,6 +50,14 @@ Message Flow (MQInput) ──► References Policy: {MyPolicyProject}:SCB_Endpoi
   <channelName>SYSTEM.DEF.SVRCONN</channelName>
 </policy:policy>
 ```
+
+### Queue vs Policy: Where Each Is Configured
+| Setting | Where Configured | Exact Tab in Toolkit | Example Value |
+| :--- | :--- | :--- | :--- |
+| **Queue Name** (`IN.Q` / `OUT.Q`) | In the **Node** itself | Node Properties ➔ **Basic** ➔ `Queue name` | `ORDER.IN.Q` |
+| **Connection & Host Details** | In the **Policy** | Policy Editor ➔ `connection` & `channelName` | `localhost(1414)`, `DEV.SVRCONN` |
+| **Link Node to Policy** | In the **Node** itself | Node Properties ➔ **Connection** ➔ `Policy` | `{MyPolicyProject}:SCB_Endpoint` |
+| **Link Application to Policy** | In the **Application** | Right-click App ➔ **Manage Project References** | Check `[✔] MyPolicyProject` |
 
 * **BAR Inclusion:** Policy projects must be packaged inside the BAR file alongside the applications: `ibmint package --input-path <dir> --output-bar-file app.bar`.
 * **Zero Flow Recompilation:** Production operations can change the target host or port by updating the policy without reopening the message flow in Toolkit.
