@@ -65,6 +65,8 @@
     font-size: 0.875em;
     font-weight: 600;
     border: 1px solid #e2e8f0;
+    word-break: break-word;
+    overflow-wrap: anywhere;
   }
 
   .dark code:not(pre code) {
@@ -849,4 +851,98 @@
 }
 .markdown-body a:hover {
   text-decoration: underline;
+}
+
+/* W3Schools-style Syntax Box (Calm, Neutral) */
+.syntax-box {
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-left: 4px solid #64748b;
+  border-radius: 0.5rem;
+  padding: 0.85rem 1.15rem;
+  margin: 1.25rem 0;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.875rem;
+  overflow-x: auto;
+}
+.dark .syntax-box {
+  background-color: #1a1a1e;
+  border-color: #27272a;
+  border-left-color: #94a3b8;
+}
+.syntax-label {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #64748b;
+  margin-bottom: 0.35rem;
+}
+.dark .syntax-label {
+  color: #94a3b8;
+}
+
+/* Real Command Console Terminal Block */
+.terminal-block {
+  background-color: #141416;
+  border: 1px solid #27272a;
+  border-radius: 0.75rem;
+  margin: 1.25rem 0;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+.terminal-header {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 0.85rem;
+  background-color: #1f2024;
+  border-bottom: 1px solid #27272a;
+  gap: 0.4rem;
+  user-select: none;
+}
+.terminal-dot {
+  width: 0.65rem;
+  height: 0.65rem;
+  border-radius: 9999px;
+}
+.terminal-dot.red { background-color: #ef4444; }
+.terminal-dot.yellow { background-color: #eab308; }
+.terminal-dot.green { background-color: #22c55e; }
+.terminal-title {
+  margin-left: 0.5rem;
+  font-size: 0.75rem;
+  color: #a1a1aa;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+.terminal-content {
+  padding: 1rem 1.15rem;
+  margin: 0;
+  font-family: "Cascadia Code", "Fira Code", Consolas, monospace;
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  overflow-x: auto;
+  color: #d4d4d8;
+  white-space: pre;
+}
+.cmd-prompt {
+  color: #38bdf8;
+  font-weight: 600;
+  user-select: none;
+}
+.cmd-user {
+  color: #ffffff;
+  font-weight: 700;
+}
+.cmd-out {
+  color: #a1a1aa;
+}
+.cmd-bip-i {
+  color: #34d399;
+}
+.cmd-bip-w {
+  color: #facc15;
+}
+.cmd-bip-e {
+  color: #f87171;
 }

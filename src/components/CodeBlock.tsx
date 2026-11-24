@@ -35,8 +35,14 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
     return 'Code Example';
   }, [title, filename, cleanCode]);
 
+  const isCommandLang = ['command', 'cmd', 'cli', 'bash', 'shell', 'sh'].includes(language.toLowerCase());
+
   const displayLang = useMemo(() => {
-    if (language.toLowerCase() === 'java') return 'Java';
+    const lower = language.toLowerCase();
+    if (lower === 'java') return 'Java';
+    if (lower === 'command' || lower === 'cmd' || lower === 'cli') return 'COMMAND';
+    if (lower === 'bash' || lower === 'shell') return 'BASH';
+    if (lower === 'esql') return 'ESQL';
     return language.toUpperCase();
   }, [language]);
 
@@ -56,7 +62,11 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
       {/* Header Top Bar: Title & Language Badge */}
       <div className="code-tab-topbar flex items-center justify-between px-3.5 sm:px-4 py-2 bg-[#252528] border-b border-[#2e2e34] select-none gap-2">
         <div className="flex items-center gap-2 min-w-0">
-          <Code2 className="w-4 h-4 text-sky-400 shrink-0" />
+          {isCommandLang ? (
+            <Terminal className="w-4 h-4 text-emerald-400 shrink-0" />
+          ) : (
+            <Code2 className="w-4 h-4 text-sky-400 shrink-0" />
+          )}
           <span className="font-semibold text-xs sm:text-sm text-zinc-100 font-mono truncate">
             {displayTitle}
           </span>

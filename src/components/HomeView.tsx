@@ -15,7 +15,8 @@ import {
   Sparkles,
   BookOpen,
   Check,
-  Brain
+  Brain,
+  Network
 } from 'lucide-react';
 import { SECTIONS, ALL_TOPICS } from '../data/topics';
 import type { PartType, BroadcastItem } from '../types';
@@ -51,16 +52,19 @@ export const HomeView: React.FC<HomeViewProps> = ({
   const part2Sections = SECTIONS.filter(s => s.part === 'Part 2: Java EE & Jakarta EE');
   const part3Sections = SECTIONS.filter(s => s.part === 'Part 3: Spring Boot & Production Stack');
   const part4Sections = SECTIONS.filter(s => s.part === 'Part 4: Database Systems & Persistence');
+  const part5Sections = SECTIONS.filter(s => s.part === 'Part 5: ACE & MQ');
 
   const part1Topics = ALL_TOPICS.filter(t => t.part === 'Part 1: Java Core');
   const part2Topics = ALL_TOPICS.filter(t => t.part === 'Part 2: Java EE & Jakarta EE');
   const part3Topics = ALL_TOPICS.filter(t => t.part === 'Part 3: Spring Boot & Production Stack');
   const part4Topics = ALL_TOPICS.filter(t => t.part === 'Part 4: Database Systems & Persistence');
+  const part5Topics = ALL_TOPICS.filter(t => t.part === 'Part 5: ACE & MQ');
 
   const part1Done = part1Topics.filter(t => completedTopicIds.has(t.id)).length;
   const part2Done = part2Topics.filter(t => completedTopicIds.has(t.id)).length;
   const part3Done = part3Topics.filter(t => completedTopicIds.has(t.id)).length;
   const part4Done = part4Topics.filter(t => completedTopicIds.has(t.id)).length;
+  const part5Done = part5Topics.filter(t => completedTopicIds.has(t.id)).length;
 
   const totalCompleted = completedTopicIds.size;
   const progressPercent = Math.round((totalCompleted / ALL_TOPICS.length) * 100);
@@ -137,6 +141,24 @@ export const HomeView: React.FC<HomeViewProps> = ({
       doneCount: part4Done,
       capstoneTitle: 'Polyglot Multi-Model Persistence Hub',
       capstoneHighlights: 'MySQL Relational Schema + MongoDB Document Store, Aggregation Pipelines, and Transactional Consistency.'
+    },
+    {
+      part: 'Part 5: ACE & MQ' as PartType,
+      label: 'ACE & MQ',
+      tag: 'Enterprise Integration',
+      subtitle: 'Enterprise Service Bus & Messaging',
+      description: 'IBM App Connect Enterprise 12 & IBM MQ 9.4. ESQL message tree transformations, JSON domain parsing, MQSC console, and BIP diagnostics.',
+      icon: Network,
+      accentText: 'text-cyan-600 dark:text-cyan-400',
+      accentBg: 'bg-cyan-500/10 dark:bg-cyan-500/15',
+      accentBorder: 'border-cyan-500/20 dark:border-cyan-500/30',
+      hoverBorder: 'hover:border-cyan-500/50',
+      glow: 'shadow-cyan-500/10',
+      topics: part5Topics,
+      sections: part5Sections,
+      doneCount: part5Done,
+      capstoneTitle: 'Enterprise Integration Broker & Transactional Message Hub',
+      capstoneHighlights: 'JSON Domain Tree, ESQL Transformations, Dynamic Queue Routing, and End-to-End MQ Verification.'
     }
   ];
 
@@ -298,7 +320,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
               Curriculum Architecture
             </h2>
             <p className="text-xs sm:text-sm text-zinc-500 dark:text-zinc-400">
-              Structured into 4 progressive pillars from core foundations to distributed cloud production.
+              Structured into 5 progressive pillars from core foundations to enterprise messaging and distributed systems.
             </p>
           </div>
 
@@ -322,7 +344,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
         </div>
 
         {/* Pillar Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
           {pillars.map((pillar) => {
             const IconComp = pillar.icon;
             const isSelected = activeTabPart === pillar.part;

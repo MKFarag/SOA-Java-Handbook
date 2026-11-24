@@ -9,7 +9,8 @@ export const MAIN_SECTIONS: { part: PartType; label: string; shortLabel: string 
   { part: 'Part 1: Java Core', label: 'Java Core', shortLabel: 'Java' },
   { part: 'Part 2: Java EE & Jakarta EE', label: 'Jakarta EE', shortLabel: 'EE' },
   { part: 'Part 3: Spring Boot & Production Stack', label: 'Spring Boot', shortLabel: 'Spring' },
-  { part: 'Part 4: Database Systems & Persistence', label: 'Database Systems', shortLabel: 'Database' }
+  { part: 'Part 4: Database Systems & Persistence', label: 'Database Systems', shortLabel: 'Database' },
+  { part: 'Part 5: ACE & MQ', label: 'ACE & MQ', shortLabel: 'ACE & MQ' }
 ];
 
 export function getTopicById(id: string): TopicDetail | undefined {
@@ -75,7 +76,27 @@ export const LEGACY_TOPIC_ALIASES: Record<string, string> = {
   'transactional-outbox-pattern-cdc-debezium': 'topic-96',
   'distributed-transactions-saga-pattern': 'topic-96',
   'production-dockerization-layered-jars': 'topic-89',
-  'graalvm-native-image-aot-compilation': 'topic-89'
+  'graalvm-native-image-aot-compilation': 'topic-89',
+
+  // ACE & MQ Legacy Aliases (Redirect previous 44-topic IDs and slugs)
+  'scenario-start-everything-from-scratch': 'topic-171',
+  'scenario-receive-json-transform-send': 'topic-159',
+  'scenario-troubleshoot-and-fix': 'topic-167',
+  'bip-codes-reference-directory': 'topic-206',
+  'real-session-startup-walkthrough': 'topic-189',
+  'mqsiprofile-and-command-console': 'topic-187',
+  'mq-queue-manager-commands': 'topic-171',
+  'runmqsc-and-mqsc-reference': 'topic-169',
+  'mq-test-tools-amqsput-amqsget': 'topic-184',
+  'mqsilist-inspecting-nodes-servers': 'topic-190',
+  'mqsistart-and-mqsistop': 'topic-192',
+  'mqsicreatebroker-and-deletebroker': 'topic-191',
+  'integration-servers-execution-groups': 'topic-196',
+  'bar-packaging-and-deployment': 'topic-199',
+  'message-flow-control-commands': 'topic-201',
+  'reading-and-changing-properties': 'topic-195',
+  'troubleshooting-with-trace-and-logs': 'topic-204',
+  'commands-cheat-sheet': 'topic-205'
 };
 
 /**

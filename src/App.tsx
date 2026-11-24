@@ -717,7 +717,7 @@ export function App() {
 
         {/* Main Content Pane */}
         <main
-          className={`flex-1 ${
+          className={`flex-1 min-w-0 ${
             isSidebarCollapsed ? 'lg:pl-0' : 'lg:pl-72 xl:pl-80'
           } w-full min-h-[calc(100vh-4rem)] pb-20 lg:pb-10 transition-all duration-200`}
         >

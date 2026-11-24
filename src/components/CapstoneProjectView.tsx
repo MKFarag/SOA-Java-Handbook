@@ -93,6 +93,13 @@ export const CapstoneProjectView: React.FC<CapstoneProjectViewProps> = ({
           bg: 'bg-amber-500/10 border-amber-500/30 text-amber-500',
           accent: 'border-amber-500'
         };
+      default:
+        return {
+          icon: Layers,
+          color: 'text-cyan-500',
+          bg: 'bg-cyan-500/10 border-cyan-500/30 text-cyan-500',
+          accent: 'border-cyan-500'
+        };
     }
   };
 

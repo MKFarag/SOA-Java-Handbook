@@ -2,7 +2,8 @@ export type PartType =
   | 'Part 1: Java Core' 
   | 'Part 2: Java EE & Jakarta EE' 
   | 'Part 3: Spring Boot & Production Stack'
-  | 'Part 4: Database Systems & Persistence';
+  | 'Part 4: Database Systems & Persistence'
+  | 'Part 5: ACE & MQ';
 
 export type DifficultyLevel = 'Beginner' | 'Intermediate' | 'Advanced';
 
@@ -133,6 +134,10 @@ export interface TopicDetail {
   markdownContent?: string;
   searchableTerms?: string[];
   cheatSheetText?: string;
+  object?: string;
+  action?: string;
+  commandName?: string;
+  synonyms?: string[];
   whatAndWhy?: {
     definition: string;
     analogy: string;
@@ -196,8 +201,8 @@ export interface KnowledgeNote {
   ownerCode: string; // The authenticated student code, or 'GUEST'
   title: string;
   description?: string;
-  category: string; // e.g. 'Java', 'Spring Boot', 'ASP.NET Core', 'Database', 'General'
-  language?: string; // e.g. 'java', 'csharp', 'sql', 'javascript', 'typescript', 'python', 'bash', 'json', etc.
+  category: string; // e.g. 'ACE & MQ', 'Java Core', 'Spring Boot', 'Jakarta EE', 'Database Systems', 'General'
+  language?: string; // e.g. 'command', 'java', 'esql', 'sql', 'bash', 'typescript', 'javascript', 'python', 'json', etc.
   content: string; // Personal written notes and technical explanation
   codeSnippet?: string; // Optional code snippet
   createdAt: string; // ISO 8601

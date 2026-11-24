@@ -27,24 +27,29 @@ interface KnowledgeBaseViewProps {
 }
 
 const CATEGORY_PRESETS = [
-  'Java',
+  'ACE & MQ',
+  'Java Core',
   'Spring Boot',
-  'ASP.NET Core',
-  'Database & EF Core',
+  'Jakarta EE',
+  'Database Systems',
   'Architecture & Cloud',
+  'Database & EF Core',
+  'ASP.NET Core',
   'General'
 ];
 
 const LANGUAGE_OPTIONS = [
+  { label: 'Command / CLI', value: 'command' },
   { label: 'Java', value: 'java' },
-  { label: 'C#', value: 'csharp' },
+  { label: 'ESQL (ACE)', value: 'esql' },
   { label: 'SQL', value: 'sql' },
-  { label: 'TypeScript', value: 'typescript' },
-  { label: 'JavaScript', value: 'javascript' },
-  { label: 'Python', value: 'python' },
   { label: 'Bash / Shell', value: 'bash' },
   { label: 'JSON / YAML', value: 'json' },
   { label: 'HTML / XML', value: 'markup' },
+  { label: 'TypeScript', value: 'typescript' },
+  { label: 'JavaScript', value: 'javascript' },
+  { label: 'Python', value: 'python' },
+  { label: 'C#', value: 'csharp' },
   { label: 'Plain Text', value: 'text' }
 ];
 
@@ -63,6 +68,7 @@ export const KnowledgeBaseView: React.FC<KnowledgeBaseViewProps> = ({
 
   // Search & Filter state
   const [searchQuery, setSearchQuery] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [selectedLanguage, setSelectedLanguage] = useState<string>('All');
   const [sortBy, setSortBy] = useState<'recent_updated' | 'recent_created' | 'title_asc'>('recent_updated');
 
@@ -74,9 +80,9 @@ export const KnowledgeBaseView: React.FC<KnowledgeBaseViewProps> = ({
   // Form state for Create / Edit
   const [formTitle, setFormTitle] = useState('');
   const [formDescription, setFormDescription] = useState('');
-  const [formCategory, setFormCategory] = useState('Java');
+  const [formCategory, setFormCategory] = useState('ACE & MQ');
   const [customCategory, setCustomCategory] = useState('');
-  const [formLanguage, setFormLanguage] = useState('java');
+  const [formLanguage, setFormLanguage] = useState('command');
   const [formContent, setFormContent] = useState('');
   const [formCodeSnippet, setFormCodeSnippet] = useState('');
   const [previewTab, setPreviewTab] = useState<'edit' | 'preview'>('edit');
@@ -102,6 +108,11 @@ export const KnowledgeBaseView: React.FC<KnowledgeBaseViewProps> = ({
       );
     }
 
+    // Category filter via dropdown
+    if (selectedCategory !== 'All') {
+      result = result.filter(n => (n.category || '').toLowerCase() === selectedCategory.toLowerCase());
+    }
+
     // Language filter via dropdown
     if (selectedLanguage !== 'All') {
       result = result.filter(n => (n.language || '').toLowerCase() === selectedLanguage.toLowerCase());
@@ -122,16 +133,16 @@ export const KnowledgeBaseView: React.FC<KnowledgeBaseViewProps> = ({
     });
 
     return result;
-  }, [notes, searchQuery, selectedLanguage, sortBy]);
+  }, [notes, searchQuery, selectedCategory, selectedLanguage, sortBy]);
 
   // Open Create Dialog
   const handleOpenCreate = () => {
     setEditingNote(null);
     setFormTitle('');
     setFormDescription('');
-    setFormCategory('Java');
+    setFormCategory('ACE & MQ');
     setCustomCategory('');
-    setFormLanguage('java');
+    setFormLanguage('command');
     setFormContent('');
     setFormCodeSnippet('');
     setPreviewTab('edit');
@@ -434,8 +445,21 @@ export const KnowledgeBaseView: React.FC<KnowledgeBaseViewProps> = ({
           )}
         </div>
 
-        {/* Language Filter Dropdown */}
-        <div className="flex items-center gap-2">
+        {/* Category, Language & Sort Filters */}
+        <div className="flex flex-wrap items-center gap-2">
+          {/* Category Filter Dropdown */}
+          <select
+            value={selectedCategory}
+            onChange={(e) => setSelectedCategory(e.target.value)}
+            className="px-3 py-2 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#1c1c1f] text-xs font-semibold text-zinc-700 dark:text-zinc-300 focus:outline-none focus:ring-2 focus:ring-blue-500/40 cursor-pointer"
+          >
+            <option value="All">All Categories</option>
+            {CATEGORY_PRESETS.map(cat => (
+              <option key={cat} value={cat}>{cat}</option>
+            ))}
+          </select>
+
+          {/* Language Filter Dropdown */}
           <select
             value={selectedLanguage}
             onChange={(e) => setSelectedLanguage(e.target.value)}
@@ -472,7 +496,7 @@ export const KnowledgeBaseView: React.FC<KnowledgeBaseViewProps> = ({
             </h3>
             <p className="text-xs sm:text-sm text-zinc-500 dark:text-zinc-400 max-w-md mx-auto">
               {notes.length === 0
-                ? 'Save your preferred Global Exception Handling, ASP.NET Core middleware, EF Core query patterns, or Java & Spring code snippets here.'
+                ? 'Save your preferred ACE commands, ESQL snippets, Spring Boot patterns, or Java Core notes here.'
                 : 'Try adjusting your search query, clearing filters, or create a new note.'}
             </p>
           </div>

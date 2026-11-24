@@ -504,6 +504,14 @@ export const TopicView: React.FC<TopicViewProps> = ({
             <span className="hover:text-zinc-700 dark:hover:text-zinc-300 truncate max-w-[140px] sm:max-w-none">
               {topic.part.split(':')[1]?.trim() || topic.part}
             </span>
+            {topic.sectionTitle && (
+              <>
+                <span>/</span>
+                <span className="hover:text-zinc-700 dark:hover:text-zinc-300 truncate max-w-[160px] sm:max-w-none">
+                  {topic.sectionTitle.replace(/^Part [A-Z]\s*—\s*/, '')}
+                </span>
+              </>
+            )}
             <span>/</span>
             <span className="text-zinc-900 dark:text-zinc-200 font-semibold truncate max-w-[160px] sm:max-w-none">
               {topic.title}

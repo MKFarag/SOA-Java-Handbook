@@ -6,7 +6,8 @@ const CONTENT_DIRS = [
   path.resolve('content/part1-core'),
   path.resolve('content/part2-jakarta'),
   path.resolve('content/part3-spring'),
-  path.resolve('content/part4-databases')
+  path.resolve('content/part4-databases'),
+  path.resolve('content/part5-ace-mq')
 ];
 const OUTPUT_FILE = path.resolve('src/data/generated-topics.json');
 const SECTIONS_FILE = path.resolve('src/data/generated-sections.json');
@@ -50,6 +51,14 @@ for (const dir of CONTENT_DIRS) {
 
     // Extract searchable terms from markdown headings, code identifiers, annotations, and tables
     const searchableTermsSet = new Set(Array.isArray(data.searchableTerms) ? data.searchableTerms : []);
+    if (data.commandName) searchableTermsSet.add(data.commandName);
+    if (data.object) searchableTermsSet.add(data.object);
+    if (data.action) searchableTermsSet.add(data.action);
+    if (Array.isArray(data.synonyms)) {
+      data.synonyms.forEach(s => searchableTermsSet.add(s));
+    } else if (typeof data.synonyms === 'string') {
+      data.synonyms.split(/[\s,]+/).filter(Boolean).forEach(s => searchableTermsSet.add(s));
+    }
 
     // 1. Headings (H1 to H4)
     const headingRegex = /^#{1,4}\s+(.+)$/gm;
