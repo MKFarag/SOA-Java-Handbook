@@ -93,7 +93,15 @@ async function runMobileAudit() {
       'topic-210', // FlowOrder Node
       'topic-211', // Error Handling
       'topic-212', // Subflows
-      'topic-213'  // Flow Patterns Cheat Sheet
+      'topic-213', // Flow Patterns Cheat Sheet
+      'topic-214', // Start Integration Server
+      'topic-215', // Stop Integration Server
+      'topic-216', // Run Independent Server
+      'topic-217', // Configure server.conf.yaml
+      'topic-218', // Message Domains & Parsing
+      'topic-219', // ResetContentDescriptor
+      'topic-220', // FileInput Node
+      'topic-221'  // FileOutput & FileRead
     ];
 
     let anyOverflowFailed = false;

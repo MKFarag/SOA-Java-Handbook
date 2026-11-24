@@ -123,8 +123,13 @@ for (const dir of CONTENT_DIRS) {
   }
 }
 
-// Sort topics by topicNumber
-topics.sort((a, b) => (a.topicNumber || 0) - (b.topicNumber || 0));
+// Sort topics by sectionNumber then topicNumber
+topics.sort((a, b) => {
+  const secA = a.sectionNumber || 1;
+  const secB = b.sectionNumber || 1;
+  if (secA !== secB) return secA - secB;
+  return (a.topicNumber || 0) - (b.topicNumber || 0);
+});
 
 // Generate sections list dynamically
 const sectionsMap = new Map();
