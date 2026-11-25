@@ -18,6 +18,8 @@ synonyms:
   - "sql server ace setup"
   - "database connection ace"
   - "which nodes use odbc"
+  - "netstat 1433 sql server"
+  - "test-netconnection 1433"
 ---
 
 # ODBC vs JDBC in ACE: Which Database Setup Do You Need?
@@ -45,6 +47,31 @@ Make sure **SQL Server itself** allows TCP connections first (especially on a lo
 2. Right-click **TCP/IP** -> **Enable**.
 3. Double-click **TCP/IP** -> **IP Addresses** tab -> scroll to **IPAll** -> set **TCP Port = `1433`** (and clear TCP Dynamic Ports).
 4. **Restart** the `SQL Server` Windows service.
+5. **Verify SQL Server is actually listening on port `1433`:**
+
+```bash
+# Windows CMD (check local machine is LISTENING + confirm PID belongs to sqlservr.exe)
+netstat -ano | findstr :1433
+
+# Windows PowerShell (check reachability + Firewall from ACE machine)
+Test-NetConnection -ComputerName sqlserver-host -Port 1433
+
+# Linux (check listening socket on port 1433)
+ss -tlnp | grep :1433
+```
+
+<details data-type="output">
+<summary>Expected Output When SQL Server Is Listening</summary>
+
+```text
+  TCP    0.0.0.0:1433           0.0.0.0:0              LISTENING       4812
+  TCP    [::]:1433              [::]:0                 LISTENING       4812
+```
+
+</details>
+
+> [!NOTE]
+> Using a dynamic **Named Instance** like `DBHOST\SQLEXPRESS` instead of fixed port `1433`? Make sure the **SQL Server Browser** Windows service is running too — it listens on **UDP port `1434`** to tell ACE which port that instance uses!
 
 > [!TIP]
 > If your flow uses **ESQL inside a `Compute` node** (the most common pattern in ACE), follow the **ODBC** path in the next topic! You only need `JDBCProviders` if you query tables inside a **Mapping (`.map`)** or **JavaCompute** node.

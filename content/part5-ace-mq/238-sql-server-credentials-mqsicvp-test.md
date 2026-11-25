@@ -130,7 +130,7 @@ mqsireload SCB
 | :--- | :--- | :--- |
 | `Data source name not found` | Created **32-bit** DSN instead of **64-bit** System DSN on Windows | Recreate inside `C:\Windows\System32\odbcad32.exe` -> **System DSN** |
 | Works in terminal, fails in flow | Used **User DSN** instead of **System DSN** (or forgot `ODBCINI` on Linux) | Always use **System DSN** on Windows / export `ODBCINI` before `mqsistart` |
-| Connection refused / timeout | SQL Server **TCP/IP** protocol disabled or port `1433` blocked | Enable TCP/IP port `1433` in SQL Server Configuration Manager + restart SQL Server |
+| Connection refused / timeout | SQL Server **TCP/IP** protocol disabled, port `1433` blocked, or Browser service off | Check **`netstat -ano \| findstr :1433`** (`LISTENING`) & `Test-NetConnection -Port 1433`; enable TCP/IP `1433` (and **SQL Server Browser** UDP `1434` for named instances) |
 | `Login failed for user` / old password | Ran `mqsisetdbparms` while server was running without reloading | Run `mqsireload SCB` (or restart Independent `IntegrationServer`) |
 | `PKIX` / SSL verify error (ODBC 18 / JDBC) | Self-signed SQL Server cert rejected | Set `TrustServerCertificate=Yes` (ODBC) or `trustServerCertificate=true` (JDBC URL) |
 
