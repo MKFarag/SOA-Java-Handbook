@@ -55,13 +55,13 @@ const documents = ALL_TOPICS.map(t => {
 ms.addAll(documents);
 
 const queries = [
-  { q: 'compute vs javacompute', expectedId: 'topic-207' },
-  { q: 'http vs mq', expectedId: 'topic-208' },
-  { q: 'route node', expectedId: 'topic-209' },
-  { q: 'floworder', expectedId: 'topic-210' },
-  { q: 'trycatch node', expectedId: 'topic-211' },
-  { q: 'subflow', expectedId: 'topic-212' },
-  { q: 'flow patterns', expectedId: 'topic-213' }
+  { q: 'compute vs javacompute', expectedId: 'topic-149' },
+  { q: 'http vs mq', expectedId: 'topic-148' },
+  { q: 'route node', expectedId: 'topic-163' },
+  { q: 'floworder', expectedId: 'topic-147' },
+  { q: 'trycatch node', expectedId: 'topic-146' },
+  { q: 'subflow', expectedId: 'topic-138' },
+  { q: 'flow patterns', expectedId: 'topic-148' }
 ];
 
 let allPassed = true;

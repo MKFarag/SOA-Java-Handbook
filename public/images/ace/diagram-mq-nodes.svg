@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 250" width="820" height="250" font-family="Segoe UI, Arial, sans-serif">
+  <rect width="820" height="250" rx="14" fill="#f8fafc"/>
+  <text x="410" y="30" text-anchor="middle" font-size="16" font-weight="700" fill="#0f172a">Which IBM MQ Node Should I Use?</text>
+
+  <rect x="24" y="54" width="180" height="168" rx="10" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+  <text x="114" y="84" text-anchor="middle" font-size="14" font-weight="700" fill="#14532d">MQInput</text>
+  <text x="114" y="106" text-anchor="middle" font-size="11.5" font-weight="700" fill="#166534">Start of Flow</text>
+  <text x="114" y="136" text-anchor="middle" font-size="11.5" fill="#1e293b">Listens to a queue</text>
+  <text x="114" y="154" text-anchor="middle" font-size="11.5" fill="#1e293b">and triggers the flow</text>
+  <text x="114" y="172" text-anchor="middle" font-size="11.5" fill="#1e293b">when a message lands.</text>
+
+  <rect x="221" y="54" width="180" height="168" rx="10" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+  <text x="311" y="84" text-anchor="middle" font-size="14" font-weight="700" fill="#1e3a8a">MQGet</text>
+  <text x="311" y="106" text-anchor="middle" font-size="11.5" font-weight="700" fill="#1d4ed8">Middle of Flow</text>
+  <text x="311" y="136" text-anchor="middle" font-size="11.5" fill="#1e293b">Fetches one extra</text>
+  <text x="311" y="154" text-anchor="middle" font-size="11.5" fill="#1e293b">message from a queue</text>
+  <text x="311" y="172" text-anchor="middle" font-size="11.5" fill="#1e293b">on demand mid-flow.</text>
+
+  <rect x="418" y="54" width="180" height="168" rx="10" fill="#e0f2fe" stroke="#0284c7" stroke-width="2"/>
+  <text x="508" y="84" text-anchor="middle" font-size="14" font-weight="700" fill="#0c4a6e">MQOutput</text>
+  <text x="508" y="106" text-anchor="middle" font-size="11.5" font-weight="700" fill="#0369a1">End (or Mid) of Flow</text>
+  <text x="508" y="136" text-anchor="middle" font-size="11.5" fill="#1e293b">Sends the message</text>
+  <text x="508" y="154" text-anchor="middle" font-size="11.5" fill="#1e293b">to a target queue</text>
+  <text x="508" y="172" text-anchor="middle" font-size="11.5" fill="#1e293b">you configure.</text>
+
+  <rect x="615" y="54" width="180" height="168" rx="10" fill="#eef2ff" stroke="#4f46e5" stroke-width="2"/>
+  <text x="705" y="84" text-anchor="middle" font-size="14" font-weight="700" fill="#312e81">MQReply</text>
+  <text x="705" y="106" text-anchor="middle" font-size="11.5" font-weight="700" fill="#4338ca">End (Reply Pattern)</text>
+  <text x="705" y="136" text-anchor="middle" font-size="11.5" fill="#1e293b">Sends response back</text>
+  <text x="705" y="154" text-anchor="middle" font-size="11.5" fill="#1e293b">to the caller's</text>
+  <text x="705" y="172" text-anchor="middle" font-size="11.5" fill="#1e293b">MQMD.ReplyToQ.</text>
+</svg>

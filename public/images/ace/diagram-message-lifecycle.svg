@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 230" width="820" height="230" font-family="Segoe UI, Arial, sans-serif">
+  <rect width="820" height="230" rx="14" fill="#f8fafc"/>
+  <text x="410" y="30" text-anchor="middle" font-size="16" font-weight="700" fill="#0f172a">Life of One Message Through an ACE Flow</text>
+  <defs>
+    <marker id="arr3" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#334155"/>
+    </marker>
+  </defs>
+
+  <rect x="20" y="60" width="136" height="124" rx="10" fill="#ffffff" stroke="#0284c7" stroke-width="2"/>
+  <text x="88" y="86" text-anchor="middle" font-size="12" font-weight="700" fill="#0369a1">1. Arrive</text>
+  <text x="88" y="112" text-anchor="middle" font-size="11.5" fill="#1e293b">Input Node</text>
+  <text x="88" y="132" text-anchor="middle" font-size="10.5" fill="#64748b">(HTTPInput / MQInput)</text>
+  <text x="88" y="164" text-anchor="middle" font-size="10.5" font-weight="600" fill="#0f172a">Raw bytes arrive</text>
+
+  <rect x="180" y="60" width="136" height="124" rx="10" fill="#ffffff" stroke="#2563eb" stroke-width="2"/>
+  <text x="248" y="86" text-anchor="middle" font-size="12" font-weight="700" fill="#1d4ed8">2. Parse</text>
+  <text x="248" y="112" text-anchor="middle" font-size="11.5" fill="#1e293b">Message Parser</text>
+  <text x="248" y="132" text-anchor="middle" font-size="10.5" fill="#64748b">(JSON / XMLNSC / DFDL)</text>
+  <text x="248" y="164" text-anchor="middle" font-size="10.5" font-weight="600" fill="#0f172a">Builds InputRoot tree</text>
+
+  <rect x="340" y="60" width="142" height="124" rx="10" fill="#dbeafe" stroke="#1d4ed8" stroke-width="2"/>
+  <text x="411" y="86" text-anchor="middle" font-size="12" font-weight="700" fill="#1e3a8a">3. Process</text>
+  <text x="411" y="112" text-anchor="middle" font-size="11.5" fill="#1e293b">Mapping / Compute</text>
+  <text x="411" y="132" text-anchor="middle" font-size="10.5" fill="#1d4ed8">Reads InputRoot</text>
+  <text x="411" y="164" text-anchor="middle" font-size="10.5" font-weight="700" fill="#1e3a8a">Builds OutputRoot</text>
+
+  <rect x="506" y="60" width="136" height="124" rx="10" fill="#ffffff" stroke="#0d9488" stroke-width="2"/>
+  <text x="574" y="86" text-anchor="middle" font-size="12" font-weight="700" fill="#0f766e">4. Serialize</text>
+  <text x="574" y="112" text-anchor="middle" font-size="11.5" fill="#1e293b">Output Parser</text>
+  <text x="574" y="132" text-anchor="middle" font-size="10.5" fill="#64748b">Tree &#8594; Text / Bytes</text>
+  <text x="574" y="164" text-anchor="middle" font-size="10.5" font-weight="600" fill="#0f172a">Prepares wire format</text>
+
+  <rect x="666" y="60" width="134" height="124" rx="10" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+  <text x="733" y="86" text-anchor="middle" font-size="12" font-weight="700" fill="#15803d">5. Send Out</text>
+  <text x="733" y="112" text-anchor="middle" font-size="11.5" fill="#1e293b">Output Node</text>
+  <text x="733" y="132" text-anchor="middle" font-size="10.5" fill="#166534">(HTTPReply / MQOutput)</text>
+  <text x="733" y="164" text-anchor="middle" font-size="10.5" font-weight="600" fill="#14532d">Memory freed</text>
+
+  <line x1="156" y1="122" x2="178" y2="122" stroke="#334155" stroke-width="2" marker-end="url(#arr3)"/>
+  <line x1="316" y1="122" x2="338" y2="122" stroke="#334155" stroke-width="2" marker-end="url(#arr3)"/>
+  <line x1="482" y1="122" x2="504" y2="122" stroke="#334155" stroke-width="2" marker-end="url(#arr3)"/>
+  <line x1="642" y1="122" x2="664" y2="122" stroke="#334155" stroke-width="2" marker-end="url(#arr3)"/>
+</svg>

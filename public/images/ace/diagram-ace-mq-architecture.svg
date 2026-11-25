@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 340" width="820" height="340" font-family="Segoe UI, Arial, sans-serif">
+  <rect width="820" height="340" rx="14" fill="#f8fafc"/>
+  <text x="410" y="32" text-anchor="middle" font-size="16" font-weight="700" fill="#0f172a">How IBM MQ and ACE Fit Together on One Machine</text>
+
+  <!-- IBM MQ Box -->
+  <rect x="28" y="54" width="235" height="258" rx="12" fill="#eef2ff" stroke="#4f46e5" stroke-width="2"/>
+  <text x="145" y="82" text-anchor="middle" font-size="14" font-weight="700" fill="#312e81">IBM MQ (Transport)</text>
+  <text x="145" y="102" text-anchor="middle" font-size="11.5" fill="#4338ca">Queue Manager: QM1 (Port 1414)</text>
+
+  <rect x="52" y="122" width="186" height="48" rx="8" fill="#ffffff" stroke="#6366f1" stroke-width="1.5"/>
+  <text x="145" y="144" text-anchor="middle" font-size="12.5" font-weight="700" fill="#1e293b">Local Queue: IN.Q</text>
+  <text x="145" y="160" text-anchor="middle" font-size="11" fill="#64748b">Holds incoming messages</text>
+
+  <rect x="52" y="190" width="186" height="48" rx="8" fill="#ffffff" stroke="#6366f1" stroke-width="1.5"/>
+  <text x="145" y="212" text-anchor="middle" font-size="12.5" font-weight="700" fill="#1e293b">Local Queue: OUT.Q</text>
+  <text x="145" y="228" text-anchor="middle" font-size="11" fill="#64748b">Holds processed messages</text>
+
+  <text x="145" y="280" text-anchor="middle" font-size="11" font-weight="600" fill="#3730a3">Safe storage — never edits data</text>
+
+  <!-- ACE Integration Node -->
+  <rect x="305" y="54" width="487" height="258" rx="12" fill="#ecfeff" stroke="#0891b2" stroke-width="2"/>
+  <text x="548" y="82" text-anchor="middle" font-size="14" font-weight="700" fill="#164e63">IBM App Connect Enterprise (ACE)</text>
+  <text x="548" y="102" text-anchor="middle" font-size="11.5" fill="#0e7490">Integration Node (e.g. ACENODE1)</text>
+
+  <!-- Integration Server -->
+  <rect x="327" y="118" width="443" height="174" rx="10" fill="#ffffff" stroke="#06b6d4" stroke-width="1.5"/>
+  <text x="548" y="140" text-anchor="middle" font-size="12.5" font-weight="700" fill="#0f172a">Integration Server: server1 (Runs Flows)</text>
+
+  <!-- Application -->
+  <rect x="347" y="154" width="403" height="122" rx="8" fill="#f0f9ff" stroke="#0284c7" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="548" y="174" text-anchor="middle" font-size="12" font-weight="700" fill="#0369a1">Application: OrderApp (Container)</text>
+
+  <!-- Message Flow Nodes -->
+  <rect x="364" y="192" width="98" height="58" rx="7" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/>
+  <text x="413" y="218" text-anchor="middle" font-size="12" font-weight="700" fill="#14532d">MQInput</text>
+  <text x="413" y="236" text-anchor="middle" font-size="10.5" fill="#166534">Reads IN.Q</text>
+
+  <rect x="498" y="192" width="102" height="58" rx="7" fill="#dbeafe" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="549" y="218" text-anchor="middle" font-size="12" font-weight="700" fill="#1e3a8a">Compute/Map</text>
+  <text x="549" y="236" text-anchor="middle" font-size="10.5" fill="#1d4ed8">Transforms</text>
+
+  <rect x="636" y="192" width="98" height="58" rx="7" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/>
+  <text x="685" y="218" text-anchor="middle" font-size="12" font-weight="700" fill="#14532d">MQOutput</text>
+  <text x="685" y="236" text-anchor="middle" font-size="10.5" fill="#166534">Writes OUT.Q</text>
+
+  <!-- Arrows -->
+  <defs>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#0f172a"/>
+    </marker>
+  </defs>
+  <line x1="238" y1="146" x2="362" y2="216" stroke="#0f172a" stroke-width="2" marker-end="url(#arr)"/>
+  <line x1="462" y1="221" x2="496" y2="221" stroke="#0f172a" stroke-width="2" marker-end="url(#arr)"/>
+  <line x1="600" y1="221" x2="634" y2="221" stroke="#0f172a" stroke-width="2" marker-end="url(#arr)"/>
+  <path d="M685,250 L685,295 L238,218" fill="none" stroke="#0f172a" stroke-width="2" marker-end="url(#arr)"/>
+</svg>

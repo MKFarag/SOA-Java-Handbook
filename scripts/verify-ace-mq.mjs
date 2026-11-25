@@ -64,57 +64,30 @@ async function runMobileAudit() {
     });
     console.log('[mobile-audit] Home Page horizontal overflow detected?', homeOverflow);
 
-    // Test topics to audit across all sections of ACE & MQ
-    const testTopics = [
-      'topic-131', // Basics
-      'topic-133', // Architecture diagram
-      'topic-137', // ESQL Module
-      'topic-139', // Message Tree
-      'topic-140', // Read a JSON field
-      'topic-144', // Loop over JSON array
-      'topic-156', // ESQL Cheat Sheet
-      'topic-157', // Link Node to QMGR
-      'topic-158', // Which MQ Node Do I Use
-      'topic-159', // MQInput Node
-      'topic-164', // Connect by Policy
-      'topic-167', // Common MQ Connection Errors
-      'topic-170', // Create Queue Manager
-      'topic-171', // Start Queue Manager
-      'topic-178', // Check Queue Depth
-      'topic-189', // Real Session Walkthrough
-      'topic-191', // Create Integration Node
-      'topic-192', // Start Integration Node
-      'topic-199', // Deploy BAR File
-      'topic-205', // Commands Cheat Sheet
-      'topic-206', // BIP Codes Reference
-      'topic-207', // Which Transformation Node
-      'topic-208', // Which Transport Protocol
-      'topic-209', // Route vs Filter
-      'topic-210', // FlowOrder Node
-      'topic-211', // Error Handling
-      'topic-212', // Subflows
-      'topic-213', // Flow Patterns Cheat Sheet
-      'topic-214', // Start Integration Server
-      'topic-215', // Stop Integration Server
-      'topic-216', // Run Independent Server
-      'topic-217', // Configure server.conf.yaml
-      'topic-218', // Message Domains & Parsing
-      'topic-219', // ResetContentDescriptor
-      'topic-220', // FileInput Node
-      'topic-221'  // FileOutput & FileRead
-    ];
+    // Test ALL 109 renumbered ACE & MQ topics (topic-131 through topic-239)
+    const testTopics = Array.from({ length: 109 }, (_, i) => `topic-${131 + i}`);
 
-    let anyOverflowFailed = false;
+    let anyAuditFailed = false;
+    let totalImagesChecked = 0;
 
     for (const tid of testTopics) {
       await page.goto(`${BASE_URL}/#${tid}`, { waitUntil: 'load' });
-      await page.waitForTimeout(300);
+      await page.waitForTimeout(200);
 
-      const audit = await page.evaluate(() => {
+      const audit = await page.evaluate(async () => {
         const docScrollWidth = document.documentElement.scrollWidth;
         const winWidth = window.innerWidth;
         const bodyScrollWidth = document.body.scrollWidth;
         const hasOverflow = docScrollWidth > winWidth + 1 || bodyScrollWidth > winWidth + 1;
+
+        // Wait briefly for any images to finish decoding
+        const imgs = Array.from(document.querySelectorAll('.markdown-body img'));
+        await Promise.all(imgs.map(img => img.complete ? Promise.resolve() : new Promise(res => {
+          img.addEventListener('load', res, { once: true });
+          img.addEventListener('error', res, { once: true });
+          setTimeout(res, 1500);
+        })));
+        const brokenImages = imgs.filter(img => !img.complete || img.naturalWidth === 0).map(img => img.getAttribute('src'));
 
         // Check tables have scroll wrapper
         const tables = Array.from(document.querySelectorAll('.markdown-body table'));
@@ -124,7 +97,6 @@ async function runMobileAudit() {
         const orangeHeaders = Array.from(document.querySelectorAll('th, thead, .syntax-box, .terminal-block')).filter(el => {
           const style = window.getComputedStyle(el);
           const bg = style.backgroundColor;
-          // check if orange rgb(234, 88, 12) or similar
           return bg.includes('234, 88, 12') || bg.includes('249, 115, 22') || bg.includes('251, 146, 60');
         });
 
@@ -135,25 +107,36 @@ async function runMobileAudit() {
           winWidth,
           tablesCount: tables.length,
           tablesWrapped,
-          orangeHeadersCount: orangeHeaders.length
+          orangeHeadersCount: orangeHeaders.length,
+          imagesCount: imgs.length,
+          brokenImages
         };
       });
 
+      totalImagesChecked += audit.imagesCount;
+
       if (audit.hasOverflow) {
         console.error(`[FAIL] ${tid} has horizontal overflow! docScrollWidth=${audit.docScrollWidth}, bodyScrollWidth=${audit.bodyScrollWidth}, winWidth=${audit.winWidth}`);
-        anyOverflowFailed = true;
+        anyAuditFailed = true;
+      } else if (audit.brokenImages.length > 0) {
+        console.error(`[FAIL] ${tid} has broken images: ${audit.brokenImages.join(', ')}`);
+        anyAuditFailed = true;
+      } else if (!audit.tablesWrapped || audit.orangeHeadersCount > 0) {
+        console.error(`[FAIL] ${tid} table wrap/color failed: wrapped=${audit.tablesWrapped}, orange=${audit.orangeHeadersCount}`);
+        anyAuditFailed = true;
       } else {
-        console.log(`[PASS] ${tid} perfectly fits 360px (tables: ${audit.tablesCount}, wrapped: ${audit.tablesWrapped}, orange headers: ${audit.orangeHeadersCount})`);
+        console.log(`[PASS] ${tid} fits 360px (imgs: ${audit.imagesCount}, tables: ${audit.tablesCount})`);
       }
     }
+    console.log(`[mobile-audit] Total rendered images checked across Part 5: ${totalImagesChecked}`);
 
-    // Test Dark Theme at 360px
+    // Test Dark Theme at 360px on topic with diagram + screenshots
     console.log('[mobile-audit] Checking Dark Theme at 360px...');
     await page.evaluate(() => {
       document.documentElement.classList.add('dark');
       localStorage.setItem('java_handbook_theme', 'dark');
     });
-    await page.goto(`${BASE_URL}/#topic-157`, { waitUntil: 'load' });
+    await page.goto(`${BASE_URL}/#topic-136`, { waitUntil: 'load' });
     await page.waitForTimeout(300);
 
     const darkAudit = await page.evaluate(() => {
@@ -168,11 +151,11 @@ async function runMobileAudit() {
     await browser.close();
     preview.kill();
 
-    if (anyOverflowFailed) {
+    if (anyAuditFailed) {
       process.exit(1);
     } else {
       console.log('\n=========================================');
-      console.log('✅ ALL MOBILE AND COLOR AUDITS PASSED 100%');
+      console.log('✅ ALL MOBILE, IMAGE AND COLOR AUDITS PASSED 100%');
       console.log('=========================================\n');
       process.exit(0);
     }

@@ -1373,6 +1373,5 @@ public class EnterpriseMicroserviceChallengeDemo {
 ];
 
 export function getChallengeBySection(sectionNumber: number): SectionMilestoneChallenge | undefined {
-  const normalizedSec = sectionNumber === 38 ? 35 : sectionNumber === 39 ? 36 : sectionNumber;
-  return SECTION_CHALLENGES.find(c => c.sectionNumber === normalizedSec);
+  return SECTION_CHALLENGES.find(c => c.sectionNumber === sectionNumber);
 }

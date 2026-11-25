@@ -147,7 +147,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
       label: 'ACE & MQ',
       tag: 'Enterprise Integration',
       subtitle: 'Enterprise Service Bus & Messaging',
-      description: 'IBM App Connect Enterprise 12 & IBM MQ 9.4. ESQL message tree transformations, JSON domain parsing, MQSC console, and BIP diagnostics.',
+      description: 'IBM App Connect Enterprise 12 & IBM MQ 9.4 in simple W3Schools style: Toolkit setup, Flows, Nodes, MQ Messaging, ESQL, and CLI commands.',
       icon: Network,
       accentText: 'text-cyan-600 dark:text-cyan-400',
       accentBg: 'bg-cyan-500/10 dark:bg-cyan-500/15',
@@ -158,7 +158,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
       sections: part5Sections,
       doneCount: part5Done,
       capstoneTitle: 'Enterprise Integration Broker & Transactional Message Hub',
-      capstoneHighlights: 'JSON Domain Tree, ESQL Transformations, Dynamic Queue Routing, and End-to-End MQ Verification.'
+      capstoneHighlights: 'Toolkit Packaging, Message Flows, Mapping & Compute Nodes, MQ Queues, and ACE/MQ CLI.'
     }
   ];
 

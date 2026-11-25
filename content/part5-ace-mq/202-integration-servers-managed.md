@@ -1,0 +1,48 @@
+---
+id: topic-202
+slug: integration-servers-managed
+topicNumber: 202
+title: "Managed Integration Servers (Overview)"
+part: 'Part 5: ACE & MQ'
+sectionNumber: 42
+sectionTitle: 'Integration Node & Server Commands'
+versionBadge: 'ACE 12.0'
+difficulty: Beginner
+readingTime: 2 min read
+shortDescription: "Understand Integration Servers inside an Integration Node: isolated OS processes with their own JVM, HTTP ports, and apps."
+object: "Managed Server"
+action: "Understand Isolation"
+commandName: "Integration Server (Managed)"
+synonyms:
+  - "managed integration server"
+  - "execution group vs integration server"
+  - "dataflowengine process"
+  - "server isolation ace"
+---
+
+# Managed Integration Servers (Overview)
+
+An **Integration Server** *(called Execution Group in older versions)* is an isolated OS worker process (`DataFlowEngine`) managed by an Integration Node.
+
+![Integration Explorer showing Integration Servers running under an Integration Node](/images/ace/integration-explorer-nodes.png)
+
+---
+
+## Why Use Multiple Servers on One Node?
+
+| Benefit | Real Example |
+| :--- | :--- |
+| **Crash Isolation** | If `PaymentsServer` runs out of memory, `ReportingServer` stays completely unaffected |
+| **Independent Restarts** | Restart or deploy to `EG1` without dropping HTTP traffic on `EG2` |
+| **Separate JVM & HTTP Ports** | Give `EG1` port `7800` + 512MB RAM and `EG2` port `7801` + 2GB RAM |
+
+---
+
+## Managed vs. Independent Server
+
+- **Managed Server** *(created inside a Node)*: Controlled via `mqsicreateexecutiongroup`, `mqsideploy NODE -e EG1`, etc.
+- **Independent Server** *(no Integration Node)*: Created in a folder via `mqsicreateworkdir` and started directly via `IntegrationServer`.
+
+---
+
+**Next:** [mqsicreateexecutiongroup: Add a Server →](#topic-203)

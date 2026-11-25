@@ -574,7 +574,7 @@ export const TopicView: React.FC<TopicViewProps> = ({
         </div>
 
         {/* H1 Title & Summary */}
-        <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-zinc-900 dark:text-zinc-50 font-sans break-words pt-1">
+        <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-zinc-900 dark:text-zinc-50 font-sans [overflow-wrap:anywhere] pt-1">
           {topic.title}
         </h1>
         <p className="text-sm sm:text-base lg:text-lg text-zinc-600 dark:text-zinc-300 leading-relaxed font-sans">

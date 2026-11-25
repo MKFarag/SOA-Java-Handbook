@@ -4,39 +4,39 @@
     "expected": "Create an integration node",
     "top5": [
       {
-        "id": "topic-191",
-        "title": "Create an Integration Node",
+        "id": "topic-141",
+        "title": "Create, Add Nodes, Wire & Save a Flow",
         "part": "Part 5: ACE & MQ",
-        "sectionTitle": "ACE Administration Commands",
-        "score": 640.5
+        "sectionTitle": "ACE Message Flows",
+        "score": 400.4
       },
       {
-        "id": "topic-196",
-        "title": "Create an Integration Server",
+        "id": "topic-198",
+        "title": "mqsicreatebroker & mqsideletebroker",
         "part": "Part 5: ACE & MQ",
-        "sectionTitle": "ACE Administration Commands",
-        "score": 381.7
+        "sectionTitle": "Integration Node & Server Commands",
+        "score": 344.6
       },
       {
-        "id": "topic-147",
-        "title": "Create, Change, and Delete Fields",
+        "id": "topic-185",
+        "title": "Procedures & Functions in ESQL",
         "part": "Part 5: ACE & MQ",
         "sectionTitle": "ESQL Reference",
-        "score": 353
+        "score": 281.7
       },
       {
-        "id": "topic-157",
-        "title": "Link a Node to a Queue Manager",
+        "id": "topic-151",
+        "title": "Compute Node: Transform Messages with ESQL",
         "part": "Part 5: ACE & MQ",
-        "sectionTitle": "Connecting Nodes to MQ",
-        "score": 273.8
+        "sectionTitle": "App Connect Nodes",
+        "score": 275.5
       },
       {
-        "id": "topic-209",
-        "title": "Message Routing: Route Node vs Filter Node",
+        "id": "topic-203",
+        "title": "mqsicreateexecutiongroup: Add a Server",
         "part": "Part 5: ACE & MQ",
-        "sectionTitle": "Message Flow Patterns & Node Selection",
-        "score": 269.9
+        "sectionTitle": "Integration Node & Server Commands",
+        "score": 274.6
       }
     ]
   },
@@ -45,32 +45,39 @@
     "expected": "Start an integration node",
     "top5": [
       {
-        "id": "topic-192",
-        "title": "Start an Integration Node",
+        "id": "topic-155",
+        "title": "MQInput Node: Start a Flow from a Queue",
         "part": "Part 5: ACE & MQ",
-        "sectionTitle": "ACE Administration Commands",
-        "score": 708
+        "sectionTitle": "App Connect Nodes",
+        "score": 514.7
       },
       {
-        "id": "topic-201",
-        "title": "Start a Message Flow",
+        "id": "topic-199",
+        "title": "mqsistart & mqsistop (Integration Nodes)",
         "part": "Part 5: ACE & MQ",
-        "sectionTitle": "ACE Administration Commands",
-        "score": 378.9
+        "sectionTitle": "Integration Node & Server Commands",
+        "score": 512.8
       },
       {
-        "id": "topic-158",
-        "title": "Which MQ Node Do I Use?",
+        "id": "topic-196",
+        "title": "Real Session Startup Walkthrough (MQ + ACE)",
         "part": "Part 5: ACE & MQ",
-        "sectionTitle": "Connecting Nodes to MQ",
-        "score": 305.1
+        "sectionTitle": "Integration Node & Server Commands",
+        "score": 392.5
       },
       {
-        "id": "topic-157",
-        "title": "Link a Node to a Queue Manager",
+        "id": "topic-204",
+        "title": "Start & Stop a Managed Integration Server",
         "part": "Part 5: ACE & MQ",
-        "sectionTitle": "Connecting Nodes to MQ",
-        "score": 239
+        "sectionTitle": "Integration Node & Server Commands",
+        "score": 359.4
+      },
+      {
+        "id": "topic-133",
+        "title": "How ACE Fits Together (Node, Server, App, Flow)",
+        "part": "Part 5: ACE & MQ",
+        "sectionTitle": "ACE Toolkit & Packaging",
+        "score": 345.2
       }
     ]
   },
@@ -79,25 +86,39 @@
     "expected": "Delete an integration node",
     "top5": [
       {
-        "id": "topic-194",
-        "title": "Delete an Integration Node",
+        "id": "topic-198",
+        "title": "mqsicreatebroker & mqsideletebroker",
         "part": "Part 5: ACE & MQ",
-        "sectionTitle": "ACE Administration Commands",
-        "score": 651.6
+        "sectionTitle": "Integration Node & Server Commands",
+        "score": 368.5
       },
       {
-        "id": "topic-197",
-        "title": "Delete an Integration Server",
+        "id": "topic-205",
+        "title": "mqsideleteexecutiongroup: Remove a Server",
         "part": "Part 5: ACE & MQ",
-        "sectionTitle": "ACE Administration Commands",
-        "score": 365.3
+        "sectionTitle": "Integration Node & Server Commands",
+        "score": 246.8
       },
       {
-        "id": "topic-147",
-        "title": "Create, Change, and Delete Fields",
+        "id": "topic-220",
+        "title": "strmqm, endmqm & dltmqm: Start, Stop & Delete",
         "part": "Part 5: ACE & MQ",
-        "sectionTitle": "ESQL Reference",
-        "score": 220.7
+        "sectionTitle": "IBM MQ Commands",
+        "score": 234.2
+      },
+      {
+        "id": "topic-160",
+        "title": "HTTPRequest Node: Call an External REST API",
+        "part": "Part 5: ACE & MQ",
+        "sectionTitle": "App Connect Nodes",
+        "score": 224.1
+      },
+      {
+        "id": "topic-210",
+        "title": "mqsideploy: Deploy, List & Clean Flows",
+        "part": "Part 5: ACE & MQ",
+        "sectionTitle": "Integration Node & Server Commands",
+        "score": 182.2
       }
     ]
   },
@@ -106,32 +127,18 @@
     "expected": "Create a queue manager",
     "top5": [
       {
-        "id": "topic-170",
-        "title": "Create a Queue Manager",
+        "id": "topic-219",
+        "title": "crtmqm: Create a Queue Manager",
         "part": "Part 5: ACE & MQ",
         "sectionTitle": "IBM MQ Commands",
-        "score": 1411.5
+        "score": 1353.9
       },
       {
-        "id": "topic-157",
-        "title": "Link a Node to a Queue Manager",
+        "id": "topic-198",
+        "title": "mqsicreatebroker & mqsideletebroker",
         "part": "Part 5: ACE & MQ",
-        "sectionTitle": "Connecting Nodes to MQ",
-        "score": 880.5
-      },
-      {
-        "id": "topic-176",
-        "title": "Define a Queue",
-        "part": "Part 5: ACE & MQ",
-        "sectionTitle": "IBM MQ Commands",
-        "score": 578.4
-      },
-      {
-        "id": "topic-191",
-        "title": "Create an Integration Node",
-        "part": "Part 5: ACE & MQ",
-        "sectionTitle": "ACE Administration Commands",
-        "score": 522.6
+        "sectionTitle": "Integration Node & Server Commands",
+        "score": 385.1
       }
     ]
   },
@@ -140,18 +147,32 @@
     "expected": "Stop a queue manager",
     "top5": [
       {
-        "id": "topic-172",
-        "title": "Stop a Queue Manager",
+        "id": "topic-220",
+        "title": "strmqm, endmqm & dltmqm: Start, Stop & Delete",
         "part": "Part 5: ACE & MQ",
         "sectionTitle": "IBM MQ Commands",
-        "score": 1508.3
+        "score": 880
       },
       {
-        "id": "topic-174",
-        "title": "List Queue Managers and Status",
+        "id": "topic-221",
+        "title": "dspmq & dspmqver: Check Queue Managers & Version",
         "part": "Part 5: ACE & MQ",
         "sectionTitle": "IBM MQ Commands",
-        "score": 816.8
+        "score": 564.1
+      },
+      {
+        "id": "topic-234",
+        "title": "IBM MQ Commands Cheat Sheet",
+        "part": "Part 5: ACE & MQ",
+        "sectionTitle": "IBM MQ Commands",
+        "score": 183.3
+      },
+      {
+        "id": "topic-198",
+        "title": "mqsicreatebroker & mqsideletebroker",
+        "part": "Part 5: ACE & MQ",
+        "sectionTitle": "Integration Node & Server Commands",
+        "score": 167
       }
     ]
   },
@@ -160,39 +181,39 @@
     "expected": "Link a node to a queue manager",
     "top5": [
       {
-        "id": "topic-157",
-        "title": "Link a Node to a Queue Manager",
+        "id": "topic-169",
+        "title": "Method 1: Connect MQ Nodes by Queue Manager Name",
         "part": "Part 5: ACE & MQ",
-        "sectionTitle": "Connecting Nodes to MQ",
-        "score": 2850.7
+        "sectionTitle": "IBM MQ Messaging",
+        "score": 2826
       },
       {
-        "id": "topic-163",
-        "title": "Connect by Queue Manager Name",
+        "id": "topic-171",
+        "title": "Queue Manager Name vs MQEndpoint Policy",
         "part": "Part 5: ACE & MQ",
-        "sectionTitle": "Connecting Nodes to MQ",
-        "score": 2672.2
+        "sectionTitle": "IBM MQ Messaging",
+        "score": 1426.9
       },
       {
-        "id": "topic-166",
-        "title": "Local vs. Remote Queue Manager",
+        "id": "topic-155",
+        "title": "MQInput Node: Start a Flow from a Queue",
         "part": "Part 5: ACE & MQ",
-        "sectionTitle": "Connecting Nodes to MQ",
-        "score": 1543.9
+        "sectionTitle": "App Connect Nodes",
+        "score": 1387.7
       },
       {
-        "id": "topic-167",
-        "title": "Common MQ Connection Errors",
+        "id": "topic-156",
+        "title": "MQOutput Node: Put a Message on a Queue",
         "part": "Part 5: ACE & MQ",
-        "sectionTitle": "Connecting Nodes to MQ",
-        "score": 1252.1
+        "sectionTitle": "App Connect Nodes",
+        "score": 1332.6
       },
       {
-        "id": "topic-160",
-        "title": "MQOutput Node",
+        "id": "topic-158",
+        "title": "MQReply Node: Reply to ReplyToQ Automatically",
         "part": "Part 5: ACE & MQ",
-        "sectionTitle": "Connecting Nodes to MQ",
-        "score": 1250.4
+        "sectionTitle": "App Connect Nodes",
+        "score": 1083.6
       }
     ]
   },
@@ -201,18 +222,25 @@
     "expected": "Connect by policy",
     "top5": [
       {
-        "id": "topic-164",
-        "title": "Connect by Policy (MQEndpoint Policy)",
+        "id": "topic-170",
+        "title": "Method 2: Connect MQ Nodes by MQEndpoint Policy",
         "part": "Part 5: ACE & MQ",
-        "sectionTitle": "Connecting Nodes to MQ",
-        "score": 472.3
+        "sectionTitle": "IBM MQ Messaging",
+        "score": 415.9
       },
       {
-        "id": "topic-165",
-        "title": "Name or Policy? (Decision Table)",
+        "id": "topic-139",
+        "title": "Policy Projects & Packaging Decisions",
         "part": "Part 5: ACE & MQ",
-        "sectionTitle": "Connecting Nodes to MQ",
-        "score": 375.6
+        "sectionTitle": "ACE Toolkit & Packaging",
+        "score": 408.9
+      },
+      {
+        "id": "topic-171",
+        "title": "Queue Manager Name vs MQEndpoint Policy",
+        "part": "Part 5: ACE & MQ",
+        "sectionTitle": "IBM MQ Messaging",
+        "score": 343
       }
     ]
   },
@@ -221,39 +249,39 @@
     "expected": "Which MQ node do I use?",
     "top5": [
       {
+        "id": "topic-154",
+        "title": "MQ Nodes Overview (Input, Output, Get, Reply)",
+        "part": "Part 5: ACE & MQ",
+        "sectionTitle": "App Connect Nodes",
+        "score": 905.3
+      },
+      {
         "id": "topic-158",
-        "title": "Which MQ Node Do I Use?",
+        "title": "MQReply Node: Reply to ReplyToQ Automatically",
         "part": "Part 5: ACE & MQ",
-        "sectionTitle": "Connecting Nodes to MQ",
-        "score": 1070.6
+        "sectionTitle": "App Connect Nodes",
+        "score": 659.6
       },
       {
-        "id": "topic-195",
-        "title": "Change Node Settings",
+        "id": "topic-170",
+        "title": "Method 2: Connect MQ Nodes by MQEndpoint Policy",
         "part": "Part 5: ACE & MQ",
-        "sectionTitle": "ACE Administration Commands",
-        "score": 616.8
+        "sectionTitle": "IBM MQ Messaging",
+        "score": 658.6
       },
       {
-        "id": "topic-160",
-        "title": "MQOutput Node",
+        "id": "topic-199",
+        "title": "mqsistart & mqsistop (Integration Nodes)",
         "part": "Part 5: ACE & MQ",
-        "sectionTitle": "Connecting Nodes to MQ",
-        "score": 616.7
+        "sectionTitle": "Integration Node & Server Commands",
+        "score": 580
       },
       {
-        "id": "topic-161",
-        "title": "MQGet Node",
+        "id": "topic-157",
+        "title": "MQGet Node: Read a Queue Mid-Flow",
         "part": "Part 5: ACE & MQ",
-        "sectionTitle": "Connecting Nodes to MQ",
-        "score": 597.9
-      },
-      {
-        "id": "topic-162",
-        "title": "MQReply Node",
-        "part": "Part 5: ACE & MQ",
-        "sectionTitle": "Connecting Nodes to MQ",
-        "score": 587.7
+        "sectionTitle": "App Connect Nodes",
+        "score": 579.5
       }
     ]
   },
@@ -262,11 +290,18 @@
     "expected": "MQInput node",
     "top5": [
       {
-        "id": "topic-159",
-        "title": "MQInput Node",
+        "id": "topic-155",
+        "title": "MQInput Node: Start a Flow from a Queue",
         "part": "Part 5: ACE & MQ",
-        "sectionTitle": "Connecting Nodes to MQ",
-        "score": 448.3
+        "sectionTitle": "App Connect Nodes",
+        "score": 423.6
+      },
+      {
+        "id": "topic-154",
+        "title": "MQ Nodes Overview (Input, Output, Get, Reply)",
+        "part": "Part 5: ACE & MQ",
+        "sectionTitle": "App Connect Nodes",
+        "score": 126.1
       }
     ]
   },
@@ -275,18 +310,18 @@
     "expected": "Start a queue manager",
     "top5": [
       {
-        "id": "topic-171",
-        "title": "Start a Queue Manager",
+        "id": "topic-220",
+        "title": "strmqm, endmqm & dltmqm: Start, Stop & Delete",
         "part": "Part 5: ACE & MQ",
         "sectionTitle": "IBM MQ Commands",
-        "score": 167.2
+        "score": 378
       },
       {
-        "id": "topic-174",
-        "title": "List Queue Managers and Status",
+        "id": "topic-196",
+        "title": "Real Session Startup Walkthrough (MQ + ACE)",
         "part": "Part 5: ACE & MQ",
-        "sectionTitle": "IBM MQ Commands",
-        "score": 32.5
+        "sectionTitle": "Integration Node & Server Commands",
+        "score": 86.5
       }
     ]
   },
@@ -295,25 +330,32 @@
     "expected": "Start an integration node",
     "top5": [
       {
-        "id": "topic-192",
-        "title": "Start an Integration Node",
+        "id": "topic-199",
+        "title": "mqsistart & mqsistop (Integration Nodes)",
         "part": "Part 5: ACE & MQ",
-        "sectionTitle": "ACE Administration Commands",
-        "score": 168.2
+        "sectionTitle": "Integration Node & Server Commands",
+        "score": 361.1
       },
       {
-        "id": "topic-201",
-        "title": "Start a Message Flow",
+        "id": "topic-211",
+        "title": "mqsistartmsgflow & mqsistopmsgflow",
         "part": "Part 5: ACE & MQ",
-        "sectionTitle": "ACE Administration Commands",
-        "score": 54.8
+        "sectionTitle": "Integration Node & Server Commands",
+        "score": 234.9
       },
       {
-        "id": "topic-205",
-        "title": "Commands Summary Cheat Sheet",
+        "id": "topic-204",
+        "title": "Start & Stop a Managed Integration Server",
         "part": "Part 5: ACE & MQ",
-        "sectionTitle": "ACE Administration Commands",
-        "score": 35.7
+        "sectionTitle": "Integration Node & Server Commands",
+        "score": 128.5
+      },
+      {
+        "id": "topic-196",
+        "title": "Real Session Startup Walkthrough (MQ + ACE)",
+        "part": "Part 5: ACE & MQ",
+        "sectionTitle": "Integration Node & Server Commands",
+        "score": 81
       }
     ]
   },
@@ -322,11 +364,11 @@
     "expected": "List nodes and status",
     "top5": [
       {
-        "id": "topic-190",
-        "title": "List Nodes and Status",
+        "id": "topic-197",
+        "title": "mqsilist: Inspect Nodes, Servers & Flows",
         "part": "Part 5: ACE & MQ",
-        "sectionTitle": "ACE Administration Commands",
-        "score": 192.7
+        "sectionTitle": "Integration Node & Server Commands",
+        "score": 450.2
       }
     ]
   },
@@ -335,32 +377,18 @@
     "expected": "Deploy a BAR",
     "top5": [
       {
-        "id": "topic-199",
-        "title": "Deploy a BAR File",
+        "id": "topic-210",
+        "title": "mqsideploy: Deploy, List & Clean Flows",
         "part": "Part 5: ACE & MQ",
-        "sectionTitle": "ACE Administration Commands",
-        "score": 1145.1
+        "sectionTitle": "Integration Node & Server Commands",
+        "score": 746.8
       },
       {
-        "id": "topic-200",
-        "title": "Read a BAR File",
+        "id": "topic-208",
+        "title": "BAR Packaging (Toolkit & ibmint package)",
         "part": "Part 5: ACE & MQ",
-        "sectionTitle": "ACE Administration Commands",
-        "score": 496.8
-      },
-      {
-        "id": "topic-198",
-        "title": "Create a BAR File",
-        "part": "Part 5: ACE & MQ",
-        "sectionTitle": "ACE Administration Commands",
-        "score": 459.7
-      },
-      {
-        "id": "topic-168",
-        "title": "Workflow Decisions: When to Use What",
-        "part": "Part 5: ACE & MQ",
-        "sectionTitle": "Connecting Nodes to MQ",
-        "score": 219.1
+        "sectionTitle": "Integration Node & Server Commands",
+        "score": 411.1
       }
     ]
   },
@@ -369,18 +397,32 @@
     "expected": "Define a queue",
     "top5": [
       {
-        "id": "topic-176",
-        "title": "Define a Queue",
+        "id": "topic-222",
+        "title": "DEFINE QLOCAL: Create a Local Queue",
         "part": "Part 5: ACE & MQ",
         "sectionTitle": "IBM MQ Commands",
-        "score": 887.1
+        "score": 860.5
       },
       {
-        "id": "topic-182",
-        "title": "Define and Start a Listener",
+        "id": "topic-226",
+        "title": "Dead-Letter Queue (DLQ) & Alias Queues",
         "part": "Part 5: ACE & MQ",
         "sectionTitle": "IBM MQ Commands",
-        "score": 437.1
+        "score": 444.2
+      },
+      {
+        "id": "topic-227",
+        "title": "MQ Listeners: Define & Start Port 1414",
+        "part": "Part 5: ACE & MQ",
+        "sectionTitle": "IBM MQ Commands",
+        "score": 393.3
+      },
+      {
+        "id": "topic-155",
+        "title": "MQInput Node: Start a Flow from a Queue",
+        "part": "Part 5: ACE & MQ",
+        "sectionTitle": "App Connect Nodes",
+        "score": 307.9
       }
     ]
   },
@@ -389,18 +431,25 @@
     "expected": "Check queue depth/status",
     "top5": [
       {
-        "id": "topic-178",
-        "title": "Check Queue Depth and Status",
+        "id": "topic-225",
+        "title": "DISPLAY QSTATUS: Who Is Connected & Queue Depth",
         "part": "Part 5: ACE & MQ",
         "sectionTitle": "IBM MQ Commands",
-        "score": 764.8
+        "score": 576.2
       },
       {
-        "id": "topic-179",
-        "title": "Alter a Queue",
+        "id": "topic-223",
+        "title": "DISPLAY QUEUE & ALTER QLOCAL: Inspect & Edit",
         "part": "Part 5: ACE & MQ",
         "sectionTitle": "IBM MQ Commands",
-        "score": 375.3
+        "score": 311.7
+      },
+      {
+        "id": "topic-234",
+        "title": "IBM MQ Commands Cheat Sheet",
+        "part": "Part 5: ACE & MQ",
+        "sectionTitle": "IBM MQ Commands",
+        "score": 115.7
       }
     ]
   },
@@ -409,39 +458,25 @@
     "expected": "the BIP codes reference or the topic explaining it",
     "top5": [
       {
-        "id": "topic-167",
-        "title": "Common MQ Connection Errors",
-        "part": "Part 5: ACE & MQ",
-        "sectionTitle": "Connecting Nodes to MQ",
-        "score": 135.2
-      },
-      {
-        "id": "topic-206",
-        "title": "BIP Codes Quick Reference Directory",
+        "id": "topic-235",
+        "title": "BIP Codes Reference Directory (By Symptom)",
         "part": "Part 5: ACE & MQ",
         "sectionTitle": "BIP Codes Reference",
-        "score": 124.4
+        "score": 88.5
       },
       {
-        "id": "topic-189",
-        "title": "Real Session Walkthrough",
+        "id": "topic-168",
+        "title": "Link an Integration Node to a Queue Manager (-q)",
         "part": "Part 5: ACE & MQ",
-        "sectionTitle": "ACE Administration Commands",
-        "score": 86.3
+        "sectionTitle": "IBM MQ Messaging",
+        "score": 80.4
       },
       {
-        "id": "topic-172",
-        "title": "Stop a Queue Manager",
+        "id": "topic-173",
+        "title": "Common MQ Connection Errors (2059, 2058, 2085, 2035)",
         "part": "Part 5: ACE & MQ",
-        "sectionTitle": "IBM MQ Commands",
-        "score": 26.7
-      },
-      {
-        "id": "topic-153",
-        "title": "Throw and Handle Errors (ExceptionList)",
-        "part": "Part 5: ACE & MQ",
-        "sectionTitle": "ESQL Reference",
-        "score": 25.5
+        "sectionTitle": "IBM MQ Messaging",
+        "score": 79.9
       }
     ]
   },
@@ -450,25 +485,39 @@
     "expected": "Read a JSON field",
     "top5": [
       {
-        "id": "topic-140",
-        "title": "Read a JSON Field",
+        "id": "topic-144",
+        "title": "Message Domains (JSON, XMLNSC, DFDL, BLOB, MIME)",
         "part": "Part 5: ACE & MQ",
-        "sectionTitle": "ESQL Reference",
-        "score": 1081
+        "sectionTitle": "ACE Message Flows",
+        "score": 250.5
       },
       {
-        "id": "topic-147",
-        "title": "Create, Change, and Delete Fields",
+        "id": "topic-178",
+        "title": "Build Output Messages & Copy Headers",
         "part": "Part 5: ACE & MQ",
         "sectionTitle": "ESQL Reference",
-        "score": 507
+        "score": 154.1
       },
       {
-        "id": "topic-141",
-        "title": "Add Fields to the Output",
+        "id": "topic-193",
+        "title": "ESQL Quick Reference Cheat Sheet",
         "part": "Part 5: ACE & MQ",
         "sectionTitle": "ESQL Reference",
-        "score": 288
+        "score": 127.5
+      },
+      {
+        "id": "topic-150",
+        "title": "Mapping Node (.map): Drag-and-Drop Mapping",
+        "part": "Part 5: ACE & MQ",
+        "sectionTitle": "App Connect Nodes",
+        "score": 121.8
+      },
+      {
+        "id": "topic-129",
+        "title": "MongoDB Fundamentals & Visual Querying with MongoDB Compass",
+        "part": "Part 4: Database Systems & Persistence",
+        "sectionTitle": "Polyglot Persistence & NoSQL Systems",
+        "score": 71.3
       }
     ]
   },
@@ -477,39 +526,39 @@
     "expected": "the topic decoding the OutputRoot path",
     "top5": [
       {
-        "id": "topic-141",
-        "title": "Add Fields to the Output",
+        "id": "topic-175",
+        "title": "The 4 Message Trees (InputRoot, OutputRoot, Env, LocalEnv)",
         "part": "Part 5: ACE & MQ",
         "sectionTitle": "ESQL Reference",
-        "score": 901
+        "score": 811.5
       },
       {
-        "id": "topic-140",
-        "title": "Read a JSON Field",
+        "id": "topic-178",
+        "title": "Build Output Messages & Copy Headers",
         "part": "Part 5: ACE & MQ",
         "sectionTitle": "ESQL Reference",
-        "score": 524.7
+        "score": 577
       },
       {
-        "id": "topic-139",
-        "title": "The Message Tree Architecture",
+        "id": "topic-184",
+        "title": "XMLNSC vs JSON Paths & Arrays in ESQL",
         "part": "Part 5: ACE & MQ",
         "sectionTitle": "ESQL Reference",
-        "score": 284.8
+        "score": 359.2
       },
       {
-        "id": "topic-147",
-        "title": "Create, Change, and Delete Fields",
+        "id": "topic-193",
+        "title": "ESQL Quick Reference Cheat Sheet",
         "part": "Part 5: ACE & MQ",
         "sectionTitle": "ESQL Reference",
-        "score": 213.6
+        "score": 220.8
       },
       {
-        "id": "topic-156",
-        "title": "ESQL Quick Reference & Cheat Sheet",
+        "id": "topic-162",
+        "title": "FileOutput & FileRead: Write or Read Files",
         "part": "Part 5: ACE & MQ",
-        "sectionTitle": "ESQL Reference",
-        "score": 207.7
+        "sectionTitle": "App Connect Nodes",
+        "score": 200.3
       }
     ]
   },
@@ -518,18 +567,32 @@
     "expected": "Loop over a JSON array",
     "top5": [
       {
-        "id": "topic-144",
-        "title": "Loop Over a JSON Array",
+        "id": "topic-182",
+        "title": "REFERENCE Pointers (Fast Tree Loops)",
         "part": "Part 5: ACE & MQ",
         "sectionTitle": "ESQL Reference",
-        "score": 976.5
+        "score": 221.8
       },
       {
         "id": "topic-13",
         "title": "Loops & Iteration",
         "part": "Part 1: Java Core",
         "sectionTitle": "Control Flow & Logic",
-        "score": 181.2
+        "score": 170.4
+      },
+      {
+        "id": "topic-16",
+        "title": "Variable Scope & Local Variable Type Inference (var)",
+        "part": "Part 1: Java Core",
+        "sectionTitle": "Methods & Modular Code",
+        "score": 97.3
+      },
+      {
+        "id": "topic-193",
+        "title": "ESQL Quick Reference Cheat Sheet",
+        "part": "Part 5: ACE & MQ",
+        "sectionTitle": "ESQL Reference",
+        "score": 90
       }
     ]
   },
@@ -538,32 +601,25 @@
     "expected": "Throw an error",
     "top5": [
       {
-        "id": "topic-153",
-        "title": "Throw and Handle Errors (ExceptionList)",
+        "id": "topic-189",
+        "title": "ESQL Error Handling (THROW & SQLSTATE)",
         "part": "Part 5: ACE & MQ",
         "sectionTitle": "ESQL Reference",
-        "score": 884.2
+        "score": 834
       },
       {
-        "id": "topic-211",
-        "title": "Error Handling: TryCatch Node vs Terminals",
+        "id": "topic-165",
+        "title": "TryCatch, Throw & Trace: Handle Errors & Debug",
         "part": "Part 5: ACE & MQ",
-        "sectionTitle": "Message Flow Patterns & Node Selection",
-        "score": 341.2
-      },
-      {
-        "id": "topic-206",
-        "title": "BIP Codes Quick Reference Directory",
-        "part": "Part 5: ACE & MQ",
-        "sectionTitle": "BIP Codes Reference",
-        "score": 190.7
+        "sectionTitle": "App Connect Nodes",
+        "score": 660
       },
       {
         "id": "topic-35",
         "title": "Custom Exceptions & Exception Chaining",
         "part": "Part 1: Java Core",
         "sectionTitle": "Exception Handling",
-        "score": 162.2
+        "score": 164.3
       }
     ]
   }

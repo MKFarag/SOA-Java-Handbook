@@ -1,0 +1,139 @@
+---
+id: topic-238
+slug: sql-server-credentials-mqsicvp-test
+topicNumber: 238
+title: "SQL Server Credentials, mqsicvp Test, JDBC & Flow Query"
+part: 'Part 5: ACE & MQ'
+sectionNumber: 44
+sectionTitle: 'SQL Server & Database Setup'
+versionBadge: 'ACE 12.0'
+difficulty: Beginner
+readingTime: 3 min read
+shortDescription: "Bind SQL Server login credentials with mqsisetdbparms, test live with mqsicvp, query SQL Server from ESQL, or configure JDBCProviders."
+object: "SQL Server Verification"
+action: "Authenticate & Test"
+commandName: "mqsisetdbparms & mqsicvp"
+synonyms:
+  - "mqsicvp sql server"
+  - "mqsisetdbparms odbc"
+  - "jdbcproviders sql server"
+  - "test odbc ace"
+  - "sql server compute node"
+---
+
+# SQL Server Credentials, `mqsicvp` Test, JDBC & Flow Query
+
+Once your Windows System DSN (or Linux `odbc.ini`) works, finish the setup in **4 simple steps**: save credentials -> test with `mqsicvp` -> reload server -> query in your flow.
+
+---
+
+## Step 1: Save SQL Server Credentials in ACE (`mqsisetdbparms`)
+
+### Option A: Using an Integration Node (`SCB`)
+```bash
+mqsisetdbparms SCB -n odbc::ORDERS_DB -u ace_user -p StrongPassword123
+mqsireload SCB
+```
+
+### Option B: Using an Independent Integration Server (`-w`)
+```bash
+mqsisetdbparms -w C:\ace-work\order-srv -n odbc::ORDERS_DB -u ace_user -p StrongPassword123
+```
+*(Restart `IntegrationServer` afterward so it loads the updated credentials!)*
+
+---
+
+## Step 2: Verify the Connection with `mqsicvp`
+
+Never guess inside a running flow — run **`mqsicvp`** in your ACE Console first:
+
+```bash
+# Test against Integration Node SCB
+mqsicvp SCB -n ORDERS_DB
+
+# Or test against an Independent Server / explicit DSN + login
+mqsicvp -w C:\ace-work\order-srv -n ORDERS_DB
+```
+
+<details data-type="output">
+<summary>Expected Output When Connected</summary>
+
+```text
+BIP8299I: User 'ace_user' from security resource name 'odbc::ORDERS_DB' will be used for connection to datasource 'ORDERS_DB'.
+BIP8290I: Verification passed for the ODBC environment.
+BIP8071I: Successful command completion.
+```
+
+</details>
+
+---
+
+## Step 3: Query SQL Server Inside a `Compute` Node
+
+1. Select your **`Compute`** node -> **Properties -> Basic**.
+2. Set **Data source = `ORDERS_DB`**.
+3. Query using parameterized ESQL **`PASSTHRU`**:
+
+```esql
+SET Environment.Db.Row[] = PASSTHRU(
+    'SELECT TOP 1 CUSTOMER_NAME, STATUS FROM dbo.Orders WHERE ORDER_ID = ?'
+    VALUES(InputRoot.JSON.Data.orderId)
+);
+
+SET OutputRoot.JSON.Data.customer = COALESCE(Environment.Db.Row[1].CUSTOMER_NAME, 'Not Found');
+```
+
+<details data-type="output">
+<summary>Expected Output</summary>
+
+```json
+{
+  "customer": "Nadia Hassan"
+}
+```
+
+</details>
+
+---
+
+## Bonus: Connecting via `Mapping` or `JavaCompute` (`JDBCProviders` Policy)
+
+If you use a **`Mapping`** node or **`JavaCompute`** (`getJDBCType4Connection`), create a Policy (`Type = JDBCProviders`, e.g. `{AppPolicies}:SqlServerJdbc`) instead of ODBC:
+
+```xml
+<policies>
+  <policy policyType="JDBCProviders" policyName="SqlServerJdbc">
+    <databaseName>OrdersDb</databaseName>
+    <databaseType>Microsoft_SQL_Server</databaseType>
+    <type4DriverClassName>com.microsoft.sqlserver.jdbc.SQLServerDriver</type4DriverClassName>
+    <type4DatasourceClassName>com.microsoft.sqlserver.jdbc.SQLServerDataSource</type4DatasourceClassName>
+    <connectionUrlFormat>jdbc:sqlserver://[serverName]:[portNumber];databaseName=[databaseName];encrypt=true;trustServerCertificate=true</connectionUrlFormat>
+    <serverName>localhost</serverName>
+    <portNumber>1433</portNumber>
+    <jarsURL>C:\sql-drivers\mssql-jdbc</jarsURL>
+    <securityIdentity>SqlJdbcCreds</securityIdentity>
+  </policy>
+</policies>
+```
+
+Then register the matching JDBC login:
+```bash
+mqsisetdbparms SCB -n jdbc::SqlJdbcCreds -u ace_user -p StrongPassword123
+mqsireload SCB
+```
+
+---
+
+## Top 5 SQL Server Setup Errors & Fixes
+
+| Symptom / Error | Exact Cause | Fix |
+| :--- | :--- | :--- |
+| `Data source name not found` | Created **32-bit** DSN instead of **64-bit** System DSN on Windows | Recreate inside `C:\Windows\System32\odbcad32.exe` -> **System DSN** |
+| Works in terminal, fails in flow | Used **User DSN** instead of **System DSN** (or forgot `ODBCINI` on Linux) | Always use **System DSN** on Windows / export `ODBCINI` before `mqsistart` |
+| Connection refused / timeout | SQL Server **TCP/IP** protocol disabled or port `1433` blocked | Enable TCP/IP port `1433` in SQL Server Configuration Manager + restart SQL Server |
+| `Login failed for user` / old password | Ran `mqsisetdbparms` while server was running without reloading | Run `mqsireload SCB` (or restart Independent `IntegrationServer`) |
+| `PKIX` / SSL verify error (ODBC 18 / JDBC) | Self-signed SQL Server cert rejected | Set `TrustServerCertificate=Yes` (ODBC) or `trustServerCertificate=true` (JDBC URL) |
+
+---
+
+**Next Section — BIP Codes Reference:** [BIP Codes Reference Directory (By Symptom) →](#topic-239)

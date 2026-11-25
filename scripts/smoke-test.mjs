@@ -103,7 +103,7 @@ async function runSmokeTest() {
     const navTests = [
       { path: '#saved', expectedTitleSubstr: '' },
       { path: '#progress', expectedTitleSubstr: '' },
-      { path: '#topic-134', expectedTitleSubstr: 'Message' }, // topic-134 in Part 5: The Life of One Message Through a Flow
+      { path: '#topic-142', expectedTitleSubstr: 'Message' }, // topic-142 in Part 5: Life of One Message Through a Flow
       { path: '#topic-76', expectedTitleSubstr: 'Security' },    // topic-76: Jakarta Web Security Essentials
       { path: '#topic-81', expectedTitleSubstr: 'Pool' }         // topic-81: JDBC Connection Pooling
     ];

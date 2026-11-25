@@ -55,14 +55,14 @@ const documents = ALL_TOPICS.map(t => {
 ms.addAll(documents);
 
 const queries = [
-  { q: 'start integration server', expectedId: 'topic-214' },
-  { q: 'stop integration server', expectedId: 'topic-215' },
-  { q: 'independent integration server', expectedId: 'topic-216' },
-  { q: 'server.conf.yaml', expectedId: 'topic-217' },
-  { q: 'message domains', expectedId: 'topic-218' },
-  { q: 'resetcontentdescriptor', expectedId: 'topic-219' },
-  { q: 'fileinput node', expectedId: 'topic-220' },
-  { q: 'fileoutput node', expectedId: 'topic-221' }
+  { q: 'start integration server', expectedId: 'topic-204' },
+  { q: 'stop integration server', expectedId: 'topic-204' },
+  { q: 'independent integration server', expectedId: 'topic-206' },
+  { q: 'server.conf.yaml', expectedId: 'topic-207' },
+  { q: 'message domains', expectedId: 'topic-144' },
+  { q: 'resetcontentdescriptor', expectedId: 'topic-153' },
+  { q: 'fileinput node', expectedId: 'topic-161' },
+  { q: 'fileoutput node', expectedId: 'topic-162' }
 ];
 
 let allPassed = true;
