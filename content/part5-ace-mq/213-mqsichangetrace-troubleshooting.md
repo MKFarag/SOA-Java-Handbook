@@ -38,13 +38,13 @@ When a flow fails silently or behaves unexpectedly on a remote server, turn on *
 ## Fast Copy-Paste Debug Workflow
 
 ```bash
-# 1. Turn User Trace ON (debug level, 20MB buffer) for server EG1
-mqsichangetrace SCB -u -e EG1 -l debug -c 20480 -r
+# 1. Turn User Trace ON (debug level, 20MB buffer) for server <IntegrationServerName>
+mqsichangetrace <IntegrationNodeName> -u -e <IntegrationServerName> -l debug -c 20480 -r
 
 # 2. >>> Send 1 test message now! <<<
 
 # 3. Turn User Trace OFF right away!
-mqsichangetrace SCB -u -e EG1 -l none
+mqsichangetrace <IntegrationNodeName> -u -e <IntegrationServerName> -l none
 ```
 
 <details data-type="output">
@@ -57,7 +57,7 @@ BIP8071I: Successful command completion.
 </details>
 
 > [!WARNING]
-> **NEVER forget step 3 (`-l none`)!** Leaving `-l debug` trace running in production slashes throughput by 50–80% and fills trace buffers rapidly. On an Independent Server, use `-w C:\ace-work\order-srv` instead of `SCB -e EG1`.
+> **NEVER forget step 3 (`-l none`)!** Leaving `-l debug` trace running in production slashes throughput by 50–80% and fills trace buffers rapidly. On an Independent Server, use `-w <WorkDirPath>` instead of `<IntegrationNodeName> -e <IntegrationServerName>`.
 
 ---
 

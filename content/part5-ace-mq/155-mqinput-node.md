@@ -31,8 +31,8 @@ synonyms:
 
 | Tab | Property | Recommended Setting | Why |
 | :--- | :--- | :--- | :--- |
-| **Basic** | **Queue name \*** | `IN.Q` | Must already exist in MQ (`DEFINE QLOCAL`) |
-| **MQ Connection** | **Connection** / **Policy** | Default *(Node QMGR)* or `MQEndpoint` policy | Tells ACE which Queue Manager hosts `IN.Q` |
+| **Basic** | **Queue name \*** | `<InputQueueName>` | Must already exist in MQ (`DEFINE QLOCAL`) |
+| **MQ Connection** | **Connection** / **Policy** | Default *(Node QMGR)* or `MQEndpoint` policy | Tells ACE which Queue Manager hosts `<InputQueueName>` |
 | **Input Message Parsing** | **Message domain** | `JSON` / `XMLNSC` / `BLOB` | Sets parser for incoming body bytes |
 | **Advanced** | **Transaction mode** | `Automatic` *(default)* | Rolls back message to queue if flow throws an unhandled error |
 
@@ -40,7 +40,7 @@ synonyms:
 
 ## Quick Test Example
 
-1. Put `{"orderId": 101}` onto `IN.Q` (via **Flow Exerciser**, **MQ Explorer**, or `amqsput IN.Q SCBQM`).
+1. Put `{"orderId": 101}` onto `<InputQueueName>` (via **Flow Exerciser**, **MQ Explorer**, or `amqsput <InputQueueName> <QueueManagerName>`).
 2. `MQInput` picks it up immediately, parses `InputRoot.JSON.Data.orderId`, and passes it out of the `Out` terminal.
 
 > [!WARNING]

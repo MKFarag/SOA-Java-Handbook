@@ -49,7 +49,7 @@ A **Subflow (`.subflow`)** is a mini message flow stored inside its own file so 
 | Where You Put the `.subflow` | Broker Schema Rule |
 | :--- | :--- |
 | Inside an **Application** | Can stay in default schema |
-| Inside a **Shared Library** | **Must** live inside a named Broker Schema (e.g., `com.myorg.errors`) |
+| Inside a **Shared Library** | **Must** live inside a named Broker Schema (`<SchemaName>`) |
 
 > [!TIP]
 > Think of a Subflow like a **function** in Java: write error logging once, fix bugs in one place, and reuse it in 20 flows.

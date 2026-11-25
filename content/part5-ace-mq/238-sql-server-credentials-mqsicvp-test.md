@@ -29,15 +29,15 @@ Once your Windows System DSN (or Linux `odbc.ini`) works, finish the setup in **
 
 ## Step 1: Save SQL Server Credentials in ACE (`mqsisetdbparms`)
 
-### Option A: Using an Integration Node (`SCB`)
+### Option A: Using an Integration Node (`<IntegrationNodeName>`)
 ```bash
-mqsisetdbparms SCB -n odbc::ORDERS_DB -u ace_user -p StrongPassword123
-mqsireload SCB
+mqsisetdbparms <IntegrationNodeName> -n odbc::<DSN_Name> -u <UserName> -p <Password>
+mqsireload <IntegrationNodeName>
 ```
 
 ### Option B: Using an Independent Integration Server (`-w`)
 ```bash
-mqsisetdbparms -w C:\ace-work\order-srv -n odbc::ORDERS_DB -u ace_user -p StrongPassword123
+mqsisetdbparms -w <WorkDirPath> -n odbc::<DSN_Name> -u <UserName> -p <Password>
 ```
 *(Restart `IntegrationServer` afterward so it loads the updated credentials!)*
 
@@ -48,18 +48,18 @@ mqsisetdbparms -w C:\ace-work\order-srv -n odbc::ORDERS_DB -u ace_user -p Strong
 Never guess inside a running flow — run **`mqsicvp`** in your ACE Console first:
 
 ```bash
-# Test against Integration Node SCB
-mqsicvp SCB -n ORDERS_DB
+# Test against Integration Node <IntegrationNodeName>
+mqsicvp <IntegrationNodeName> -n <DSN_Name>
 
 # Or test against an Independent Server / explicit DSN + login
-mqsicvp -w C:\ace-work\order-srv -n ORDERS_DB
+mqsicvp -w <WorkDirPath> -n <DSN_Name>
 ```
 
 <details data-type="output">
 <summary>Expected Output When Connected</summary>
 
 ```text
-BIP8299I: User 'ace_user' from security resource name 'odbc::ORDERS_DB' will be used for connection to datasource 'ORDERS_DB'.
+BIP8299I: User '<UserName>' from security resource name 'odbc::<DSN_Name>' will be used for connection to datasource '<DSN_Name>'.
 BIP8290I: Verification passed for the ODBC environment.
 BIP8071I: Successful command completion.
 ```
@@ -71,12 +71,12 @@ BIP8071I: Successful command completion.
 ## Step 3: Query SQL Server Inside a `Compute` Node
 
 1. Select your **`Compute`** node -> **Properties -> Basic**.
-2. Set **Data source = `ORDERS_DB`**.
+2. Set **Data source = `<DSN_Name>`**.
 3. Query using parameterized ESQL **`PASSTHRU`**:
 
 ```esql
 SET Environment.Db.Row[] = PASSTHRU(
-    'SELECT TOP 1 CUSTOMER_NAME, STATUS FROM dbo.Orders WHERE ORDER_ID = ?'
+    'SELECT TOP 1 CUSTOMER_NAME, STATUS FROM dbo.<TableName> WHERE ORDER_ID = ?'
     VALUES(InputRoot.JSON.Data.orderId)
 );
 
@@ -88,7 +88,7 @@ SET OutputRoot.JSON.Data.customer = COALESCE(Environment.Db.Row[1].CUSTOMER_NAME
 
 ```json
 {
-  "customer": "Nadia Hassan"
+  "customer": "<CustomerName>"
 }
 ```
 
@@ -98,28 +98,28 @@ SET OutputRoot.JSON.Data.customer = COALESCE(Environment.Db.Row[1].CUSTOMER_NAME
 
 ## Bonus: Connecting via `Mapping` or `JavaCompute` (`JDBCProviders` Policy)
 
-If you use a **`Mapping`** node or **`JavaCompute`** (`getJDBCType4Connection`), create a Policy (`Type = JDBCProviders`, e.g. `{AppPolicies}:SqlServerJdbc`) instead of ODBC:
+If you use a **`Mapping`** node or **`JavaCompute`** (`getJDBCType4Connection`), create a Policy (`Type = JDBCProviders`, e.g. `{<PolicyProjectName>}:<JdbcPolicyName>`) instead of ODBC:
 
 ```xml
 <policies>
-  <policy policyType="JDBCProviders" policyName="SqlServerJdbc">
-    <databaseName>OrdersDb</databaseName>
+  <policy policyType="JDBCProviders" policyName="<JdbcPolicyName>">
+    <databaseName><DatabaseName></databaseName>
     <databaseType>Microsoft_SQL_Server</databaseType>
     <type4DriverClassName>com.microsoft.sqlserver.jdbc.SQLServerDriver</type4DriverClassName>
     <type4DatasourceClassName>com.microsoft.sqlserver.jdbc.SQLServerDataSource</type4DatasourceClassName>
     <connectionUrlFormat>jdbc:sqlserver://[serverName]:[portNumber];databaseName=[databaseName];encrypt=true;trustServerCertificate=true</connectionUrlFormat>
     <serverName>localhost</serverName>
     <portNumber>1433</portNumber>
-    <jarsURL>C:\sql-drivers\mssql-jdbc</jarsURL>
-    <securityIdentity>SqlJdbcCreds</securityIdentity>
+    <jarsURL><PathToJdbcDriversFolder></jarsURL>
+    <securityIdentity><SecurityIdentityName></securityIdentity>
   </policy>
 </policies>
 ```
 
 Then register the matching JDBC login:
 ```bash
-mqsisetdbparms SCB -n jdbc::SqlJdbcCreds -u ace_user -p StrongPassword123
-mqsireload SCB
+mqsisetdbparms <IntegrationNodeName> -n jdbc::<SecurityIdentityName> -u <UserName> -p <Password>
+mqsireload <IntegrationNodeName>
 ```
 
 ---
@@ -131,7 +131,7 @@ mqsireload SCB
 | `Data source name not found` | Created **32-bit** DSN instead of **64-bit** System DSN on Windows | Recreate inside `C:\Windows\System32\odbcad32.exe` -> **System DSN** |
 | Works in terminal, fails in flow | Used **User DSN** instead of **System DSN** (or forgot `ODBCINI` on Linux) | Always use **System DSN** on Windows / export `ODBCINI` before `mqsistart` |
 | Connection refused / timeout | SQL Server **TCP/IP** protocol disabled, port `1433` blocked, or Browser service off | Check **`netstat -ano \| findstr :1433`** (`LISTENING`) & `Test-NetConnection -Port 1433`; enable TCP/IP `1433` (and **SQL Server Browser** UDP `1434` for named instances) |
-| `Login failed for user` / old password | Ran `mqsisetdbparms` while server was running without reloading | Run `mqsireload SCB` (or restart Independent `IntegrationServer`) |
+| `Login failed for user` / old password | Ran `mqsisetdbparms` while server was running without reloading | Run `mqsireload <IntegrationNodeName>` (or restart Independent `IntegrationServer`) |
 | `PKIX` / SSL verify error (ODBC 18 / JDBC) | Self-signed SQL Server cert rejected | Set `TrustServerCertificate=Yes` (ODBC) or `trustServerCertificate=true` (JDBC URL) |
 
 ---

@@ -28,14 +28,14 @@ After running **`mqsisetdbparms`** (setting database or MQ credentials) or updat
 ## Syntax & Fast Example
 
 ```bash
-# 1. Set or update ODBC database credentials on node SCB
-mqsisetdbparms SCB -n odbc::ORDERS_DB -u appuser -p MyPass123
+# 1. Set or update ODBC database credentials on node <IntegrationNodeName>
+mqsisetdbparms <IntegrationNodeName> -n odbc::<DSN_Name> -u <UserName> -p <Password>
 
-# 2. Reload server EG1 immediately so it picks up new credentials
-mqsireload SCB -e EG1
+# 2. Reload server <IntegrationServerName> immediately so it picks up new credentials
+mqsireload <IntegrationNodeName> -e <IntegrationServerName>
 
-# Or reload ALL managed servers on node SCB
-mqsireload SCB
+# Or reload ALL managed servers on node <IntegrationNodeName>
+mqsireload <IntegrationNodeName>
 ```
 
 <details data-type="output">

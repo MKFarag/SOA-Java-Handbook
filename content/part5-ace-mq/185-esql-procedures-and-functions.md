@@ -67,7 +67,7 @@ CALL StampAudit(OutputRoot.JSON.Data, ApplicationLabel);
 {
   "totalWithTax": 115.00,
   "audit": {
-    "app": "OrderApp",
+    "app": "<ApplicationName>",
     "timestamp": "2026-11-25T09:30:00Z"
   }
 }

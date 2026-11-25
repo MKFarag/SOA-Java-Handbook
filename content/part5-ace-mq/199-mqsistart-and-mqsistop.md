@@ -29,14 +29,14 @@ Use **`mqsistart`** and **`mqsistop`** to bring an entire Integration Node (and 
 ## Syntax & Example
 
 ```bash
-# Start node SCB (also starts linked QMGR if needed)
-mqsistart SCB
+# Start node <IntegrationNodeName> (also starts linked QMGR if needed)
+mqsistart <IntegrationNodeName>
 
 # Stop gracefully (waits for active flows to finish)
-mqsistop SCB
+mqsistop <IntegrationNodeName>
 
 # Emergency force stop (ONLY if normal stop hangs!)
-mqsistop SCB -i
+mqsistop <IntegrationNodeName> -i
 ```
 
 <details data-type="output">
@@ -54,8 +54,8 @@ BIP8096I: Successful command initiation, check the system log to ensure that the
 
 | Flag / Behavior | What Happens |
 | :--- | :--- |
-| Normal **`mqsistop SCB`** | Lets in-flight messages commit cleanly before shutting down servers |
-| Immediate **`mqsistop SCB -i`** | Kills server processes immediately without waiting — use only if a flow is deadlocked |
+| Normal **`mqsistop <IntegrationNodeName>`** | Lets in-flight messages commit cleanly before shutting down servers |
+| Immediate **`mqsistop <IntegrationNodeName> -i`** | Kills server processes immediately without waiting — use only if a flow is deadlocked |
 | **Toolkit shortcut** | You can also right-click your Node in **Integration Explorer -> Start / Stop** |
 
 ---

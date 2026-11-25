@@ -23,7 +23,7 @@ synonyms:
 
 **IBM MQ** and **IBM App Connect Enterprise (ACE)** are two separate products designed to work together like a **post office** and a **processing office**.
 
-![IBM MQ Explorer showing local queues IN.Q and OUT.Q inside SCBQM with current queue depth](/images/ace/mq-explorer-queues-depth.png)
+![IBM MQ Explorer showing local queues `<InputQueueName>` and `<OutputQueueName>` inside `<QueueManagerName>` with current queue depth](/images/ace/mq-explorer-queues-depth.png)
 
 ---
 
@@ -40,7 +40,7 @@ synonyms:
 
 **Yes!** If your ACE flows only handle `HTTPInput -> Mapping -> HTTPReply` or `FileInput -> FileOutput`, IBM MQ does not even need to be installed.
 
-However, as soon as you use **`MQInput`**, **`MQOutput`**, **`MQGet`**, **`MQReply`**, or **Aggregation/Collector** nodes, ACE must connect to an **IBM MQ Queue Manager** (like `SCBQM`).
+However, as soon as you use **`MQInput`**, **`MQOutput`**, **`MQGet`**, **`MQReply`**, or **Aggregation/Collector** nodes, ACE must connect to an **IBM MQ Queue Manager** (like `<QueueManagerName>`).
 
 ---
 

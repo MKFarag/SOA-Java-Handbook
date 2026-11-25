@@ -30,9 +30,9 @@ Every command and screen in ACE follows one simple nesting order from the operat
 ## From Outside In
 
 1. **Host Machine (Windows / Linux):** Runs IBM MQ and IBM ACE processes.
-2. **Integration Node** *(formerly Broker)*: An optional manager on your machine (for example `TESTNODE_user`). It can manage one or more Integration Servers and link to an IBM MQ Queue Manager.
+2. **Integration Node** *(formerly Broker)*: An optional manager on your machine (`<IntegrationNodeName>`). It can manage one or more Integration Servers and link to an IBM MQ Queue Manager.
 3. **Integration Server** *(formerly Execution Group)*: The isolated runtime process that actually executes your flows. You can run it **inside** an Integration Node, or run an **Independent Integration Server** standalone without any Node.
-4. **Application:** Your deployable unit (for example `OrderApp`). It packages flows, maps, schemas, and any static libraries together.
+4. **Application:** Your deployable unit (`<ApplicationName>`). It packages flows, maps, schemas, and any static libraries together.
 5. **Message Flow (`.msgflow`):** The pipeline of connected nodes inside an application that receives, transforms, and sends messages.
 
 ---
@@ -41,7 +41,7 @@ Every command and screen in ACE follows one simple nesting order from the operat
 
 | Setup | Command to Start | Best For |
 | :--- | :--- | :--- |
-| **Integration Node + Server** | `mqsistart MYNODE` | Traditional VMs running several servers managed together or via MQ link |
+| **Integration Node + Server** | `mqsistart <IntegrationNodeName>` | Traditional VMs running several servers managed together or via MQ link |
 | **Independent Integration Server** | `IntegrationServer --work-dir ...` | Fast local dev, Docker containers, microservices (no Node required) |
 
 > [!NOTE]

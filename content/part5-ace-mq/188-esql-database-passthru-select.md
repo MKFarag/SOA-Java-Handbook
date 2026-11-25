@@ -33,7 +33,7 @@ Always pass inputs using **`?`** placeholders to prevent SQL injection and enabl
 ```esql
 DECLARE custId CHARACTER InputRoot.JSON.Data.customerId;
 SET Environment.DbResult.Row[] = PASSTHRU(
-    'SELECT FULL_NAME, TIER FROM CUSTOMERS WHERE ID = ?'
+    'SELECT FULL_NAME, TIER FROM <TableName> WHERE ID = ?'
     VALUES(custId)
 );
 
@@ -45,7 +45,7 @@ SET OutputRoot.JSON.Data.name = COALESCE(Environment.DbResult.Row[1].FULL_NAME, 
 
 ```json
 {
-  "name": "Sara Ahmed"
+  "name": "<CustomerName>"
 }
 ```
 
@@ -57,7 +57,7 @@ SET OutputRoot.JSON.Data.name = COALESCE(Environment.DbResult.Row[1].FULL_NAME, 
 
 ```esql
 PASSTHRU(
-    'INSERT INTO AUDIT_LOG (ORDER_ID, STATUS) VALUES (?, ?)'
+    'INSERT INTO <AuditTableName> (ORDER_ID, STATUS) VALUES (?, ?)'
     VALUES(InputRoot.JSON.Data.orderId, 'CREATED')
 );
 ```
@@ -66,9 +66,9 @@ PASSTHRU(
 
 ## Don't Forget Credentials on the Node!
 
-1. Configure your OS ODBC DSN (`ORDERS_DB`) — see the full **[SQL Server Windows (64-bit) guide](#topic-236)** or **[Linux `odbc.ini` guide](#topic-237)**.
-2. Register DB user/password with ACE: `mqsisetdbparms MYNODE -n odbc::ORDERS_DB -u dbuser -p secret` and verify with **[`mqsicvp`](#topic-238)**.
-3. Set **Data source = `ORDERS_DB`** on the Compute node.
+1. Configure your OS ODBC DSN (`<DSN_Name>`) — see the full **[SQL Server Windows (64-bit) guide](#topic-236)** or **[Linux `odbc.ini` guide](#topic-237)**.
+2. Register DB user/password with ACE: `mqsisetdbparms <IntegrationNodeName> -n odbc::<DSN_Name> -u <UserName> -p <Password>` and verify with **[`mqsicvp`](#topic-238)**.
+3. Set **Data source = `<DSN_Name>`** on the Compute node.
 
 > [!WARNING]
 > Check **Transaction** property on your Compute node (`Automatic` commits/rolls back DB + MQ together, whereas `Commit` commits DB changes immediately even if the flow fails downstream!).

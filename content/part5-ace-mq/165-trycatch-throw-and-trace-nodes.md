@@ -43,7 +43,7 @@ These three nodes (in the **Construction** and **Error Handling** drawers) give 
 
 In **Properties -> Basic**, set:
 - **Destination:** `File`
-- **File path:** `C:\ace-logs\debug.txt`
+- **File path:** `<TraceFilePath>`
 - **Pattern:**
 
 ```text

@@ -28,8 +28,8 @@ Use **`mqsideleteexecutiongroup`** to remove an unused Integration Server from a
 ## Syntax & Example
 
 ```bash
-# Integration Node SCB must be running!
-mqsideleteexecutiongroup SCB -e EG_OLD
+# Integration Node <IntegrationNodeName> must be running!
+mqsideleteexecutiongroup <IntegrationNodeName> -e <IntegrationServerName>
 ```
 
 <details data-type="output">

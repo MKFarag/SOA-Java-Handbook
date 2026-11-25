@@ -40,8 +40,8 @@ dspmqver
 <summary>Expected Output</summary>
 
 ```text
-QMNAME(SCBQM)                                             STATUS(Running)
-QMNAME(TESTQM)                                            STATUS(Ended normally)
+QMNAME(<QueueManagerName>)                                             STATUS(Running)
+QMNAME(<QueueManagerName2>)                                            STATUS(Ended normally)
 
 Name:        IBM MQ
 Version:     9.4.0.0
@@ -58,7 +58,7 @@ Platform:    IBM MQ for Windows (x64 platform)
 | Status | Meaning | Action |
 | :--- | :--- | :--- |
 | **`Running`** | Healthy and ready for `runmqsc` & ACE | Proceed normally |
-| **`Ended normally`** / **`Ended immediately`** | Stopped | Run `strmqm SCBQM` |
+| **`Ended normally`** / **`Ended immediately`** | Stopped | Run `strmqm <QueueManagerName>` |
 | **`Ending immediately`** / **`Quiescing`** | Shutting down right now | Wait 5 seconds and run `dspmq` again |
 
 ---

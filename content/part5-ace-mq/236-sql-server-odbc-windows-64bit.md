@@ -52,11 +52,11 @@ C:\Windows\System32\odbcad32.exe
 
 | Screen Field | What to Enter | Example |
 | :--- | :--- | :--- |
-| **Name** | Exact DSN name you will put in ACE `Data source` | `ORDERS_DB` |
+| **Name** | Exact DSN name you will put in ACE `Data source` | `<DSN_Name>` |
 | **Description** | Short label (optional) | `SQL Server Orders DB` |
-| **Server** | Host + port or named instance | `localhost,1433` or `DBHOST\SQLEXPRESS` |
-| **Authentication** | Pick **With SQL Server authentication...** *(recommended for ACE `mqsisetdbparms`)* | Login ID: `ace_user`, Password: `StrongPassword123` |
-| **Change the default database to** | Check this box and select your DB! | `OrdersDb` |
+| **Server** | Host + port or named instance | `localhost,1433` or `<HostName>\<InstanceName>` |
+| **Authentication** | Pick **With SQL Server authentication...** *(recommended for ACE `mqsisetdbparms`)* | Login ID: `<UserName>`, Password: `<Password>` |
+| **Change the default database to** | Check this box and select your DB! | `<DatabaseName>` |
 
 ---
 

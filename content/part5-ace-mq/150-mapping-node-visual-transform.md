@@ -23,7 +23,7 @@ synonyms:
 
 The **Mapping** node transforms messages visually using a **Graphical Data Map (`.map`)** file — drag a wire from an input field to an output field and let ACE generate the runtime transform for you.
 
-![New Message Map wizard Step 1 creating OrderMap.map](/images/ace/mapping-wizard-step1.png)
+![New Message Map wizard Step 1 creating `<MapName>`.map](/images/ace/mapping-wizard-step1.png)
 
 ---
 
@@ -38,7 +38,7 @@ The **Mapping** node transforms messages visually using a **Graphical Data Map (
 ## Create a Map in 4 Steps
 
 1. Drag a **Mapping** node onto your flow canvas and double-click it to launch the **New Message Map** wizard.
-2. Give the map a clear name (e.g., `OrderMap`) and click **Next**.
+2. Give the map a clear name (`<MapName>`) and click **Next**.
 3. Pick your **Map inputs** (source schema) and **Map outputs** (target schema), then click **Finish**.
 
 ![Select map inputs and outputs dialog in the Mapping wizard](/images/ace/mapping-wizard-io-schemas.png)

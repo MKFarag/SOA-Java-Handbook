@@ -22,7 +22,7 @@ synonyms:
 
 # DISPLAY QSTATUS: Who Is Connected & Queue Depth
 
-Messages piling up in `IN.Q`? Run **`DISPLAY QSTATUS`** inside `runmqsc` to see **if ACE is actually listening** and **which exact process holds the queue open**.
+Messages piling up in `<InputQueueName>`? Run **`DISPLAY QSTATUS`** inside `runmqsc` to see **if ACE is actually listening** and **which exact process holds the queue open**.
 
 ![IBM MQ Explorer Queues panel showing Current queue depth and Open input/output counts](/images/ace/mq-explorer-queues-depth.png)
 
@@ -32,10 +32,10 @@ Messages piling up in `IN.Q`? Run **`DISPLAY QSTATUS`** inside `runmqsc` to see 
 
 ```text
 * Check queue depth, open readers (IPPROCS), open writers (OPPROCS), oldest msg age
-DISPLAY QSTATUS('IN.Q') CURDEPTH IPPROCS OPPROCS MSGAGE
+DISPLAY QSTATUS('<InputQueueName>') CURDEPTH IPPROCS OPPROCS MSGAGE
 
-* See the EXACT app name and PID connected to IN.Q!
-DISPLAY QSTATUS('IN.Q') TYPE(HANDLE) APPLTAG PID
+* See the EXACT app name and PID connected to <InputQueueName>!
+DISPLAY QSTATUS('<InputQueueName>') TYPE(HANDLE) APPLTAG PID
 ```
 
 <details data-type="output">
@@ -43,11 +43,11 @@ DISPLAY QSTATUS('IN.Q') TYPE(HANDLE) APPLTAG PID
 
 ```text
 AMQ8450I: Display queue status details.
-   QUEUE(IN.Q)                             TYPE(QUEUE)
+   QUEUE(<InputQueueName>)                             TYPE(QUEUE)
    CURDEPTH(0)                             IPPROCS(1)
    MSGAGE( )                               OPPROCS(0)
 AMQ8450I: Display queue status details.
-   QUEUE(IN.Q)                             TYPE(HANDLE)
+   QUEUE(<InputQueueName>)                             TYPE(HANDLE)
    APPLTAG(DataFlowEngine.exe)             PID(14820)
 ```
 

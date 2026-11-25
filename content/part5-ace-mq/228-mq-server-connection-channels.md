@@ -26,14 +26,14 @@ Once port `1414` is open, remote ACE client flows and apps enter the Queue Manag
 
 ---
 
-## Define & Monitor a Channel (`runmqsc SCBQM`)
+## Define & Monitor a Channel (`runmqsc <QueueManagerName>`)
 
 ```text
 * Create a client channel for ACE & external apps
-DEFINE CHANNEL('APP.SVRCONN') CHLTYPE(SVRCONN) TRPTYPE(TCP) DESCR('ACE client channel') REPLACE
+DEFINE CHANNEL('<ChannelName>') CHLTYPE(SVRCONN) TRPTYPE(TCP) DESCR('ACE client channel') REPLACE
 
 * Check live active client connections
-DISPLAY CHSTATUS('APP.SVRCONN')
+DISPLAY CHSTATUS('<ChannelName>')
 ```
 
 <details data-type="output">
@@ -50,10 +50,10 @@ AMQ8014I: IBM MQ channel created.
 ## How ACE Uses This Channel
 
 In your ACE `MQEndpoint` policy (or client properties), enter **exact matching values**:
-- **Queue manager name:** `SCBQM`
-- **Host:** `your-mq-host`
-- **Port:** `1414` *(from `LISTENER.TCP`)*
-- **Channel name:** `APP.SVRCONN` *(case-sensitive!)*
+- **Queue manager name:** `<QueueManagerName>`
+- **Host:** `<HostName>`
+- **Port:** `1414` *(from `<ListenerName>`)*
+- **Channel name:** `<ChannelName>` *(case-sensitive!)*
 
 ---
 

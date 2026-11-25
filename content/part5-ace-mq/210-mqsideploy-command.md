@@ -31,25 +31,25 @@ synonyms:
 ## Common Deployment Commands
 
 ```bash
-# Deploy to a Managed Server (Node SCB, server EG1)
-mqsideploy SCB -e EG1 -a C:\builds\OrderApp.bar
+# Deploy to a Managed Server (Node <IntegrationNodeName>, server <IntegrationServerName>)
+mqsideploy <IntegrationNodeName> -e <IntegrationServerName> -a <BarFilePath>
 
 # Full clean deploy (-m deletes old apps not in this BAR!)
-mqsideploy SCB -e EG1 -a C:\builds\OrderApp.bar -m
+mqsideploy <IntegrationNodeName> -e <IntegrationServerName> -a <BarFilePath> -m
 
 # Deploy to an Independent Integration Server (via REST port 7600)
-mqsideploy -i localhost -p 7600 -a C:\builds\OrderApp.bar
+mqsideploy -i localhost -p 7600 -a <BarFilePath>
 
 # Remove an application by name (-d)
-mqsideploy SCB -e EG1 -d OrderApp
+mqsideploy <IntegrationNodeName> -e <IntegrationServerName> -d <ApplicationName>
 ```
 
 <details data-type="output">
 <summary>Expected Output</summary>
 
 ```text
-BIP1039I: Deploying BAR file 'C:\builds\OrderApp.bar' to integration server 'EG1' ...
-BIP9332I: Application 'OrderApp' has been created or updated successfully.
+BIP1039I: Deploying BAR file '<BarFilePath>' to integration server '<IntegrationServerName>' ...
+BIP9332I: Application '<ApplicationName>' has been created or updated successfully.
 BIP1092I: The integration node successfully processed the deployment request.
 ```
 
@@ -58,7 +58,7 @@ BIP1092I: The integration node successfully processed the deployment request.
 ---
 
 > [!WARNING]
-> **Careful with `-m` (`complete deployment`)!** Adding `-m` deletes **everything else** already deployed on that Integration Server (`EG1`) that is not inside your `.bar` file. Omit `-m` for normal incremental app deploys.
+> **Careful with `-m` (`complete deployment`)!** Adding `-m` deletes **everything else** already deployed on that Integration Server (`<IntegrationServerName>`) that is not inside your `.bar` file. Omit `-m` for normal incremental app deploys.
 
 ---
 

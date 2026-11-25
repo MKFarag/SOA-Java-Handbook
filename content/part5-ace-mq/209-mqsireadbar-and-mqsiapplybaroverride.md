@@ -31,7 +31,7 @@ Never open `.bar` binaries in Notepad! Use **`mqsireadbar`** to list every confi
 ## Step 1: See Every Configurable Key Inside the BAR
 
 ```bash
-mqsireadbar -b C:\builds\OrderApp.bar -r
+mqsireadbar -b <BarFilePath> -r
 ```
 
 <details data-type="output">
@@ -39,10 +39,10 @@ mqsireadbar -b C:\builds\OrderApp.bar -r
 
 ```text
 BIP1052I: Reading Broker Archive using runtime integration node or server.
-OrderApp.appzip:
-  ProcessOrderFlow.msgflow:
-    MQInput#queueName = IN.Q
-    MQOutput#queueName = OUT.Q
+<ApplicationName>.appzip:
+  <MessageFlowName>.msgflow:
+    MQInput#queueName = <InputQueueName>
+    MQOutput#queueName = <OutputQueueName>
 BIP8071I: Successful command completion.
 ```
 
@@ -52,15 +52,15 @@ BIP8071I: Successful command completion.
 
 ## Step 2: Override Values for UAT/PROD
 
-Create `uat.properties`:
+Create `<OverridePropertiesFile>.properties`:
 ```properties
-ProcessOrderFlow#MQInput.queueName=UAT.IN.Q
-ProcessOrderFlow#MQOutput.queueName=UAT.OUT.Q
+<MessageFlowName>#MQInput.queueName=UAT.<InputQueueName>
+<MessageFlowName>#MQOutput.queueName=UAT.<OutputQueueName>
 ```
 
 Then stamp a UAT-ready copy of the BAR:
 ```bash
-mqsiapplybaroverride -b OrderApp.bar -p uat.properties -o OrderApp-UAT.bar
+mqsiapplybaroverride -b <BarFileName>.bar -p <OverridePropertiesFile>.properties -o <TargetEnvBarFile>.bar
 ```
 
 > [!TIP]

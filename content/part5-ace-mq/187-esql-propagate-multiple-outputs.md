@@ -29,7 +29,7 @@ Normally `Main()` returns **once** (`RETURN TRUE;`), sending **one** message to 
 ## Pattern 1: Split a 3-Item Array into 3 Separate Messages
 
 ```esql
-CREATE COMPUTE MODULE SplitOrders_Compute
+CREATE COMPUTE MODULE <ComputeModuleName>
     CREATE FUNCTION Main() RETURNS BOOLEAN
     BEGIN
         FOR item AS InputRoot.JSON.Data.orders.Item[] DO

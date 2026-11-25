@@ -8,11 +8,11 @@
   <text x="145" y="102" text-anchor="middle" font-size="11.5" fill="#4338ca">Queue Manager: QM1 (Port 1414)</text>
 
   <rect x="52" y="122" width="186" height="48" rx="8" fill="#ffffff" stroke="#6366f1" stroke-width="1.5"/>
-  <text x="145" y="144" text-anchor="middle" font-size="12.5" font-weight="700" fill="#1e293b">Local Queue: IN.Q</text>
+  <text x="145" y="144" text-anchor="middle" font-size="12.5" font-weight="700" fill="#1e293b">Local Queue: &lt;InputQueue&gt;</text>
   <text x="145" y="160" text-anchor="middle" font-size="11" fill="#64748b">Holds incoming messages</text>
 
   <rect x="52" y="190" width="186" height="48" rx="8" fill="#ffffff" stroke="#6366f1" stroke-width="1.5"/>
-  <text x="145" y="212" text-anchor="middle" font-size="12.5" font-weight="700" fill="#1e293b">Local Queue: OUT.Q</text>
+  <text x="145" y="212" text-anchor="middle" font-size="12.5" font-weight="700" fill="#1e293b">Local Queue: &lt;OutputQueue&gt;</text>
   <text x="145" y="228" text-anchor="middle" font-size="11" fill="#64748b">Holds processed messages</text>
 
   <text x="145" y="280" text-anchor="middle" font-size="11" font-weight="600" fill="#3730a3">Safe storage — never edits data</text>
@@ -28,12 +28,12 @@
 
   <!-- Application -->
   <rect x="347" y="154" width="403" height="122" rx="8" fill="#f0f9ff" stroke="#0284c7" stroke-width="1.5" stroke-dasharray="5,3"/>
-  <text x="548" y="174" text-anchor="middle" font-size="12" font-weight="700" fill="#0369a1">Application: OrderApp (Container)</text>
+  <text x="548" y="174" text-anchor="middle" font-size="12" font-weight="700" fill="#0369a1">Application: &lt;AppName&gt; (Container)</text>
 
   <!-- Message Flow Nodes -->
   <rect x="364" y="192" width="98" height="58" rx="7" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/>
   <text x="413" y="218" text-anchor="middle" font-size="12" font-weight="700" fill="#14532d">MQInput</text>
-  <text x="413" y="236" text-anchor="middle" font-size="10.5" fill="#166534">Reads IN.Q</text>
+  <text x="413" y="236" text-anchor="middle" font-size="10.5" fill="#166534">Reads &lt;InputQueue&gt;</text>
 
   <rect x="498" y="192" width="102" height="58" rx="7" fill="#dbeafe" stroke="#2563eb" stroke-width="1.5"/>
   <text x="549" y="218" text-anchor="middle" font-size="12" font-weight="700" fill="#1e3a8a">Compute/Map</text>
@@ -41,7 +41,7 @@
 
   <rect x="636" y="192" width="98" height="58" rx="7" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/>
   <text x="685" y="218" text-anchor="middle" font-size="12" font-weight="700" fill="#14532d">MQOutput</text>
-  <text x="685" y="236" text-anchor="middle" font-size="10.5" fill="#166534">Writes OUT.Q</text>
+  <text x="685" y="236" text-anchor="middle" font-size="10.5" fill="#166534">Writes &lt;OutputQueue&gt;</text>
 
   <!-- Arrows -->
   <defs>

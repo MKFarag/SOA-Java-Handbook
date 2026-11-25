@@ -29,7 +29,7 @@ synonyms:
 ## Mode 1: Interactive Typing
 
 ```bash
-amqsput IN.Q SCBQM
+amqsput <InputQueueName> <QueueManagerName>
 ```
 
 Type your payload (even JSON on one line!), press **Enter**, then press **Enter on an empty line** to quit:
@@ -39,7 +39,7 @@ Type your payload (even JSON on one line!), press **Enter**, then press **Enter 
 
 ```text
 Sample AMQSPUT0 start
-target queue is IN.Q
+target queue is <InputQueueName>
 {"orderId": 101, "amount": 250}
 
 Sample AMQSPUT0 end
@@ -52,7 +52,7 @@ Sample AMQSPUT0 end
 ## Mode 2: One-Line Pipe (Great for Quick Repeats!)
 
 ```bash
-echo {"orderId": 102, "amount": 99} | amqsput IN.Q SCBQM
+echo {"orderId": 102, "amount": 99} | amqsput <InputQueueName> <QueueManagerName>
 ```
 
 - Notice **`amqsput`** uses **local bindings** (same server); use **`amqsputc`** (with `c` at the end) if connecting to a **remote** Queue Manager via `MQSERVER`!

@@ -28,7 +28,7 @@ Here is a complete, real-world Compute node transforming an incoming **JSON orde
 ## Complete Compute Module
 
 ```esql
-CREATE COMPUTE MODULE JsonOrderToXml_Compute
+CREATE COMPUTE MODULE <ComputeModuleName>
     CREATE FUNCTION Main() RETURNS BOOLEAN
     BEGIN
         CALL CopyMessageHeaders();
@@ -65,9 +65,9 @@ END MODULE;
 <summary>Input JSON & Transformed XML Output</summary>
 
 ```xml
-<!-- Input JSON: {"orderId":"ORD-9","customer":"SCB","items":[{"sku":"A1","qty":2,"price":15.5}]} -->
+<!-- Input JSON: {"orderId":"ORD-9","customer":"<IntegrationNodeName>","items":[{"sku":"A1","qty":2,"price":15.5}]} -->
 <Order id="ORD-9">
-  <Customer>SCB</Customer>
+  <Customer><IntegrationNodeName></Customer>
   <Lines>
     <Line>
       <Sku>A1</Sku>

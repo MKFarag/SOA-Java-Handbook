@@ -31,9 +31,9 @@ ACE gives you **4 main IBM MQ nodes**. Beginners often mix up `MQInput` vs. `MQG
 
 | Node | Position in Flow | What Queue Does It Use? | Simple Mental Model |
 | :--- | :--- | :--- | :--- |
-| **`MQInput`** | **Start** (Trigger) | Fixed queue you configure | *"Wake up whenever a message arrives on `IN.Q`"* |
-| **`MQGet`** | **Middle** | Queue you configure (or CorrelId lookup) | *"Pause this flow right now, go fetch one message from `LOOKUP.Q`, and come back"* |
-| **`MQOutput`** | **End / Anywhere** | Fixed queue (or `LocalEnvironment` override) | *"Put this message into `OUT.Q`"* |
+| **`MQInput`** | **Start** (Trigger) | Fixed queue you configure | *"Wake up whenever a message arrives on `<InputQueueName>`"* |
+| **`MQGet`** | **Middle** | Queue you configure (or CorrelId lookup) | *"Pause this flow right now, go fetch one message from `<LookupQueueName>`, and come back"* |
+| **`MQOutput`** | **End / Anywhere** | Fixed queue (or `LocalEnvironment` override) | *"Put this message into `<OutputQueueName>`"* |
 | **`MQReply`** | **End** | Automatically reads `MQMD.ReplyToQ` & `ReplyToQMgr` | *"Return an answer to whoever sent the request"* |
 
 ---

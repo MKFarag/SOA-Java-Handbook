@@ -32,7 +32,7 @@ When you open it for the very first time, you only need two clicks to start buil
 ## Step 1: Pick Your Workspace Folder
 
 1. Open **IBM App Connect Enterprise Toolkit** from the Windows Start Menu.
-2. When the **Workspace Launcher** pops up, accept the default folder or click **Browse...** to choose a clean folder (for example `C:\workspaces\ace-dev`).
+2. When the **Workspace Launcher** pops up, accept the default folder or click **Browse...** to choose a clean folder (`<WorkspacePath>`).
 3. Click **Launch**.
 
 > [!TIP]

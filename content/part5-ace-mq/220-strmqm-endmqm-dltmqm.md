@@ -29,25 +29,25 @@ Manage the full lifecycle of an IBM MQ Queue Manager from your OS shell (`CMD` o
 ## Start, Stop & Delete Commands
 
 ```bash
-# 1. Start Queue Manager SCBQM
-strmqm SCBQM
+# 1. Start Queue Manager <QueueManagerName>
+strmqm <QueueManagerName>
 
 # 2. Controlled stop (waits for active apps to disconnect)
-endmqm SCBQM
+endmqm <QueueManagerName>
 
 # 3. Wait until stop completes (-w) OR immediate stop (-i) if an app stays connected
-endmqm -w -i SCBQM
+endmqm -w -i <QueueManagerName>
 
 # 4. Permanently delete a STOPPED Queue Manager (and all its queues/messages!)
-dltmqm SCBQM
+dltmqm <QueueManagerName>
 ```
 
 <details data-type="output">
 <summary>Expected Output</summary>
 
 ```text
-IBM MQ queue manager 'SCBQM' starting.
-IBM MQ queue manager 'SCBQM' started using V9.4.0.0.
+IBM MQ queue manager '<QueueManagerName>' starting.
+IBM MQ queue manager '<QueueManagerName>' started using V9.4.0.0.
 ```
 
 </details>
@@ -55,7 +55,7 @@ IBM MQ queue manager 'SCBQM' started using V9.4.0.0.
 ---
 
 > [!WARNING]
-> Running `endmqm SCBQM` without `-i` can hang for minutes if **ACE** still holds an open connection! Always run **`mqsistop <Node>` first**, then **`endmqm -w SCBQM`** (or `endmqm -i SCBQM` in dev).
+> Running `endmqm <QueueManagerName>` without `-i` can hang for minutes if **ACE** still holds an open connection! Always run **`mqsistop <Node>` first**, then **`endmqm -w <QueueManagerName>`** (or `endmqm -i <QueueManagerName>` in dev).
 
 ---
 

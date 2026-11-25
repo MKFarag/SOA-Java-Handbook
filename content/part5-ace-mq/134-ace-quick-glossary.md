@@ -45,8 +45,8 @@ IBM documentation mixes new ACE names with older WebSphere Message Broker names.
 
 | Term | Plain-English Meaning | Example |
 | :--- | :--- | :--- |
-| **Queue Manager (QMGR)** | The MQ server instance that hosts queues and delivers messages | `SCBQM` |
-| **Local Queue (`QLOCAL`)** | A mailbox stored inside a Queue Manager where messages wait | `IN.Q`, `OUT.Q` |
+| **Queue Manager (QMGR)** | The MQ server instance that hosts queues and delivers messages | `<QueueManagerName>` |
+| **Local Queue (`QLOCAL`)** | A mailbox stored inside a Queue Manager where messages wait | `<InputQueueName>`, `<OutputQueueName>` |
 | **Message Flow vs. Queue** | **MQ** stores messages safely on disk; **ACE** reads, transforms, and routes them | MQ = Mailbox, ACE = Worker |
 
 > [!TIP]

@@ -29,21 +29,21 @@ Need to pause one buggy flow during maintenance while keeping other flows on the
 ## Syntax & Examples
 
 ```bash
-# Stop ONE specific message flow inside Application OrderApp
-mqsistopmsgflow SCB -e EG1 -k OrderApp -m ProcessOrderFlow
+# Stop ONE specific message flow inside Application <ApplicationName>
+mqsistopmsgflow <IntegrationNodeName> -e <IntegrationServerName> -k <ApplicationName> -m <MessageFlowName>
 
-# Stop the ENTIRE Application OrderApp (all flows inside it)
-mqsistopmsgflow SCB -e EG1 -k OrderApp
+# Stop the ENTIRE Application <ApplicationName> (all flows inside it)
+mqsistopmsgflow <IntegrationNodeName> -e <IntegrationServerName> -k <ApplicationName>
 
 # Start it back up cleanly
-mqsistartmsgflow SCB -e EG1 -k OrderApp -m ProcessOrderFlow
+mqsistartmsgflow <IntegrationNodeName> -e <IntegrationServerName> -k <ApplicationName> -m <MessageFlowName>
 ```
 
 <details data-type="output">
 <summary>Expected Output</summary>
 
 ```text
-BIP1276I: Message flow 'ProcessOrderFlow' on integration server 'EG1' has been stopped.
+BIP1276I: Message flow '<MessageFlowName>' on integration server '<IntegrationServerName>' has been stopped.
 BIP8071I: Successful command completion.
 ```
 
@@ -53,13 +53,13 @@ BIP8071I: Successful command completion.
 
 ## Same Action on an Independent Server
 
-Replace `SCB -e EG1` with `-i localhost -p 7600`:
+Replace `<IntegrationNodeName> -e <IntegrationServerName>` with `-i localhost -p 7600`:
 ```bash
-mqsistopmsgflow -i localhost -p 7600 -k OrderApp -m ProcessOrderFlow
+mqsistopmsgflow -i localhost -p 7600 -k <ApplicationName> -m <MessageFlowName>
 ```
 
 > [!TIP]
-> Notice stopping `OrderApp` pauses its triggers (`MQInput` stops reading `IN.Q`, `HTTPInput` returns `503`), letting messages build safely in IBM MQ until you call `mqsistartmsgflow`.
+> Notice stopping `<ApplicationName>` pauses its triggers (`MQInput` stops reading `<InputQueueName>`, `HTTPInput` returns `503`), letting messages build safely in IBM MQ until you call `mqsistartmsgflow`.
 
 ---
 

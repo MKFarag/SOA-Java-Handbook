@@ -31,7 +31,7 @@ A **BAR (Broker Archive)** is a `.bar` zip package containing compiled flows, ES
 ## Option A: Build in Toolkit (GUI)
 
 1. Right-click anywhere in **Application Development -> New -> BAR file**.
-2. Type a name like `OrderApp.bar` and click **Finish**.
+2. Type a name like `<BarFileName>.bar` and click **Finish**.
 3. Check the Applications / Shared Libraries / Policy Projects to include, then click **Build and Save**.
 
 ---
@@ -39,14 +39,14 @@ A **BAR (Broker Archive)** is a `.bar` zip package containing compiled flows, ES
 ## Option B: Build in Terminal / CI/CD (`ibmint package`)
 
 ```bash
-ibmint package --input-path C:\workspaces\ace-dev --output-bar-file C:\builds\OrderApp.bar --project OrderApp
+ibmint package --input-path <WorkspacePath> --output-bar-file <BarFilePath> --project <ApplicationName>
 ```
 
 <details data-type="output">
 <summary>Expected Output</summary>
 
 ```text
-BIP15201I: Packaging project 'OrderApp' into bar file 'C:\builds\OrderApp.bar'.
+BIP15201I: Packaging project '<ApplicationName>' into bar file '<BarFilePath>'.
 BIP8071I: Successful command completion.
 ```
 

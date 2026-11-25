@@ -31,11 +31,11 @@ Whenever ACE cannot talk to IBM MQ, MQ hands back a 4-digit **`MQRC` (Reason Cod
 
 | Code | Official Name | Plain-English Cause | Exact Fix |
 | :--- | :--- | :--- | :--- |
-| **`2059`** | `MQRC_Q_MGR_NOT_AVAILABLE` | Queue Manager is **stopped**, or wrong host/port in `CLIENT` mode | Start QMGR (`strmqm SCBQM`) or verify Listener port `1414` is running |
-| **`2058`** | `MQRC_Q_MGR_NAME_ERROR` | Typo in Queue Manager name (`SCBQM` vs `scbqm`) or Node isn't linked | Check exact case via `dspmq`; verify `MQEndpoint` / `-q` spelling |
-| **`2085`** | `MQRC_UNKNOWN_OBJECT_NAME` | Queue doesn't exist on that Queue Manager | Run `runmqsc SCBQM` -> `DISPLAY QLOCAL(*)` and `DEFINE QLOCAL('IN.Q')` |
+| **`2059`** | `MQRC_Q_MGR_NOT_AVAILABLE` | Queue Manager is **stopped**, or wrong host/port in `CLIENT` mode | Start QMGR (`strmqm <QueueManagerName>`) or verify Listener port `1414` is running |
+| **`2058`** | `MQRC_Q_MGR_NAME_ERROR` | Typo in Queue Manager name (`<QueueManagerName>` vs `<queueManagerName_lowercase>`) or Node isn't linked | Check exact case via `dspmq`; verify `MQEndpoint` / `-q` spelling |
+| **`2085`** | `MQRC_UNKNOWN_OBJECT_NAME` | Queue doesn't exist on that Queue Manager | Run `runmqsc <QueueManagerName>` -> `DISPLAY QLOCAL(*)` and `DEFINE QLOCAL('<InputQueueName>')` |
 | **`2035`** | `MQRC_NOT_AUTHORIZED` | MQ Channel Auth (`CHLAUTH`) or OAM permissions blocked your user | Check `AMQERR01.LOG` for blocked user/rule; update `CHLAUTH` or `CONNAUTH` for dev |
-| **`2538`** | `MQRC_HOST_NOT_AVAILABLE` | Firewall blocked port `1414`, wrong IP, or MQ Listener stopped | Start listener in `runmqsc`: `START LISTENER(LISTENER.TCP)` |
+| **`2538`** | `MQRC_HOST_NOT_AVAILABLE` | Firewall blocked port `1414`, wrong IP, or MQ Listener stopped | Start listener in `runmqsc`: `START LISTENER(<ListenerName>)` |
 
 ---
 

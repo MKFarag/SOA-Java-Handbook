@@ -29,7 +29,7 @@ synonyms:
 
 | Tab | Property | Common Setting | What It Does |
 | :--- | :--- | :--- | :--- |
-| **Basic** | **Queue name** | `OUT.Q` | Target queue name |
+| **Basic** | **Queue name** | `<OutputQueueName>` | Target queue name |
 | **Basic** | **Queue manager name** | Empty *(local)* or remote QMGR | Optional remote QMGR name |
 | **Request** | **New message ID** / **Reply-to queue** | Optional | Stamps `MQMD.ReplyToQ` when sending a request expecting a reply |
 | **Advanced** | **Destination mode** | `Queue Name` *(fixed)* or `Destination List` *(dynamic)* | Pick `Destination List` when ESQL chooses the target queue dynamically |
@@ -41,14 +41,14 @@ synonyms:
 Set **Destination mode** to **Destination List** on `MQOutput`, then set the target queue inside a **Compute** node (with `Compute mode = LocalEnvironment And Message`):
 
 ```esql
-SET OutputLocalEnvironment.Destination.MQ.DestinationData[1].queueName = 'VIP.OUT.Q';
+SET OutputLocalEnvironment.Destination.MQ.DestinationData[1].queueName = '<TargetQueueName>';
 ```
 
 <details data-type="output">
 <summary>Result in IBM MQ Explorer</summary>
 
 ```text
-Message lands on VIP.OUT.Q instead of the static queue name typed on MQOutput.
+Message lands on <TargetQueueName> instead of the static queue name typed on MQOutput.
 ```
 
 </details>

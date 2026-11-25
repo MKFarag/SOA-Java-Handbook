@@ -29,7 +29,7 @@ synonyms:
 ## Syntax & Example
 
 ```bash
-amqsget OUT.Q SCBQM
+amqsget <OutputQueueName> <QueueManagerName>
 ```
 
 <details data-type="output">

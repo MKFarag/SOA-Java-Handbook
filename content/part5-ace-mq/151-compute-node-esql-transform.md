@@ -49,7 +49,7 @@ The **Compute** node lets you transform, build, or filter messages using **ESQL*
 Double-click the **Compute** node to open its `.esql` file and edit `Main()`:
 
 ```esql
-CREATE COMPUTE MODULE Order_Compute
+CREATE COMPUTE MODULE <ComputeModuleName>
     CREATE FUNCTION Main() RETURNS BOOLEAN
     BEGIN
         CALL CopyMessageHeaders();

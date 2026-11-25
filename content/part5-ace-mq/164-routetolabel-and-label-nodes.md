@@ -30,8 +30,8 @@ When you have **10+ possible message types** (for example SOAP operations or cou
 ```text
   [MQInput] ──▶ [Compute (sets labelName = 'CREATE')] ──▶ [RouteToLabel]
 
-  [Label: 'CREATE'] ──▶ [CreateOrderSubflow] ──▶ [MQOutput]
-  [Label: 'CANCEL'] ──▶ [CancelOrderSubflow] ──▶ [MQOutput]
+  [Label: 'CREATE'] ──▶ [<Subflow1Name>] ──▶ [MQOutput]
+  [Label: 'CANCEL'] ──▶ [<Subflow2Name>] ──▶ [MQOutput]
 ```
 
 ---

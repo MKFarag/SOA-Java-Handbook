@@ -40,8 +40,8 @@ Never hardcode production queue managers, database hosts, or external URLs insid
 
 ## How a Policy Works at Runtime
 
-1. In the Toolkit: **New -> Policy Project** (for example `ProdPolicies`), then create a Policy (such as `MQEndpoint` or `HTTPRequest`).
-2. Reference it on your flow node using `{PolicyProjectName}:PolicyName` (e.g., `{ProdPolicies}:OrderMQ`).
+1. In the Toolkit: **New -> Policy Project** (`<PolicyProjectName>`), then create a Policy (such as `MQEndpoint` or `HTTPRequest`).
+2. Reference it on your flow node using `{PolicyProjectName}:PolicyName` (e.g., `{<PolicyProjectName>}:OrderMQ`).
 3. Deploy the Policy Project to the Integration Server. To switch environments later, update only the Policy XML and redeploy the Policy Project.
 
 > [!TIP]

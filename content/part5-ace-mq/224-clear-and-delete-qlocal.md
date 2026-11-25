@@ -22,21 +22,21 @@ synonyms:
 
 # CLEAR QLOCAL & DELETE QLOCAL: Empty or Remove
 
-Need to wipe 500 bad test messages out of `IN.Q` during dev? Use **`CLEAR QLOCAL`** inside `runmqsc`. Want to remove the queue definition altogether? Use **`DELETE QLOCAL`**.
+Need to wipe 500 bad test messages out of `<InputQueueName>` during dev? Use **`CLEAR QLOCAL`** inside `runmqsc`. Want to remove the queue definition altogether? Use **`DELETE QLOCAL`**.
 
 ---
 
-## Commands (Inside `runmqsc SCBQM`)
+## Commands (Inside `runmqsc <QueueManagerName>`)
 
 ```text
-* Empty all messages inside IN.Q (queue definition stays!)
-CLEAR QLOCAL('IN.Q')
+* Empty all messages inside <InputQueueName> (queue definition stays!)
+CLEAR QLOCAL('<InputQueueName>')
 
-* Permanently remove queue TEMP.Q (must be empty first!)
-DELETE QLOCAL('TEMP.Q')
+* Permanently remove queue <QueueName> (must be empty first!)
+DELETE QLOCAL('<QueueName>')
 
 * Delete queue EVEN if messages still sit inside (USE CAREFULLY!)
-DELETE QLOCAL('TEMP.Q') PURGE
+DELETE QLOCAL('<QueueName>') PURGE
 ```
 
 <details data-type="output">
@@ -51,7 +51,7 @@ AMQ8022I: IBM MQ queue cleared.
 ---
 
 > [!WARNING]
-> Getting **`AMQ8148S: IBM MQ object in use`** when running `CLEAR QLOCAL('IN.Q')`? That means an active app (usually your **ACE `MQInput` flow!**) has the queue open for reading (`IPPROCS > 0`). Stop the flow first (`mqsistopmsgflow ...`) or read messages cleanly with `amqsget`, then clear!
+> Getting **`AMQ8148S: IBM MQ object in use`** when running `CLEAR QLOCAL('<InputQueueName>')`? That means an active app (usually your **ACE `MQInput` flow!**) has the queue open for reading (`IPPROCS > 0`). Stop the flow first (`mqsistopmsgflow ...`) or read messages cleanly with `amqsget`, then clear!
 
 ---
 

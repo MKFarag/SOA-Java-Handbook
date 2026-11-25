@@ -29,14 +29,14 @@ In ACE 12, you don't even have to create an Integration Node for local testing o
 ## Step 1: Create the Server Work Directory
 
 ```bash
-mqsicreateworkdir C:\ace-work\order-srv
+mqsicreateworkdir <WorkDirPath>
 ```
 
 <details data-type="output">
-<summary>What Gets Created Inside C:\ace-work\order-srv</summary>
+<summary>What Gets Created Inside <WorkDirPath></summary>
 
 ```text
-mqsicreateworkdir: Copying sample server.conf.yaml to C:\ace-work\order-srv
+mqsicreateworkdir: Copying sample server.conf.yaml to <WorkDirPath>
   config/
   overrides/
   run/          <-- Drop .bar files or deployed apps here!
@@ -50,14 +50,14 @@ mqsicreateworkdir: Copying sample server.conf.yaml to C:\ace-work\order-srv
 ## Step 2: Start the Independent Server
 
 ```bash
-IntegrationServer --name OrderServer --work-dir C:\ace-work\order-srv
+IntegrationServer --name <IntegrationServerName> --work-dir <WorkDirPath>
 ```
 
 <details data-type="output">
 <summary>Expected Console Startup Log</summary>
 
 ```text
-BIP1990I: Integration server 'OrderServer' starting initialization; version '12.0.11.0'
+BIP1990I: Integration server '<IntegrationServerName>' starting initialization; version '12.0.11.0'
 BIP2866I: IBM App Connect Enterprise administration security is inactive.
 BIP1991I: Integration server has finished initialization.
 ```

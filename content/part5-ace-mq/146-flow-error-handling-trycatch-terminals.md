@@ -32,7 +32,7 @@ Every production flow needs a plan when bad JSON arrives or a downstream API fai
 | Strategy | How You Wire It | When to Use |
 | :--- | :--- | :--- |
 | **1. Let MQ Roll Back (Default)** | Leave `Catch` / `Failure` unwired | Message goes back to input queue (and Backout Queue after retries) |
-| **2. Whole-Flow Catch** | Wire `MQInput.Catch` -> `ErrorHandlerSubflow` | One standard place to log `ExceptionList` and send an HTTP 500 or MQ error message |
+| **2. Whole-Flow Catch** | Wire `MQInput.Catch` -> `<ErrorSubflowName>` | One standard place to log `ExceptionList` and send an HTTP 500 or MQ error message |
 | **3. Local Section (`TryCatch` node)** | Wire `TryCatch.Try` -> Risky nodes, `TryCatch.Catch` -> Fallback | An optional enrichment API call failed, but the flow should continue with default values |
 
 ---

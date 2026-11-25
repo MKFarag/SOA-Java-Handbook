@@ -30,7 +30,7 @@ Creating a library takes two steps: **create the library**, then tell your **App
 ## Step 1: Create the Library
 
 1. Right-click empty space in **Application Development** -> **New -> Library...**
-2. Enter a name like `CommonSchemasLib`.
+2. Enter a name like `<LibraryName>`.
 3. Select **Shared library** *(recommended for enterprise schemas/subflows)* or **Static library**.
 4. Click **Finish**.
 
@@ -38,9 +38,9 @@ Creating a library takes two steps: **create the library**, then tell your **App
 
 ## Step 2: Reference It from Your Application
 
-1. Right-click your Application (for example `OrderApp`) in **Application Development**.
+1. Right-click your Application (`<ApplicationName>`) in **Application Development**.
 2. Click **Manage Library References...**
-3. Check the box next to `CommonSchemasLib`.
+3. Check the box next to `<LibraryName>`.
 4. Click **OK**.
 
 Your library now appears under the **Included Libraries** folder inside your Application:

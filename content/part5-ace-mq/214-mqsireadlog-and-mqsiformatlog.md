@@ -30,18 +30,18 @@ ACE stores trace logs internally in compact binary/XML format. To actually read 
 
 ```bash
 # 1. Export internal User Trace (-u) buffer to XML file
-mqsireadlog SCB -u -e EG1 -o C:\temp\trace.xml
+mqsireadlog <IntegrationNodeName> -u -e <IntegrationServerName> -o <TraceXmlPath>
 
 # 2. Format that XML into readable plain text
-mqsiformatlog -i C:\temp\trace.xml -o C:\temp\trace.txt
+mqsiformatlog -i <TraceXmlPath> -o <TraceTxtPath>
 ```
 
 <details data-type="output">
-<summary>Sample Lines Inside C:\temp\trace.txt</summary>
+<summary>Sample Lines Inside <TraceTxtPath></summary>
 
 ```text
-2026-11-25 10:15:02.410  BIP2537I: Node 'ProcessOrderFlow.Compute': Executing statement ''SET OutputRoot.JSON.Data.status = 'OK';''
-2026-11-25 10:15:02.415  BIP2602I: Sending message from 'ProcessOrderFlow.MQOutput' to queue 'OUT.Q'.
+2026-11-25 10:15:02.410  BIP2537I: Node '<MessageFlowName>.Compute': Executing statement ''SET OutputRoot.JSON.Data.status = 'OK';''
+2026-11-25 10:15:02.415  BIP2602I: Sending message from '<MessageFlowName>.MQOutput' to queue '<OutputQueueName>'.
 ```
 
 </details>

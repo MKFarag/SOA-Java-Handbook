@@ -30,8 +30,8 @@ IBM MQ ships **secure by default**: every remote connection running as an OS adm
 
 | Environment | Recommended Fix for `MQRC 2035` |
 | :--- | :--- |
-| **Staging / Production** | Create a dedicated non-admin OS/LDAP user (`aceapp`), map it via `SET CHLAUTH`, and enable TLS + user credentials (`mqsisetdbparms`) |
-| **Isolated Local Dev Lab Only** | Allow your app channel (`APP.SVRCONN`) via `SET CHLAUTH` on your sandbox QMGR |
+| **Staging / Production** | Create a dedicated non-admin OS/LDAP user (`<UserName>`), map it via `SET CHLAUTH`, and enable TLS + user credentials (`mqsisetdbparms`) |
+| **Isolated Local Dev Lab Only** | Allow your app channel (`<ChannelName>`) via `SET CHLAUTH` on your sandbox QMGR |
 
 ---
 
@@ -40,15 +40,15 @@ IBM MQ ships **secure by default**: every remote connection running as an OS adm
 Always inspect `AMQERR01.LOG` — MQ explicitly prints **which exact rule** rejected your connection. Then configure a scoped rule in `runmqsc`:
 
 ```text
-* Allow specific service user 'aceapp' over APP.SVRCONN
-SET CHLAUTH('APP.SVRCONN') TYPE(USERMAP) CLNTUSER('aceapp') USERSRC(MAP) MCAUSER('aceapp') ACTION(ADD)
+* Allow specific service user '<UserName>' over <ChannelName>
+SET CHLAUTH('<ChannelName>') TYPE(USERMAP) CLNTUSER('<UserName>') USERSRC(MAP) MCAUSER('<UserName>') ACTION(ADD)
 REFRESH SECURITY(*)
 ```
 
-And grant `aceapp` permission on queues via `setmqaut`:
+And grant `<UserName>` permission on queues via `setmqaut`:
 ```bash
-setmqaut -m SCBQM -t qmgr -p aceapp +connect +inq
-setmqaut -m SCBQM -n IN.Q -t queue -p aceapp +get +browse +inq
+setmqaut -m <QueueManagerName> -t qmgr -p <UserName> +connect +inq
+setmqaut -m <QueueManagerName> -n <InputQueueName> -t queue -p <UserName> +get +browse +inq
 ```
 
 > [!WARNING]

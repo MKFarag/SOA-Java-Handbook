@@ -30,10 +30,10 @@ Use **`mqsicreatebroker`** to create an Integration Node on your machine, and **
 
 ```bash
 # Without MQ link (HTTP / File flows only)
-mqsicreatebroker DEVNODE
+mqsicreatebroker <IntegrationNodeName>
 
-# Linked to local IBM MQ Queue Manager SCBQM (recommended for MQ flows)
-mqsicreatebroker SCB -q SCBQM
+# Linked to local IBM MQ Queue Manager <QueueManagerName> (recommended for MQ flows)
+mqsicreatebroker <IntegrationNodeName> -q <QueueManagerName>
 ```
 
 <details data-type="output">
@@ -50,14 +50,14 @@ BIP8071I: Successful command completion.
 ## Delete an Integration Node (Must Be Stopped First!)
 
 ```bash
-mqsistop SCB
-mqsideletebroker SCB
+mqsistop <IntegrationNodeName>
+mqsideletebroker <IntegrationNodeName>
 ```
 
-- Notice deleting an Integration Node deletes its managed servers and deployed flows inside it — add **`-w`** (`mqsideletebroker SCB -w`) if you also want to clean its workpath/registry files cleanly.
+- Notice deleting an Integration Node deletes its managed servers and deployed flows inside it — add **`-w`** (`mqsideletebroker <IntegrationNodeName> -w`) if you also want to clean its workpath/registry files cleanly.
 
 > [!NOTE]
-> Remember IBM MQ Queue Manager `SCBQM` must **already exist** before linking it with `-q SCBQM`, or creation succeeds with a warning and startup later fails until `SCBQM` is created.
+> Remember IBM MQ Queue Manager `<QueueManagerName>` must **already exist** before linking it with `-q <QueueManagerName>`, or creation succeeds with a warning and startup later fails until `<QueueManagerName>` is created.
 
 ---
 

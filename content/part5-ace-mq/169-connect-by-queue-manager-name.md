@@ -29,17 +29,17 @@ The fastest way to wire an `MQInput` or `MQOutput` node on your local dev machin
 
 1. Click `MQInput` or `MQOutput` -> **Properties -> MQ Connection**.
 2. Set **Connection** dropdown to **Local queue manager**:
-   - **Leave Queue manager name empty:** Uses the Integration Node's default linked QMGR (`-q SCBQM`) or `server.conf.yaml`'s `defaultQueueManager`.
-   - **Or type `SCBQM` explicitly:** Connects locally in bindings mode to `SCBQM` on the same server.
+   - **Leave Queue manager name empty:** Uses the Integration Node's default linked QMGR (`-q <QueueManagerName>`) or `server.conf.yaml`'s `defaultQueueManager`.
+   - **Or type `<QueueManagerName>` explicitly:** Connects locally in bindings mode to `<QueueManagerName>` on the same server.
 
 ---
 
 ## Remote Direct Option (Client Properties)
 
 You can also pick **MQ client connection properties** directly on the node and type:
-- **Queue manager host name:** e.g. `10.20.30.40`
+- **Queue manager host name:** e.g. `<HostName>`
 - **Listener port number:** e.g. `1414`
-- **Channel name:** e.g. `DEV.APP.SVRCONN`
+- **Channel name:** e.g. `<ChannelName>`
 
 > [!WARNING]
 > Hardcoding host IP, port, and channel directly inside `.msgflow` nodes means **rebuilding the BAR file** for UAT and PROD! For team or multi-environment flows, use **[Method 2: MQEndpoint Policy](#topic-170)** instead.

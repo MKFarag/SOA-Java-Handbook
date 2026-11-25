@@ -41,7 +41,7 @@ Whenever IBM MQ throws an unclear failure (`2035`, channel won't start, Queue Ma
 
 ```bash
 # Linux: watch the last 30 lines live
-tail -n 30 /var/mqm/qmgrs/SCBQM/errors/AMQERR01.LOG
+tail -n 30 /var/mqm/qmgrs/<QueueManagerName>/errors/AMQERR01.LOG
 
 # Lookup ANY AMQ or 4-digit MQRC error code meaning
 mqrc 2059
@@ -53,7 +53,7 @@ mqrc 2059
 ```text
 ----- amqzfema.c : 1492 -------------------------------------------------------
 AMQ9777E: Channel was blocked
-EXPLANATION: The inbound connection to channel 'APP.SVRCONN' from host '10.0.0.5' was blocked by CHLAUTH rule...
+EXPLANATION: The inbound connection to channel '<ChannelName>' from host '<ClientIpAddress>' was blocked by CHLAUTH rule...
 ```
 
 </details>

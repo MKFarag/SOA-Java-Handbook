@@ -28,17 +28,17 @@ On **Linux and Docker containers**, ACE 12 ships with built-in **DataDirect** dr
 
 ## Step 1: Create Your `odbc.ini` File
 
-Create `/var/mqsi/odbc/odbc.ini` (matching your ACE installation folder, e.g., `/opt/ibm/ace-12`):
+Create `<OdbcIniPath>` (matching your ACE installation folder, e.g., `/opt/ibm/ace-12`):
 
 ```ini
 [ODBC Data Sources]
-ORDERS_DB=DataDirect SQL Server Wire Protocol
+<DSN_Name>=DataDirect SQL Server Wire Protocol
 
-[ORDERS_DB]
+[<DSN_Name>]
 Driver=/opt/ibm/ace-12/server/ODBC/drivers/lib/UKsqls95.so
 Description=DataDirect SQL Server Wire Protocol
-Database=OrdersDb
-HostName=sqlserver.company.com
+Database=<DatabaseName>
+HostName=<HostName>
 PortNumber=1433
 AnsiNPW=1
 LoginTimeout=0
@@ -49,7 +49,7 @@ IANAAppCodePage=4
 UNICODE=UTF-8
 ```
 
-*(Connecting to a SQL Server **named instance** instead of port `1433`? Replace `HostName` and omit `PortNumber`: `HostName=sqlserver.company.com\SQLEXPRESS`.)*
+*(Connecting to a SQL Server **named instance** instead of port `1433`? Replace `HostName` and omit `PortNumber`: `HostName=<HostName>\<InstanceName>`.)*
 
 ---
 
@@ -58,7 +58,7 @@ UNICODE=UTF-8
 Before running `mqsicvp`, `mqsistart`, or `IntegrationServer`, tell Linux where your `odbc.ini` lives (add this to your shell profile or container entrypoint after sourcing `mqsiprofile`):
 
 ```bash
-export ODBCINI=/var/mqsi/odbc/odbc.ini
+export ODBCINI=<OdbcIniPath>
 export ODBCSYSINI=/opt/ibm/ace-12/server/ODBC/drivers/etc
 ```
 
@@ -67,7 +67,7 @@ export ODBCSYSINI=/opt/ibm/ace-12/server/ODBC/drivers/etc
 ## Step 3: Check Permissions on `odbc.ini`
 
 ```bash
-chmod 644 /var/mqsi/odbc/odbc.ini
+chmod 644 <OdbcIniPath>
 ```
 
 > [!TIP]

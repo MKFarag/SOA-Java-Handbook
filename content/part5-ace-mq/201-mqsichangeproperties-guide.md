@@ -22,21 +22,21 @@ synonyms:
 
 # Change Properties Live (mqsichangeproperties)
 
-Use **`mqsichangeproperties`** to update server or node settings from the command line — notice you always pass the Node (`SCB`), optional Server (`-e EG1`), component (`-o`), property name (`-n`), and new value (`-v`).
+Use **`mqsichangeproperties`** to update server or node settings from the command line — notice you always pass the Node (`<IntegrationNodeName>`), optional Server (`-e <IntegrationServerName>`), component (`-o`), property name (`-n`), and new value (`-v`).
 
 ---
 
 ## Syntax & Fast Examples
 
 ```bash
-# Change server EG1 embedded HTTP port to 7808
-mqsichangeproperties SCB -e EG1 -o HTTPConnector -n port -v 7808
+# Change server <IntegrationServerName> embedded HTTP port to 7808
+mqsichangeproperties <IntegrationNodeName> -e <IntegrationServerName> -o HTTPConnector -n port -v 7808
 
-# Increase JVM max heap to 1 GB on server EG1
-mqsichangeproperties SCB -e EG1 -o ComIbmJVMManager -n jvmMaxHeapSize -v 1073741824
+# Increase JVM max heap to 1 GB on server <IntegrationServerName>
+mqsichangeproperties <IntegrationNodeName> -e <IntegrationServerName> -o ComIbmJVMManager -n jvmMaxHeapSize -v 1073741824
 
 # Restart server so changes take effect cleanly
-mqsistop SCB -e EG1 && mqsistart SCB -e EG1
+mqsistop <IntegrationNodeName> -e <IntegrationServerName> && mqsistart <IntegrationNodeName> -e <IntegrationServerName>
 ```
 
 <details data-type="output">
@@ -54,7 +54,7 @@ BIP8071I: Successful command completion.
 
 | Flag | Meaning | Example |
 | :--- | :--- | :--- |
-| **`-e EG1`** | Target Integration Server (omit for Node-wide) | `-e EG1` |
+| **`-e <IntegrationServerName>`** | Target Integration Server (omit for Node-wide) | `-e <IntegrationServerName>` |
 | **`-o`** | Object/component name | `-o HTTPConnector`, `-o ComIbmJVMManager` |
 | **`-n`** | Property name | `-n port` |
 | **`-v`** | New value | `-v 7808` |

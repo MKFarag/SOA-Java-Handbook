@@ -26,12 +26,12 @@ By default, a newly created Queue Manager **has no running TCP listener**, causi
 
 ---
 
-## Define, Auto-Start & Verify Listener (`runmqsc SCBQM`)
+## Define, Auto-Start & Verify Listener (`runmqsc <QueueManagerName>`)
 
 ```text
-DEFINE LISTENER('LISTENER.TCP') TRPTYPE(TCP) PORT(1414) CONTROL(QMGR) REPLACE
-START LISTENER('LISTENER.TCP')
-DISPLAY LSSTATUS('LISTENER.TCP')
+DEFINE LISTENER('<ListenerName>') TRPTYPE(TCP) PORT(1414) CONTROL(QMGR) REPLACE
+START LISTENER('<ListenerName>')
+DISPLAY LSSTATUS('<ListenerName>')
 ```
 
 <details data-type="output">
@@ -41,7 +41,7 @@ DISPLAY LSSTATUS('LISTENER.TCP')
 AMQ8626I: IBM MQ listener created.
 AMQ8021I: Request to start IBM MQ Listener accepted.
 AMQ8631I: Display listener status details.
-   LISTENER(LISTENER.TCP)                  STATUS(RUNNING)
+   LISTENER(<ListenerName>)                  STATUS(RUNNING)
    PORT(1414)
 ```
 
@@ -50,7 +50,7 @@ AMQ8631I: Display listener status details.
 ---
 
 > [!TIP]
-> Always include **`CONTROL(QMGR)`**! That tells IBM MQ to automatically start and stop `LISTENER.TCP` every time `strmqm SCBQM` / `endmqm SCBQM` runs in the future.
+> Always include **`CONTROL(QMGR)`**! That tells IBM MQ to automatically start and stop `<ListenerName>` every time `strmqm <QueueManagerName>` / `endmqm <QueueManagerName>` runs in the future.
 
 ---
 

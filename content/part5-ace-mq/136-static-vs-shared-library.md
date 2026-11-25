@@ -57,7 +57,7 @@ Notice what appears on the Integration Server after deployment: **Shared librari
 - Choose a **Static Library** when an app needs its own locked snapshot of helper files and must **not** change when another team updates the library.
 
 > [!WARNING]
-> If you put a **subflow** inside a **Shared Library**, it **must** be inside a named Broker Schema (for example `com.company.common`), not the `(default)` schema. Otherwise referencing apps cannot call it.
+> If you put a **subflow** inside a **Shared Library**, it **must** be inside a named Broker Schema (`<SchemaName>`), not the `(default)` schema. Otherwise referencing apps cannot call it.
 
 ---
 

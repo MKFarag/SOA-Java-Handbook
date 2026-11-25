@@ -21,7 +21,7 @@ synonyms:
 
 # ACE Commands Quick Cheat Sheet
 
-All essential ACE 12 commands on one page — replace `SCB` with your Node name, `EG1` with your Server name, or swap `SCB -e EG1` for `-i localhost -p 7600` on an Independent Server.
+All essential ACE 12 commands on one page — replace `<IntegrationNodeName>` with your Node name, `<IntegrationServerName>` with your Server name, or swap `<IntegrationNodeName> -e <IntegrationServerName>` for `-i localhost -p 7600` on an Independent Server.
 
 ---
 
@@ -31,19 +31,19 @@ All essential ACE 12 commands on one page — replace `SCB` with your Node name,
 | :--- | :--- |
 | **Load CLI environment (Linux)** | `. /opt/ibm/ace-12/server/bin/mqsiprofile` |
 | **List all Nodes** | `mqsilist` |
-| **List Servers & Apps on Node** | `mqsilist SCB -e EG1` |
-| **Create Node + link MQ** | `mqsicreatebroker SCB -q SCBQM` |
-| **Start / Stop Node** | `mqsistart SCB` / `mqsistop SCB` |
-| **Create / Start / Stop Server** | `mqsicreateexecutiongroup SCB -e EG1` / `mqsistart SCB -e EG1` |
-| **Create Independent Server** | `mqsicreateworkdir C:\ace-work\srv1` |
-| **Run Independent Server** | `IntegrationServer --name srv1 --work-dir C:\ace-work\srv1` |
-| **Package BAR from source** | `ibmint package --input-path C:\ws --output-bar-file App.bar --project App` |
-| **Inspect BAR contents** | `mqsireadbar -b App.bar -r` |
-| **Deploy BAR to Server** | `mqsideploy SCB -e EG1 -a App.bar` |
-| **Stop / Start 1 Flow** | `mqsistopmsgflow SCB -e EG1 -k App -m Flow` / `mqsistartmsgflow ...` |
-| **Set DB / MQ credentials** | `mqsisetdbparms SCB -n odbc::DSN -u user -p pass` |
-| **Turn User Trace ON / OFF** | `mqsichangetrace SCB -u -e EG1 -l debug -r` / `-l none` |
-| **Read & Format Trace** | `mqsireadlog SCB -u -e EG1 -o t.xml && mqsiformatlog -i t.xml -o t.txt` |
+| **List Servers & Apps on Node** | `mqsilist <IntegrationNodeName> -e <IntegrationServerName>` |
+| **Create Node + link MQ** | `mqsicreatebroker <IntegrationNodeName> -q <QueueManagerName>` |
+| **Start / Stop Node** | `mqsistart <IntegrationNodeName>` / `mqsistop <IntegrationNodeName>` |
+| **Create / Start / Stop Server** | `mqsicreateexecutiongroup <IntegrationNodeName> -e <IntegrationServerName>` / `mqsistart <IntegrationNodeName> -e <IntegrationServerName>` |
+| **Create Independent Server** | `mqsicreateworkdir <WorkDirPath>` |
+| **Run Independent Server** | `IntegrationServer --name <IntegrationServerName> --work-dir <WorkDirPath>` |
+| **Package BAR from source** | `ibmint package --input-path <WorkspacePath> --output-bar-file <BarFileName>.bar --project <ApplicationName>` |
+| **Inspect BAR contents** | `mqsireadbar -b <BarFileName>.bar -r` |
+| **Deploy BAR to Server** | `mqsideploy <IntegrationNodeName> -e <IntegrationServerName> -a <BarFileName>.bar` |
+| **Stop / Start 1 Flow** | `mqsistopmsgflow <IntegrationNodeName> -e <IntegrationServerName> -k <ApplicationName> -m <MessageFlowName>` / `mqsistartmsgflow ...` |
+| **Set DB / MQ credentials** | `mqsisetdbparms <IntegrationNodeName> -n odbc::<DSN_Name> -u <UserName> -p <Password>` |
+| **Turn User Trace ON / OFF** | `mqsichangetrace <IntegrationNodeName> -u -e <IntegrationServerName> -l debug -r` / `-l none` |
+| **Read & Format Trace** | `mqsireadlog <IntegrationNodeName> -u -e <IntegrationServerName> -o <TraceXmlFile> && mqsiformatlog -i <TraceXmlFile> -o <TraceTxtFile>` |
 
 ---
 

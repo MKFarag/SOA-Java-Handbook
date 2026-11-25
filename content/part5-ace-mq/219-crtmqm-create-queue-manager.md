@@ -29,8 +29,8 @@ synonyms:
 ## Syntax & Example
 
 ```bash
-# Create Queue Manager SCBQM and mark it as this PC's default (-q)
-crtmqm -q SCBQM
+# Create Queue Manager <QueueManagerName> and mark it as this PC's default (-q)
+crtmqm -q <QueueManagerName>
 ```
 
 <details data-type="output">
@@ -38,9 +38,9 @@ crtmqm -q SCBQM
 
 ```text
 IBM MQ queue manager created.
-Directory 'C:\ProgramData\IBM\MQ\qmgrs\SCBQM' created.
+Directory 'C:\ProgramData\IBM\MQ\qmgrs\<QueueManagerName>' created.
 The queue manager is associated with installation 'Installation1'.
-Creating or replacing default objects for queue manager 'SCBQM'.
+Creating or replacing default objects for queue manager '<QueueManagerName>'.
 Default objects statistics : 84 created. 0 replaced. 0 failed.
 Completing setup.
 Setup completed.
@@ -59,7 +59,7 @@ Setup completed.
 | **`-ll`** | Linear logging — keeps archival logs for point-in-time media recovery | High-compliance production |
 
 > [!TIP]
-> Notice `crtmqm` **only creates** the Queue Manager — it starts in `Ended immediately` state until you run **`strmqm SCBQM`**!
+> Notice `crtmqm` **only creates** the Queue Manager — it starts in `Ended immediately` state until you run **`strmqm <QueueManagerName>`**!
 
 ---
 

@@ -45,7 +45,7 @@ IBM ACE prints a **`BIPxxxx`** message code in the console, Web UI, and logs (`I
 
 | Code | Level | Meaning | Exact Action |
 | :--- | :--- | :--- | :--- |
-| **`BIP1284I` / `BIP1285I`** | Info | Integration Server `EG1` is running / stopped | Expected status report from `mqsilist` / `mqsistop` |
+| **`BIP1284I` / `BIP1285I`** | Info | Integration Server `<IntegrationServerName>` is running / stopped | Expected status report from `mqsilist` / `mqsistop` |
 | **`BIP1275I` / `BIP1276I`** | Info | Application / Flow is running / stopped | Resume with `mqsistartmsgflow` if stopped |
 | **`BIP1039I` / `BIP1092I`** | Info | BAR deployment started / completed cleanly | Run `mqsilist <Node> -e <Server>` to confirm active flows |
 | **`BIP9332I`** | Info | Application created or updated cleanly | Normal `mqsideploy` confirmation |

@@ -30,9 +30,9 @@ ESQL gives you built-in string functions — remember string positions are **1-b
 
 | Function | Purpose | Example | Result |
 | :--- | :--- | :--- | :--- |
-| **`||`** | Join strings | `'SCB-' || '101'` | `'SCB-101'` |
+| **`||`** | Join strings | `'<IntegrationNodeName>-' || '101'` | `'<IntegrationNodeName>-101'` |
 | **`TRIM(...)`** | Remove spaces (both ends) | `TRIM('  hi  ')` | `'hi'` |
-| **`UPPER / LOWER`** | Change case | `UPPER('scb')` | `'SCB'` |
+| **`UPPER / LOWER`** | Change case | `UPPER('abc')` | `'<IntegrationNodeName>'` |
 | **`LENGTH(...)`** | Character count | `LENGTH('ACE')` | `3` |
 | **`SUBSTRING(...)`** | Extract slice (1-based!) | `SUBSTRING('ORD-995' FROM 5 FOR 3)` | `'995'` |
 | **`REPLACE(...)`** | Swap text | `REPLACE('A-B-C', '-', '_')` | `'A_B_C'` |
@@ -52,12 +52,12 @@ SET OutputRoot.JSON.Data.domain = SUBSTRING(cleanEmail FROM atPos + 1);
 ```
 
 <details data-type="output">
-<summary>Expected Output (Input: "  Ali@Bank.COM  ")</summary>
+<summary>Expected Output (Input: "  <EmailInput>  ")</summary>
 
 ```json
 {
-  "email": "ali@bank.com",
-  "domain": "bank.com"
+  "email": "<NormalizedEmail>",
+  "domain": "<DomainName>"
 }
 ```
 

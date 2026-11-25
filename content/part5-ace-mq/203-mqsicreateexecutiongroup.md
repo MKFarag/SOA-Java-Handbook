@@ -9,7 +9,7 @@ sectionTitle: 'Integration Node & Server Commands'
 versionBadge: 'ACE 12.0'
 difficulty: Beginner
 readingTime: 2 min read
-shortDescription: "Add a new managed Integration Server (e.g., EG1) inside a running Integration Node."
+shortDescription: "Add a new managed Integration Server inside a running Integration Node."
 object: "Integration Server"
 action: "Create Server"
 commandName: "mqsicreateexecutiongroup"
@@ -22,18 +22,18 @@ synonyms:
 
 # mqsicreateexecutiongroup: Add a Server
 
-Use **`mqsicreateexecutiongroup`** to add a new Integration Server inside an already-running Integration Node (such as `SCB`).
+Use **`mqsicreateexecutiongroup`** to add a new Integration Server inside an already-running Integration Node (such as `<IntegrationNodeName>`).
 
 ---
 
 ## Syntax & Example
 
 ```bash
-# Make sure node SCB is running first!
-mqsistart SCB
+# Make sure node <IntegrationNodeName> is running first!
+mqsistart <IntegrationNodeName>
 
-# Create server EG1 inside SCB
-mqsicreateexecutiongroup SCB -e EG1
+# Create server <IntegrationServerName> inside <IntegrationNodeName>
+mqsicreateexecutiongroup <IntegrationNodeName> -e <IntegrationServerName>
 ```
 
 <details data-type="output">
@@ -50,7 +50,7 @@ BIP8071I: Successful command completion.
 ## Good to Know
 
 - Notice the Integration Node **must be running** before calling `mqsicreateexecutiongroup`.
-- Verify immediately with `mqsilist SCB` — `EG1` automatically starts as part of creation!
+- Verify immediately with `mqsilist <IntegrationNodeName>` — `<IntegrationServerName>` automatically starts as part of creation!
 - Need to point directly to a remote Node? Pass host/port or a `.broker` file with `-i` and `-p`.
 
 ---

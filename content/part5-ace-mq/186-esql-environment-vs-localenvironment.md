@@ -43,7 +43,7 @@ Save the original order ID in `Environment`, then dynamically override the `HTTP
 SET Environment.Variables.origOrderId = InputRoot.JSON.Data.orderId;
 
 SET OutputLocalEnvironment.Destination.HTTP.RequestURL =
-    'https://api.internal/customers/' || InputRoot.JSON.Data.customerId;
+    'https://<ApiHostName>/<ResourcePath>/' || InputRoot.JSON.Data.customerId;
 ```
 
 > [!WARNING]

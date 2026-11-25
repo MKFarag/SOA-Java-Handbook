@@ -30,7 +30,7 @@ In ACE, every flow you build should live inside an **Application**. An Applicati
 ## How to Create an Application
 
 1. In the **Application Development** pane (top-left), click **New -> Application** (or right-click empty white space -> **New -> Application...**).
-2. Type a clear name, such as `OrderApp`.
+2. Type a clear name, such as `<ApplicationName>`.
 3. Leave the working set default or click **Next** if you want to include an existing library right now.
 4. Click **Finish**.
 

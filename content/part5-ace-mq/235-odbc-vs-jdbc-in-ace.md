@@ -54,7 +54,7 @@ Make sure **SQL Server itself** allows TCP connections first (especially on a lo
 netstat -ano | findstr :1433
 
 # Windows PowerShell (check reachability + Firewall from ACE machine)
-Test-NetConnection -ComputerName sqlserver-host -Port 1433
+Test-NetConnection -ComputerName <HostName> -Port 1433
 
 # Linux (check listening socket on port 1433)
 ss -tlnp | grep :1433
@@ -71,7 +71,7 @@ ss -tlnp | grep :1433
 </details>
 
 > [!NOTE]
-> Using a dynamic **Named Instance** like `DBHOST\SQLEXPRESS` instead of fixed port `1433`? Make sure the **SQL Server Browser** Windows service is running too — it listens on **UDP port `1434`** to tell ACE which port that instance uses!
+> Using a dynamic **Named Instance** like `<HostName>\<InstanceName>` instead of fixed port `1433`? Make sure the **SQL Server Browser** Windows service is running too — it listens on **UDP port `1434`** to tell ACE which port that instance uses!
 
 > [!TIP]
 > If your flow uses **ESQL inside a `Compute` node** (the most common pattern in ACE), follow the **ODBC** path in the next topic! You only need `JDBCProviders` if you query tables inside a **Mapping (`.map`)** or **JavaCompute** node.

@@ -30,13 +30,13 @@ synonyms:
 
 ```bash
 # Check Node-wide HTTP listener & HTTPS settings
-mqsireportproperties SCB -b httplistener -o HTTPConnector -a
+mqsireportproperties <IntegrationNodeName> -b httplistener -o HTTPConnector -a
 
-# Check JVM heap size on server EG1
-mqsireportproperties SCB -e EG1 -o ComIbmJVMManager -a
+# Check JVM heap size on server <IntegrationServerName>
+mqsireportproperties <IntegrationNodeName> -e <IntegrationServerName> -o ComIbmJVMManager -a
 
 # Check Node general info (including WebAdmin port & linked QMGR)
-mqsireportproperties SCB -o BrokerRegistry -a
+mqsireportproperties <IntegrationNodeName> -o BrokerRegistry -a
 ```
 
 <details data-type="output">

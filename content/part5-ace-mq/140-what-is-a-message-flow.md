@@ -39,7 +39,7 @@ A **Message Flow (`.msgflow`)** is a visual assembly line inside an Application.
 
 ```text
   [MQInput]  ───(Out)───▶  [Mapping / Compute]  ───(Out)───▶  [MQOutput]
-  (Wakes up)                 (Transforms JSON/XML)             (Writes to OUT.Q)
+  (Wakes up)                 (Transforms JSON/XML)             (Writes to <OutputQueueName>)
 ```
 
 - A message flow **does not poll in a loop**; it waits quietly using almost zero CPU until a message lands on its Input node.

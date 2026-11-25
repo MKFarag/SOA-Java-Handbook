@@ -33,7 +33,7 @@ Every ACE 12 Integration Server is configured through a clean, readable YAML fil
 restAdminListener:
   port: 7600                  # Web UI & mqsideploy / Toolkit admin port
 
-defaultQueueManager: 'SCBQM'  # Default local MQ Queue Manager if node doesn't specify one
+defaultQueueManager: '<QueueManagerName>'  # Default local MQ Queue Manager if node doesn't specify one
 
 ResourceManagers:
   HTTPConnector:

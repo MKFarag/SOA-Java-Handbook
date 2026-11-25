@@ -22,7 +22,7 @@ synonyms:
 
 # amqsbcg: Peek at Messages Without Deleting
 
-Need to check what landed on `IN.BO.Q` or `OUT.Q` **without removing it** (and inspect full `MQMD` headers like `ReplyToQ` and `CorrelId`)? Run **`amqsbcg`**.
+Need to check what landed on `<BackoutQueueName>` or `<OutputQueueName>` **without removing it** (and inspect full `MQMD` headers like `ReplyToQ` and `CorrelId`)? Run **`amqsbcg`**.
 
 ![IBM MQ Explorer Queues view showing depth without draining messages](/images/ace/mq-explorer-queues-depth.png)
 
@@ -31,7 +31,7 @@ Need to check what landed on `IN.BO.Q` or `OUT.Q` **without removing it** (and i
 ## Syntax & Example
 
 ```bash
-amqsbcg OUT.Q SCBQM
+amqsbcg <OutputQueueName> <QueueManagerName>
 ```
 
 <details data-type="output">

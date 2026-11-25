@@ -30,10 +30,10 @@ Every IBM MQ environment — from a developer laptop to a bank cluster — runs 
 
 | Object | Simple Job | Real Example | When Needed? |
 | :--- | :--- | :--- | :--- |
-| **Queue Manager (`QMGR`)** | The MQ server container | `SCBQM` | Always (hosts everything below) |
-| **Queue (`QLOCAL`)** | Mailbox storing messages | `IN.Q`, `OUT.Q` | Always (where ACE reads/writes) |
-| **Listener (`LISTENER`)** | Opens a TCP/IP network port | `LISTENER.TCP` on port `1414` | Whenever apps or ACE connect **remotely** (`CLIENT` mode) |
-| **Channel (`SVRCONN`)** | Network doorway for remote apps | `APP.SVRCONN` | Whenever apps or ACE connect **remotely** (`CLIENT` mode) |
+| **Queue Manager (`QMGR`)** | The MQ server container | `<QueueManagerName>` | Always (hosts everything below) |
+| **Queue (`QLOCAL`)** | Mailbox storing messages | `<InputQueueName>`, `<OutputQueueName>` | Always (where ACE reads/writes) |
+| **Listener (`LISTENER`)** | Opens a TCP/IP network port | `<ListenerName>` on port `1414` | Whenever apps or ACE connect **remotely** (`CLIENT` mode) |
+| **Channel (`SVRCONN`)** | Network doorway for remote apps | `<ChannelName>` | Whenever apps or ACE connect **remotely** (`CLIENT` mode) |
 
 ---
 

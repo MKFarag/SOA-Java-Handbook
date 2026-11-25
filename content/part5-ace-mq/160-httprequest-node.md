@@ -29,7 +29,7 @@ synonyms:
 
 | Tab | Property | Example | Purpose |
 | :--- | :--- | :--- | :--- |
-| **Basic** | **Web service URL \*** | `https://api.example.com/rates` | Default endpoint URL |
+| **Basic** | **Web service URL \*** | `https://<ApiHostName>/<EndpointPath>` | Default endpoint URL |
 | **HTTP Settings** | **HTTP method** | `GET` / `POST` | Defaults to `POST` if you forget to switch it for a `GET`! |
 | **Response Message Parsing** | **Message domain** | `JSON` | Tells ACE how to parse the API's response body |
 | **Request** | **Request timeout (sec)** | `30` (default `120`) | How long ACE waits before failing |
@@ -49,7 +49,7 @@ synonyms:
 Set the target URL dynamically per request (needs `Compute mode = LocalEnvironment And Message` before `HTTPRequest`):
 
 ```esql
-SET OutputLocalEnvironment.Destination.HTTP.RequestURL = 'https://api.example.com/orders/' || orderId;
+SET OutputLocalEnvironment.Destination.HTTP.RequestURL = 'https://<ApiHostName>/<ResourcePath>/' || orderId;
 SET OutputLocalEnvironment.Destination.HTTP.RequestLine.Method = 'GET';
 ```
 

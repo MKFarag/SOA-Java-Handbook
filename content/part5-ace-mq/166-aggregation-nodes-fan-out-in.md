@@ -30,20 +30,20 @@ Suppose one customer order needs price data from **Inventory** AND risk data fro
 ### Flow 1 (Fan-Out):
 ```text
                         ┌──▶ [Compute A] ──▶ [MQOutput (INV.Q)] ──▶ [AggregateRequest ('INV')]
-  [Input] ──▶ [AggregateControl ('ORDER_AGG', Timeout=10s)]
+  [Input] ──▶ [AggregateControl ('<AggregateName>', Timeout=10s)]
                         └──▶ [Compute B] ──▶ [MQOutput (FRD.Q)] ──▶ [AggregateRequest ('FRD')]
 ```
 
 ### Flow 2 (Fan-In):
 ```text
-  [MQInput (REPLIES.Q)] ──▶ [AggregateReply ('ORDER_AGG')] ──▶ [Compute (Combine Results)] ──▶ [Output]
+  [MQInput (<ReplyQueueName>)] ──▶ [AggregateReply ('<AggregateName>')] ──▶ [Compute (Combine Results)] ──▶ [Output]
 ```
 
 ---
 
 ## Rules to Remember
 
-1. **Matching `Aggregate name`:** `AggregateControl`, both `AggregateRequest` nodes, and `AggregateReply` must share the exact same **Aggregate name** (e.g., `ORDER_AGG`).
+1. **Matching `Aggregate name`:** `AggregateControl`, both `AggregateRequest` nodes, and `AggregateReply` must share the exact same **Aggregate name** (`<AggregateName>`).
 2. **Place `AggregateRequest` *after* `MQOutput` / `HTTPRequest`:** It records each outbound folder name (`INV`, `FRD`) after sending.
 3. **Wire `AggregateReply.Timeout`:** Always wire the `Timeout` (or `Unknown`) terminal so partial replies are still handled cleanly if one backend stalls!
 

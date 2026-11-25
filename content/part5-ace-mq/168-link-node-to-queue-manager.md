@@ -35,11 +35,11 @@ mqsicreatebroker <NodeName> -q <QueueManagerName>
 
 ## Fast Example
 
-First ensure `SCBQM` exists in IBM MQ, then create node `SCB` linked to `SCBQM`:
+First ensure `<QueueManagerName>` exists in IBM MQ, then create node `<IntegrationNodeName>` linked to `<QueueManagerName>`:
 
 ```bash
-mqsicreatebroker SCB -q SCBQM
-mqsistart SCB
+mqsicreatebroker <IntegrationNodeName> -q <QueueManagerName>
+mqsistart <IntegrationNodeName>
 ```
 
 <details data-type="output">
@@ -54,11 +54,11 @@ BIP8096I: Successful command initiation, check the system log to ensure that the
 
 ---
 
-## What Happens When You Start `SCB`
+## What Happens When You Start `<IntegrationNodeName>`
 
-1. ACE checks that `SCBQM` is running on the same PC (local bindings).
-2. If `SCBQM` is **stopped**, `mqsistart SCB` **auto-starts `SCBQM`** or fails if `SCBQM` does not exist (`BIP8018E`).
-3. You can verify the link anytime with `mqsilist` — look for `with queue manager 'SCBQM'`.
+1. ACE checks that `<QueueManagerName>` is running on the same PC (local bindings).
+2. If `<QueueManagerName>` is **stopped**, `mqsistart <IntegrationNodeName>` **auto-starts `<QueueManagerName>`** or fails if `<QueueManagerName>` does not exist (`BIP8018E`).
+3. You can verify the link anytime with `mqsilist` — look for `with queue manager '<QueueManagerName>'`.
 
 > [!WARNING]
 > **Using an Independent Integration Server?** An Independent Server has **no Integration Node**, so `-q` does not apply — instead use an **`MQEndpoint` policy** or set **`defaultQueueManager`** in `server.conf.yaml`!

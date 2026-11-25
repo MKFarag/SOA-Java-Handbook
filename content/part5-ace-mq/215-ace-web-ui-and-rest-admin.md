@@ -32,7 +32,7 @@ Every ACE Node and Independent Integration Server ships with a clean **browser W
 
 | Setup | Default Port | Open in Browser |
 | :--- | :--- | :--- |
-| **Integration Node** (e.g., `SCB`) | **`4414`** | `http://localhost:4414` |
+| **Integration Node** (`<IntegrationNodeName>`) | **`4414`** | `http://localhost:4414` |
 | **Independent Integration Server** | **`7600`** | `http://localhost:7600` |
 
 *(Confirm exact port anytime in `server.conf.yaml` -> `restAdminListener.port` or `mqsireportproperties <Node> -b webadmin -o HTTPConnector -a`.)*

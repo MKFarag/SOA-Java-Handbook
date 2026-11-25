@@ -31,9 +31,9 @@ synonyms:
 When you double-click a `Compute` node, ACE generates a module linked to that node:
 
 ```esql
-BROKER SCHEMA com.company.orders
+BROKER SCHEMA <SchemaName>
 
-CREATE COMPUTE MODULE Order_Compute
+CREATE COMPUTE MODULE <ComputeModuleName>
     CREATE FUNCTION Main() RETURNS BOOLEAN
     BEGIN
         CALL CopyMessageHeaders();

@@ -22,7 +22,7 @@ synonyms:
 
 # Dead-Letter Queue (DLQ) & Alias Queues
 
-In production, never leave poison messages stuck looping infinitely on `IN.Q`. Configure a **Backout Queue** (`BOQNAME` + `BOTHRESH`) and a Queue Manager **Dead-Letter Queue (`DEADQ`)**.
+In production, never leave poison messages stuck looping infinitely on `<InputQueueName>`. Configure a **Backout Queue** (`BOQNAME` + `BOTHRESH`) and a Queue Manager **Dead-Letter Queue (`DEADQ`)**.
 
 ---
 
@@ -30,15 +30,15 @@ In production, never leave poison messages stuck looping infinitely on `IN.Q`. C
 
 ```text
 * 1. Create DLQ & register it on the Queue Manager
-DEFINE QLOCAL('DEAD.LETTER.Q') DEFPSIST(YES) REPLACE
-ALTER QMGR DEADQ('DEAD.LETTER.Q')
+DEFINE QLOCAL('<DeadLetterQueueName>') DEFPSIST(YES) REPLACE
+ALTER QMGR DEADQ('<DeadLetterQueueName>')
 
-* 2. Create Backout Queue for IN.Q poison messages (move after 3 failed retries!)
-DEFINE QLOCAL('IN.BO.Q') DEFPSIST(YES) REPLACE
-ALTER QLOCAL('IN.Q') BOQNAME('IN.BO.Q') BOTHRESH(3)
+* 2. Create Backout Queue for <InputQueueName> poison messages (move after 3 failed retries!)
+DEFINE QLOCAL('<BackoutQueueName>') DEFPSIST(YES) REPLACE
+ALTER QLOCAL('<InputQueueName>') BOQNAME('<BackoutQueueName>') BOTHRESH(3)
 ```
 
-Now if an ACE flow crashes 3 times on a malformed message, MQ automatically moves that message to `IN.BO.Q` so healthy orders keep flowing!
+Now if an ACE flow crashes 3 times on a malformed message, MQ automatically moves that message to `<BackoutQueueName>` so healthy orders keep flowing!
 
 ---
 
@@ -47,7 +47,7 @@ Now if an ACE flow crashes 3 times on a malformed message, MQ automatically move
 An alias lets an app send to a friendly virtual name without changing code when the target queue changes:
 
 ```text
-DEFINE QALIAS('ORDERS.ALIAS') TARGET('OUT.Q') REPLACE
+DEFINE QALIAS('<AliasQueueName>') TARGET('<OutputQueueName>') REPLACE
 ```
 
 ---

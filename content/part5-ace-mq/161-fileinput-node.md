@@ -29,7 +29,7 @@ synonyms:
 
 | Tab | Property | Example | Why It Matters |
 | :--- | :--- | :--- | :--- |
-| **Basic** | **Input directory \*** | `C:\ace-data\in` | Folder ACE scans for incoming files |
+| **Basic** | **Input directory \*** | `<InputDirectory>` | Folder ACE scans for incoming files |
 | **Basic** | **File name or pattern** | `*.csv` or `orders_*.xml` | Picks which files to read |
 | **Basic** | **Action on successful processing** | `Move to Archive Subdirectory` | Prevents re-reading the same file forever! |
 | **Records and Elements** | **Record detection** | `Whole File` / `Delimited (Line)` / `Parsed Record` | Lets you split a 10,000-line CSV into 10,000 tiny flow runs |

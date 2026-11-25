@@ -29,28 +29,28 @@ An **`MQEndpoint` Policy** stores MQ host, port, queue manager, channel, and sec
 
 ## Create & Attach an `MQEndpoint` Policy (4 Steps)
 
-1. In Toolkit: **New -> Policy Project** -> name it `AppPolicies`.
-2. Right-click `AppPolicies` -> **New -> Policy** -> name it `OrderQM`.
+1. In Toolkit: **New -> Policy Project** -> name it `<PolicyProjectName>`.
+2. Right-click `<PolicyProjectName>` -> **New -> Policy** -> name it `<PolicyName>`.
 3. Set **Type = `MQEndpoint`**, **Template = `MQEndpoint`**, and fill in:
    - **Connection:** `CLIENT` (remote) or `LOCAL` (same machine)
-   - **Queue manager name:** `SCBQM`
-   - **Queue manager host name:** `mq-server.internal` *(for `CLIENT`)*
+   - **Queue manager name:** `<QueueManagerName>`
+   - **Queue manager host name:** `<HostName>` *(for `CLIENT`)*
    - **Listener port number:** `1414` *(for `CLIENT`)*
    - **Channel name:** `SYSTEM.DEF.SVRCONN` *(for `CLIENT`)*
 4. Back on your **`MQInput` / `MQOutput`** node -> **Properties -> Policy -> Policy**, type:
 
 ```text
-{AppPolicies}:OrderQM
+{<PolicyProjectName>}:<PolicyName>
 ```
 
 ---
 
 ## Using the Same Flow in UAT & PROD
 
-Deploy the exact same Application BAR everywhere, and just deploy a different `AppPolicies` Policy Project per environment (DEV points to `dev-mq:1414`, PROD points to `prod-mq:1415`).
+Deploy the exact same Application BAR everywhere, and just deploy a different `<PolicyProjectName>` Policy Project per environment (DEV points to `<DevHostName>:<Port>`, PROD points to `<ProdHostName>:<Port>`).
 
 > [!TIP]
-> Need a username/password or TLS keystore on that remote MQ channel? Add **`Security identity`** inside the `MQEndpoint` policy and run `mqsisetdbparms <Node> -n mq::myCreds -u appuser -p secret`.
+> Need a username/password or TLS keystore on that remote MQ channel? Add **`Security identity`** inside the `MQEndpoint` policy and run `mqsisetdbparms <Node> -n mq::<SecurityIdentityName> -u <UserName> -p <Password>`.
 
 ---
 

@@ -9,7 +9,7 @@ sectionTitle: 'IBM MQ Commands'
 versionBadge: 'IBM MQ 9.4'
 difficulty: Beginner
 readingTime: 2 min read
-shortDescription: "Create durable local queues (like IN.Q and OUT.Q) in IBM MQ using runmqsc DEFINE QLOCAL or MQ Explorer."
+shortDescription: "Create durable local queues in IBM MQ using runmqsc DEFINE QLOCAL or MQ Explorer."
 object: "Local Queue"
 action: "Create Queue"
 commandName: "DEFINE QLOCAL"
@@ -31,14 +31,14 @@ Every queue your ACE `MQInput` or `MQOutput` node names **must exist on the Queu
 ## Create Queues via CLI (`runmqsc`)
 
 ```bash
-runmqsc SCBQM
+runmqsc <QueueManagerName>
 ```
 
 Inside `runmqsc`:
 
 ```text
-DEFINE QLOCAL('IN.Q')  DESCR('Orders inbound queue')  DEFPSIST(YES) MAXDEPTH(50000) REPLACE
-DEFINE QLOCAL('OUT.Q') DESCR('Orders outbound queue') DEFPSIST(YES) MAXDEPTH(50000) REPLACE
+DEFINE QLOCAL('<InputQueueName>')  DESCR('Orders inbound queue')  DEFPSIST(YES) MAXDEPTH(50000) REPLACE
+DEFINE QLOCAL('<OutputQueueName>') DESCR('Orders outbound queue') DEFPSIST(YES) MAXDEPTH(50000) REPLACE
 END
 ```
 
@@ -63,7 +63,7 @@ AMQ8006I: IBM MQ queue created.
 | **`REPLACE`** | Updates properties safely if already exists | Makes scripts idempotent (`run` cleanly twice!) |
 
 > [!TIP]
-> Queue names are **case-sensitive**: `'IN.Q'` and `'in.q'` are completely different queues in IBM MQ! Stick to uppercase letters and dots (`APP.IN.Q`) cleanly across MQ and ACE.
+> Queue names are **case-sensitive**: `'<InputQueueName>'` and `'in.q'` are completely different queues in IBM MQ! Stick to uppercase letters and dots (`APP.<InputQueueName>`) cleanly across MQ and ACE.
 
 ---
 

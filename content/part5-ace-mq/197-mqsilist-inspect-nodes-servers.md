@@ -33,24 +33,24 @@ synonyms:
 | Command | What It Shows |
 | :--- | :--- |
 | `mqsilist` | Every Integration Node on this PC + linked Queue Manager + status |
-| `mqsilist SCB` | All Integration Servers (e.g., `EG1`) running inside node `SCB` |
-| `mqsilist SCB -e EG1` | All Applications, Libraries, and Policies deployed on server `EG1` |
-| `mqsilist SCB -e EG1 -k OrderApp -d 2` | Deep view (`-d 2`) of every flow, status, and endpoints inside `OrderApp` |
+| `mqsilist <IntegrationNodeName>` | All Integration Servers (`<IntegrationServerName>`) running inside node `<IntegrationNodeName>` |
+| `mqsilist <IntegrationNodeName> -e <IntegrationServerName>` | All Applications, Libraries, and Policies deployed on server `<IntegrationServerName>` |
+| `mqsilist <IntegrationNodeName> -e <IntegrationServerName> -k <ApplicationName> -d 2` | Deep view (`-d 2`) of every flow, status, and endpoints inside `<ApplicationName>` |
 
 ---
 
 ## Fast Example
 
 ```bash
-mqsilist SCB -e EG1
+mqsilist <IntegrationNodeName> -e <IntegrationServerName>
 ```
 
 <details data-type="output">
 <summary>Expected Output</summary>
 
 ```text
-BIP1275I: Application 'OrderApp' on integration server 'EG1' is running.
-BIP1284I: Integration server 'EG1' on integration node 'SCB' is running.
+BIP1275I: Application '<ApplicationName>' on integration server '<IntegrationServerName>' is running.
+BIP1284I: Integration server '<IntegrationServerName>' on integration node '<IntegrationNodeName>' is running.
 BIP8071I: Successful command completion.
 ```
 

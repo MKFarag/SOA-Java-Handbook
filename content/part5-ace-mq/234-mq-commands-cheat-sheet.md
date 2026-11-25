@@ -21,7 +21,7 @@ synonyms:
 
 # IBM MQ Commands Cheat Sheet
 
-Replace `SCBQM` with your Queue Manager name and `IN.Q` / `OUT.Q` with your queue names.
+Replace `<QueueManagerName>` with your Queue Manager name and `<InputQueueName>` / `<OutputQueueName>` with your queue names.
 
 ---
 
@@ -31,25 +31,25 @@ Replace `SCBQM` with your Queue Manager name and `IN.Q` / `OUT.Q` with your queu
 | :--- | :--- |
 | Check Queue Managers & statuses | `dspmq` |
 | Check MQ version | `dspmqver` |
-| Create QMGR & set default | `crtmqm -q SCBQM` |
-| Start / Stop QMGR | `strmqm SCBQM` / `endmqm -w SCBQM` |
-| Delete QMGR | `dltmqm SCBQM` |
-| Open MQSC admin prompt | `runmqsc SCBQM` |
-| Send / Get / Browse test msg | `amqsput IN.Q SCBQM` / `amqsget OUT.Q SCBQM` / `amqsbcg IN.Q SCBQM` |
+| Create QMGR & set default | `crtmqm -q <QueueManagerName>` |
+| Start / Stop QMGR | `strmqm <QueueManagerName>` / `endmqm -w <QueueManagerName>` |
+| Delete QMGR | `dltmqm <QueueManagerName>` |
+| Open MQSC admin prompt | `runmqsc <QueueManagerName>` |
+| Send / Get / Browse test msg | `amqsput <InputQueueName> <QueueManagerName>` / `amqsget <OutputQueueName> <QueueManagerName>` / `amqsbcg <InputQueueName> <QueueManagerName>` |
 | Translate MQRC code | `mqrc 2035` |
 
 ---
 
-## Inside `runmqsc SCBQM`
+## Inside `runmqsc <QueueManagerName>`
 
 | Task | MQSC Command |
 | :--- | :--- |
-| Create local queue | `DEFINE QLOCAL('IN.Q') DEFPSIST(YES) MAXDEPTH(50000) REPLACE` |
+| Create local queue | `DEFINE QLOCAL('<InputQueueName>') DEFPSIST(YES) MAXDEPTH(50000) REPLACE` |
 | List user queues + depth | `DISPLAY QLOCAL(*) WHERE(NAME NS 'SYSTEM.') CURDEPTH` |
-| Who has queue open (`PID`)? | `DISPLAY QSTATUS('IN.Q') TYPE(HANDLE) APPLTAG PID` |
-| Empty all messages in queue | `CLEAR QLOCAL('IN.Q')` |
-| Create & start port 1414 listener | `DEFINE LISTENER('L.TCP') TRPTYPE(TCP) PORT(1414) CONTROL(QMGR) REPLACE` + `START LISTENER('L.TCP')` |
-| Create remote client channel | `DEFINE CHANNEL('APP.SVRCONN') CHLTYPE(SVRCONN) TRPTYPE(TCP) REPLACE` |
+| Who has queue open (`PID`)? | `DISPLAY QSTATUS('<InputQueueName>') TYPE(HANDLE) APPLTAG PID` |
+| Empty all messages in queue | `CLEAR QLOCAL('<InputQueueName>')` |
+| Create & start port 1414 listener | `DEFINE LISTENER('<ListenerName>') TRPTYPE(TCP) PORT(1414) CONTROL(QMGR) REPLACE` + `START LISTENER('<ListenerName>')` |
+| Create remote client channel | `DEFINE CHANNEL('<ChannelName>') CHLTYPE(SVRCONN) TRPTYPE(TCP) REPLACE` |
 | Exit `runmqsc` | `END` |
 
 ---

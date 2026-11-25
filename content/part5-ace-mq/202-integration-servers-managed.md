@@ -32,15 +32,15 @@ An **Integration Server** *(called Execution Group in older versions)* is an iso
 
 | Benefit | Real Example |
 | :--- | :--- |
-| **Crash Isolation** | If `PaymentsServer` runs out of memory, `ReportingServer` stays completely unaffected |
-| **Independent Restarts** | Restart or deploy to `EG1` without dropping HTTP traffic on `EG2` |
-| **Separate JVM & HTTP Ports** | Give `EG1` port `7800` + 512MB RAM and `EG2` port `7801` + 2GB RAM |
+| **Crash Isolation** | If `<Server1Name>` runs out of memory, `<Server2Name>` stays completely unaffected |
+| **Independent Restarts** | Restart or deploy to `<IntegrationServerName>` without dropping HTTP traffic on `<Server2Name>` |
+| **Separate JVM & HTTP Ports** | Give `<IntegrationServerName>` port `7800` + 512MB RAM and `<Server2Name>` port `7801` + 2GB RAM |
 
 ---
 
 ## Managed vs. Independent Server
 
-- **Managed Server** *(created inside a Node)*: Controlled via `mqsicreateexecutiongroup`, `mqsideploy NODE -e EG1`, etc.
+- **Managed Server** *(created inside a Node)*: Controlled via `mqsicreateexecutiongroup`, `mqsideploy NODE -e <IntegrationServerName>`, etc.
 - **Independent Server** *(no Integration Node)*: Created in a folder via `mqsicreateworkdir` and started directly via `IntegrationServer`.
 
 ---

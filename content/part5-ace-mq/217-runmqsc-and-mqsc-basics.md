@@ -29,14 +29,14 @@ IBM MQ divides commands in two: **OS shell commands** (like `crtmqm`, `strmqm`, 
 ## Mode 1: Interactive Shell
 
 ```bash
-runmqsc SCBQM
+runmqsc <QueueManagerName>
 ```
 
-Once inside `Starting MQSC for queue manager SCBQM.`, type MQSC commands directly, and type **`END`** to exit back to CMD/Bash:
+Once inside `Starting MQSC for queue manager <QueueManagerName>.`, type MQSC commands directly, and type **`END`** to exit back to CMD/Bash:
 
 ```text
-DEFINE QLOCAL('IN.Q') REPLACE
-DISPLAY QLOCAL('IN.Q')
+DEFINE QLOCAL('<InputQueueName>') REPLACE
+DISPLAY QLOCAL('<InputQueueName>')
 END
 ```
 
@@ -45,9 +45,9 @@ END
 
 ```text
 5724-H72 (C) Copyright IBM Corp. 1994, 2024.
-Starting MQSC for queue manager SCBQM.
+Starting MQSC for queue manager <QueueManagerName>.
 
-     1 : DEFINE QLOCAL('IN.Q') REPLACE
+     1 : DEFINE QLOCAL('<InputQueueName>') REPLACE
 AMQ8006I: IBM MQ queue created.
      2 : END
 One MQSC command read.
@@ -63,11 +63,11 @@ No commands have a syntax error.
 Skip typing `END` manually by piping commands into `runmqsc`:
 
 ```bash
-echo DISPLAY QLOCAL(*) | runmqsc SCBQM
+echo DISPLAY QLOCAL(*) | runmqsc <QueueManagerName>
 ```
 
 > [!TIP]
-> Notice **MQSC converts unquoted names to UPPERCASE automatically!** Always wrap queue names in **single quotes (`'IN.Q'`)** if your queue or channel uses lowercase or dots!
+> Notice **MQSC converts unquoted names to UPPERCASE automatically!** Always wrap queue names in **single quotes (`'<InputQueueName>'`)** if your queue or channel uses lowercase or dots!
 
 ---
 

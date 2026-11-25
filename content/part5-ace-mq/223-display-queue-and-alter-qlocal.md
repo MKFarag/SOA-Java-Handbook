@@ -32,14 +32,14 @@ Use **`DISPLAY QLOCAL`** to list queues or read settings (including how many mes
 * List all non-system user queues cleanly (skip SYSTEM.* clutter)
 DISPLAY QLOCAL(*) WHERE(NAME NS 'SYSTEM.') CURDEPTH MAXDEPTH
 
-* Check every setting on IN.Q
-DISPLAY QLOCAL('IN.Q') ALL
+* Check every setting on <InputQueueName>
+DISPLAY QLOCAL('<InputQueueName>') ALL
 
 * Increase MAXDEPTH to 100,000 without losing messages
-ALTER QLOCAL('IN.Q') MAXDEPTH(100000)
+ALTER QLOCAL('<InputQueueName>') MAXDEPTH(100000)
 
 * Temporarily block producers from putting new messages (GET still allowed!)
-ALTER QLOCAL('IN.Q') PUT(DISABLED)
+ALTER QLOCAL('<InputQueueName>') PUT(DISABLED)
 ```
 
 <details data-type="output">
@@ -47,10 +47,10 @@ ALTER QLOCAL('IN.Q') PUT(DISABLED)
 
 ```text
 AMQ8409I: Display Queue details.
-   QUEUE(IN.Q)                             TYPE(QLOCAL)
+   QUEUE(<InputQueueName>)                             TYPE(QLOCAL)
    CURDEPTH(3)                             MAXDEPTH(50000)
 AMQ8409I: Display Queue details.
-   QUEUE(OUT.Q)                            TYPE(QLOCAL)
+   QUEUE(<OutputQueueName>)                            TYPE(QLOCAL)
    CURDEPTH(0)                             MAXDEPTH(50000)
 ```
 
@@ -59,7 +59,7 @@ AMQ8409I: Display Queue details.
 ---
 
 > [!TIP]
-> `PUT(DISABLED)` is super handy during maintenance: callers stop putting new messages on `IN.Q`, while your ACE flow finishes draining the remaining `CURDEPTH` safely! Set `PUT(ENABLED)` when done.
+> `PUT(DISABLED)` is super handy during maintenance: callers stop putting new messages on `<InputQueueName>`, while your ACE flow finishes draining the remaining `CURDEPTH` safely! Set `PUT(ENABLED)` when done.
 
 ---
 

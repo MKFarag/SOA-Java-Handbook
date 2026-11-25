@@ -29,14 +29,14 @@ synonyms:
 
 | Situation | Use `MQReply`? | Reason |
 | :--- | :--- | :--- |
-| Caller set `MQMD.ReplyToQ = 'APP1.REPLY.Q'` and expects dynamic reply | **Yes** | Automatically routes back to whoever called you |
-| Flow always pushes to one fixed queue `OUT.Q` | **No** (use `MQOutput`) | Request messages might not have `ReplyToQ` populated |
+| Caller set `MQMD.ReplyToQ = '<ReplyToQueueName>'` and expects dynamic reply | **Yes** | Automatically routes back to whoever called you |
+| Flow always pushes to one fixed queue `<OutputQueueName>` | **No** (use `MQOutput`) | Request messages might not have `ReplyToQ` populated |
 
 ---
 
 ## How Request-Reply Correlation Works
 
-1. Caller sends request on `REQ.Q` with `MQMD.MsgId = 0x1234` and `MQMD.ReplyToQ = 'CLIENT.REPLY.Q'`.
+1. Caller sends request on `<RequestQueueName>` with `MQMD.MsgId = 0x1234` and `MQMD.ReplyToQ = '<ReplyToQueueName>'`.
 2. Your flow processes the request and reaches **`MQReply`**.
 3. Check **`MQMD.CorrelId = MsgId`** (automatic when your `Compute` node copies `MQMD` headers or uses default `MQReply` behavior) so the waiting caller picks up **its exact reply**.
 

@@ -29,8 +29,8 @@ Building your first flow takes 4 quick actions in the Toolkit.
 
 ## Step 1: Create the Flow File
 
-1. Right-click your Application (for example `OrderApp`) -> **New -> Message Flow**.
-2. Type a flow name like `ProcessOrderFlow`.
+1. Right-click your Application (`<ApplicationName>`) -> **New -> Message Flow**.
+2. Type a flow name like `<MessageFlowName>`.
 3. Click **Finish**. The blank grid **Flow Canvas** opens in the center.
 
 ---
