@@ -517,7 +517,12 @@
       "topic-190",
       "topic-191",
       "topic-192",
-      "topic-193"
+      "topic-193",
+      "topic-194",
+      "topic-195",
+      "topic-196",
+      "topic-197",
+      "topic-198"
     ]
   },
   {
@@ -526,11 +531,6 @@
     "part": "Part 5: ACE & MQ",
     "description": "Load the IBM App Connect Enterprise environment with mqsiprofile (or open the ACE Console) before running any mqsi command.",
     "topicIds": [
-      "topic-194",
-      "topic-195",
-      "topic-196",
-      "topic-197",
-      "topic-198",
       "topic-199",
       "topic-200",
       "topic-201",
@@ -548,7 +548,12 @@
       "topic-213",
       "topic-214",
       "topic-215",
-      "topic-216"
+      "topic-216",
+      "topic-217",
+      "topic-218",
+      "topic-219",
+      "topic-220",
+      "topic-221"
     ]
   },
   {
@@ -557,11 +562,6 @@
     "part": "Part 5: ACE & MQ",
     "description": "Open runmqsc to create queues, check queue depth, start listeners, and configure channels inside an IBM MQ Queue Manager.",
     "topicIds": [
-      "topic-217",
-      "topic-218",
-      "topic-219",
-      "topic-220",
-      "topic-221",
       "topic-222",
       "topic-223",
       "topic-224",
@@ -574,7 +574,12 @@
       "topic-231",
       "topic-232",
       "topic-233",
-      "topic-234"
+      "topic-234",
+      "topic-235",
+      "topic-236",
+      "topic-237",
+      "topic-238",
+      "topic-239"
     ]
   },
   {
@@ -583,10 +588,10 @@
     "part": "Part 5: ACE & MQ",
     "description": "Know when ACE needs an ODBC Data Source (Compute, Database, Filter) versus a JDBC Providers Policy (Mapping, JavaCompute).",
     "topicIds": [
-      "topic-235",
-      "topic-236",
-      "topic-237",
-      "topic-238"
+      "topic-240",
+      "topic-241",
+      "topic-242",
+      "topic-243"
     ]
   },
   {
@@ -595,7 +600,7 @@
     "part": "Part 5: ACE & MQ",
     "description": "Instant plain-English guide to every common IBM ACE BIP info and error code grouped by what you were doing when you saw it.",
     "topicIds": [
-      "topic-239"
+      "topic-244"
     ]
   }
 ]

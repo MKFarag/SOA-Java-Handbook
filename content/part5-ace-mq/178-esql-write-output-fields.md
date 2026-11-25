@@ -71,4 +71,4 @@ SET OutputRoot.XMLNSC.Orders.Order[2].Id = 'ORD-102';
 
 ---
 
-**Next:** [String Functions (TRIM, SUBSTRING, REPLACE) →](#topic-179)
+**Next:** [CREATE FIELD, CREATE LASTCHILD, DELETE FIELD & DETACH →](#topic-179)

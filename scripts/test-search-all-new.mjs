@@ -55,10 +55,10 @@ const documents = ALL_TOPICS.map(t => {
 ms.addAll(documents);
 
 const queries = [
-  { q: 'start integration server', expectedId: 'topic-204' },
-  { q: 'stop integration server', expectedId: 'topic-204' },
-  { q: 'independent integration server', expectedId: 'topic-206' },
-  { q: 'server.conf.yaml', expectedId: 'topic-207' },
+  { q: 'start integration server', expectedId: 'topic-209' },
+  { q: 'stop integration server', expectedId: 'topic-209' },
+  { q: 'independent integration server', expectedId: 'topic-211' },
+  { q: 'server.conf.yaml', expectedId: 'topic-212' },
   { q: 'message domains', expectedId: 'topic-144' },
   { q: 'resetcontentdescriptor', expectedId: 'topic-153' },
   { q: 'fileinput node', expectedId: 'topic-161' },
