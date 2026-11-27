@@ -49,6 +49,9 @@ Replace `<QueueManagerName>` with your Queue Manager name and `<InputQueueName>`
 | Who has queue open (`PID`)? | `DISPLAY QSTATUS('<InputQueueName>') TYPE(HANDLE) APPLTAG PID` |
 | Empty all messages in queue | `CLEAR QLOCAL('<InputQueueName>')` |
 | Create & start port 1414 listener | `DEFINE LISTENER('<ListenerName>') TRPTYPE(TCP) PORT(1414) CONTROL(QMGR) REPLACE` + `START LISTENER('<ListenerName>')` |
+| Find active listener & port | `DISPLAY LSSTATUS(*) PORT STATUS` |
+| List all defined listeners | `DISPLAY LISTENER(*) PORT CONTROL` |
+| Change existing listener port | `STOP LISTENER('<ListenerName>')` + `ALTER LISTENER('<ListenerName>') TRPTYPE(TCP) PORT(1414)` + `START LISTENER('<ListenerName>')` |
 | Create remote client channel | `DEFINE CHANNEL('<ChannelName>') CHLTYPE(SVRCONN) TRPTYPE(TCP) REPLACE` |
 | Exit `runmqsc` | `END` |
 
