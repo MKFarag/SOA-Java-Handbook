@@ -722,6 +722,7 @@ export function parseRichSteps(markdownBody, { taskDirPath, tasksRoot, taskLabel
   const lines = String(markdownBody || '').split(/\r?\n/);
   const steps = [];
   let currentStep = null;
+  let currentMethod = null;
   let inCodeFence = null;
   let currentNote = null;
   let hasStartedBlocks = false;
@@ -740,6 +741,8 @@ export function parseRichSteps(markdownBody, { taskDirPath, tasksRoot, taskLabel
     flushNote();
     if (currentStep && currentStep.text.trim()) {
       steps.push({
+        number: currentStep.number,
+        ...(currentStep.method ? { method: currentStep.method } : {}),
         text: currentStep.text.trim(),
         blocks: currentStep.blocks
       });
@@ -771,6 +774,15 @@ export function parseRichSteps(markdownBody, { taskDirPath, tasksRoot, taskLabel
       continue;
     }
 
+    // Method section heading: Method: <label> (or ### Method: <label>)
+    const methodMatch = line.match(/^\s*(?:#{1,6}\s*)?Method:\s*(.+?)\s*$/i);
+    if (methodMatch) {
+      flushStep();
+      const methodTitle = methodMatch[1].replace(/^\*\*|\*\*$/g, '').trim();
+      currentMethod = methodTitle || null;
+      continue;
+    }
+
     // Opening code fence under a step
     const fenceMatch = line.match(/^(\s*)(`{3,}|~{3,})(.*)$/);
     if (fenceMatch && currentStep) {
@@ -787,11 +799,13 @@ export function parseRichSteps(markdownBody, { taskDirPath, tasksRoot, taskLabel
     }
 
     // Top-level numbered step item
-    const itemMatch = line.match(/^\s*\d+[.)]\s+(.+)$/);
+    const itemMatch = line.match(/^\s*(\d+)[.)]\s+(.+)$/);
     if (itemMatch) {
       flushStep();
       currentStep = {
-        text: itemMatch[1].trim(),
+        number: parseInt(itemMatch[1], 10),
+        ...(currentMethod ? { method: currentMethod } : {}),
+        text: itemMatch[2].trim(),
         blocks: []
       };
       continue;
@@ -974,6 +988,8 @@ export function compileAllTasks(repoRoot = process.cwd()) {
         }
 
         const steps = parsedSteps.map(step => ({
+          ...(typeof step.number === 'number' ? { number: step.number } : {}),
+          ...(step.method ? { method: step.method } : {}),
           text: step.text,
           links: matchStepToTopics(step.text, matchedSection.part, topicIndex),
           ...(step.blocks.length > 0 ? { blocks: step.blocks } : {})

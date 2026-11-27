@@ -26,5 +26,23 @@ title: Connect Two Applications Through MQ Queues
     SET OutputRoot.JSON.Data.FullName =
         InputRoot.JSON.Data.FirstName || ' ' || InputRoot.JSON.Data.LastName;
     ```
+Method: Direct connection to the queue manager
 11. Create the integration node linked with the queue manager.
 12. Create a BAR file for the 2 projects and deploy it to the integration node.
+
+Method: Connection using a Policy
+11. Create the integration node without linking it to a queue manager.
+12. Verify the queue manager name and port using commands.
+    ```bash
+    dspmq
+    runmqsc <QM_NAME>
+    DISPLAY LSSTATUS(*) PORT
+    ```
+13. Create a Policy Project.
+14. Add a policy to the Policy Project and configure it as shown in the image.
+    ![Policy configuration](./images/01-connect-two-applications-through-mq-queues-step-14.png)
+15. Add the policy to the `MQInput` and `MQOutput` nodes using this format:
+    ```text
+    {PolicyProjectName}:PolicyName
+    ```
+16. Deploy the Policy Project to the integration node first, then create the BAR file for the 2 projects and deploy it. (Alternatively, include the Policy Project in the BAR.)

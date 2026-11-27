@@ -222,6 +222,8 @@ export type TaskStepBlock =
   | { type: 'note'; text: string };
 
 export interface TaskStep {
+  number?: number;
+  method?: string;
   text: string;
   links: TaskStepLink[];
   blocks?: TaskStepBlock[];

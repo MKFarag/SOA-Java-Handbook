@@ -16,6 +16,7 @@ Steps:
    Code: (optional, the code or commands, with the language if not obvious)
    Image: <file name from _inbox> | <short caption>  (optional)
    Note: <optional>
+Method: <optional method label when steps branch into alternative methods>
 2. ...
 ```
 
@@ -23,6 +24,7 @@ Steps:
 - `Title`: Required. Short English title.
 - `Reference`: Optional. A PDF name + page number, or a URL. Omit `reference` from frontmatter if not provided.
 - `Steps`: Required. Numbered list (`1.`, `2.`, ...). Each step may optionally include `Code:`, `Image:`, and/or `Note:` blocks underneath in any order.
+- `Method`: Optional section header (`Method: <label>`) placed before a group of numbered steps when a task branches into alternative methods. Each method group renders as its own labeled section in Task Log while preserving its step numbers.
 
 ---
 
@@ -48,7 +50,7 @@ On every invocation of `Follow TASKLOG.md`, perform these exact steps in order:
 5. **Move and rename referenced images**:
    - For each `Image:` block on step `<n>` (`1`-indexed), move `content/tasks/_inbox/<file name>` to:
      `content/tasks/<topic-slug>/images/<task-slug>-step-<n>.<ext>`
-     (using lowercase extension `<ext>`; if a single step has multiple images, append `-2`, `-3`, etc. before `.<ext>`).
+     (using lowercase extension `<ext>`; if a single step number has multiple images — including across `Method:` branches — append `-2`, `-3`, etc. before `.<ext>`).
    - Delete the original file from `content/tasks/_inbox/` after moving (never delete `_inbox/.gitkeep`).
    - Record each moved image's file size in bytes/KB. If any image is **larger than 300 KB**, note a clear warning in the final report.
 6. **Create the new task Markdown file**:
@@ -65,6 +67,9 @@ On every invocation of `Follow TASKLOG.md`, perform these exact steps in order:
         ```
         ![Console after running mqsiprofile](./images/<task-slug>-step-1.png)
         > Note: run it from the ACE console, not a normal terminal.
+
+     Method: Optional method branch name
+     2. Next step inside this method branch.
      ```
 7. **Run the build-time auto-link compiler**:
    - Run `npm run compile-tasks` (executes `scripts/compile-tasks.mjs` and updates `src/data/generated-tasks.json`).

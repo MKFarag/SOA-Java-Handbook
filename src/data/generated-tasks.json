@@ -7,6 +7,7 @@
     "title": "Connect Two Applications Through MQ Queues",
     "steps": [
       {
+        "number": 1,
         "text": "Open MQ Explorer as administrator.",
         "links": [
           {
@@ -18,6 +19,7 @@
         ]
       },
       {
+        "number": 2,
         "text": "Create a new queue manager.",
         "links": [
           {
@@ -29,6 +31,7 @@
         ]
       },
       {
+        "number": 3,
         "text": "Create 2 local queues.",
         "links": [
           {
@@ -40,6 +43,7 @@
         ]
       },
       {
+        "number": 4,
         "text": "Create 2 applications in ACE, each with a message flow.",
         "links": [
           {
@@ -57,10 +61,12 @@
         ]
       },
       {
+        "number": 5,
         "text": "Add a message flow to each application.",
         "links": []
       },
       {
+        "number": 6,
         "text": "Build the flow of the first application.",
         "links": [],
         "blocks": [
@@ -72,6 +78,7 @@
         ]
       },
       {
+        "number": 7,
         "text": "Build the flow of the second application (with the MQ nodes).",
         "links": [
           {
@@ -90,10 +97,12 @@
         ]
       },
       {
+        "number": 8,
         "text": "Configure the nodes.",
         "links": []
       },
       {
+        "number": 9,
         "text": "In the first application, use this code in the Compute node to receive the data:",
         "links": [
           {
@@ -112,6 +121,7 @@
         ]
       },
       {
+        "number": 10,
         "text": "In the second application, add this code:",
         "links": [],
         "blocks": [
@@ -123,6 +133,8 @@
         ]
       },
       {
+        "number": 11,
+        "method": "Direct connection to the queue manager",
         "text": "Create the integration node linked with the queue manager.",
         "links": [
           {
@@ -140,12 +152,131 @@
         ]
       },
       {
+        "number": 12,
+        "method": "Direct connection to the queue manager",
         "text": "Create a BAR file for the 2 projects and deploy it to the integration node.",
         "links": [
           {
             "topicId": "topic-213",
             "slug": "bar-packaging-and-ibmint",
             "title": "BAR Packaging (Toolkit & ibmint package)",
+            "part": "Part 5: ACE & MQ"
+          }
+        ]
+      },
+      {
+        "number": 11,
+        "method": "Connection using a Policy",
+        "text": "Create the integration node without linking it to a queue manager.",
+        "links": [
+          {
+            "topicId": "topic-168",
+            "slug": "link-node-to-queue-manager",
+            "title": "Link an Integration Node to a Queue Manager (-q)",
+            "part": "Part 5: ACE & MQ"
+          },
+          {
+            "topicId": "topic-203",
+            "slug": "mqsicreatebroker-and-mqsideletebroker",
+            "title": "mqsicreatebroker & mqsideletebroker",
+            "part": "Part 5: ACE & MQ"
+          }
+        ]
+      },
+      {
+        "number": 12,
+        "method": "Connection using a Policy",
+        "text": "Verify the queue manager name and port using commands.",
+        "links": [
+          {
+            "topicId": "topic-171",
+            "slug": "qmgr-name-vs-policy-decision",
+            "title": "Queue Manager Name vs MQEndpoint Policy",
+            "part": "Part 5: ACE & MQ"
+          }
+        ],
+        "blocks": [
+          {
+            "type": "code",
+            "language": "bash",
+            "code": "dspmq\nrunmqsc <QM_NAME>\nDISPLAY LSSTATUS(*) PORT"
+          }
+        ]
+      },
+      {
+        "number": 13,
+        "method": "Connection using a Policy",
+        "text": "Create a Policy Project.",
+        "links": [
+          {
+            "topicId": "topic-139",
+            "slug": "policy-projects-and-packaging-rules",
+            "title": "Policy Projects & Packaging Decisions",
+            "part": "Part 5: ACE & MQ"
+          }
+        ]
+      },
+      {
+        "number": 14,
+        "method": "Connection using a Policy",
+        "text": "Add a policy to the Policy Project and configure it as shown in the image.",
+        "links": [
+          {
+            "topicId": "topic-139",
+            "slug": "policy-projects-and-packaging-rules",
+            "title": "Policy Projects & Packaging Decisions",
+            "part": "Part 5: ACE & MQ"
+          }
+        ],
+        "blocks": [
+          {
+            "type": "image",
+            "src": "ace-mq/images/01-connect-two-applications-through-mq-queues-step-14.png",
+            "alt": "Policy configuration"
+          }
+        ]
+      },
+      {
+        "number": 15,
+        "method": "Connection using a Policy",
+        "text": "Add the policy to the `MQInput` and `MQOutput` nodes using this format:",
+        "links": [
+          {
+            "topicId": "topic-155",
+            "slug": "mqinput-node",
+            "title": "MQInput Node: Start a Flow from a Queue",
+            "part": "Part 5: ACE & MQ"
+          },
+          {
+            "topicId": "topic-156",
+            "slug": "mqoutput-node",
+            "title": "MQOutput Node: Put a Message on a Queue",
+            "part": "Part 5: ACE & MQ"
+          }
+        ],
+        "blocks": [
+          {
+            "type": "code",
+            "language": "text",
+            "code": "{PolicyProjectName}:PolicyName"
+          }
+        ]
+      },
+      {
+        "number": 16,
+        "method": "Connection using a Policy",
+        "text": "Deploy the Policy Project to the integration node first, then create the BAR file for the 2 projects and deploy it. (Alternatively, include the Policy Project in the BAR.)",
+        "links": [
+          {
+            "topicId": "topic-213",
+            "slug": "bar-packaging-and-ibmint",
+            "title": "BAR Packaging (Toolkit & ibmint package)",
+            "part": "Part 5: ACE & MQ"
+          },
+          {
+            "topicId": "topic-139",
+            "slug": "policy-projects-and-packaging-rules",
+            "title": "Policy Projects & Packaging Decisions",
             "part": "Part 5: ACE & MQ"
           }
         ]
