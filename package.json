@@ -5,10 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "predev": "node scripts/compile-content.mjs",
+    "predev": "node scripts/compile-content.mjs && node scripts/compile-tasks.mjs",
     "compile-content": "node scripts/compile-content.mjs",
+    "compile-tasks": "node scripts/compile-tasks.mjs",
     "typecheck": "tsc -b",
-    "prebuild": "node scripts/compile-content.mjs",
+    "prebuild": "node scripts/compile-content.mjs && node scripts/compile-tasks.mjs",
     "build": "tsc -b && vite build",
     "test:verify": "node scripts/verify-examples.mjs",
     "test:smoke": "npm run build && node scripts/smoke-test.mjs",

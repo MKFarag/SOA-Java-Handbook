@@ -16,7 +16,8 @@ import {
   BookOpen,
   Check,
   Brain,
-  Network
+  Network,
+  ClipboardList
 } from 'lucide-react';
 import { SECTIONS, ALL_TOPICS } from '../data/topics';
 import type { PartType, BroadcastItem } from '../types';
@@ -33,6 +34,8 @@ interface HomeViewProps {
   onOpenCertificate?: () => void;
   onOpenCapstone?: (part?: PartType) => void;
   onOpenKnowledgeBase?: () => void;
+  onOpenTaskLog?: () => void;
+  taskLogCount?: number;
   broadcasts?: BroadcastItem[];
   onOpenBroadcasts?: () => void;
 }
@@ -43,6 +46,8 @@ export const HomeView: React.FC<HomeViewProps> = ({
   onOpenCertificate,
   onOpenCapstone,
   onOpenKnowledgeBase,
+  onOpenTaskLog,
+  taskLogCount = 0,
   broadcasts,
   onOpenBroadcasts
 }) => {
@@ -219,6 +224,22 @@ export const HomeView: React.FC<HomeViewProps> = ({
             >
               <Brain className="w-4 h-4 text-blue-500" />
               <span>My Knowledge Base</span>
+            </button>
+          )}
+
+          {onOpenTaskLog && (
+            <button
+              type="button"
+              onClick={onOpenTaskLog}
+              className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white dark:bg-zinc-800/90 hover:bg-zinc-100 dark:hover:bg-zinc-700 text-zinc-800 dark:text-zinc-200 text-xs sm:text-sm font-semibold border border-zinc-200 dark:border-zinc-700 shadow-xs transition-all cursor-pointer"
+            >
+              <ClipboardList className="w-4 h-4 tasklog-accent-text" />
+              <span>Task Log</span>
+              {taskLogCount > 0 && (
+                <span className="tasklog-badge px-1.5 py-0.2 rounded-full text-[10px] font-mono font-bold">
+                  {taskLogCount}
+                </span>
+              )}
             </button>
           )}
 

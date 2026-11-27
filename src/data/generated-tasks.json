@@ -1,0 +1,155 @@
+[
+  {
+    "id": "ace-mq/01-connect-two-applications-through-mq-queues",
+    "order": 1,
+    "topic": "ACE & MQ",
+    "topicSlug": "ace-mq",
+    "title": "Connect Two Applications Through MQ Queues",
+    "steps": [
+      {
+        "text": "Open MQ Explorer as administrator.",
+        "links": [
+          {
+            "topicId": "topic-167",
+            "slug": "what-is-ibm-mq-vs-ace",
+            "title": "What Is IBM MQ vs ACE?",
+            "part": "Part 5: ACE & MQ"
+          }
+        ]
+      },
+      {
+        "text": "Create a new queue manager.",
+        "links": [
+          {
+            "topicId": "topic-224",
+            "slug": "crtmqm-create-queue-manager",
+            "title": "crtmqm: Create a Queue Manager",
+            "part": "Part 5: ACE & MQ"
+          }
+        ]
+      },
+      {
+        "text": "Create 2 local queues.",
+        "links": [
+          {
+            "topicId": "topic-227",
+            "slug": "define-qlocal-create-queue",
+            "title": "DEFINE QLOCAL: Create a Local Queue",
+            "part": "Part 5: ACE & MQ"
+          }
+        ]
+      },
+      {
+        "text": "Create 2 applications in ACE, each with a message flow.",
+        "links": [
+          {
+            "topicId": "topic-135",
+            "slug": "create-first-application",
+            "title": "Create Your First Application",
+            "part": "Part 5: ACE & MQ"
+          }
+        ],
+        "blocks": [
+          {
+            "type": "note",
+            "text": "The first application receives `FirstName` and `LastName`, generates an `Id` in the program, and passes the three values to the first queue. The second application concatenates `FirstName` and `LastName` into `FullName` and passes the result to the second queue."
+          }
+        ]
+      },
+      {
+        "text": "Add a message flow to each application.",
+        "links": []
+      },
+      {
+        "text": "Build the flow of the first application.",
+        "links": [],
+        "blocks": [
+          {
+            "type": "image",
+            "src": "ace-mq/images/01-connect-two-applications-through-mq-queues-step-6.png",
+            "alt": "First application message flow"
+          }
+        ]
+      },
+      {
+        "text": "Build the flow of the second application (with the MQ nodes).",
+        "links": [
+          {
+            "topicId": "topic-154",
+            "slug": "mq-nodes-overview",
+            "title": "MQ Nodes Overview (Input, Output, Get, Reply)",
+            "part": "Part 5: ACE & MQ"
+          }
+        ],
+        "blocks": [
+          {
+            "type": "image",
+            "src": "ace-mq/images/01-connect-two-applications-through-mq-queues-step-7.png",
+            "alt": "Second application message flow with MQ nodes"
+          }
+        ]
+      },
+      {
+        "text": "Configure the nodes.",
+        "links": []
+      },
+      {
+        "text": "In the first application, use this code in the Compute node to receive the data:",
+        "links": [
+          {
+            "topicId": "topic-151",
+            "slug": "compute-node-esql-transform",
+            "title": "Compute Node: Transform Messages with ESQL",
+            "part": "Part 5: ACE & MQ"
+          }
+        ],
+        "blocks": [
+          {
+            "type": "code",
+            "language": "esql",
+            "code": "SET OutputRoot.JSON.Data.Id = UUIDASCHAR;\nSET OutputRoot.JSON.Data.FirstName = InputRoot.JSON.Data.FirstName;\nSET OutputRoot.JSON.Data.LastName = InputRoot.JSON.Data.LastName;"
+          }
+        ]
+      },
+      {
+        "text": "In the second application, add this code:",
+        "links": [],
+        "blocks": [
+          {
+            "type": "code",
+            "language": "esql",
+            "code": "SET OutputRoot.JSON.Data.Id = InputRoot.JSON.Data.Id;\nSET OutputRoot.JSON.Data.FullName =\n    InputRoot.JSON.Data.FirstName || ' ' || InputRoot.JSON.Data.LastName;"
+          }
+        ]
+      },
+      {
+        "text": "Create the integration node linked with the queue manager.",
+        "links": [
+          {
+            "topicId": "topic-168",
+            "slug": "link-node-to-queue-manager",
+            "title": "Link an Integration Node to a Queue Manager (-q)",
+            "part": "Part 5: ACE & MQ"
+          },
+          {
+            "topicId": "topic-203",
+            "slug": "mqsicreatebroker-and-mqsideletebroker",
+            "title": "mqsicreatebroker & mqsideletebroker",
+            "part": "Part 5: ACE & MQ"
+          }
+        ]
+      },
+      {
+        "text": "Create a BAR file for the 2 projects and deploy it to the integration node.",
+        "links": [
+          {
+            "topicId": "topic-213",
+            "slug": "bar-packaging-and-ibmint",
+            "title": "BAR Packaging (Toolkit & ibmint package)",
+            "part": "Part 5: ACE & MQ"
+          }
+        ]
+      }
+    ]
+  }
+]

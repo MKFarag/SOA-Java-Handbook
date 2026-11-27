@@ -14,7 +14,9 @@ import { AdminDashboardModal } from './components/AdminDashboardModal';
 import { BroadcastsModal } from './components/BroadcastsModal';
 import { MobileNav } from './components/MobileNav';
 import { KnowledgeBaseView } from './components/KnowledgeBaseView';
+import { TaskLogView } from './components/TaskLogView';
 import { ALL_TOPICS, getTopicById, resolveTopic, migrateProfileData, CURRENT_TOPIC_IDS } from './data/topics';
+import { TASK_LOG_ITEMS } from './data/tasks';
 import type { ChallengeStatus, PartType, StudentProfile, BroadcastItem, KnowledgeNote } from './types';
 import {
   saveStudentProfile,
@@ -25,14 +27,19 @@ import {
   syncGuestNotesToCloud
 } from './services/firebaseService';
 
-type ViewType = 'home' | 'topic' | 'saved' | 'progress' | 'certificate' | 'capstone' | 'knowledge-base';
+type ViewType = 'home' | 'topic' | 'saved' | 'progress' | 'certificate' | 'capstone' | 'knowledge-base' | 'tasks';
 
 const parseInitialNav = (): { view: ViewType; topicId: string } => {
   const fallbackTopicId = ALL_TOPICS[0]?.id || 'topic-01';
   if (typeof window === 'undefined') {
     return { view: 'home', topicId: fallbackTopicId };
   }
+  const pathname = window.location.pathname.replace(/\/+$/, '') || '/';
   const rawHash = window.location.hash.replace(/^#\/?/, '').trim();
+
+  if ((pathname === '/tasks' && !rawHash) || rawHash === 'tasks') {
+    return { view: 'tasks', topicId: fallbackTopicId };
+  }
   if (!rawHash || rawHash === 'home') return { view: 'home', topicId: fallbackTopicId };
   if (rawHash === 'saved') return { view: 'saved', topicId: fallbackTopicId };
   if (rawHash === 'progress') return { view: 'progress', topicId: fallbackTopicId };
@@ -484,7 +491,15 @@ export function App() {
 
   const handleNavigateView = (view: ViewType) => {
     setCurrentView(view);
-    window.location.hash = view;
+    if (view === 'tasks') {
+      if (window.location.pathname !== '/tasks' || window.location.hash) {
+        window.history.pushState(null, '', '/tasks');
+      }
+    } else if (window.location.pathname !== '/') {
+      window.history.pushState(null, '', `/#${view}`);
+    } else {
+      window.location.hash = view;
+    }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -522,9 +537,14 @@ export function App() {
       }
     };
 
-    // URL Hash Navigation Listener (#topic-id, #slug, #saved, #progress, #admin, #capstone, #certificate)
-    const handleHashChange = () => {
+    // URL Path & Hash Navigation Listener (/tasks, #topic-id, #slug, #saved, #progress, #admin, #capstone, #certificate)
+    const syncFromLocation = () => {
+      const pathname = window.location.pathname.replace(/\/+$/, '') || '/';
       const rawHash = window.location.hash.replace(/^#\/?/, '').trim();
+      if ((pathname === '/tasks' && !rawHash) || rawHash === 'tasks') {
+        setCurrentView('tasks');
+        return;
+      }
       if (!rawHash) {
         setCurrentView('home');
         return;
@@ -567,7 +587,8 @@ export function App() {
     };
 
     window.addEventListener('keydown', handleKeyDown);
-    window.addEventListener('hashchange', handleHashChange);
+    window.addEventListener('hashchange', syncFromLocation);
+    window.addEventListener('popstate', syncFromLocation);
 
     // Initial check for secret admin modal on direct link
     const initialRaw = window.location.hash.replace(/^#\/?/, '').trim();
@@ -577,7 +598,8 @@ export function App() {
 
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
-      window.removeEventListener('hashchange', handleHashChange);
+      window.removeEventListener('hashchange', syncFromLocation);
+      window.removeEventListener('popstate', syncFromLocation);
     };
   }, []);
 
@@ -624,10 +646,11 @@ export function App() {
       setSelectedSectionPart(topic.part);
     }
     setCurrentView('topic');
-    if (topic) {
-      window.location.hash = topic.slug || topic.id;
+    const targetHash = topic ? (topic.slug || topic.id) : topicId;
+    if (window.location.pathname !== '/') {
+      window.history.pushState(null, '', `/#${targetHash}`);
     } else {
-      window.location.hash = topicId;
+      window.location.hash = targetHash;
     }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -679,6 +702,8 @@ export function App() {
         onOpenSaved={() => handleNavigateView('saved')}
         onOpenProgress={() => handleNavigateView('progress')}
         onOpenKnowledgeBase={() => handleNavigateView('knowledge-base')}
+        onOpenTasks={() => handleNavigateView('tasks')}
+        isTasksActive={currentView === 'tasks'}
         knowledgeNotesCount={knowledgeNotes.length}
         onOpenCertificate={handleOpenCertificate}
         onGoHome={() => handleNavigateView('home')}
@@ -733,6 +758,8 @@ export function App() {
               broadcasts={broadcasts}
               onOpenBroadcasts={handleOpenBroadcasts}
               onOpenKnowledgeBase={() => handleNavigateView('knowledge-base')}
+              onOpenTaskLog={() => handleNavigateView('tasks')}
+              taskLogCount={TASK_LOG_ITEMS.length}
             />
           )}
 
@@ -804,6 +831,10 @@ export function App() {
               onDeleteNote={handleDeleteKnowledgeNote}
               onOpenSyncModal={() => setIsSyncModalOpen(true)}
             />
+          )}
+
+          {currentView === 'tasks' && (
+            <TaskLogView onSelectTopic={handleSelectTopic} />
           )}
         </main>
       </div>

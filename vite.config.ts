@@ -1,10 +1,45 @@
+import { execFileSync } from 'node:child_process'
+import path from 'node:path'
 import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
-import { defineConfig } from 'vite'
+import { defineConfig, type Plugin } from 'vite'
+
+function taskLogCompilerPlugin(): Plugin {
+  const tasksDir = path.resolve('content/tasks');
+  const compileScript = path.resolve('scripts/compile-tasks.mjs');
+
+  const runCompile = () => {
+    execFileSync('node', [compileScript], { stdio: 'inherit' });
+  };
+
+  return {
+    name: 'task-log-compiler',
+    buildStart() {
+      runCompile();
+    },
+    configureServer(server) {
+      server.watcher.add(tasksDir);
+      const onTaskFileEvent = (filePath: string) => {
+        const normalized = filePath.replace(/\\/g, '/');
+        if (normalized.includes('/content/tasks/') && normalized.endsWith('.md')) {
+          try {
+            runCompile();
+          } catch (err) {
+            console.error('[task-log-compiler] Failed to compile tasks:', err);
+          }
+        }
+      };
+      server.watcher.on('add', onTaskFileEvent);
+      server.watcher.on('change', onTaskFileEvent);
+      server.watcher.on('unlink', onTaskFileEvent);
+    }
+  };
+}
 
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
+    taskLogCompilerPlugin(),
     react(),
     tailwindcss(),
   ],

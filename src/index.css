@@ -17,6 +17,11 @@
     --code-bg: #1e1e1e;
     --code-header: #2d2d2d;
     --code-text: #d4d4d4;
+    --tasklog-accent: #0d9488;
+    --tasklog-accent-hover: #0f766e;
+    --tasklog-accent-soft: rgba(13, 148, 136, 0.1);
+    --tasklog-accent-border: rgba(13, 148, 136, 0.28);
+    --tasklog-accent-text: #0f766e;
   }
 
   .dark {
@@ -33,6 +38,11 @@
     --code-bg: #1e1e1e;
     --code-header: #252526;
     --code-text: #d4d4d4;
+    --tasklog-accent: #2dd4bf;
+    --tasklog-accent-hover: #5eead4;
+    --tasklog-accent-soft: rgba(45, 212, 191, 0.12);
+    --tasklog-accent-border: rgba(45, 212, 191, 0.3);
+    --tasklog-accent-text: #2dd4bf;
   }
 
   html {
@@ -992,4 +1002,51 @@
 }
 .cmd-bip-e {
   color: #f87171;
+}
+
+/* Utility for clean horizontally scrollable filter strips on mobile */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Task Log subtle accent helpers driven by --tasklog-accent */
+.tasklog-accent-text {
+  color: var(--tasklog-accent-text);
+}
+.tasklog-chip-active {
+  background-color: var(--tasklog-accent-soft);
+  color: var(--tasklog-accent-text);
+  border-color: var(--tasklog-accent-border);
+}
+.tasklog-badge {
+  background-color: var(--tasklog-accent-soft);
+  color: var(--tasklog-accent-text);
+  border: 1px solid var(--tasklog-accent-border);
+}
+.tasklog-card {
+  border-left: 3px solid var(--tasklog-accent);
+}
+.tasklog-link-btn {
+  color: var(--tasklog-accent-text);
+  background-color: var(--tasklog-accent-soft);
+  border: 1px solid var(--tasklog-accent-border);
+}
+.tasklog-link-btn:hover {
+  border-color: var(--tasklog-accent);
+  color: var(--tasklog-accent-hover);
+}
+.tasklog-search:focus {
+  border-color: var(--tasklog-accent);
+  box-shadow: 0 0 0 2px var(--tasklog-accent-soft);
+}
+.tasklog-note {
+  border-left: 2px solid var(--tasklog-accent);
+  background-color: var(--tasklog-accent-soft);
+}
+.tasklog-card .code-tab-container {
+  margin: 0.625rem 0 0.25rem 0;
 }

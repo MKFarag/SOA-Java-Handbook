@@ -58,7 +58,10 @@ export function highlightCodeLines(
   let highlightedHtml: string;
   try {
     const langKey = language.toLowerCase();
-    const grammar = Prism.languages[langKey] || Prism.languages.java || Prism.languages.javascript;
+    const isPlainText = langKey === 'text' || langKey === 'plaintext' || langKey === 'plain' || langKey === 'txt';
+    const grammar = isPlainText
+      ? undefined
+      : (Prism.languages[langKey] || Prism.languages.java || Prism.languages.javascript);
     if (grammar) {
       highlightedHtml = Prism.highlight(cleanCode, grammar, langKey);
     } else {

@@ -9,7 +9,8 @@ import {
   PanelLeftClose,
   PanelLeft,
   Sun,
-  Moon
+  Moon,
+  ClipboardList
 } from 'lucide-react';
 import { Logo } from './Logo';
 import { PersonalUtilitiesMenu } from './PersonalUtilitiesMenu';
@@ -28,6 +29,8 @@ interface HeaderProps {
   onOpenSaved: () => void;
   onOpenProgress: () => void;
   onOpenKnowledgeBase?: () => void;
+  onOpenTasks: () => void;
+  isTasksActive?: boolean;
   knowledgeNotesCount?: number;
   onOpenCertificate: () => void;
   onGoHome: () => void;
@@ -60,6 +63,8 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenSaved,
   onOpenProgress,
   onOpenKnowledgeBase,
+  onOpenTasks,
+  isTasksActive = false,
   knowledgeNotesCount = 0,
   onOpenCertificate,
   onGoHome,
@@ -105,15 +110,15 @@ export const Header: React.FC<HeaderProps> = ({
     <header className="fixed top-0 inset-x-0 z-40 w-full border-b border-zinc-200/80 dark:border-zinc-800/80 bg-white/95 dark:bg-[#141416]/95 backdrop-blur-md transition-colors shadow-xs">
       
       {/* Top Primary Bar */}
-      <div className="w-full px-3 sm:px-5 lg:px-6 h-14 sm:h-16 flex items-center justify-between gap-2 sm:gap-4">
+      <div className="w-full px-2.5 sm:px-5 lg:px-6 h-14 sm:h-16 flex items-center justify-between gap-1.5 sm:gap-4">
         
         {/* Left Section: Controls + Brand */}
-        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+        <div className="flex items-center gap-1.5 sm:gap-3 min-w-0 shrink">
           {/* Mobile Navigation Drawer Trigger */}
           <button
             type="button"
             onClick={onToggleMobileSidebar}
-            className="lg:hidden p-1.5 sm:p-2 rounded-lg text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800 cursor-pointer"
+            className="lg:hidden p-1.5 sm:p-2 rounded-lg text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800 cursor-pointer shrink-0"
             title="Toggle topics drawer"
           >
             <Menu className="w-5 h-5" />
@@ -123,7 +128,7 @@ export const Header: React.FC<HeaderProps> = ({
           <button
             type="button"
             onClick={onToggleDesktopSidebar}
-            className="hidden lg:flex p-1.5 rounded-lg text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors cursor-pointer"
+            className="hidden lg:flex p-1.5 rounded-lg text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors cursor-pointer shrink-0"
             title={isSidebarCollapsed ? "Expand sidebar" : "Collapse sidebar for wider reading"}
           >
             {isSidebarCollapsed ? (
@@ -134,7 +139,7 @@ export const Header: React.FC<HeaderProps> = ({
           </button>
 
           {/* New Modern Vector Logo */}
-          <div className="group cursor-pointer">
+          <div className="group cursor-pointer min-w-0">
             <Logo
               variant="desktop"
               onClick={handleLogoClick}
@@ -168,14 +173,14 @@ export const Header: React.FC<HeaderProps> = ({
           })}
         </nav>
 
-        {/* Right Section: Global Search, Cloud Sync, Appearance, Profile */}
-        <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+        {/* Right Section: Global Search, Task Log, Cloud Sync, Appearance, Profile */}
+        <div className="flex items-center gap-1 sm:gap-2 shrink-0">
           
           {/* Global Search Button */}
           <button
             type="button"
             onClick={onOpenSearch}
-            className="flex items-center justify-between px-2.5 sm:px-3 py-1.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-[#1e1e22] hover:border-sky-500/50 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 text-xs transition-all shadow-2xs cursor-pointer min-w-[36px] sm:min-w-[140px] md:min-w-[180px]"
+            className="flex items-center justify-between px-2 sm:px-3 py-1.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-[#1e1e22] hover:border-sky-500/50 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 text-xs transition-all shadow-2xs cursor-pointer min-w-[32px] sm:min-w-[140px] md:min-w-[180px]"
             title="Search documentation (Ctrl+K)"
           >
             <div className="flex items-center gap-2 truncate">
@@ -187,11 +192,28 @@ export const Header: React.FC<HeaderProps> = ({
             </kbd>
           </button>
 
+          {/* Task Log Icon Button */}
+          <button
+            type="button"
+            onClick={onOpenTasks}
+            className={`p-1.5 sm:p-2 rounded-xl transition-colors cursor-pointer border ${
+              isTasksActive
+                ? 'tasklog-chip-active shadow-2xs'
+                : 'border-transparent text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:border-zinc-200 dark:hover:border-zinc-700/80'
+            }`}
+            title="Task Log"
+            aria-label="Task Log"
+          >
+            <ClipboardList
+              className={`w-4 h-4 ${isTasksActive ? 'tasklog-accent-text' : 'tasklog-accent-text opacity-85'}`}
+            />
+          </button>
+
           {/* Cloud Sync Status Indicator */}
           <button
             type="button"
             onClick={onOpenSync}
-            className={`relative p-2 rounded-xl transition-all cursor-pointer border ${
+            className={`relative p-1.5 sm:p-2 rounded-xl transition-all cursor-pointer border ${
               syncStatus === 'success'
                 ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/30 hover:bg-emerald-500/20'
                 : syncStatus === 'syncing'
@@ -231,7 +253,7 @@ export const Header: React.FC<HeaderProps> = ({
           <button
             type="button"
             onClick={onToggleTheme}
-            className="p-2 rounded-xl text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors cursor-pointer border border-transparent hover:border-zinc-200 dark:hover:border-zinc-700/80"
+            className="p-1.5 sm:p-2 rounded-xl text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors cursor-pointer border border-transparent hover:border-zinc-200 dark:hover:border-zinc-700/80"
             title={isDark ? "Switch to light theme" : "Switch to dark theme"}
             aria-label="Toggle theme"
           >

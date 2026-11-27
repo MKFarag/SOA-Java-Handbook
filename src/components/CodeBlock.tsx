@@ -43,6 +43,7 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
     if (lower === 'command' || lower === 'cmd' || lower === 'cli') return 'COMMAND';
     if (lower === 'bash' || lower === 'shell') return 'BASH';
     if (lower === 'esql') return 'ESQL';
+    if (lower === 'text' || lower === 'plaintext' || lower === 'plain' || lower === 'txt') return 'PLAIN TEXT';
     return language.toUpperCase();
   }, [language]);
 
@@ -56,7 +57,7 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
   const padDigits = lines.length >= 100 ? 3 : 2;
 
   return (
-    <div className={`code-tab-container my-4 sm:my-6 rounded-xl overflow-hidden border border-zinc-200/80 dark:border-[#2e2e34] bg-[#1e1e1e] shadow-lg text-left transition-all ${
+    <div className={`code-tab-container w-full max-w-full min-w-0 my-4 sm:my-6 rounded-xl overflow-hidden border border-zinc-200/80 dark:border-[#2e2e34] bg-[#1e1e1e] shadow-lg text-left transition-all ${
       isWrapped ? 'code-wrapped' : 'code-scrollable'
     }`}>
       {/* Header Top Bar: Title & Language Badge */}

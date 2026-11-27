@@ -16,7 +16,7 @@ export const Logo: React.FC<LogoProps> = ({
   return (
     <div
       onClick={onClick}
-      className={`inline-flex items-center gap-2.5 select-none ${onClick ? 'cursor-pointer' : ''} ${className}`}
+      className={`inline-flex items-center gap-1.5 sm:gap-2.5 select-none min-w-0 ${onClick ? 'cursor-pointer' : ''} ${className}`}
       title={title}
     >
       {/* Modern Developer Vector Icon Mark */}
@@ -25,7 +25,7 @@ export const Logo: React.FC<LogoProps> = ({
           viewBox="0 0 48 48"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          className="w-8 h-8 sm:w-9 sm:h-9 drop-shadow-sm transition-transform duration-200 group-hover:scale-105"
+          className="w-7 h-7 sm:w-9 sm:h-9 drop-shadow-sm transition-transform duration-200 group-hover:scale-105"
         >
           <defs>
             {/* Steam Gradient: Cyan to Indigo */}
@@ -157,24 +157,31 @@ export const Logo: React.FC<LogoProps> = ({
 
       {/* Brand Typography */}
       {variant !== 'icon-only' && (
-        <div className="flex items-center gap-2">
-          {/* Main Title: SOA Java */}
-          <div className="flex items-baseline gap-1.5">
-            <span className="font-extrabold text-base sm:text-lg tracking-tight text-zinc-900 dark:text-zinc-50 font-sans">
-              SOA
-            </span>
-            <span className="font-extrabold text-base sm:text-lg tracking-tight bg-gradient-to-r from-sky-500 via-blue-500 to-indigo-500 bg-clip-text text-transparent font-sans">
-              Java
-            </span>
-          </div>
-
-          {/* Vertical Divider & Subtitle (Desktop / Full) */}
-          {variant === 'desktop' && (
-            <div className="hidden sm:flex items-center border-l border-zinc-300 dark:border-zinc-700/80 pl-2">
-              <span className="text-xs sm:text-sm font-medium tracking-wide text-zinc-500 dark:text-zinc-400 font-sans">
-                Handbook
+        <div className="flex flex-col leading-tight min-w-0">
+          <div className="flex items-center gap-2">
+            {/* Main Title: SOA Java */}
+            <div className="flex items-baseline gap-1.5">
+              <span className="font-extrabold text-base sm:text-lg tracking-tight text-zinc-900 dark:text-zinc-50 font-sans">
+                SOA
+              </span>
+              <span className="font-extrabold text-base sm:text-lg tracking-tight bg-gradient-to-r from-sky-500 via-blue-500 to-indigo-500 bg-clip-text text-transparent font-sans">
+                Java
               </span>
             </div>
+
+            {/* Vertical Divider & Subtitle (Desktop / Full) */}
+            {variant === 'desktop' && (
+              <div className="hidden sm:flex items-center border-l border-zinc-300 dark:border-zinc-700/80 pl-2">
+                <span className="text-xs sm:text-sm font-medium tracking-wide text-zinc-500 dark:text-zinc-400 font-sans">
+                  Handbook
+                </span>
+              </div>
+            )}
+          </div>
+          {variant === 'desktop' && (
+            <span className="text-[10px] sm:text-[11px] font-medium text-zinc-500 dark:text-zinc-400 tracking-wide truncate max-w-[100px] min-[400px]:max-w-[140px] sm:max-w-none">
+              Made by <span className="font-semibold text-sky-600 dark:text-sky-400">Mohamed Khaled Farag</span>
+            </span>
           )}
         </div>
       )}

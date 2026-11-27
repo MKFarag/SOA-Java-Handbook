@@ -209,4 +209,32 @@ export interface KnowledgeNote {
   updatedAt: string; // ISO 8601
 }
 
+export interface TaskStepLink {
+  topicId: string;
+  slug: string;
+  title: string;
+  part: PartType;
+}
+
+export type TaskStepBlock =
+  | { type: 'code'; language: string; code: string }
+  | { type: 'image'; src: string; alt: string }
+  | { type: 'note'; text: string };
+
+export interface TaskStep {
+  text: string;
+  links: TaskStepLink[];
+  blocks?: TaskStepBlock[];
+}
+
+export interface TaskLogEntry {
+  id: string;
+  order: number;
+  topic: string;
+  topicSlug: string;
+  title: string;
+  reference?: string;
+  steps: TaskStep[];
+}
+
 
