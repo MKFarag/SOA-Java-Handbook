@@ -7,7 +7,8 @@ const CONTENT_DIRS = [
   path.resolve('content/part2-jakarta'),
   path.resolve('content/part3-spring'),
   path.resolve('content/part4-databases'),
-  path.resolve('content/part5-ace-mq')
+  path.resolve('content/part5-ace-mq'),
+  path.resolve('content/part6-esql')
 ];
 const OUTPUT_FILE = path.resolve('src/data/generated-topics.json');
 const SECTIONS_FILE = path.resolve('src/data/generated-sections.json');

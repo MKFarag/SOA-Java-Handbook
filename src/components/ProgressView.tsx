@@ -13,7 +13,8 @@ import {
   BookOpen,
   Target,
   XCircle,
-  Network
+  Network,
+  FileCode2
 } from 'lucide-react';
 import { ALL_TOPICS } from '../data/topics';
 import { SECTION_CHALLENGES } from '../data/challenges';
@@ -77,6 +78,12 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
     ? Math.round((aceCompleted / aceTopics.length) * 100) 
     : 0;
 
+  const esqlTopics = ALL_TOPICS.filter(t => t.part === 'Part 6: ESQL');
+  const esqlCompleted = esqlTopics.filter(t => completedTopicIds.has(t.id)).length;
+  const esqlPercent = esqlTopics.length > 0 
+    ? Math.round((esqlCompleted / esqlTopics.length) * 100) 
+    : 0;
+
   // Mastered challenges count
   const masteredChallengesCount = Object.values(challengeStates).filter(s => s === 'mastered').length;
 
@@ -98,8 +105,8 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
         </p>
       </div>
 
-      {/* Progress Cards Overview (6 Tiers) */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-3 sm:gap-4">
+      {/* Progress Cards Overview (7 Tiers) */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         {/* Overall Progress */}
         <div className="p-4 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#1e1e1e] shadow-xs space-y-2.5">
           <div className="flex items-center justify-between">
@@ -238,6 +245,30 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
             <div
               className="bg-cyan-500 h-1.5 rounded-full transition-all duration-500"
               style={{ width: `${acePercent}%` }}
+            />
+          </div>
+        </div>
+
+        {/* ESQL Progress */}
+        <div className="p-4 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#1e1e1e] shadow-xs space-y-2.5">
+          <div className="flex items-center justify-between">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-violet-600 dark:text-violet-400">
+              ESQL
+            </span>
+            <FileCode2 className="w-4 h-4 text-violet-500" />
+          </div>
+          <div className="flex items-baseline justify-between">
+            <span className="text-2xl sm:text-3xl font-extrabold text-zinc-900 dark:text-zinc-100 font-mono">
+              {esqlPercent}%
+            </span>
+            <span className="text-[11px] font-mono text-zinc-500">
+              {esqlCompleted}/{esqlTopics.length}
+            </span>
+          </div>
+          <div className="w-full bg-zinc-100 dark:bg-zinc-800 rounded-full h-1.5 overflow-hidden">
+            <div
+              className="bg-violet-500 h-1.5 rounded-full transition-all duration-500"
+              style={{ width: `${esqlPercent}%` }}
             />
           </div>
         </div>

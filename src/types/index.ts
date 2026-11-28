@@ -3,7 +3,8 @@ export type PartType =
   | 'Part 2: Java EE & Jakarta EE' 
   | 'Part 3: Spring Boot & Production Stack'
   | 'Part 4: Database Systems & Persistence'
-  | 'Part 5: ACE & MQ';
+  | 'Part 5: ACE & MQ'
+  | 'Part 6: ESQL';
 
 export type DifficultyLevel = 'Beginner' | 'Intermediate' | 'Advanced';
 
@@ -201,7 +202,7 @@ export interface KnowledgeNote {
   ownerCode: string; // The authenticated student code, or 'GUEST'
   title: string;
   description?: string;
-  category: string; // e.g. 'ACE & MQ', 'Java Core', 'Spring Boot', 'Jakarta EE', 'Database Systems', 'General'
+  category: string; // e.g. 'ACE & MQ', 'ESQL', 'Java Core', 'Spring Boot', 'Jakarta EE', 'Database Systems', 'General'
   language?: string; // e.g. 'command', 'java', 'esql', 'sql', 'bash', 'typescript', 'javascript', 'python', 'json', etc.
   content: string; // Personal written notes and technical explanation
   codeSnippet?: string; // Optional code snippet

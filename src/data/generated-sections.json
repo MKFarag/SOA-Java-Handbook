@@ -494,9 +494,9 @@
   },
   {
     "sectionNumber": 41,
-    "title": "ESQL Fundamentals & Reference",
+    "title": "Integration Node & Server Commands",
     "part": "Part 5: ACE & MQ",
-    "description": "Understand what ESQL is, where .esql files run, and how Compute, Filter, and Database nodes differ.",
+    "description": "Load the IBM App Connect Enterprise environment with mqsiprofile (or open the ACE Console) before running any mqsi command.",
     "topicIds": [
       "topic-174",
       "topic-175",
@@ -525,9 +525,9 @@
   },
   {
     "sectionNumber": 42,
-    "title": "ESQL Solved Tasks & Practice",
+    "title": "IBM MQ Commands",
     "part": "Part 5: ACE & MQ",
-    "description": "Solved ACE task: convert an incoming MQ XML order (with attribute id and repeating Item elements) into a typed JSON object with an items array.",
+    "description": "Open runmqsc to create queues, check queue depth, start listeners, and configure channels inside an IBM MQ Queue Manager.",
     "topicIds": [
       "topic-197",
       "topic-198",
@@ -539,27 +539,43 @@
       "topic-204",
       "topic-205",
       "topic-206",
-      "topic-207"
-    ]
-  },
-  {
-    "sectionNumber": 43,
-    "title": "Integration Node & Server Commands",
-    "part": "Part 5: ACE & MQ",
-    "description": "Load the IBM App Connect Enterprise environment with mqsiprofile (or open the ACE Console) before running any mqsi command.",
-    "topicIds": [
+      "topic-207",
       "topic-208",
       "topic-209",
       "topic-210",
       "topic-211",
       "topic-212",
       "topic-213",
-      "topic-214",
+      "topic-214"
+    ]
+  },
+  {
+    "sectionNumber": 43,
+    "title": "SQL Server & Database Setup",
+    "part": "Part 5: ACE & MQ",
+    "description": "Know when ACE needs an ODBC Data Source (Compute, Database, Filter) versus a JDBC Providers Policy (Mapping, JavaCompute).",
+    "topicIds": [
       "topic-215",
       "topic-216",
       "topic-217",
-      "topic-218",
-      "topic-219",
+      "topic-218"
+    ]
+  },
+  {
+    "sectionNumber": 44,
+    "title": "BIP Codes Reference",
+    "part": "Part 5: ACE & MQ",
+    "description": "Instant plain-English guide to every common IBM ACE BIP info and error code grouped by what you were doing when you saw it.",
+    "topicIds": [
+      "topic-219"
+    ]
+  },
+  {
+    "sectionNumber": 45,
+    "title": "Fundamentals",
+    "part": "Part 6: ESQL",
+    "description": "Understand what ESQL is, where .esql files run, and how Compute, Filter, and Database nodes differ.",
+    "topicIds": [
       "topic-220",
       "topic-221",
       "topic-222",
@@ -570,18 +586,18 @@
       "topic-227",
       "topic-228",
       "topic-229",
-      "topic-230"
+      "topic-230",
+      "topic-231",
+      "topic-232",
+      "topic-233"
     ]
   },
   {
-    "sectionNumber": 44,
-    "title": "IBM MQ Commands",
-    "part": "Part 5: ACE & MQ",
-    "description": "Open runmqsc to create queues, check queue depth, start listeners, and configure channels inside an IBM MQ Queue Manager.",
+    "sectionNumber": 46,
+    "title": "Advanced",
+    "part": "Part 6: ESQL",
+    "description": "Create, append, prepend, delete, and move message tree nodes cleanly using CREATE FIELD, CREATE LASTCHILD/FIRSTCHILD, DELETE FIELD, and DETACH/ATTACH.",
     "topicIds": [
-      "topic-231",
-      "topic-232",
-      "topic-233",
       "topic-234",
       "topic-235",
       "topic-236",
@@ -593,30 +609,22 @@
       "topic-242",
       "topic-243",
       "topic-244",
-      "topic-245",
-      "topic-246",
-      "topic-247",
-      "topic-248"
+      "topic-245"
     ]
   },
   {
-    "sectionNumber": 45,
-    "title": "SQL Server & Database Setup",
-    "part": "Part 5: ACE & MQ",
-    "description": "Know when ACE needs an ODBC Data Source (Compute, Database, Filter) versus a JDBC Providers Policy (Mapping, JavaCompute).",
+    "sectionNumber": 47,
+    "title": "Tasks",
+    "part": "Part 6: ESQL",
+    "description": "Solved ACE task: convert an incoming MQ XML order (with attribute id and repeating Item elements) into a typed JSON object with an items array.",
     "topicIds": [
+      "topic-246",
+      "topic-247",
+      "topic-248",
       "topic-249",
       "topic-250",
       "topic-251",
-      "topic-252"
-    ]
-  },
-  {
-    "sectionNumber": 46,
-    "title": "BIP Codes Reference",
-    "part": "Part 5: ACE & MQ",
-    "description": "Instant plain-English guide to every common IBM ACE BIP info and error code grouped by what you were doing when you saw it.",
-    "topicIds": [
+      "topic-252",
       "topic-253"
     ]
   }

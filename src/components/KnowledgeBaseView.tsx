@@ -28,6 +28,7 @@ interface KnowledgeBaseViewProps {
 
 const CATEGORY_PRESETS = [
   'ACE & MQ',
+  'ESQL',
   'Java Core',
   'Spring Boot',
   'Jakarta EE',

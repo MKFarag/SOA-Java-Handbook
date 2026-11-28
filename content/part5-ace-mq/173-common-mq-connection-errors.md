@@ -61,4 +61,4 @@ mqrc 2035
 
 ---
 
-**Next Section — ESQL Fundamentals & Reference:** [ESQL Introduction: Compute, Filter & Database Nodes →](#topic-174)
+**Next Section — Integration Node & Server Commands:** [mqsiprofile & the ACE Command Console →](#topic-174)

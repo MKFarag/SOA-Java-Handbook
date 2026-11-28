@@ -64,7 +64,7 @@ async function runMobileAudit() {
     });
     console.log('[mobile-audit] Home Page horizontal overflow detected?', homeOverflow);
 
-    // Test ALL 123 renumbered ACE & MQ topics (topic-131 through topic-253)
+    // Test ALL 123 ACE & MQ + ESQL topics (topic-131 through topic-253)
     const testTopics = Array.from({ length: 123 }, (_, i) => `topic-${131 + i}`);
 
     let anyAuditFailed = false;

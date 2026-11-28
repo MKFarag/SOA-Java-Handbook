@@ -17,7 +17,8 @@ import {
   Check,
   Brain,
   Network,
-  ClipboardList
+  ClipboardList,
+  FileCode2
 } from 'lucide-react';
 import { SECTIONS, ALL_TOPICS } from '../data/topics';
 import type { PartType, BroadcastItem } from '../types';
@@ -58,18 +59,21 @@ export const HomeView: React.FC<HomeViewProps> = ({
   const part3Sections = SECTIONS.filter(s => s.part === 'Part 3: Spring Boot & Production Stack');
   const part4Sections = SECTIONS.filter(s => s.part === 'Part 4: Database Systems & Persistence');
   const part5Sections = SECTIONS.filter(s => s.part === 'Part 5: ACE & MQ');
+  const part6Sections = SECTIONS.filter(s => s.part === 'Part 6: ESQL');
 
   const part1Topics = ALL_TOPICS.filter(t => t.part === 'Part 1: Java Core');
   const part2Topics = ALL_TOPICS.filter(t => t.part === 'Part 2: Java EE & Jakarta EE');
   const part3Topics = ALL_TOPICS.filter(t => t.part === 'Part 3: Spring Boot & Production Stack');
   const part4Topics = ALL_TOPICS.filter(t => t.part === 'Part 4: Database Systems & Persistence');
   const part5Topics = ALL_TOPICS.filter(t => t.part === 'Part 5: ACE & MQ');
+  const part6Topics = ALL_TOPICS.filter(t => t.part === 'Part 6: ESQL');
 
   const part1Done = part1Topics.filter(t => completedTopicIds.has(t.id)).length;
   const part2Done = part2Topics.filter(t => completedTopicIds.has(t.id)).length;
   const part3Done = part3Topics.filter(t => completedTopicIds.has(t.id)).length;
   const part4Done = part4Topics.filter(t => completedTopicIds.has(t.id)).length;
   const part5Done = part5Topics.filter(t => completedTopicIds.has(t.id)).length;
+  const part6Done = part6Topics.filter(t => completedTopicIds.has(t.id)).length;
 
   const totalCompleted = completedTopicIds.size;
   const progressPercent = Math.round((totalCompleted / ALL_TOPICS.length) * 100);
@@ -152,7 +156,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
       label: 'ACE & MQ',
       tag: 'Enterprise Integration',
       subtitle: 'Enterprise Service Bus & Messaging',
-      description: 'IBM App Connect Enterprise 12 & IBM MQ 9.4 in simple W3Schools style: Toolkit setup, Flows, Nodes, MQ Messaging, ESQL, and CLI commands.',
+      description: 'IBM App Connect Enterprise 12 & IBM MQ 9.4 in simple W3Schools style: Toolkit setup, Flows, Nodes, MQ Messaging, ODBC, and CLI commands.',
       icon: Network,
       accentText: 'text-cyan-600 dark:text-cyan-400',
       accentBg: 'bg-cyan-500/10 dark:bg-cyan-500/15',
@@ -164,6 +168,24 @@ export const HomeView: React.FC<HomeViewProps> = ({
       doneCount: part5Done,
       capstoneTitle: 'Enterprise Integration Broker & Transactional Message Hub',
       capstoneHighlights: 'Toolkit Packaging, Message Flows, Mapping & Compute Nodes, MQ Queues, and ACE/MQ CLI.'
+    },
+    {
+      part: 'Part 6: ESQL' as PartType,
+      label: 'ESQL',
+      tag: 'Part 6',
+      subtitle: 'Message Tree Programming',
+      description: 'IBM ACE Extended SQL in W3Schools style: Fundamentals, Advanced Tree & DB patterns, 6 Solved Tasks, and Hands-On Practice.',
+      icon: FileCode2,
+      accentText: 'text-violet-600 dark:text-violet-400',
+      accentBg: 'bg-violet-500/10 dark:bg-violet-500/15',
+      accentBorder: 'border-violet-500/20 dark:border-violet-500/30',
+      hoverBorder: 'hover:border-violet-500/50',
+      glow: 'shadow-violet-500/10',
+      topics: part6Topics,
+      sections: part6Sections,
+      doneCount: part6Done,
+      capstoneTitle: 'End-to-End ESQL Transformation, Routing & Validation Suite',
+      capstoneHighlights: 'XML/JSON Transforms, REFERENCE Loops, SELECT on Trees, PROPAGATE, PASSTHRU & ExceptionList Handling.'
     }
   ];
 
@@ -341,7 +363,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
               Curriculum Architecture
             </h2>
             <p className="text-xs sm:text-sm text-zinc-500 dark:text-zinc-400">
-              Structured into 5 progressive pillars from core foundations to enterprise messaging and distributed systems.
+              Structured into 6 progressive pillars from core foundations to enterprise messaging, ESQL, and distributed systems.
             </p>
           </div>
 
@@ -365,7 +387,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
         </div>
 
         {/* Pillar Cards Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {pillars.map((pillar) => {
             const IconComp = pillar.icon;
             const isSelected = activeTabPart === pillar.part;

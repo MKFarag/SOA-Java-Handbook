@@ -40,7 +40,7 @@ The **Compute** node lets you transform, build, or filter messages using **ESQL*
 | :--- | :--- | :--- |
 | **ESQL module** | Auto-generated | Links this node to a `CREATE COMPUTE MODULE ...` block in your `.esql` file |
 | **Compute mode** | `Message` | Controls whether `LocalEnvironment` and `Exception` trees are copied or freshly rebuilt (`Message`, `LocalEnvironment`, `LocalEnvironment And Message`, etc.) |
-| **Data source** | *(empty)* | [ODBC DSN name](#topic-250) if this Compute node queries SQL Server or another DB |
+| **Data source** | *(empty)* | [ODBC DSN name](#topic-216) if this Compute node queries SQL Server or another DB |
 
 ---
 
