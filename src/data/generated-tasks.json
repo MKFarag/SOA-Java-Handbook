@@ -23,7 +23,7 @@
         "text": "Create a new queue manager.",
         "links": [
           {
-            "topicId": "topic-224",
+            "topicId": "topic-233",
             "slug": "crtmqm-create-queue-manager",
             "title": "crtmqm: Create a Queue Manager",
             "part": "Part 5: ACE & MQ"
@@ -35,7 +35,7 @@
         "text": "Create 2 local queues.",
         "links": [
           {
-            "topicId": "topic-227",
+            "topicId": "topic-236",
             "slug": "define-qlocal-create-queue",
             "title": "DEFINE QLOCAL: Create a Local Queue",
             "part": "Part 5: ACE & MQ"
@@ -144,7 +144,7 @@
             "part": "Part 5: ACE & MQ"
           },
           {
-            "topicId": "topic-203",
+            "topicId": "topic-212",
             "slug": "mqsicreatebroker-and-mqsideletebroker",
             "title": "mqsicreatebroker & mqsideletebroker",
             "part": "Part 5: ACE & MQ"
@@ -157,7 +157,7 @@
         "text": "Create a BAR file for the 2 projects and deploy it to the integration node.",
         "links": [
           {
-            "topicId": "topic-213",
+            "topicId": "topic-222",
             "slug": "bar-packaging-and-ibmint",
             "title": "BAR Packaging (Toolkit & ibmint package)",
             "part": "Part 5: ACE & MQ"
@@ -176,7 +176,7 @@
             "part": "Part 5: ACE & MQ"
           },
           {
-            "topicId": "topic-203",
+            "topicId": "topic-212",
             "slug": "mqsicreatebroker-and-mqsideletebroker",
             "title": "mqsicreatebroker & mqsideletebroker",
             "part": "Part 5: ACE & MQ"
@@ -268,7 +268,7 @@
         "text": "Deploy the Policy Project to the integration node first, then create the BAR file for the 2 projects and deploy it. (Alternatively, include the Policy Project in the BAR.)",
         "links": [
           {
-            "topicId": "topic-213",
+            "topicId": "topic-222",
             "slug": "bar-packaging-and-ibmint",
             "title": "BAR Packaging (Toolkit & ibmint package)",
             "part": "Part 5: ACE & MQ"

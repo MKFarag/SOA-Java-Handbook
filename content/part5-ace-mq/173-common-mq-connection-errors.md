@@ -61,4 +61,4 @@ mqrc 2035
 
 ---
 
-**Next Section — ESQL Reference:** [ESQL Basics: Modules & Main() →](#topic-174)
+**Next Section — ESQL Fundamentals & Reference:** [ESQL Introduction: Compute, Filter & Database Nodes →](#topic-174)
